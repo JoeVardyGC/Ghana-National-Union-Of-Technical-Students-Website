@@ -431,9 +431,9 @@ export default function ContactClient() {
 
             <a
               href="mailto:infos@gnuts.org.gh"
-              className="inline-flex items-center gap-2 px-6 py-3.5 bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#014900] text-xs font-black uppercase tracking-wider rounded-2xl transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-6 py-3.5 bg-white hover:bg-gray-100 text-[#014900] text-xs font-black uppercase tracking-wider rounded-2xl transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
             >
-              <Mail className="w-3.5 h-3.5 text-[#D9A000]" />
+              <Mail className="w-3.5 h-3.5 text-[#014900]" />
               <span>Email Secretariat</span>
             </a>
           </div>
