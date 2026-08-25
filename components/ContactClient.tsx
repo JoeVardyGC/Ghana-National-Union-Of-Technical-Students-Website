@@ -72,7 +72,7 @@ export default function ContactClient() {
   };
 
   return (
-    <div className="space-y-12 font-['Montserrat',sans-serif]">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-12 font-['Montserrat',sans-serif]">
       
       {/* 1. MAIN CONTACT GRID: INFO CARDS + SUBMISSION FORM */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
