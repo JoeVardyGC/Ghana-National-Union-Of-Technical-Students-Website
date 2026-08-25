@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { 
   Users, 
@@ -80,6 +80,24 @@ export default function UsersManagementClient({
   );
   const [searchQuery, setSearchQuery] = useState('');
   const [roleFilter, setRoleFilter] = useState<string>('ALL');
+
+  // Real-time synchronization with Railway MySQL / Database
+  useEffect(() => {
+    if (initialUsers && initialUsers.length > 0) {
+      setUsersList(initialUsers);
+    }
+  }, [initialUsers]);
+
+  useEffect(() => {
+    fetch('/api/admin/users')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && Array.isArray(data.users) && data.users.length > 0) {
+          setUsersList(data.users);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   // Multi-Selection State (Excludes Root ID 1)
   const [selectedIds, setSelectedIds] = useState<number[]>([]);

@@ -2,6 +2,7 @@ import { query } from '@/lib/db';
 import UsersManagementClient from './UsersManagementClient';
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function AdminUsersPage() {
   const rawUsers = await query('SELECT * FROM users ORDER BY id ASC').catch(() => []);
