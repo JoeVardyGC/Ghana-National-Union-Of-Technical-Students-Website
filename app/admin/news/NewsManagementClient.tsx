@@ -542,16 +542,16 @@ export default function NewsManagementClient({ initialNews = [] }: { initialNews
 
       {/* 6. CREATE / EDIT MODAL */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 bg-black/60 backdrop-blur-xs font-['Montserrat',sans-serif]">
-          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] shadow-2xl border border-gray-200 flex flex-col overflow-hidden animate-fadeIn">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/70 backdrop-blur-xs font-['Montserrat',sans-serif] overflow-hidden">
+          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[86vh] shadow-2xl border border-gray-200 flex flex-col overflow-hidden animate-fadeIn">
             
             {/* Fixed Modal Header */}
-            <div className="p-5 sm:p-6 pb-4 border-b border-gray-100 flex items-start justify-between shrink-0 bg-white">
+            <div className="p-4 sm:p-5 border-b border-gray-100 flex items-center justify-between shrink-0 bg-white z-10">
               <div>
-                <h3 className="text-lg sm:text-xl font-black uppercase text-[#014900] tracking-tight">
+                <h3 className="text-base sm:text-lg font-black uppercase text-[#014900] tracking-tight">
                   {editingItem ? 'Edit Press Release' : 'Publish New Announcement'}
                 </h3>
-                <p className="text-xs text-gray-500 font-medium mt-0.5">
+                <p className="text-xs text-gray-500 font-medium">
                   Create an official news item visible to technical students across Ghana.
                 </p>
               </div>
@@ -565,7 +565,7 @@ export default function NewsManagementClient({ initialNews = [] }: { initialNews
             </div>
 
             {/* Scrollable Form Body */}
-            <div className="p-5 sm:p-6 overflow-y-auto space-y-4 flex-grow custom-scrollbar">
+            <div className="p-4 sm:p-6 overflow-y-auto space-y-4 flex-1 custom-scrollbar">
               {feedbackMsg && (
                 <div className="p-3 bg-red-50 text-red-700 border border-red-200 rounded-2xl text-xs font-bold flex items-center gap-2">
                   <AlertCircle className="w-4 h-4 shrink-0" />

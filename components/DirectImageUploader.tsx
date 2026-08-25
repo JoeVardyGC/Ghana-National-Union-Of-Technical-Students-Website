@@ -85,12 +85,12 @@ export default function DirectImageUploader({
   };
 
   return (
-    <div className="space-y-2 bg-gray-50/80 p-4 rounded-2xl border border-gray-200/90 font-['Montserrat',sans-serif]">
+    <div className="space-y-1.5 bg-gray-50/80 p-3 rounded-2xl border border-gray-200/90 font-['Montserrat',sans-serif]">
       
       {/* Label and Header */}
       <div className="flex items-center justify-between">
         <label className="text-xs font-black uppercase text-gray-700 tracking-wider flex items-center gap-1.5">
-          <ImageIcon className="w-4 h-4 text-[#014900]" />
+          <ImageIcon className="w-3.5 h-3.5 text-[#014900]" />
           <span>{label}</span>
         </label>
         
@@ -101,7 +101,7 @@ export default function DirectImageUploader({
             className="text-[11px] font-bold text-red-600 hover:text-red-700 flex items-center gap-1 cursor-pointer"
           >
             <X className="w-3.5 h-3.5" />
-            <span>Remove Image</span>
+            <span>Remove</span>
           </button>
         ) : (
           <button
@@ -109,23 +109,26 @@ export default function DirectImageUploader({
             onClick={() => setShowUrlInput(!showUrlInput)}
             className="text-[11px] font-bold text-[#014900] hover:text-[#D9A000] flex items-center gap-1 cursor-pointer transition-colors"
           >
-            <LinkIcon className="w-3 h-3 text-[#D9A000]" />
-            <span>{showUrlInput ? 'Switch to File Upload' : 'Paste Image URL'}</span>
+            <LinkIcon className="w-3.5 h-3.5" />
+            <span>{showUrlInput ? 'Upload File' : 'Paste Image URL'}</span>
           </button>
         )}
       </div>
 
       {uploadError && (
-        <p className="text-xs font-bold text-red-600">{uploadError}</p>
+        <p className="text-[11px] font-bold text-red-600 bg-red-50 p-2 rounded-xl border border-red-200">
+          {uploadError}
+        </p>
       )}
 
-      {/* 1. If Image is Selected -> Show Thumbnail Preview */}
+      {/* Upload Zone or Preview */}
       {value ? (
-        <div className="relative rounded-2xl overflow-hidden border-2 border-[#014900]/30 bg-gray-900 group max-h-48 flex items-center justify-center">
+        /* 1. Image Preview with replace/delete overlay */
+        <div className="relative group rounded-xl overflow-hidden border border-gray-200 bg-white h-32 flex items-center justify-center">
           <img
             src={value}
-            alt="Preview"
-            className="w-full h-44 object-contain"
+            alt={label}
+            className="w-full h-full object-contain"
           />
           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
             <button
@@ -163,12 +166,12 @@ export default function DirectImageUploader({
             value={urlDraft}
             onChange={(e) => setUrlDraft(e.target.value)}
             placeholder="Paste image link (https://...)"
-            className="flex-1 px-3.5 py-2.5 bg-white border border-gray-300 rounded-xl text-xs font-semibold outline-none focus:border-[#014900]"
+            className="flex-1 px-3.5 py-2 bg-white border border-gray-300 rounded-xl text-xs font-semibold outline-none focus:border-[#014900]"
           />
           <button
             type="button"
             onClick={handleUrlSubmit}
-            className="px-4 py-2.5 bg-[#014900] text-white text-xs font-black uppercase tracking-wider rounded-xl hover:bg-[#D9A000] hover:text-[#014900] transition-colors cursor-pointer"
+            className="px-4 py-2 bg-[#014900] text-white text-xs font-black uppercase tracking-wider rounded-xl hover:bg-[#D9A000] hover:text-[#014900] transition-colors cursor-pointer"
           >
             Attach
           </button>
@@ -179,7 +182,7 @@ export default function DirectImageUploader({
           onDragOver={(e) => e.preventDefault()}
           onDrop={handleDrop}
           onClick={() => fileInputRef.current?.click()}
-          className="border-2 border-dashed border-emerald-400/80 hover:border-[#014900] bg-white rounded-2xl p-5 text-center cursor-pointer transition-all hover:bg-emerald-50/40 group flex flex-col items-center justify-center gap-2"
+          className="border-2 border-dashed border-emerald-400/80 hover:border-[#014900] bg-white rounded-2xl p-3 text-center cursor-pointer transition-all hover:bg-emerald-50/40 group flex items-center justify-center gap-3"
         >
           <input
             ref={fileInputRef}
@@ -193,21 +196,21 @@ export default function DirectImageUploader({
             }}
           />
 
-          <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#014900] group-hover:bg-[#014900] group-hover:text-white transition-colors flex items-center justify-center shadow-xs">
+          <div className="w-8 h-8 rounded-xl bg-emerald-50 text-[#014900] group-hover:bg-[#014900] group-hover:text-white transition-colors flex items-center justify-center shrink-0 shadow-xs">
             {isUploading ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
+              <Loader2 className="w-4 h-4 animate-spin" />
             ) : (
-              <Upload className="w-5 h-5" />
+              <Upload className="w-4 h-4" />
             )}
           </div>
 
-          <div>
-            <p className="text-xs font-bold text-gray-800">
+          <div className="text-left">
+            <p className="text-xs font-bold text-gray-800 leading-tight">
               {isUploading ? (
                 'Uploading image file...'
               ) : (
                 <>
-                  Click to <span className="text-[#014900] font-black underline">browse image</span> or drag and drop
+                  Click to <span className="text-[#014900] font-black underline">browse image</span> or drag & drop
                 </>
               )}
             </p>
