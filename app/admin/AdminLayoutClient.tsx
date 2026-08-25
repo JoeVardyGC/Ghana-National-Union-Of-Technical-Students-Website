@@ -59,13 +59,25 @@ export default function AdminLayoutClient({ children, sessionUser }: AdminLayout
     return <>{children}</>;
   }
 
-  const currentUser = sessionUser || {
-    id: 1,
-    username: 'admin@gnuts.org.gh',
-    name: 'General Secretariat',
-    role: 'Super Admin',
-    email: 'admin@gnuts.org.gh'
-  };
+  // If unauthenticated on any other admin route, redirect to login
+  useEffect(() => {
+    if (!sessionUser && pathname !== '/admin/login') {
+      router.replace('/admin/login');
+    }
+  }, [sessionUser, pathname, router]);
+
+  if (!sessionUser) {
+    return (
+      <div className="min-h-screen bg-[#014900] flex items-center justify-center font-['Montserrat',sans-serif]">
+        <div className="text-center space-y-3 text-white">
+          <div className="w-10 h-10 border-3 border-[#D9A000] border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="text-xs uppercase tracking-widest text-[#D9A000] font-bold">Redirecting to Login...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const currentUser = sessionUser;
 
   const handleLogout = async () => {
     setIsLoggingOut(true);

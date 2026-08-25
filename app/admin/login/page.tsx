@@ -49,7 +49,8 @@ export default function AdminLoginPage() {
 
       setSuccessMessage(`Welcome back, ${data.user?.name || 'Executive Officer'}. Redirecting to portal...`);
       setTimeout(() => {
-        router.push('/admin');
+        const destination = (typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('redirect') : null) || '/admin';
+        router.push(destination);
         router.refresh();
       }, 700);
     } catch (err: any) {

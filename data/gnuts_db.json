@@ -24,6 +24,18 @@
       "display_order": 1,
       "created_at": "2026-08-24T16:15:14.638Z",
       "updated_at": "2026-08-24T16:15:14.638Z"
+    },
+    {
+      "id": 2,
+      "full_name": "Danga",
+      "position": "National President",
+      "email": "infos@gnuts.org.gh",
+      "phone": "+233 24 000 0000",
+      "bio": "",
+      "photo": "/uploads/1787660571076-executive-crop-1787660570994.jpg",
+      "display_order": 2,
+      "created_at": "2026-08-25T12:22:52.985Z",
+      "updated_at": "2026-08-25T12:22:52.985Z"
     }
   ],
   "news": [
@@ -119,7 +131,8 @@
       "subject": "fffffffffffffffffff",
       "message": "fffffffffffffffffff",
       "created_at": "2026-08-25T11:48:04.813Z",
-      "updated_at": "2026-08-25T11:48:04.813Z"
+      "updated_at": "2026-08-25T11:48:28.722Z",
+      "status": "replied"
     }
   ],
   "audit_logs": [
@@ -371,6 +384,36 @@
       "details": "Bulk deleted 6 gallery items (IDs: 1, 2, 3, 4, 5, 6)",
       "created_at": "2026-08-25T11:24:04.071Z",
       "updated_at": "2026-08-25T11:24:04.071Z"
+    },
+    {
+      "id": 26,
+      "user_name": "GNUTS Secretariat",
+      "user_role": "Super Admin",
+      "action": "UPDATE_MESSAGE_STATUS",
+      "target": "Message #1",
+      "details": "Marked inquiry #1 as \"replied\"",
+      "created_at": "2026-08-25T11:48:28.725Z",
+      "updated_at": "2026-08-25T11:48:28.725Z"
+    },
+    {
+      "id": 27,
+      "user_name": "GNUTS Secretariat",
+      "user_role": "Super Admin",
+      "action": "UPDATE_EXECUTIVE",
+      "target": "Musah Abubakar Sadik",
+      "details": "Updated executive officer profile (#1): \"Musah Abubakar Sadik\" (National Public Relations Officer )",
+      "created_at": "2026-08-25T12:18:10.330Z",
+      "updated_at": "2026-08-25T12:18:10.330Z"
+    },
+    {
+      "id": 28,
+      "user_name": "GNUTS Secretariat",
+      "user_role": "Super Admin",
+      "action": "CREATE_EXECUTIVE",
+      "target": "Danga",
+      "details": "Appointed Danga as National President (Display Order: #2)",
+      "created_at": "2026-08-25T12:22:52.987Z",
+      "updated_at": "2026-08-25T12:22:52.987Z"
     }
   ],
   "about_page": [
