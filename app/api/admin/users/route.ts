@@ -88,42 +88,17 @@ export async function POST(request: Request) {
 
     const avatarUrl = avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop';
 
-    // Insert into both full_name and name safely with fallback
-    let insertResult = await query(
-      `INSERT INTO users (full_name, name, email, password, role, avatar) 
-       VALUES (?, ?, ?, ?, ?, ?)`,
+    // Insert user into MySQL users table (full_name, email, password, role)
+    const insertResult = await query(
+      `INSERT INTO users (full_name, email, password, role) 
+       VALUES (?, ?, ?, ?)`,
       [
-        name,
         name,
         email.toLowerCase().trim(),
         password,
-        role,
-        avatarUrl,
+        role || 'Super Admin',
       ]
-    ).catch(async () => {
-      return query(
-        `INSERT INTO users (full_name, email, password, role) 
-         VALUES (?, ?, ?, ?)`,
-        [
-          name,
-          email.toLowerCase().trim(),
-          password,
-          role,
-        ]
-      ).catch(async () => {
-        return query(
-          `INSERT INTO users (name, email, password, role, avatar) 
-           VALUES (?, ?, ?, ?, ?)`,
-          [
-            name,
-            email.toLowerCase().trim(),
-            password,
-            role,
-            avatarUrl,
-          ]
-        );
-      });
-    });
+    );
 
     const userName = session.name || session.username || 'Comrade Joe Vardy';
     const userRole = session.role || 'Super Admin';

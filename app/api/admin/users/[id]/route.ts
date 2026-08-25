@@ -36,50 +36,32 @@ export async function PUT(
       await query(
         `UPDATE users SET 
           full_name = ?, 
-          name = ?, 
           email = ?, 
           password = ?, 
-          role = ?, 
-          avatar = ? 
+          role = ?
          WHERE id = ?`,
         [
           name,
-          name,
           email.toLowerCase().trim(),
           password,
-          role || 'Press & Media',
-          avatar || '',
+          role || 'Super Admin',
           userId,
         ]
-      ).catch(async () => {
-        return query(
-          `UPDATE users SET full_name = ?, email = ?, password = ?, role = ? WHERE id = ?`,
-          [name, email.toLowerCase().trim(), password, role || 'Press & Media', userId]
-        );
-      });
+      );
     } else {
       await query(
         `UPDATE users SET 
           full_name = ?, 
-          name = ?, 
           email = ?, 
-          role = ?, 
-          avatar = ? 
+          role = ?
          WHERE id = ?`,
         [
           name,
-          name,
           email.toLowerCase().trim(),
-          role || 'Press & Media',
-          avatar || '',
+          role || 'Super Admin',
           userId,
         ]
-      ).catch(async () => {
-        return query(
-          `UPDATE users SET full_name = ?, email = ?, role = ? WHERE id = ?`,
-          [name, email.toLowerCase().trim(), role || 'Press & Media', userId]
-        );
-      });
+      );
     }
 
     const userName = session.name || session.username || 'Comrade Joe Vardy';
