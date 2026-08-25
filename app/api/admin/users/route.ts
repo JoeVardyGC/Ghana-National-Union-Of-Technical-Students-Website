@@ -28,18 +28,26 @@ export async function GET(request: Request) {
     const role = searchParams.get('role');
     const search = searchParams.get('search');
 
-    let sql = 'SELECT id, name, email, role, avatar, created_at FROM users ORDER BY id ASC';
+    let sql = 'SELECT * FROM users ORDER BY id ASC';
     let params: any[] = [];
 
     if (role && role !== 'ALL') {
-      sql = 'SELECT id, name, email, role, avatar, created_at FROM users WHERE role = ? ORDER BY id ASC';
+      sql = 'SELECT * FROM users WHERE UPPER(role) = UPPER(?) ORDER BY id ASC';
       params = [role];
     }
 
     const rows = await query(sql, params);
 
     if (rows && rows.length > 0) {
-      let filtered = rows;
+      let filtered = rows.map((u: any) => ({
+        id: u.id,
+        name: u.full_name || u.name || 'Executive Officer',
+        email: u.email,
+        role: u.role || 'Super Admin',
+        avatar: u.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop',
+        created_at: u.created_at || new Date().toISOString(),
+      }));
+
       if (search) {
         const q = search.toLowerCase();
         filtered = filtered.filter((item: any) =>
@@ -51,21 +59,9 @@ export async function GET(request: Request) {
       return NextResponse.json({ users: filtered });
     }
 
-    let fallback = DEFAULT_USERS;
-    if (role && role !== 'ALL') {
-      fallback = fallback.filter((n) => n.role.toUpperCase() === role.toUpperCase());
-    }
-    if (search) {
-      const q = search.toLowerCase();
-      fallback = fallback.filter((n) =>
-        n.name.toLowerCase().includes(q) ||
-        n.email.toLowerCase().includes(q)
-      );
-    }
-
-    return NextResponse.json({ users: fallback });
+    return NextResponse.json({ users: [] });
   } catch (error: any) {
-    return NextResponse.json({ users: DEFAULT_USERS });
+    return NextResponse.json({ users: [] });
   }
 }
 
@@ -92,17 +88,42 @@ export async function POST(request: Request) {
 
     const avatarUrl = avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop';
 
-    const insertResult = await query(
-      `INSERT INTO users (name, email, password, role, avatar) 
-       VALUES (?, ?, ?, ?, ?)`,
+    // Insert into both full_name and name safely with fallback
+    let insertResult = await query(
+      `INSERT INTO users (full_name, name, email, password, role, avatar) 
+       VALUES (?, ?, ?, ?, ?, ?)`,
       [
+        name,
         name,
         email.toLowerCase().trim(),
         password,
         role,
         avatarUrl,
       ]
-    ).catch(() => null);
+    ).catch(async () => {
+      return query(
+        `INSERT INTO users (full_name, email, password, role) 
+         VALUES (?, ?, ?, ?)`,
+        [
+          name,
+          email.toLowerCase().trim(),
+          password,
+          role,
+        ]
+      ).catch(async () => {
+        return query(
+          `INSERT INTO users (name, email, password, role, avatar) 
+           VALUES (?, ?, ?, ?, ?)`,
+          [
+            name,
+            email.toLowerCase().trim(),
+            password,
+            role,
+            avatarUrl,
+          ]
+        );
+      });
+    });
 
     const userName = session.name || session.username || 'Comrade Joe Vardy';
     const userRole = session.role || 'Super Admin';

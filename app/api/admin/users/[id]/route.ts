@@ -35,6 +35,7 @@ export async function PUT(
     if (password && password.trim() !== '') {
       await query(
         `UPDATE users SET 
+          full_name = ?, 
           name = ?, 
           email = ?, 
           password = ?, 
@@ -43,16 +44,23 @@ export async function PUT(
          WHERE id = ?`,
         [
           name,
+          name,
           email.toLowerCase().trim(),
           password,
           role || 'Press & Media',
           avatar || '',
           userId,
         ]
-      ).catch(() => null);
+      ).catch(async () => {
+        return query(
+          `UPDATE users SET full_name = ?, email = ?, password = ?, role = ? WHERE id = ?`,
+          [name, email.toLowerCase().trim(), password, role || 'Press & Media', userId]
+        );
+      });
     } else {
       await query(
         `UPDATE users SET 
+          full_name = ?, 
           name = ?, 
           email = ?, 
           role = ?, 
@@ -60,12 +68,18 @@ export async function PUT(
          WHERE id = ?`,
         [
           name,
+          name,
           email.toLowerCase().trim(),
           role || 'Press & Media',
           avatar || '',
           userId,
         ]
-      ).catch(() => null);
+      ).catch(async () => {
+        return query(
+          `UPDATE users SET full_name = ?, email = ?, role = ? WHERE id = ?`,
+          [name, email.toLowerCase().trim(), role || 'Press & Media', userId]
+        );
+      });
     }
 
     const userName = session.name || session.username || 'Comrade Joe Vardy';

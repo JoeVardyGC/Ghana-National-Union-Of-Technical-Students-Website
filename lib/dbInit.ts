@@ -11,20 +11,27 @@ export async function initializeDatabase(): Promise<{ success: boolean; message:
       CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
         full_name VARCHAR(150) NOT NULL,
+        name VARCHAR(150) DEFAULT NULL,
         email VARCHAR(150) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
         role VARCHAR(50) NOT NULL DEFAULT 'Super Admin',
+        avatar VARCHAR(255) DEFAULT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
 
+    // Ensure columns exist if table was created previously
+    await query('ALTER TABLE users ADD COLUMN name VARCHAR(150) DEFAULT NULL').catch(() => null);
+    await query('ALTER TABLE users ADD COLUMN full_name VARCHAR(150) DEFAULT NULL').catch(() => null);
+    await query('ALTER TABLE users ADD COLUMN avatar VARCHAR(255) DEFAULT NULL').catch(() => null);
+
     // Seed default primary Super Admin if empty
     const existingUsers = await query('SELECT id FROM users LIMIT 1');
     if (!existingUsers || existingUsers.length === 0) {
       await query(`
-        INSERT INTO users (full_name, email, password, role) VALUES
-        ('GNUTS Secretariat', 'admin@gnuts.org.gh', 'admin123', 'Super Admin');
+        INSERT INTO users (full_name, name, email, password, role) VALUES
+        ('GNUTS Secretariat', 'GNUTS Secretariat', 'admin@gnuts.org.gh', 'admin123', 'Super Admin');
       `);
     }
 
