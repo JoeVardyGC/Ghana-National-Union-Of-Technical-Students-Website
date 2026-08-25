@@ -542,39 +542,41 @@ export default function NewsManagementClient({ initialNews = [] }: { initialNews
 
       {/* 6. CREATE / EDIT MODAL */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/75 backdrop-blur-xs font-['Montserrat',sans-serif] p-3 sm:p-6 flex justify-center items-start">
-          <div className="bg-white rounded-3xl max-w-2xl w-full my-6 sm:my-10 shadow-2xl border border-gray-200 p-6 sm:p-8 relative animate-fadeIn space-y-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs font-['Montserrat',sans-serif]">
+          <div className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-gray-200 max-h-[90vh] overflow-y-auto space-y-6 animate-fadeIn">
             
             {/* Modal Header */}
-            <div className="flex items-start justify-between border-b border-gray-100 pb-4">
-              <div>
-                <h3 className="text-xl sm:text-2xl font-black uppercase text-[#014900] tracking-tight">
-                  {editingItem ? 'Edit Press Release' : 'Publish New Announcement'}
-                </h3>
-                <p className="text-xs sm:text-sm text-gray-500 font-medium mt-0.5">
-                  Create an official news item visible to technical students across Ghana.
-                </p>
+            <div className="flex items-center justify-between border-b border-gray-100 pb-4">
+              <div className="flex items-center gap-2.5">
+                <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#014900] flex items-center justify-center font-bold shrink-0">
+                  <Newspaper className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base sm:text-lg font-black text-[#014900] uppercase tracking-tight">
+                    {editingItem ? 'Edit Press Release' : 'Publish New Announcement'}
+                  </h3>
+                  <p className="text-xs text-gray-500 font-medium">Create an official news item visible to technical students</p>
+                </div>
               </div>
               <button
                 type="button"
                 onClick={() => setIsModalOpen(false)}
-                className="text-gray-400 hover:text-gray-600 p-2 rounded-full hover:bg-gray-100 transition-colors cursor-pointer shrink-0 ml-2"
-                title="Close Form"
+                className="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition-colors cursor-pointer shrink-0"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
             {feedbackMsg && (
-              <div className="p-3.5 bg-red-50 text-red-700 border border-red-200 rounded-2xl text-xs font-bold flex items-center gap-2">
+              <div className="p-3 bg-red-50 text-red-700 border border-red-200 rounded-2xl text-xs font-bold flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>{feedbackMsg}</span>
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-4">
               {/* Title */}
-              <div className="space-y-1.5">
+              <div className="space-y-1">
                 <label className="text-xs font-black uppercase tracking-wider text-gray-700">
                   Headline Title *
                 </label>
@@ -584,13 +586,13 @@ export default function NewsManagementClient({ initialNews = [] }: { initialNews
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   placeholder="e.g. 34th National Delegates Congress Date Announced"
-                  className="w-full px-4 py-3 bg-gray-50 rounded-2xl border border-gray-200 text-sm font-medium outline-none focus:border-[#014900] focus:bg-white"
+                  className="w-full px-4 py-2.5 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-medium outline-none focus:border-[#014900] focus:bg-white"
                 />
               </div>
 
               {/* Author & Date */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="space-y-1">
                   <label className="text-xs font-black uppercase tracking-wider text-gray-700">
                     Author / Desk *
                   </label>
@@ -600,11 +602,11 @@ export default function NewsManagementClient({ initialNews = [] }: { initialNews
                     value={formData.author}
                     onChange={(e) => setFormData({ ...formData, author: e.target.value })}
                     placeholder="e.g. GNUTS PRO / General Secretary"
-                    className="w-full px-4 py-2.5 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-medium outline-none focus:border-[#014900]"
+                    className="w-full px-4 py-2 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-medium outline-none focus:border-[#014900]"
                   />
                 </div>
 
-                <div className="space-y-1.5">
+                <div className="space-y-1">
                   <label className="text-xs font-black uppercase tracking-wider text-gray-700">
                     Publication Date *
                   </label>
@@ -613,7 +615,7 @@ export default function NewsManagementClient({ initialNews = [] }: { initialNews
                     required
                     value={formData.published_at}
                     onChange={(e) => setFormData({ ...formData, published_at: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-medium outline-none focus:border-[#014900]"
+                    className="w-full px-4 py-2 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-medium outline-none focus:border-[#014900]"
                   />
                 </div>
               </div>
@@ -627,7 +629,7 @@ export default function NewsManagementClient({ initialNews = [] }: { initialNews
               />
 
               {/* In-Article Additional Photos */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <DirectImageUploader
                   label="In-Article Photo 2 (Optional)"
                   value={formData.image2}
@@ -643,7 +645,7 @@ export default function NewsManagementClient({ initialNews = [] }: { initialNews
               </div>
 
               {/* Article Content */}
-              <div className="space-y-1.5">
+              <div className="space-y-1">
                 <div className="flex items-center justify-between">
                   <label className="text-xs font-black uppercase tracking-wider text-gray-700">
                     Full Article Content *
@@ -654,7 +656,7 @@ export default function NewsManagementClient({ initialNews = [] }: { initialNews
                 </div>
                 <textarea
                   required
-                  rows={8}
+                  rows={6}
                   value={formData.content}
                   onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                   placeholder="Enter the full article body, statements, bullet points, and official communique..."
@@ -663,8 +665,8 @@ export default function NewsManagementClient({ initialNews = [] }: { initialNews
               </div>
 
               {/* Social Sharing Switch */}
-              <div className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl border border-gray-200">
-                <div className="flex items-center gap-2.5">
+              <div className="flex items-center justify-between p-3.5 bg-gray-50 rounded-2xl border border-gray-200">
+                <div className="flex items-center gap-2">
                   <Share2 className="w-4 h-4 text-[#014900]" />
                   <span className="text-xs font-bold text-gray-700">Allow WhatsApp & Social Sharing</span>
                 </div>
@@ -681,14 +683,14 @@ export default function NewsManagementClient({ initialNews = [] }: { initialNews
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-6 py-3 rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-black text-xs uppercase tracking-wider cursor-pointer transition-colors"
+                  className="px-5 py-2.5 rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-black text-xs uppercase tracking-wider cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSaving}
-                  className="px-7 py-3 rounded-2xl bg-[#014900] hover:bg-[#003300] text-white font-black text-xs uppercase tracking-wider shadow-md hover:shadow-xl transition-all cursor-pointer disabled:opacity-70 flex items-center gap-2"
+                  className="px-6 py-2.5 rounded-2xl bg-[#014900] hover:bg-[#003300] text-white font-black text-xs uppercase tracking-wider shadow-md hover:shadow-xl transition-all cursor-pointer disabled:opacity-70"
                 >
                   {isSaving ? 'Saving Article...' : (editingItem ? 'Update Release' : 'Publish Article')}
                 </button>
