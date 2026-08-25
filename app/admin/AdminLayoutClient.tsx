@@ -54,17 +54,17 @@ export default function AdminLayoutClient({ children, sessionUser }: AdminLayout
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-  // If on login page, render clean standalone layout
-  if (pathname === '/admin/login') {
-    return <>{children}</>;
-  }
-
   // If unauthenticated on any other admin route, redirect to login
   useEffect(() => {
     if (!sessionUser && pathname !== '/admin/login') {
       router.replace('/admin/login');
     }
   }, [sessionUser, pathname, router]);
+
+  // If on login page, render clean standalone layout
+  if (pathname === '/admin/login') {
+    return <>{children}</>;
+  }
 
   if (!sessionUser) {
     return (
