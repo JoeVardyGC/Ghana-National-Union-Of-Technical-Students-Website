@@ -80,6 +80,7 @@ export default function UsersManagementClient({
   );
   const [searchQuery, setSearchQuery] = useState('');
   const [roleFilter, setRoleFilter] = useState<string>('ALL');
+  const [dbStatus, setDbStatus] = useState<any>(null);
 
   // Real-time synchronization with Railway MySQL / Database
   useEffect(() => {
@@ -96,6 +97,11 @@ export default function UsersManagementClient({
           setUsersList(data.users);
         }
       })
+      .catch(() => {});
+
+    fetch('/api/admin/db-status')
+      .then((res) => res.json())
+      .then((data) => setDbStatus(data))
       .catch(() => {});
   }, []);
 
@@ -119,14 +125,17 @@ export default function UsersManagementClient({
     avatar: '',
   });
 
-  const filteredUsers = usersList.filter((item) => {
-    const q = searchQuery.toLowerCase();
+  const filteredUsers = usersList.filter((item: any) => {
+    const q = (searchQuery || '').toLowerCase();
+    const nameStr = (item.name || item.full_name || '').toLowerCase();
+    const emailStr = (item.email || '').toLowerCase();
+    const roleStr = (item.role || '').toLowerCase();
     const matchesSearch =
-      item.name.toLowerCase().includes(q) ||
-      item.email.toLowerCase().includes(q) ||
-      item.role.toLowerCase().includes(q);
+      nameStr.includes(q) ||
+      emailStr.includes(q) ||
+      roleStr.includes(q);
     const matchesRole =
-      roleFilter === 'ALL' || item.role.toUpperCase() === roleFilter.toUpperCase();
+      roleFilter === 'ALL' || roleStr === roleFilter.toLowerCase();
     return matchesSearch && matchesRole;
   });
 
@@ -298,6 +307,27 @@ export default function UsersManagementClient({
           <span>Add New Officer / Admin</span>
         </button>
       </div>
+
+      {/* Live Database Connection Status Banner */}
+      {dbStatus && (
+        dbStatus.connected_to_mysql ? (
+          <div className="flex items-center gap-2.5 px-4 py-2.5 bg-emerald-50 border border-emerald-200 rounded-2xl text-xs font-bold text-emerald-800 shadow-xs">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+            <span>Live Railway Database Connected • {dbStatus.configured_host}</span>
+          </div>
+        ) : (
+          <div className="p-4 bg-amber-50 border border-amber-300 rounded-2xl text-xs text-amber-900 space-y-1.5 shadow-sm">
+            <div className="flex items-center gap-2 font-black text-amber-900 uppercase tracking-wide">
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-ping shrink-0" />
+              <span>Storage Notice: Local Fallback Mode Active</span>
+            </div>
+            <p className="text-[11px] text-amber-800 font-medium">
+              The site is currently reading from the local file snapshot instead of your live Railway MySQL database. 
+              {dbStatus.error ? ` Connection Error: ${dbStatus.error}` : ' Please ensure DATABASE_URL in Vercel is set to the Railway Public TCP URL and redeployed.'}
+            </p>
+          </div>
+        )
+      )}
 
       {/* 2. Search & Role Filter Bar */}
       <div className="bg-white rounded-3xl p-4 border border-gray-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
