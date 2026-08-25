@@ -10,9 +10,7 @@ import {
   CheckCircle2, 
   AlertCircle, 
   Share2, 
-  ArrowRight,
-  Sparkles,
-  HelpCircle
+  ArrowRight
 } from 'lucide-react';
 
 export default function ContactClient() {
@@ -81,10 +79,6 @@ export default function ContactClient() {
         <div className="lg:col-span-5 space-y-6">
           
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 border border-emerald-200 text-[#014900] text-[11px] font-extrabold uppercase tracking-widest rounded-full">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>National Secretariat</span>
-            </div>
             <h2 className="text-2xl sm:text-3xl font-black text-gray-900 uppercase tracking-tight">
               Get in Touch
             </h2>
