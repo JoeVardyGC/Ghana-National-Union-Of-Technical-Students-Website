@@ -42,7 +42,7 @@ export default function UnionPillarsSection() {
             <span>OUR CORE PILLARS OF ACTION</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#014900] tracking-tight">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#014900] tracking-tight uppercase">
             Championing Technical Excellence
           </h2>
 

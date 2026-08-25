@@ -1,0 +1,516 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "GNUTS Secretariat",
+      "full_name": "GNUTS Secretariat",
+      "email": "admin@gnuts.org.gh",
+      "password": "password123",
+      "role": "Super Admin",
+      "avatar": "https://res.cloudinary.com/dslngzls6/image/upload/v1786991593/photo_2026-08-17_18-24-49_bg2c1g.jpg",
+      "created_at": "2026-08-24T15:49:04.468Z",
+      "updated_at": "2026-08-24T15:49:04.468Z"
+    }
+  ],
+  "executives": [
+    {
+      "id": 1,
+      "full_name": "Musah Abubakar Sadik",
+      "position": "National Public Relations Officer ",
+      "email": "abubakarsadikmusah2004@gmail.com",
+      "phone": "+233256259336",
+      "bio": "",
+      "photo": "/uploads/1787588109860-6941b5b777238.jpg",
+      "display_order": 1,
+      "created_at": "2026-08-24T16:15:14.638Z",
+      "updated_at": "2026-08-24T16:15:14.638Z"
+    }
+  ],
+  "news": [
+    {
+      "id": 1,
+      "title": "GNUTS Announces 2nd Central Committee Meeting for the 34th Administration",
+      "content": "The Ghana National Union of Technical Students (GNUTS) has officially announced the details for its 2nd Central Committee Meeting under the 34th Administration.\n\nThe high-profile student leadership meeting is scheduled to take place from 3rd to 4th September, 2026. This gathering will bring together student leaders, institutional representatives, and executives to deliberate on key policies, address student welfare concerns, and strategize on advancing technical education in Ghana.\n\nEvent Details at a Glance:\n\nEvent: 2nd Central Committee Meeting (34th GNUTS Administration)\n\nDate: 3rd – 4th September, 2026\n\nVenue: Kumasi Technical University, Ashanti Region\n\nDelegates and invited student leadership figures are entreated to prepare ahead of the summit as the union continues to uphold its core motto: #BeTheDifference. For further updates and official notices, members can visit the official GNUTS portal at www.gnuts.org or follow social media handles via @gnuts_live.",
+      "image": "/uploads/1787587306260-WhatsApp_Image_2026-08-20_at_2.33.16_PM.jpeg",
+      "author": "GNUTS PRO",
+      "published_at": "2026-08-24",
+      "status": "published",
+      "allow_sharing": 1,
+      "image2": "",
+      "image3": "",
+      "created_at": "2026-08-24T16:02:01.343Z",
+      "updated_at": "2026-08-24T16:02:01.343Z"
+    },
+    {
+      "id": 2,
+      "title": "GNUTS Launches \"#ChooseTVETFirst\" Campaign to Champion Skills Development",
+      "content": "The Ghana National Union of Technical Students (GNUTS) under the 34th Administration has officially rolled out its national advocacy initiative, the \"#ChooseTVETFirst\" Campaign, anchored on the powerful theme: \"Skills Are The Future.\"\n\nThis visionary campaign is designed to shift public perception, elevate the status of Technical and Vocational Education and Training (TVET), and encourage young people to embrace practical skills acquisition as a primary pathway to national development and sustainable employment.\n\nKey Highlights of the Campaign:\n\nCore Theme: Skills Are The Future (#ChooseTVETFirst)\n\nObjective: Promoting hands-on technical training, robotics, engineering competence, and modern vocational expertise.\n\nInitiator: Ghana National Union of Technical Students (34th Administration)\n\nGNUTS continues to advocate for infrastructure development, innovation, and enhanced opportunities for technical students across Ghana. For more details on the campaign and how to get involved, visit the official union platform at www.gnuts.org or connect via social media channels @gnuts_live.",
+      "image": "/uploads/1787587477319-choose_tvet_first.png",
+      "author": "GNUTS PRO",
+      "published_at": "2026-06-24",
+      "status": "published",
+      "allow_sharing": 1,
+      "image2": "",
+      "image3": "",
+      "created_at": "2026-08-24T16:04:47.988Z",
+      "updated_at": "2026-08-24T16:04:47.988Z"
+    }
+  ],
+  "scholarships": [
+    {
+      "id": 1,
+      "title": "Chevening Scholarship (Ghana)",
+      "description": "The Chevening Scholarship is the UK Government’s prestigious international awards scheme funded by the Foreign, Commonwealth and Development Office (FCDO). It provides full financial support for future leaders from Ghana to pursue a one-year taught master’s degree at any eligible university in the United Kingdom. The award typically covers full university tuition fees, a monthly living allowance, return economy airfares to the UK, and additional grants to cover essential academic expenses.",
+      "requirements": "Be a citizen of Ghana and commit to returning for at least two years after the scholarship ends\n\nHold an undergraduate degree that qualifies you for entry to a UK master's program\n\nHave a minimum of 2,800 hours (roughly two years) of work experience acquired after your undergraduate degree\n\nApply to three different, eligible one-year taught master's courses at UK universities\n\nValid passport or national identity document\n\nUndergraduate degree certificate and transcripts\n\nTwo professional or academic references\n\nFour application essays covering leadership, networking, study choice, and career plan",
+      "deadline": "2026-10-06",
+      "link": "https://www.chevening.org/scholarship/ghana/",
+      "status": "active",
+      "created_at": "2026-08-24T15:54:41.678Z",
+      "updated_at": "2026-08-24T15:54:41.678Z"
+    }
+  ],
+  "opportunities": [
+    {
+      "id": 1,
+      "title": "AmaliTech Immersive Software Engineering Internship",
+      "description": "The AmaliTech Immersive Internship Programme is a structured, paid technical internship designed to bridge the gap between classroom theory and professional software engineering environments.\n\nKey Focus Areas: Frontend and Backend Engineering specializations where participants write code, build responsive web apps, and learn modern software workflows.\n\nRequired Skills & Eligibility:\n\nBe a third-year bachelor's student or second-year Higher National Diploma (HND) student\n\nStudying Computer Science, Engineering, Information Technology, or related technical programs\n\nGood foundation in programming fundamentals and an eagerness to learn professional development pipelines",
+      "type": "internship",
+      "location": "Ghana (On-site / Structured Training Centers)",
+      "deadline": "2026-11-19",
+      "link": "https://opportunitiesforyouth.org/2026/07/09/amalitech-immersive-internship-programme-2026-in-ghana-paid-gain-real-world-software-engineering-experience-with-mentorship-and-a-stipend/",
+      "status": "active",
+      "created_at": "2026-08-24T15:56:50.479Z",
+      "updated_at": "2026-08-24T15:56:50.479Z"
+    },
+    {
+      "id": 2,
+      "title": "Stain Studios Graphic Designer Internship",
+      "description": "Stain Studios is a creative design agency offering a hands-on graphic design internship tailored for emerging visual communicators and students. The role involves supporting the design team with visual assets for branding, layout design, and digital projects.\n\nKey Responsibilities: Assisting with graphics for web and social media, contributing to logo and brand identity design, image retouching, preparing files for print and digital delivery, and maintaining organized design files.\n\nRequired Skills & Eligibility:\n\nProficiency in industry-standard design tools (such as Adobe Photoshop, Illustrator, Figma, or similar)\n\nStrong visual communication skills and meticulous attention to detail\n\nCurrent enrollment in or recent completion of a design-related program (or equivalent practical experience)\n\nA portfolio showcasing relevant academic, personal, or professional design work",
+      "type": "internship",
+      "location": "Accra, Ghana (Hybrid / Remote options)",
+      "deadline": "2026-09-16",
+      "link": "https://bebee.com/gh/jobs/graphic-designer-internship-stain-studios-accra-greater-accra-region--t7xk-765064028",
+      "status": "active",
+      "created_at": "2026-08-24T15:58:02.810Z",
+      "updated_at": "2026-08-24T15:58:02.810Z"
+    }
+  ],
+  "innovations": [],
+  "resources": [
+    {
+      "id": 1,
+      "title": "Constitution of the Ghana National Union of Technical Students (GNUTS)",
+      "description": "The official supreme legal framework governing the structure, membership, governance, rights, duties, and operational procedures of the Ghana National Union of Technical Students (GNUTS). It outlines the powers of key organs including Congress, the Central Committee, the National Executive Committee, the Judicial Council, and member institution SRCs, alongside election guidelines, financial administration rules, and schedules for institutional membership and rotation.",
+      "category": "constitution",
+      "file_path": "/uploads/1787589629559-694b49528bff5.pdf",
+      "file_name": "694b49528bff5.pdf",
+      "file_size": 3873697,
+      "display_order": 1,
+      "created_at": "2026-08-24T16:40:51.292Z",
+      "updated_at": "2026-08-24T16:40:51.292Z"
+    }
+  ],
+  "contact_messages": [
+    {
+      "id": 1,
+      "name": "Musah Abubakar Sadik",
+      "email": "abubakarsadikmusah2004@gmail.com",
+      "phone": "0256259336",
+      "subject": "fffffffffffffffffff",
+      "message": "fffffffffffffffffff",
+      "created_at": "2026-08-25T11:48:04.813Z",
+      "updated_at": "2026-08-25T11:48:04.813Z"
+    }
+  ],
+  "audit_logs": [
+    {
+      "id": 1,
+      "user_name": "System Admin",
+      "user_role": "Super Admin",
+      "action": "SYSTEM_BOOT",
+      "target": "Database Initializer",
+      "details": "Universal real-time database sync initialized.",
+      "created_at": "2026-08-24T15:49:04.469Z"
+    },
+    {
+      "id": 2,
+      "user_name": "Executive Officer",
+      "user_role": "Press & Media",
+      "action": "DELETE_NEWS",
+      "target": "Article #1",
+      "details": "Deleted article #1",
+      "created_at": "2026-08-24T15:50:44.225Z",
+      "updated_at": "2026-08-24T15:50:44.225Z"
+    },
+    {
+      "id": 3,
+      "user_name": "Executive Officer",
+      "user_role": "Super Admin",
+      "action": "DELETE_EXECUTIVE",
+      "target": "Officer #2",
+      "details": "Removed executive officer #2 from National Council",
+      "created_at": "2026-08-24T15:51:04.108Z",
+      "updated_at": "2026-08-24T15:51:04.108Z"
+    },
+    {
+      "id": 4,
+      "user_name": "Executive Officer",
+      "user_role": "Super Admin",
+      "action": "DELETE_EXECUTIVE",
+      "target": "Officer #2",
+      "details": "Removed executive officer #2 from National Council",
+      "created_at": "2026-08-24T15:51:04.218Z",
+      "updated_at": "2026-08-24T15:51:04.218Z"
+    },
+    {
+      "id": 5,
+      "user_name": "Executive Officer",
+      "user_role": "Super Admin",
+      "action": "DELETE_EXECUTIVE",
+      "target": "Officer #3",
+      "details": "Removed executive officer #3 from National Council",
+      "created_at": "2026-08-24T15:51:06.673Z",
+      "updated_at": "2026-08-24T15:51:06.673Z"
+    },
+    {
+      "id": 6,
+      "user_name": "Executive Officer",
+      "user_role": "Super Admin",
+      "action": "DELETE_EXECUTIVE",
+      "target": "Officer #1",
+      "details": "Removed executive officer #1 from National Council",
+      "created_at": "2026-08-24T15:51:09.710Z",
+      "updated_at": "2026-08-24T15:51:09.710Z"
+    },
+    {
+      "id": 7,
+      "user_name": "Executive Officer",
+      "user_role": "Financial Secretary",
+      "action": "DELETE_SCHOLARSHIP",
+      "target": "Scholarship #1",
+      "details": "Removed scholarship opportunity #1",
+      "created_at": "2026-08-24T15:51:15.349Z",
+      "updated_at": "2026-08-24T15:51:15.349Z"
+    },
+    {
+      "id": 8,
+      "user_name": "Executive Officer",
+      "user_role": "Innovation Director",
+      "action": "DELETE_INNOVATION",
+      "target": "Project #1",
+      "details": "Removed TVET project #1",
+      "created_at": "2026-08-24T15:51:22.196Z",
+      "updated_at": "2026-08-24T15:51:22.196Z"
+    },
+    {
+      "id": 9,
+      "user_name": "Executive Officer",
+      "user_role": "Super Admin",
+      "action": "DELETE_OPPORTUNITY",
+      "target": "Opportunity #1",
+      "details": "Removed opportunity #1",
+      "created_at": "2026-08-24T15:51:30.610Z",
+      "updated_at": "2026-08-24T15:51:30.610Z"
+    },
+    {
+      "id": 10,
+      "user_name": "Executive Officer",
+      "user_role": "Super Admin",
+      "action": "DELETE_OPPORTUNITY",
+      "target": "Opportunity #2",
+      "details": "Removed opportunity #2",
+      "created_at": "2026-08-24T15:51:33.344Z",
+      "updated_at": "2026-08-24T15:51:33.344Z"
+    },
+    {
+      "id": 11,
+      "user_name": "Executive Officer",
+      "user_role": "Super Admin",
+      "action": "DELETE_RESOURCE",
+      "target": "Document #1",
+      "details": "Removed official document #1",
+      "created_at": "2026-08-24T15:51:38.620Z",
+      "updated_at": "2026-08-24T15:51:38.620Z"
+    },
+    {
+      "id": 12,
+      "user_name": "Executive Officer",
+      "user_role": "Super Admin",
+      "action": "DELETE_RESOURCE",
+      "target": "Document #2",
+      "details": "Removed official document #2",
+      "created_at": "2026-08-24T15:51:40.711Z",
+      "updated_at": "2026-08-24T15:51:40.711Z"
+    },
+    {
+      "id": 13,
+      "user_name": "Executive Officer",
+      "user_role": "Financial Secretary",
+      "action": "CREATE_SCHOLARSHIP",
+      "target": "Chevening Scholarship (Ghana)",
+      "details": "Posted new scholarship: \"Chevening Scholarship (Ghana)\"",
+      "created_at": "2026-08-24T15:54:41.679Z",
+      "updated_at": "2026-08-24T15:54:41.679Z"
+    },
+    {
+      "id": 14,
+      "user_name": "Executive Officer",
+      "user_role": "Super Admin",
+      "action": "CREATE_OPPORTUNITY",
+      "target": "AmaliTech Immersive Software Engineering Internship",
+      "details": "Posted new internship: \"AmaliTech Immersive Software Engineering Internship\" at Ghana (On-site / Structured Training Centers)",
+      "created_at": "2026-08-24T15:56:50.480Z",
+      "updated_at": "2026-08-24T15:56:50.480Z"
+    },
+    {
+      "id": 15,
+      "user_name": "Executive Officer",
+      "user_role": "Super Admin",
+      "action": "CREATE_OPPORTUNITY",
+      "target": "Stain Studios Graphic Designer Internship",
+      "details": "Posted new internship: \"Stain Studios Graphic Designer Internship\" at Accra, Ghana (Hybrid / Remote options)",
+      "created_at": "2026-08-24T15:58:02.812Z",
+      "updated_at": "2026-08-24T15:58:02.812Z"
+    },
+    {
+      "id": 16,
+      "user_name": "Executive Officer",
+      "user_role": "Press & Media",
+      "action": "CREATE_NEWS",
+      "target": "GNUTS Announces 2nd Central Committee Meeting for the 34th Administration",
+      "details": "Published new article: \"GNUTS Announces 2nd Central Committee Meeting for the 34th Administration\" by GNUTS PRO",
+      "created_at": "2026-08-24T16:02:01.345Z",
+      "updated_at": "2026-08-24T16:02:01.345Z"
+    },
+    {
+      "id": 17,
+      "user_name": "Executive Officer",
+      "user_role": "Press & Media",
+      "action": "CREATE_NEWS",
+      "target": "GNUTS Launches \"#ChooseTVETFirst\" Campaign to Champion Skills Development",
+      "details": "Published new article: \"GNUTS Launches \"#ChooseTVETFirst\" Campaign to Champion Skills Development\" by GNUTS PRO",
+      "created_at": "2026-08-24T16:04:47.990Z",
+      "updated_at": "2026-08-24T16:04:47.990Z"
+    },
+    {
+      "id": 18,
+      "user_name": "Executive Officer",
+      "user_role": "Financial Secretary",
+      "action": "CREATE_SCHOLARSHIP",
+      "target": "TVET National Presidential Scholarship 2026",
+      "details": "Posted new scholarship: \"TVET National Presidential Scholarship 2026\"",
+      "created_at": "2026-08-24T16:05:07.985Z",
+      "updated_at": "2026-08-24T16:05:07.985Z"
+    },
+    {
+      "id": 19,
+      "user_name": "Executive Officer",
+      "user_role": "Super Admin",
+      "action": "CREATE_OPPORTUNITY",
+      "target": "Volta River Authority (VRA) Power Plant Attachment",
+      "details": "Posted new internship: \"Volta River Authority (VRA) Power Plant Attachment\" at Akosombo, Eastern Region",
+      "created_at": "2026-08-24T16:05:27.337Z",
+      "updated_at": "2026-08-24T16:05:27.337Z"
+    },
+    {
+      "id": 20,
+      "user_name": "Executive Officer",
+      "user_role": "Super Admin",
+      "action": "CREATE_EXECUTIVE",
+      "target": "Musah Abubakar Sadik",
+      "details": "Appointed Musah Abubakar Sadik as National Public Relations Officer  (Display Order: #1)",
+      "created_at": "2026-08-24T16:15:14.639Z",
+      "updated_at": "2026-08-24T16:15:14.639Z"
+    },
+    {
+      "id": 21,
+      "user_name": "Executive Officer",
+      "user_role": "Super Admin",
+      "action": "UPDATE_EXECUTIVE",
+      "target": "Musah Abubakar Sadik",
+      "details": "Updated executive officer profile (#1): \"Musah Abubakar Sadik\" (National Public Relations Officer )",
+      "created_at": "2026-08-24T16:16:46.183Z",
+      "updated_at": "2026-08-24T16:16:46.183Z"
+    },
+    {
+      "id": 22,
+      "user_name": "Executive Officer",
+      "user_role": "Super Admin",
+      "action": "CREATE_RESOURCE",
+      "target": "Constitution of the Ghana National Union of Technical Students (GNUTS)",
+      "details": "Uploaded official document: \"Constitution of the Ghana National Union of Technical Students (GNUTS)\" (constitution)",
+      "created_at": "2026-08-24T16:40:51.293Z",
+      "updated_at": "2026-08-24T16:40:51.293Z"
+    },
+    {
+      "id": 23,
+      "user_name": "Executive Officer",
+      "user_role": "Financial Secretary",
+      "action": "DELETE_SCHOLARSHIP",
+      "target": "Scholarship #2",
+      "details": "Removed scholarship opportunity #2",
+      "created_at": "2026-08-25T10:18:10.932Z",
+      "updated_at": "2026-08-25T10:18:10.932Z"
+    },
+    {
+      "id": 24,
+      "user_name": "Executive Officer",
+      "user_role": "Super Admin",
+      "action": "DELETE_OPPORTUNITY",
+      "target": "Opportunity #3",
+      "details": "Removed opportunity #3",
+      "created_at": "2026-08-25T10:19:10.988Z",
+      "updated_at": "2026-08-25T10:19:10.988Z"
+    },
+    {
+      "id": 25,
+      "user_name": "GNUTS Secretariat",
+      "user_role": "Super Admin",
+      "action": "BULK_DELETE_GALLERY",
+      "target": "6 items",
+      "details": "Bulk deleted 6 gallery items (IDs: 1, 2, 3, 4, 5, 6)",
+      "created_at": "2026-08-25T11:24:04.071Z",
+      "updated_at": "2026-08-25T11:24:04.071Z"
+    }
+  ],
+  "about_page": [
+    {
+      "id": 1,
+      "hero_title": "About GNUTS",
+      "hero_subtitle": "Empowering Technical & TVET Students Across Ghana",
+      "hero_image": "https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg",
+      "who_we_are_title": "Who We Are",
+      "who_we_are_subtitle": "The Recognized National Voice of Technical & TVET Students",
+      "who_we_are_content": "The Ghana National Union of Technical Students (GNUTS) is the sole democratic, non-partisan representative council for all technical and vocational education students across Ghana.\n\nFrom advocating for industrial training allowances and modern laboratory equipment to participating in national education policy reform, GNUTS empowers technical students to become skilled engineers, tech pioneers, and industrial leaders.",
+      "who_we_are_image": "https://res.cloudinary.com/dslngzls6/image/upload/v1786991593/photo_2026-08-17_18-24-49_bg2c1g.jpg",
+      "mission_title": "Our Mission",
+      "mission_content": "To represent, unite, and empower technical students across Ghana by advocating for quality and inclusive technical education, promoting student welfare and leadership development, engaging stakeholders for national progress, and strengthening communication and participation within the union.\n\nGNUTS is committed to ensuring that the concerns, aspirations, and contributions of technical students are reflected in national educational policies and development frameworks.",
+      "vision_title": "Our Vision",
+      "vision_content": "To build a strong, credible, united, and nationally respected student union that effectively represents the collective interests of students in Technical Universities and Technical and Vocational Education and Training (TVET) institutions across Ghana; a union that champions excellence, innovation, professionalism, accountability, and integrity in technical education, actively influences national educational policies, promotes skills development and employability, and positions technical students as indispensable contributors to Ghana’s industrial growth, socio-economic transformation, and sustainable national development.",
+      "values_title": "Our Core Values",
+      "updated_at": "2026-08-24T15:49:04.469Z"
+    }
+  ],
+  "history_milestones": [
+    {
+      "id": 1,
+      "year": "1987",
+      "title": "Establishment of GNUPS",
+      "description": "The Ghana National Union of Polytechnic Students (GNUPS) was established after technical students broke away from the National Union of Ghana Students (NUGS). This decision was driven by concerns of marginalization and the need for a dedicated national body to represent the unique academic, professional, and welfare interests of polytechnic students across Ghana.",
+      "image": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=800&auto=format&fit=crop",
+      "tag": "UNION FOUNDING",
+      "display_order": 1,
+      "created_at": "2026-08-24T15:49:04.469Z",
+      "updated_at": "2026-08-24T15:49:04.469Z"
+    },
+    {
+      "id": 2,
+      "year": "2000",
+      "title": "The Tamale Declaration",
+      "description": "GNUPS was formally operationalized at a national congress held in Tamale, where its first constitution was adopted. This historic congress, widely referred to as the Tamale Declaration, provided a legal and administrative framework for the Union and strengthened its legitimacy as the recognized voice of polytechnic students nationwide.",
+      "image": "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?q=80&w=800&auto=format&fit=crop",
+      "tag": "CONSTITUTIONAL CHARTER",
+      "display_order": 2,
+      "created_at": "2026-08-24T15:49:04.469Z",
+      "updated_at": "2026-08-24T15:49:04.469Z"
+    },
+    {
+      "id": 3,
+      "year": "2016",
+      "title": "Transition from GNUPS to GNUTS",
+      "description": "Following the Government of Ghana’s conversion of polytechnics into technical universities, GNUPS was rebranded as the Ghana National Union of Technical Students (GNUTS). The change reflected the evolving identity of technical students and was ratified at the First Central Committee and Mini Congress held at Tamale Technical University from December 1–4, 2016.",
+      "image": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=800&auto=format&fit=crop",
+      "tag": "HISTORIC REBRANDING",
+      "display_order": 3,
+      "created_at": "2026-08-24T15:49:04.469Z",
+      "updated_at": "2026-08-24T15:49:04.469Z"
+    },
+    {
+      "id": 4,
+      "year": "2017",
+      "title": "Public Recognition and Rebranding",
+      "description": "GNUTS issued official press statements to announce and affirm its new identity. The Union emphasized legal compliance, institutional continuity, and urged stakeholders, media organizations, and the general public to recognize GNUTS as the legitimate national representative body of technical university students.",
+      "image": "https://res.cloudinary.com/dslngzls6/image/upload/v1787056252/choose_tvet_first_kwucvy.png",
+      "tag": "NATIONAL RECOGNITION",
+      "display_order": 4,
+      "created_at": "2026-08-24T15:49:04.469Z",
+      "updated_at": "2026-08-24T15:49:04.469Z"
+    }
+  ],
+  "settings": [
+    {
+      "id": 1,
+      "site_name": "GNUTS Ghana",
+      "contact_email": "info@gnuts.org.gh",
+      "phone_number": "+233 (0) 302 987 654",
+      "address": "Accra Technical University Campus, Barnes Road, Accra, Ghana"
+    }
+  ],
+  "hero_banners": [
+    {
+      "id": 1,
+      "page_key": "home_carousel",
+      "title": "Ghana National Union of Technical Students (GNUTS)",
+      "image_url": "https://res.cloudinary.com/dslngzls6/image/upload/v1786991593/photo_2026-08-17_18-24-49_bg2c1g.jpg",
+      "display_order": 1,
+      "status": "active"
+    },
+    {
+      "id": 2,
+      "page_key": "home_carousel",
+      "title": "Empowering Technical Students for National Development",
+      "image_url": "https://res.cloudinary.com/dslngzls6/image/upload/v1786991595/photo_2026-08-17_18-24-46_w6zphs.jpg",
+      "display_order": 2,
+      "status": "active"
+    },
+    {
+      "id": 3,
+      "page_key": "home_carousel",
+      "title": "Creating Opportunities Beyond the Classroom",
+      "image_url": "https://res.cloudinary.com/dslngzls6/image/upload/v1786991595/photo_2026-08-17_18-24-43_hkzlai.jpg",
+      "display_order": 3,
+      "status": "active"
+    },
+    {
+      "id": 4,
+      "page_key": "about_hero",
+      "title": "About GNUTS Page Hero Banner",
+      "image_url": "https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg",
+      "display_order": 1,
+      "status": "active"
+    },
+    {
+      "id": 5,
+      "page_key": "news_hero",
+      "title": "News & Press Releases Hero Banner",
+      "image_url": "https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg",
+      "display_order": 1,
+      "status": "active"
+    },
+    {
+      "id": 6,
+      "page_key": "innovations_hero",
+      "title": "Student Innovations Hero Banner",
+      "image_url": "https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg",
+      "display_order": 1,
+      "status": "active"
+    },
+    {
+      "id": 7,
+      "page_key": "scholarships_hero",
+      "title": "Scholarships & Opportunities Hero Banner",
+      "image_url": "https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg",
+      "display_order": 1,
+      "status": "active"
+    },
+    {
+      "id": 8,
+      "page_key": "contact_hero",
+      "title": "Contact Hero Banner",
+      "image_url": "https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg",
+      "display_order": 1,
+      "status": "active"
+    }
+  ],
+  "gallery": []
+}

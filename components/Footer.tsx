@@ -95,6 +95,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/gallery" className="hover:text-[#D9A000] transition-colors">
+                  Legacy & Leadership Gallery
+                </Link>
+              </li>
+              <li>
                 <Link href="/blog" className="hover:text-[#D9A000] transition-colors">
                   News & Editorial
                 </Link>

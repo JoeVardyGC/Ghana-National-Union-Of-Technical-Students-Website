@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, Users, GraduationCap, Building2 } from 'lucide-react';
+import { resolveImgUrl } from '@/lib/imageUtils';
 
 interface Slide {
   title: string;
@@ -49,6 +50,12 @@ interface StatsProps {
   scholarshipsCount?: number;
 }
 
+export interface CarouselSlideProp {
+  id?: number;
+  image_url?: string;
+  title?: string;
+}
+
 const AnimatedCounter = ({ value, suffix = '' }: { value: number; suffix?: string }) => {
   const [count, setCount] = useState(0);
 
@@ -79,16 +86,37 @@ const AnimatedCounter = ({ value, suffix = '' }: { value: number; suffix?: strin
   return <>{count.toLocaleString()}{suffix}</>;
 };
 
-export default function HeroSlider({ stats }: { stats?: StatsProps }) {
+export default function HeroSlider({ 
+  stats, 
+  carouselSlides = [] 
+}: { 
+  stats?: StatsProps; 
+  carouselSlides?: CarouselSlideProp[];
+}) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [progress, setProgress] = useState(0);
 
+  const activeSlides: Slide[] = carouselSlides && carouselSlides.length > 0
+    ? carouselSlides.map((cs, idx) => {
+        const fallback = PHP_HERO_SLIDES[idx % PHP_HERO_SLIDES.length];
+        return {
+          title: cs.title && cs.title.trim() !== '' ? cs.title : fallback.title,
+          subtitle: fallback.subtitle,
+          image: cs.image_url ? resolveImgUrl(cs.image_url) : fallback.image,
+          btn1_text: fallback.btn1_text,
+          btn1_link: fallback.btn1_link,
+          btn2_text: fallback.btn2_text,
+          btn2_link: fallback.btn2_link,
+        };
+      })
+    : PHP_HERO_SLIDES;
+
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % PHP_HERO_SLIDES.length);
+      setCurrentIndex((prev) => (prev + 1) % activeSlides.length);
     }, 6000);
     return () => clearInterval(timer);
-  }, []);
+  }, [activeSlides.length]);
 
   useEffect(() => {
     setProgress(0);
@@ -101,18 +129,18 @@ export default function HeroSlider({ stats }: { stats?: StatsProps }) {
   }, [currentIndex]);
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev === 0 ? PHP_HERO_SLIDES.length - 1 : prev - 1));
+    setCurrentIndex((prev) => (prev === 0 ? activeSlides.length - 1 : prev - 1));
   };
 
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % PHP_HERO_SLIDES.length);
+    setCurrentIndex((prev) => (prev + 1) % activeSlides.length);
   };
 
   return (
     <div className="relative w-full">
       {/* Hero Section */}
-      <section className="relative h-[92vh] min-h-[650px] sm:min-h-[750px] lg:min-h-[850px] max-h-[950px] w-full overflow-hidden bg-black text-white">
-        {PHP_HERO_SLIDES.map((slide, index) => {
+      <section className="relative h-[520px] sm:h-[580px] lg:h-[620px] w-full overflow-hidden bg-black text-white">
+        {activeSlides.map((slide, index) => {
           const isActive = index === currentIndex;
           return (
             <div
@@ -135,27 +163,26 @@ export default function HeroSlider({ stats }: { stats?: StatsProps }) {
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent" />
 
               {/* Content Container with Animated Text Entrance */}
-              <div className="relative h-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 flex flex-col justify-center items-start pb-20 sm:pb-16 pointer-events-none">
+              <div className="relative h-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 flex flex-col justify-center items-start pb-16 sm:pb-12 pointer-events-none">
                 <div className="max-w-3xl pointer-events-auto">
-                  <h1 className={`text-3xl sm:text-5xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight drop-shadow-lg mb-4 sm:mb-6 transition-all duration-1000 transform ${isActive ? 'translate-y-0 opacity-100 delay-300' : 'translate-y-8 opacity-0'}`}>
+                  <h1 className={`text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight drop-shadow-lg mb-3 sm:mb-4 transition-all duration-1000 transform ${isActive ? 'translate-y-0 opacity-100 delay-300' : 'translate-y-8 opacity-0'}`}>
                     {slide.title}
                   </h1>
 
-                  <p className={`text-base sm:text-xl lg:text-2xl text-gray-200 font-medium leading-relaxed max-w-2xl drop-shadow-md mb-6 sm:mb-8 transition-all duration-1000 transform ${isActive ? 'translate-y-0 opacity-100 delay-500' : 'translate-y-8 opacity-0'}`}>
+                  <p className={`text-sm sm:text-lg lg:text-xl text-gray-200 font-medium leading-relaxed max-w-2xl drop-shadow-md mb-5 sm:mb-6 transition-all duration-1000 transform ${isActive ? 'translate-y-0 opacity-100 delay-500' : 'translate-y-8 opacity-0'}`}>
                     {slide.subtitle}
                   </p>
 
-                  <div className={`flex flex-col sm:flex-row gap-3.5 transition-all duration-1000 transform ${isActive ? 'translate-y-0 opacity-100 delay-700' : 'translate-y-8 opacity-0'}`}>
+                  <div className={`flex flex-wrap gap-4 transition-all duration-1000 transform ${isActive ? 'translate-y-0 opacity-100 delay-700' : 'translate-y-8 opacity-0'}`}>
                     <Link
                       href={slide.btn1_link}
-                      className="inline-flex items-center justify-center px-8 py-4 rounded-md bg-[#014900] text-white font-extrabold text-sm sm:text-base tracking-wide hover:bg-[#003300] transition-all shadow-lg text-center"
+                      className="px-6 py-3 bg-[#014900] text-white hover:bg-[#D9A000] hover:text-[#014900] transition-all rounded-2xl font-bold text-sm shadow-md hover:shadow-xl hover:-translate-y-0.5"
                     >
                       {slide.btn1_text}
                     </Link>
-
                     <Link
                       href={slide.btn2_link}
-                      className="inline-flex items-center justify-center px-8 py-4 rounded-md border-2 border-white/80 bg-white/5 backdrop-blur-sm text-white font-bold text-sm sm:text-base tracking-wide hover:bg-white hover:text-[#014900] transition-all text-center"
+                      className="px-6 py-3 bg-white text-gray-900 hover:bg-gray-100 transition-all rounded-2xl font-bold text-sm shadow-md hover:shadow-xl hover:-translate-y-0.5"
                     >
                       {slide.btn2_text}
                     </Link>
@@ -166,63 +193,94 @@ export default function HeroSlider({ stats }: { stats?: StatsProps }) {
           );
         })}
 
-        {/* Hero Navigation Controls */}
+        {/* Slider Controls */}
         <button
           onClick={prevSlide}
+          className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 text-white flex items-center justify-center hover:bg-black/70 transition-colors z-20"
           aria-label="Previous Slide"
-          className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/20 backdrop-blur-md border border-white/10 hover:bg-[#D9A000] hover:text-[#014900] hover:border-[#D9A000] text-white flex items-center justify-center transition-all group"
         >
-          <ChevronLeft className="w-6 h-6 transition-transform group-hover:-translate-x-0.5" />
+          <ChevronLeft className="w-6 h-6" />
         </button>
-
         <button
           onClick={nextSlide}
+          className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 text-white flex items-center justify-center hover:bg-black/70 transition-colors z-20"
           aria-label="Next Slide"
-          className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-black/20 backdrop-blur-md border border-white/10 hover:bg-[#D9A000] hover:text-[#014900] hover:border-[#D9A000] text-white flex items-center justify-center transition-all group"
         >
-          <ChevronRight className="w-6 h-6 transition-transform group-hover:translate-x-0.5" />
+          <ChevronRight className="w-6 h-6" />
         </button>
 
-        {/* Slide Progress Bar (replacing dots) */}
-        <div className="absolute bottom-0 left-0 w-full h-1.5 bg-white/10 z-20">
-          <div
-            className="h-full bg-[#D9A000] ease-linear"
-            style={{ 
-              width: `${progress}%`,
-              transitionDuration: progress === 0 ? '0ms' : '6000ms',
-              transitionProperty: 'width'
-            }}
-          />
+        {/* Slide Indicators with Progress Bar */}
+        <div className="absolute bottom-16 sm:bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+          {activeSlides.map((_, index) => {
+            const isActive = index === currentIndex;
+            return (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className="group relative py-2 focus:outline-none"
+                aria-label={`Go to slide ${index + 1}`}
+              >
+                <div
+                  className={`h-1.5 rounded-full transition-all duration-300 overflow-hidden bg-white/40 ${
+                    isActive ? 'w-10 sm:w-14' : 'w-2.5 sm:w-3 group-hover:bg-white/60'
+                  }`}
+                >
+                  {isActive && (
+                    <div
+                      className="h-full bg-[#D9A000] transition-all ease-linear"
+                      style={{
+                        width: `${progress}%`,
+                        transitionDuration: '6000ms',
+                      }}
+                    />
+                  )}
+                </div>
+              </button>
+            );
+          })}
         </div>
       </section>
 
-      {/* Overlay Stats Card with Glassmorphism and Animated Counters */}
-      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 -mt-24 sm:-mt-20 z-30 mb-12">
-        <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-100 p-6 sm:p-8 relative overflow-hidden">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 divide-y sm:divide-y-0 sm:divide-x divide-gray-200">
-            {/* Stat 1 */}
-            <div className="flex items-center gap-5 sm:justify-center pt-2 sm:pt-0">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#014900]/10 to-[#014900]/5 text-[#014900] flex items-center justify-center shrink-0 border border-[#014900]/10 shadow-sm">
-                <Building2 className="w-7 h-7" />
+      {/* Floating Modern Compact Stats Bar — Curved Edges */}
+      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 -mt-8 z-30 mb-8">
+        <div className="bg-white/95 backdrop-blur-md rounded-3xl shadow-xl border border-gray-200/80 py-5 px-6 sm:px-8 relative overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+            {/* Stat 1: Students Represented */}
+            <div className="flex items-center gap-3.5 md:justify-center pt-2 md:pt-0">
+              <div className="w-9 h-9 rounded-lg bg-[#014900]/10 text-[#014900] flex items-center justify-center shrink-0 border border-[#014900]/15">
+                <Users className="w-4.5 h-4.5" />
               </div>
               <div>
-                <h4 className="text-3xl sm:text-4xl font-extrabold text-[#014900]">
-                  <AnimatedCounter value={10} suffix="+" />
+                <h4 className="text-xl sm:text-2xl font-extrabold text-[#014900] leading-none">
+                  <AnimatedCounter value={200000 + (new Date().getFullYear() - 2026) * 40000} suffix="+" />
                 </h4>
-                <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Active Member Institutions</p>
+                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mt-1">Students Represented</p>
               </div>
             </div>
 
-            {/* Stat 2 */}
-            <div className="flex items-center gap-5 sm:justify-center pt-6 sm:pt-0">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#014900]/10 to-[#014900]/5 text-[#014900] flex items-center justify-center shrink-0 border border-[#014900]/10 shadow-sm">
-                <GraduationCap className="w-7 h-7" />
+            {/* Stat 2: Member Institutions */}
+            <div className="flex items-center gap-3.5 md:justify-center pt-3 md:pt-0">
+              <div className="w-9 h-9 rounded-lg bg-[#D9A000]/15 text-[#014900] flex items-center justify-center shrink-0 border border-[#D9A000]/25">
+                <Building2 className="w-4.5 h-4.5" />
               </div>
               <div>
-                <h4 className="text-3xl sm:text-4xl font-extrabold text-[#014900]">
-                  <AnimatedCounter value={(stats?.scholarshipsCount && stats.scholarshipsCount > 0) ? stats.scholarshipsCount : 1} />
+                <h4 className="text-xl sm:text-2xl font-extrabold text-[#014900] leading-none">
+                  <AnimatedCounter value={10} suffix="+" />
                 </h4>
-                <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Active Scholarships Available</p>
+                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mt-1">Member Institutions</p>
+              </div>
+            </div>
+
+            {/* Stat 3: National Advocacy */}
+            <div className="flex items-center gap-3.5 md:justify-center pt-3 md:pt-0">
+              <div className="w-9 h-9 rounded-lg bg-[#014900]/10 text-[#014900] flex items-center justify-center shrink-0 border border-[#014900]/15">
+                <GraduationCap className="w-4.5 h-4.5" />
+              </div>
+              <div>
+                <h4 className="text-xl sm:text-2xl font-extrabold text-[#014900] leading-none">
+                  <AnimatedCounter value={new Date().getFullYear() - 1992} suffix="+ Yrs" />
+                </h4>
+                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mt-1">National Advocacy</p>
               </div>
             </div>
           </div>

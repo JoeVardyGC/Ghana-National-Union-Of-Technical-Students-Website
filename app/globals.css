@@ -1,4 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..900;1,300..900&display=swap');
 @import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-montserrat), 'Montserrat', sans-serif;
+  --font-display: var(--font-montserrat), 'Montserrat', sans-serif;
+}
 
 @layer base {
   :root {
@@ -10,11 +16,8 @@
     --light-bg: #f8f9fa;
   }
 
-  *, html, body, h1, h2, h3, h4, h5, h6, input, button, select, textarea, p, span, a, div, .prose, .prose * {
-    font-family: var(--font-montserrat), 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-  }
-
   body {
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
     background-color: #f8f9fa;
     color: #1a1a1a;
     line-height: 1.65;
@@ -22,9 +25,13 @@
     overflow-x: hidden;
   }
 
-  h1 { font-size: 2.75rem; font-weight: 800; line-height: 1.2; }
-  h2 { font-size: 2.25rem; font-weight: 800; line-height: 1.25; }
-  h3 { font-size: 1.5rem; font-weight: 700; line-height: 1.3; }
+  h1, h2, h3, h4, h5, h6, .font-header, .font-display {
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
+  }
+
+  h1 { font-size: 2.75rem; font-weight: 900; line-height: 1.2; }
+  h2 { font-size: 2.25rem; font-weight: 900; line-height: 1.25; }
+  h3 { font-size: 1.5rem; font-weight: 800; line-height: 1.3; }
   h4 { font-size: 1.25rem; font-weight: 700; line-height: 1.35; }
 }
 
@@ -47,6 +54,40 @@
 
 .border-gnuts-gold {
   border-color: #D9A000;
+}
+
+/* Hover Glow & Aura Effects */
+.hover-gold-glow {
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hover-gold-glow:hover {
+  box-shadow: 0 12px 35px -5px rgba(217, 160, 0, 0.35), 0 4px 12px -2px rgba(217, 160, 0, 0.15);
+  transform: translateY(-4px);
+}
+
+.hover-green-glow {
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hover-green-glow:hover {
+  box-shadow: 0 12px 35px -5px rgba(1, 73, 0, 0.35), 0 4px 12px -2px rgba(1, 73, 0, 0.15);
+  transform: translateY(-4px);
+}
+
+/* Shimmer Skeleton Loading Animation */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+html.dark .animate-shimmer {
+  background: linear-gradient(90deg, #1f2937 25%, #374151 50%, #1f2937 75%);
+  background-size: 200% 100%;
 }
 
 /* Mobile Responsive Utility Rules */
@@ -86,11 +127,6 @@
 @keyframes progressFill {
   from { width: 0%; }
   to { width: 100%; }
-}
-
-@keyframes shimmer {
-  0% { background-position: -1000px 0; }
-  100% { background-position: 1000px 0; }
 }
 
 @keyframes float {
@@ -172,3 +208,133 @@
 .reveal-on-scroll.visible > *:nth-child(2) { transition-delay: 150ms; }
 .reveal-on-scroll.visible > *:nth-child(3) { transition-delay: 250ms; }
 .reveal-on-scroll.visible > *:nth-child(4) { transition-delay: 350ms; }
+
+/* ==========================================================================
+   Modern Minimalist Custom Scrollbars & Utilities
+   ========================================================================== */
+
+/* Universal No-Scrollbar Utilities (Hide ugly horizontal bars on pills & tabs) */
+.no-scrollbar,
+.scrollbar-none,
+.hide-scrollbar {
+  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: none !important; /* Firefox */
+  -webkit-overflow-scrolling: touch;
+}
+
+.no-scrollbar::-webkit-scrollbar,
+.scrollbar-none::-webkit-scrollbar,
+.hide-scrollbar::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Edge, Opera */
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Global Root / Window Scrollbar */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(1, 73, 0, 0.3) transparent;
+}
+
+/* Chrome, Edge, Safari, WebKit */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(1, 73, 0, 0.25);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: all 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(1, 73, 0, 0.6);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Hide all clunky scrollbar stepper buttons/arrows completely on all browsers */
+::-webkit-scrollbar-button,
+::-webkit-scrollbar-button:start,
+::-webkit-scrollbar-button:end,
+::-webkit-scrollbar-button:vertical:increment,
+::-webkit-scrollbar-button:vertical:decrement,
+::-webkit-scrollbar-button:horizontal:increment,
+::-webkit-scrollbar-button:horizontal:decrement {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Sleek Micro-Scrollbar for Data Tables & Overflow Panels */
+.custom-scrollbar,
+.table-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(1, 73, 0, 0.3) rgba(0, 0, 0, 0.03);
+}
+
+.custom-scrollbar::-webkit-scrollbar,
+.table-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track,
+.table-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb,
+.table-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(1, 73, 0, 0.3);
+  border-radius: 9999px;
+  transition: background 0.2s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover,
+.table-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #014900;
+}
+
+/* Dark Green Admin Sidebar Scrollbar */
+.sidebar-scrollbar,
+aside nav {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(217, 160, 0, 0.35) transparent;
+}
+
+.sidebar-scrollbar::-webkit-scrollbar,
+aside nav::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.sidebar-scrollbar::-webkit-scrollbar-track,
+aside nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-scrollbar::-webkit-scrollbar-thumb,
+aside nav::-webkit-scrollbar-thumb {
+  background: rgba(217, 160, 0, 0.35);
+  border-radius: 9999px;
+}
+
+.sidebar-scrollbar::-webkit-scrollbar-thumb:hover,
+aside nav::-webkit-scrollbar-thumb:hover {
+  background: #D9A000;
+}
+

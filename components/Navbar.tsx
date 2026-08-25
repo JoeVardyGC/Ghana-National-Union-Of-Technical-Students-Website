@@ -1,24 +1,43 @@
-'use me';
 'use client';
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Phone, Mail, MapPin, ChevronRight, ExternalLink } from 'lucide-react';
+import { Phone, Mail, MapPin, ChevronRight, ExternalLink, Sparkles, X } from 'lucide-react';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [desktopDrawerOpen, setDesktopDrawerOpen] = useState(false);
+  const [readingProgress, setReadingProgress] = useState(0);
+  const [showProgressBar, setShowProgressBar] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
+      const scrollY = window.scrollY;
+      setIsScrolled(scrollY > 30);
+
+      // Check if viewing blog detail page
+      if (pathname.startsWith('/blog/') && pathname !== '/blog') {
+        const mainImgElem = document.getElementById('article-main-image');
+        const triggerPoint = mainImgElem ? (mainImgElem.getBoundingClientRect().top + scrollY - 140) : 320;
+        
+        setShowProgressBar(scrollY >= triggerPoint);
+
+        const totalScrollable = document.documentElement.scrollHeight - window.innerHeight;
+        if (totalScrollable > 0) {
+          setReadingProgress(Math.min(100, Math.max(0, (scrollY / totalScrollable) * 100)));
+        }
+      } else {
+        setShowProgressBar(false);
+      }
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [pathname]);
 
   const navLinks = [
     { name: 'Home', href: '/' },
@@ -30,17 +49,33 @@ export default function Navbar() {
   ];
 
   const drawerLinks = [
-    { name: 'Our Leadership', href: '/about#leadership' },
-    { name: 'Check your CTVET result', href: 'https://ctvet.gov.gh/results/', external: true },
-    { name: 'Resources / Constitution', href: '/resources' },
+    { name: 'Our Leadership', href: '/#executives-section' },
     { name: 'Our History', href: '/about#history' },
-    { name: 'Privacy Policy', href: '/privacy' },
+    { name: 'Legacy & Leadership Gallery', href: '/gallery' },
+    { name: 'Check your CTVET result', href: 'https://ctvet.gov.gh/results/', external: true },
+    { name: 'Resources / Constitution', href: '/about#resources' },
   ];
+
+  const handleDrawerLinkClick = (e: React.MouseEvent, href: string) => {
+    setDesktopDrawerOpen(false);
+    setMobileMenuOpen(false);
+
+    // If it's a leadership link or hash on current page
+    if (href === '/#executives-section' || href.startsWith('#')) {
+      const targetId = href.replace('/#', '').replace('#', '');
+      const elem = document.getElementById(targetId) || document.getElementById('executives-section') || document.getElementById('leadership');
+      if (elem) {
+        e.preventDefault();
+        elem.scrollIntoView({ behavior: 'smooth' });
+        window.history.pushState(null, '', `/#${targetId}`);
+      }
+    }
+  };
 
   return (
     <>
-      {/* 1. White Top Bar Before Navbar (NUGS Style) */}
-      <div className="bg-white text-[#014900] text-xs py-2 px-4 border-b border-gray-200 font-medium">
+      {/* 1. White Top Bar Before Navbar */}
+      <div className="bg-white text-[#014900] text-xs py-2 px-4 border-b border-gray-200 font-medium font-['Montserrat',sans-serif]">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-4">
           {/* Left Side: P.O. Box, Phone, Email */}
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 sm:gap-6 text-[11px] sm:text-xs">
@@ -50,14 +85,14 @@ export default function Navbar() {
             </div>
             <a
               href="tel:+233302987654"
-              className="flex items-center gap-1.5 hover:text-[#D9A000] transition-colors text-gray-700"
+              className="flex items-center gap-1.5 hover:text-[#D9A000] transition-colors text-gray-700 font-semibold"
             >
               <Phone className="w-3.5 h-3.5 text-[#014900] shrink-0" />
               <span>+233 (0) 302 987 654</span>
             </a>
             <a
               href="mailto:info@gnuts.org.gh"
-              className="flex items-center gap-1.5 hover:text-[#D9A000] transition-colors text-gray-700"
+              className="flex items-center gap-1.5 hover:text-[#D9A000] transition-colors text-gray-700 font-semibold"
             >
               <Mail className="w-3.5 h-3.5 text-[#014900] shrink-0" />
               <span>info@gnuts.org.gh</span>
@@ -66,7 +101,7 @@ export default function Navbar() {
 
           {/* Right Side: Social Media Handles */}
           <div className="flex items-center gap-3.5 text-gray-600">
-            <span className="text-[11px] sm:text-xs font-semibold text-[#014900] hidden lg:inline">
+            <span className="text-[11px] sm:text-xs font-bold text-[#014900] hidden lg:inline">
               Connect With Us:
             </span>
             <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-[#014900] hover:text-[#D9A000] transition-colors" aria-label="Facebook">
@@ -85,16 +120,16 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* 2. Main Sticky Header (Zoomed-in clean logo without outer border/glowing ring) */}
+      {/* 2. Main Sticky Header */}
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
+        className={`sticky top-0 z-50 transition-all duration-300 relative font-['Montserrat',sans-serif] ${
           isScrolled
             ? 'bg-[#014900] shadow-xl py-3 border-b-2 border-[#D9A000]/40'
             : 'bg-[#014900] py-3.5 border-b border-white/10'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          {/* Zoomed-in Logo without outer ring + GNUTS text */}
+          {/* Logo & Branding */}
           <Link href="/" className="flex items-center gap-3.5 group py-1">
             <div className="w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform duration-300 overflow-hidden">
               <img
@@ -103,12 +138,12 @@ export default function Navbar() {
                 className="w-full h-full object-cover scale-110"
               />
             </div>
-            <span className="font-extrabold text-white text-2xl sm:text-3xl tracking-wider font-sans">
+            <span className="font-['Montserrat'] font-black text-white text-2xl sm:text-3xl tracking-wider">
               GNUTS
             </span>
           </Link>
 
-          {/* Desktop Navigation Links */}
+          {/* Desktop Navigation Links — Montserrat Bold when Selected, Montserrat Regular when Unselected */}
           <nav className="hidden lg:flex items-center gap-7">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
@@ -119,7 +154,7 @@ export default function Navbar() {
                   className={`text-sm tracking-wide transition-all relative py-1.5 group ${
                     isActive
                       ? 'font-bold text-white'
-                      : 'font-medium text-white/90 hover:text-white'
+                      : 'font-normal text-white/85 hover:text-white'
                   }`}
                 >
                   {link.name}
@@ -137,7 +172,7 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setDesktopDrawerOpen(!desktopDrawerOpen)}
-              className="hidden lg:flex flex-col justify-center gap-1.5 p-2 rounded-lg hover:bg-white/10 transition-colors"
+              className="hidden lg:flex flex-col justify-center gap-1.5 p-2 rounded-xl hover:bg-white/10 transition-colors cursor-pointer"
               aria-label="Toggle Quick Resources"
               title="Quick Resources"
             >
@@ -145,77 +180,98 @@ export default function Navbar() {
               <span className="w-5 h-0.5 bg-white rounded-full" />
               <span className="w-5 h-0.5 bg-[#D9A000] rounded-full" />
             </button>
-
+            {/* Mobile Hamburger Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5 p-2 bg-transparent rounded-lg focus:outline-none group"
-              aria-label="Toggle Menu"
+              className="lg:hidden p-2 text-white hover:text-[#D9A000] focus:outline-none cursor-pointer"
+              aria-label="Toggle Mobile Menu"
             >
-              <span
-                className={`w-6 h-0.5 bg-white rounded-full transition-all duration-300 ${
-                  mobileMenuOpen ? 'rotate-45 translate-y-2 bg-[#D9A000]' : 'group-hover:bg-[#D9A000]'
-                }`}
-              />
-              <span
-                className={`w-6 h-0.5 bg-white rounded-full transition-opacity duration-300 ${
-                  mobileMenuOpen ? 'opacity-0' : 'group-hover:bg-[#D9A000]'
-                }`}
-              />
-              <span
-                className={`w-6 h-0.5 bg-white rounded-full transition-all duration-300 ${
-                  mobileMenuOpen ? '-rotate-45 -translate-y-2 bg-[#D9A000]' : 'group-hover:bg-[#D9A000]'
-                }`}
-              />
+              <div className="w-6 h-5 flex flex-col justify-between">
+                <span className="w-full h-0.5 bg-current transition-all" />
+                <span className="w-full h-0.5 bg-current transition-all" />
+                <span className="w-full h-0.5 bg-current transition-all" />
+              </div>
             </button>
           </div>
+
         </div>
+
+        {/* Reading Progress Bar for Article Detail Pages */}
+        {showProgressBar && (
+          <div className="w-full bg-[#013300] h-1.5 relative overflow-hidden">
+            <div 
+              className="bg-[#D9A000] h-full transition-all duration-150 ease-out"
+              style={{ width: `${readingProgress}%` }}
+            />
+          </div>
+        )}
       </header>
 
-      {/* Desktop Drawer Panel */}
+      {/* Desktop & Tablet Slide-Out Quick Resources Drawer Panel */}
       {desktopDrawerOpen && (
-        <div className="fixed inset-0 z-50 hidden lg:block">
+        <div className="fixed inset-0 z-50 hidden lg:block animate-fadeIn font-['Montserrat',sans-serif]">
           <div
-            className="fixed inset-0 bg-black/50 transition-opacity duration-300"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300"
             onClick={() => setDesktopDrawerOpen(false)}
           />
-          <div className="fixed top-24 right-8 w-80 bg-[#014900] text-white rounded-xl shadow-2xl p-6 border-2 border-[#D9A000]/40 z-50 animate-fadeInUp">
-            <div className="flex items-center justify-between pb-4 border-b border-white/15">
-              <span className="font-extrabold text-sm uppercase tracking-wider text-[#D9A000]">
-                Quick Resources
-              </span>
-              <button
-                onClick={() => setDesktopDrawerOpen(false)}
-                className="text-gray-300 hover:text-white font-bold"
-              >
-                ✕
-              </button>
-            </div>
-            <div className="mt-4 flex flex-col gap-2">
-              {drawerLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  target={link.external ? '_blank' : '_self'}
-                  rel={link.external ? 'noopener noreferrer' : undefined}
+          
+          <div className="fixed inset-y-0 right-0 w-96 bg-[#014900] text-white p-7 shadow-2xl border-l border-emerald-800/60 z-50 flex flex-col justify-between animate-slideInRight">
+            
+            <div className="space-y-6">
+              <div className="flex items-center justify-end pb-4 border-b border-white/15">
+                <button
                   onClick={() => setDesktopDrawerOpen(false)}
-                  className="flex items-center justify-between py-2.5 px-3 rounded-lg text-sm font-semibold text-gray-100 hover:bg-white/10 hover:text-[#D9A000] transition-colors"
+                  className="w-8 h-8 rounded-xl bg-white/10 hover:bg-[#D9A000] text-white hover:text-[#014900] flex items-center justify-center transition-all duration-300 shadow-sm cursor-pointer"
+                  aria-label="Close Drawer"
                 >
-                  <span>{link.name}</span>
-                  {link.external ? (
-                    <ExternalLink className="w-4 h-4 text-[#D9A000]" />
-                  ) : (
-                    <ChevronRight className="w-4 h-4 text-[#D9A000]" />
-                  )}
-                </a>
-              ))}
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Links Container */}
+              <div className="space-y-2.5">
+                {drawerLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    target={link.external ? '_blank' : '_self'}
+                    rel={link.external ? 'noopener noreferrer' : undefined}
+                    onClick={(e) => handleDrawerLinkClick(e, link.href)}
+                    className="group flex items-center justify-between p-3.5 bg-emerald-950/60 hover:bg-[#D9A000] border border-emerald-800/60 hover:border-[#D9A000] rounded-2xl text-xs sm:text-sm font-semibold text-white hover:text-[#014900] transition-all duration-300 shadow-sm hover:translate-x-1 cursor-pointer"
+                  >
+                    <span className="group-hover:text-[#014900] transition-colors">{link.name}</span>
+                    {link.external ? (
+                      <ExternalLink className="w-4 h-4 text-[#D9A000] group-hover:text-[#014900] group-hover:scale-110 transition-transform" />
+                    ) : (
+                      <ChevronRight className="w-4 h-4 text-[#D9A000] group-hover:text-[#014900] group-hover:translate-x-1 transition-transform" />
+                    )}
+                  </a>
+                ))}
+              </div>
             </div>
+
+            {/* Bottom Footer Stamp */}
+            <div className="pt-6 border-t border-white/15 space-y-2 text-xs text-gray-200">
+              <div className="flex items-center gap-2.5">
+                <img
+                  src="https://res.cloudinary.com/dslngzls6/image/upload/v1786982867/gnuts_fav_htclbt.png"
+                  alt="GNUTS"
+                  className="w-6 h-6 object-contain"
+                />
+                <div>
+                  <p className="text-white font-bold uppercase tracking-wide">GNUTS Secretariat</p>
+                  <p className="text-[11px] text-gray-300 font-medium">Ghana National Union of Technical Students</p>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       )}
 
       {/* Mobile Menu Drawer */}
       <div
-        className={`fixed inset-0 z-50 lg:hidden transition-all duration-400 ease-in-out ${
+        className={`fixed inset-0 z-50 lg:hidden transition-all duration-400 ease-in-out font-['Montserrat',sans-serif] ${
           mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       >
@@ -224,31 +280,32 @@ export default function Navbar() {
           onClick={() => setMobileMenuOpen(false)}
         />
         <div
-          className={`fixed inset-y-0 right-0 w-4/5 max-w-sm bg-[#014900] text-white p-6 flex flex-col justify-between shadow-2xl transition-transform duration-400 ease-in-out ${
+          className={`fixed inset-y-0 right-0 w-4/5 max-w-sm bg-[#014900] text-white p-6 flex flex-col justify-between shadow-2xl transition-transform duration-400 ease-in-out border-l border-emerald-800/60 ${
             mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
-          <div>
+          <div className="space-y-6">
             <div className="flex items-center justify-between pb-4 border-b border-white/15">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 flex items-center justify-center overflow-hidden">
+                <div className="w-8 h-8 flex items-center justify-center overflow-hidden">
                   <img
                     src="https://res.cloudinary.com/dslngzls6/image/upload/v1786982867/gnuts_fav_htclbt.png"
                     alt="GNUTS"
-                    className="w-full h-full object-cover scale-110"
+                    className="w-full h-full object-contain"
                   />
                 </div>
-                <span className="font-extrabold text-xl text-white">GNUTS</span>
+                <span className="font-bold text-lg text-white">GNUTS</span>
               </div>
               <button
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-1 text-gray-300 hover:text-[#D9A000] font-bold text-xl"
+                className="w-8 h-8 rounded-xl bg-white/10 text-white hover:bg-[#D9A000] hover:text-[#014900] flex items-center justify-center cursor-pointer"
               >
-                ✕
+                <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="mt-6 flex flex-col gap-1">
+            {/* Navigation Links — Montserrat Bold when Selected, Montserrat Regular when Unselected */}
+            <div className="flex flex-col gap-1.5">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
                 return (
@@ -256,41 +313,45 @@ export default function Navbar() {
                     key={link.href}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center justify-between p-3 rounded-lg text-base transition-all ${
+                    className={`flex items-center justify-between p-3 rounded-2xl text-xs uppercase tracking-wider transition-all ${
                       isActive
-                        ? 'font-bold text-white bg-white/10 border-l-4 border-[#D9A000]'
-                        : 'font-medium text-white/90 hover:bg-white/5 hover:text-white'
+                        ? 'font-bold text-white bg-white/15 border-l-4 border-[#D9A000]'
+                        : 'font-normal text-gray-100 hover:bg-white/10'
                     }`}
                   >
                     <span>{link.name}</span>
-                    <ChevronRight className="w-4 h-4 text-[#D9A000]" />
+                    <ChevronRight className="w-3.5 h-3.5 text-[#D9A000]" />
                   </Link>
                 );
               })}
             </div>
 
-            <div className="mt-6 pt-6 border-t border-white/15 space-y-2">
-              <span className="text-xs font-extrabold text-[#D9A000] uppercase tracking-wider block mb-2">
-                Quick Links
-              </span>
-              {drawerLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  target={link.external ? '_blank' : '_self'}
-                  rel={link.external ? 'noopener noreferrer' : undefined}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between py-2 text-sm text-gray-200 hover:text-[#D9A000]"
-                >
-                  <span>{link.name}</span>
-                  <ChevronRight className="w-3.5 h-3.5 text-[#D9A000]" />
-                </a>
-              ))}
+            {/* Quick Resources Drawer Section */}
+            <div className="pt-4 border-t border-white/15">
+              <div className="space-y-1.5">
+                {drawerLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    target={link.external ? '_blank' : '_self'}
+                    rel={link.external ? 'noopener noreferrer' : undefined}
+                    onClick={(e) => handleDrawerLinkClick(e, link.href)}
+                    className="group flex items-center justify-between p-3 bg-emerald-950/60 hover:bg-[#D9A000] border border-emerald-800/60 rounded-2xl text-xs font-semibold text-white hover:text-[#014900] transition-all cursor-pointer"
+                  >
+                    <span className="group-hover:text-[#014900] transition-colors">{link.name}</span>
+                    {link.external ? (
+                      <ExternalLink className="w-3.5 h-3.5 text-[#D9A000] group-hover:text-[#014900]" />
+                    ) : (
+                      <ChevronRight className="w-3.5 h-3.5 text-[#D9A000] group-hover:text-[#014900]" />
+                    )}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
 
-          <div className="pt-4 border-t border-white/15 text-xs text-gray-300 space-y-1">
-            <p className="text-[#D9A000] font-bold">GNUTS National Secretariat</p>
+          <div className="pt-4 border-t border-white/15 text-[11px] text-gray-300 space-y-0.5">
+            <p className="text-white font-bold uppercase">GNUTS Secretariat</p>
             <p>Ghana National Union of Technical Students</p>
           </div>
         </div>

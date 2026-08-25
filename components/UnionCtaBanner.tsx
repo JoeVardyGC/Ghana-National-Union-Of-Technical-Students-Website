@@ -16,7 +16,7 @@ export default function UnionCtaBanner() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           {/* Left Column: Headline & Value Props */}
           <div className="lg:col-span-8 space-y-6">
-            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-white leading-tight">
               Are You a Technical Student in Ghana?
             </h2>
 

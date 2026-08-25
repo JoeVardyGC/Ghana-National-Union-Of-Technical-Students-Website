@@ -5,22 +5,35 @@ import OpportunitiesSection from '@/components/OpportunitiesSection';
 import UnionCtaBanner from '@/components/UnionCtaBanner';
 import NewsSection from '@/components/NewsSection';
 import ScrollAnimationProvider from '@/components/ScrollAnimationProvider';
-import { Layers, Clock, MessageSquare, Mail, Phone, Share2, Globe } from 'lucide-react';
+import { Layers, Clock, MessageSquare, Mail, Phone, Share2 } from 'lucide-react';
 
-export const revalidate = 60; // Refresh data every 60s
+export const dynamic = 'force-dynamic';
+export const revalidate = 0; // Fresh real-time data on every visit
 
 export default async function HomePage() {
-  // Fetch dynamic data from MariaDB
-  const scholarships = await query('SELECT * FROM scholarships WHERE status = "active" ORDER BY created_at DESC LIMIT 2').catch(() => []);
-  const opportunities = await query('SELECT * FROM opportunities WHERE status = "active" ORDER BY created_at DESC LIMIT 3').catch(() => []);
-  const executives = await query('SELECT * FROM executives ORDER BY display_order ASC, created_at DESC LIMIT 8').catch(() => []);
-  const news = await query('SELECT * FROM news WHERE status = "published" ORDER BY published_at DESC LIMIT 3').catch(() => []);
-  const statsResult = await query('SELECT COUNT(*) as count FROM innovations WHERE status = "approved"').catch(() => [{ count: 0 }]);
-  const scholarshipsCountResult = await query('SELECT COUNT(*) as count FROM scholarships WHERE status = "active"').catch(() => [{ count: 0 }]);
+  // Fetch dynamic data in parallel for maximum server performance
+  const [
+    scholarships,
+    opportunities,
+    executives,
+    news,
+    statsResult,
+    scholarshipsCountResult,
+    carouselSlidesResult
+  ] = await Promise.all([
+    query('SELECT * FROM scholarships ORDER BY created_at DESC LIMIT 2').catch(() => []),
+    query('SELECT * FROM opportunities WHERE status = "active" ORDER BY created_at DESC LIMIT 3').catch(() => []),
+    query('SELECT * FROM executives ORDER BY display_order ASC, created_at DESC LIMIT 8').catch(() => []),
+    query('SELECT * FROM news WHERE status = "published" ORDER BY published_at DESC, created_at DESC, id DESC LIMIT 6').catch(() => []),
+    query('SELECT COUNT(*) as count FROM innovations WHERE status = "approved"').catch(() => [{ count: 0 }]),
+    query('SELECT COUNT(*) as count FROM scholarships WHERE status = "active"').catch(() => [{ count: 0 }]),
+    query('SELECT * FROM hero_banners WHERE page_key = "home_carousel" ORDER BY display_order ASC, id ASC').catch(() => []),
+  ]);
 
   const projectsCount = statsResult[0]?.count ?? 0;
   const dbScholarshipsCount = scholarshipsCountResult[0]?.count ?? 0;
   const scholarshipsCount = dbScholarshipsCount > 0 ? dbScholarshipsCount : 1;
+  const carouselSlides = carouselSlidesResult || [];
 
   // Background color palette for executive cards matching GNUTS brand
   const cardBgColors = [
@@ -32,9 +45,9 @@ export default async function HomePage() {
 
   return (
     <ScrollAnimationProvider>
-      <div className="flex flex-col min-h-screen bg-[#f8f9fa] font-sans overflow-x-hidden">
+      <div className="flex flex-col min-h-screen bg-[#f8f9fa] font-['Montserrat',sans-serif] overflow-x-hidden">
         {/* 1. Hero Section + Floating Stats Overlay */}
-        <HeroSlider stats={{ projectsCount, scholarshipsCount }} />
+        <HeroSlider stats={{ projectsCount, scholarshipsCount }} carouselSlides={carouselSlides} />
 
         {/* 2. About GNUTS Section */}
         <section className="relative py-16 sm:py-24 bg-white overflow-hidden" id="about-section">
@@ -42,57 +55,57 @@ export default async function HomePage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center reveal-on-scroll">
             {/* Left side */}
             <div>
-              <h2 className="text-4xl sm:text-5xl font-extrabold text-[#014900] tracking-tight leading-tight">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#014900] tracking-tight leading-tight uppercase">
                 About GNUTS
               </h2>
-              <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-6" />
-              <p className="text-gray-600 text-lg sm:text-xl leading-relaxed mb-8">
+              <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-4" />
+              <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-8 font-medium">
                 Protecting the interests of all technical students in Ghana since 1962. We are the national representative body of students in Technical Universities and Technical and Vocational Education and Training (TVET) institutions across Ghana.
               </p>
               <Link
                 href="/about"
-                className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-bold rounded-md text-white bg-[#014900] hover:bg-[#003300] transition-colors shadow-sm hover:shadow-md"
+                className="inline-flex items-center justify-center px-7 py-3.5 border border-transparent text-sm font-black uppercase tracking-wider rounded-2xl text-white bg-[#014900] hover:bg-[#D9A000] hover:text-[#014900] transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
               >
                 Discover Our Story →
               </Link>
             </div>
 
-            {/* Right side: 3 stacked cards */}
+            {/* Right side: 3 stacked curved cards (rounded-2xl) */}
             <div className="flex flex-col gap-5">
               {/* Card 1 */}
-              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-5 hover:shadow-md hover:border-[#014900]/20 transition-all group">
-                <div className="w-12 h-12 rounded-xl bg-[#f8f9fa] group-hover:bg-[#014900] group-hover:text-white text-[#014900] flex items-center justify-center shrink-0 transition-colors">
+              <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl border border-gray-100 border-l-4 border-l-[#014900] flex gap-5 hover:border-[#014900]/30 hover:-translate-y-1 transition-all group">
+                <div className="w-12 h-12 rounded-xl bg-[#f8f9fa] group-hover:bg-[#014900] group-hover:text-white text-[#014900] flex items-center justify-center shrink-0 transition-colors border border-gray-200/60 shadow-xs">
                   <Layers className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-extrabold text-gray-900 mb-2">Who We Are</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
+                  <h3 className="text-lg font-extrabold text-gray-900 mb-1.5 group-hover:text-[#014900] transition-colors">Who We Are</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed font-medium">
                     A unified voice advancing the academic, social, and professional interests of technical students in national educational discourse.
                   </p>
                 </div>
               </div>
 
               {/* Card 2 */}
-              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-5 hover:shadow-md hover:border-[#014900]/20 transition-all group">
-                <div className="w-12 h-12 rounded-xl bg-[#f8f9fa] group-hover:bg-[#014900] group-hover:text-white text-[#014900] flex items-center justify-center shrink-0 transition-colors">
+              <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl border border-gray-100 border-l-4 border-l-[#D9A000] flex gap-5 hover:border-[#D9A000]/40 hover:-translate-y-1 transition-all group">
+                <div className="w-12 h-12 rounded-xl bg-[#f8f9fa] group-hover:bg-[#D9A000] group-hover:text-[#014900] text-[#014900] flex items-center justify-center shrink-0 transition-colors border border-gray-200/60 shadow-xs">
                   <Clock className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-extrabold text-gray-900 mb-2">Our History</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
+                  <h3 className="text-lg font-extrabold text-gray-900 mb-1.5 group-hover:text-[#D9A000] transition-colors">Our History</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed font-medium">
                     Emerging in 1987 to address the marginalization of polytechnic students, fully operationalized with the Tamale Declaration in 2000.
                   </p>
                 </div>
               </div>
 
               {/* Card 3 */}
-              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex gap-5 hover:shadow-md hover:border-[#014900]/20 transition-all group">
-                <div className="w-12 h-12 rounded-xl bg-[#f8f9fa] group-hover:bg-[#014900] group-hover:text-white text-[#014900] flex items-center justify-center shrink-0 transition-colors">
+              <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl border border-gray-100 border-l-4 border-l-[#014900] flex gap-5 hover:border-[#014900]/30 hover:-translate-y-1 transition-all group">
+                <div className="w-12 h-12 rounded-xl bg-[#f8f9fa] group-hover:bg-[#014900] group-hover:text-white text-[#014900] flex items-center justify-center shrink-0 transition-colors border border-gray-200/60 shadow-xs">
                   <MessageSquare className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-extrabold text-gray-900 mb-2">Policy & Advocacy</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
+                  <h3 className="text-lg font-extrabold text-gray-900 mb-1.5 group-hover:text-[#014900] transition-colors">Policy & Advocacy</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed font-medium">
                     Championing student-centered policies for quality technical education, funding, campus safety, and graduate employability.
                   </p>
                 </div>
@@ -102,74 +115,91 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 3. Available Scholarships Section */}
+      {/* 3. Available Scholarships Section — Connected to Live Database */}
       <section className="py-16 sm:py-24 bg-white border-y border-gray-200" id="scholarships-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-3">
             <div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#014900] tracking-tight">Available Scholarships</h2>
-              <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-4" />
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#014900] tracking-tight uppercase">Available Scholarships</h2>
+              <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-3" />
               <p className="text-gray-500 text-sm sm:text-base font-medium">
                 Funding opportunities for technical and vocational students
               </p>
             </div>
             <Link
               href="/scholarships"
-              className="inline-flex items-center gap-1 text-sm sm:text-base font-bold text-[#014900] hover:text-[#D9A000] transition-colors mt-2 md:mt-0"
+              className="inline-flex items-center gap-1 text-sm sm:text-base font-black uppercase text-[#014900] hover:text-[#D9A000] transition-colors mt-2 md:mt-0"
             >
               View All →
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 reveal-on-scroll">
-            {/* Card 1: Active */}
-            <div className="group relative bg-white rounded-2xl p-7 sm:p-8 shadow-sm border border-gray-100 border-l-4 border-l-[#014900] flex flex-col justify-between overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/10 opacity-0 group-hover:opacity-100 backdrop-blur-[2px] transition-opacity duration-300 pointer-events-none z-0"></div>
-              
-              <div className="space-y-4 relative z-10">
-                <div className="flex justify-between items-start gap-3">
-                  <h3 className="font-extrabold text-lg sm:text-xl text-gray-900 leading-snug">
-                    No-Fees-Stress Tertiary Intervention
-                  </h3>
-                  <span className="px-3 py-1 rounded-md bg-[#014900] text-white text-[11px] font-bold uppercase tracking-wider shrink-0">
-                    ACTIVE
-                  </span>
-                </div>
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  This is a government initiative aimed at ensuring that no student is denied higher education due to an inability to pay upfront admission fees. It specifically targets first-year (Level 100) Ghanaian students admitted to public tertiary institutions, including universities, polytechnics, colleges of...
-                </p>
-              </div>
-              <div className="pt-4 mt-6 border-t border-gray-100 relative z-10">
-                <Link href="/scholarships" className="text-sm font-bold text-[#014900] group-hover:text-[#D9A000] transition-colors inline-flex items-center gap-1">
-                  Apply Now →
-                </Link>
-              </div>
+          {scholarships.length === 0 ? (
+            <div className="text-center py-12 px-6 bg-white rounded-3xl border border-gray-200 shadow-sm max-w-xl mx-auto">
+              <div className="text-4xl mb-3">🎓</div>
+              <p className="text-gray-500 font-medium text-sm">
+                No active scholarships currently available. Check back soon for new bursary announcements.
+              </p>
             </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 reveal-on-scroll">
+              {scholarships.map((item: any, idx: number) => {
+                const isActive = (item.status || 'active').toLowerCase() === 'active';
+                const isGold = idx % 2 === 1;
 
-            {/* Card 2: Inactive */}
-            <div className="group relative bg-white rounded-2xl p-7 sm:p-8 shadow-sm border border-gray-100 border-l-4 border-l-gray-300 flex flex-col justify-between overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/10 opacity-0 group-hover:opacity-100 backdrop-blur-[2px] transition-opacity duration-300 pointer-events-none z-0"></div>
-              
-              <div className="space-y-4 relative z-10">
-                <div className="flex justify-between items-start gap-3">
-                  <h3 className="font-extrabold text-lg sm:text-xl text-gray-900 leading-snug">
-                    Student Loan Trust Fund (SLTF)
-                  </h3>
-                  <span className="px-3 py-1 rounded-md bg-[#D9A000] text-white text-[11px] font-bold uppercase tracking-wider shrink-0">
-                    INACTIVE
-                  </span>
-                </div>
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  The SLTF provides financial resources to Ghanaian students in accredited tertiary institutions (both public and private). The fund is designed to cover academic fees, books, and living expenses. A major feature of the current system is the &quot;No Guarantor&quot; policy, which allows students to access the l...
-                </p>
-              </div>
-              <div className="pt-4 mt-6 border-t border-gray-100 relative z-10">
-                <Link href="/scholarships" className="text-sm font-bold text-gray-400 group-hover:text-[#D9A000] transition-colors inline-flex items-center gap-1">
-                  Learn More →
-                </Link>
-              </div>
+                return (
+                  <div
+                    key={item.id || idx}
+                    className={`group relative bg-white rounded-3xl p-7 sm:p-8 shadow-md border border-gray-100 flex flex-col justify-between overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1.5 ${
+                      isActive && !isGold
+                        ? 'border-l-4 border-l-[#014900]'
+                        : 'border-l-4 border-l-[#D9A000]'
+                    }`}
+                  >
+                    <div className="space-y-4 relative z-10">
+                      <div className="flex justify-between items-start gap-3">
+                        <h3
+                          className={`font-black text-lg sm:text-xl text-gray-900 leading-snug transition-colors ${
+                            isActive && !isGold ? 'group-hover:text-[#014900]' : 'group-hover:text-[#D9A000]'
+                          }`}
+                        >
+                          {item.title}
+                        </h3>
+                        <span
+                          className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider shrink-0 shadow-xs ${
+                            isActive
+                              ? 'bg-[#014900] text-white'
+                              : 'bg-[#D9A000] text-[#014900]'
+                          }`}
+                        >
+                          {item.status ? item.status.toUpperCase() : 'ACTIVE'}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-600 leading-relaxed font-medium line-clamp-4">
+                        {item.description}
+                      </p>
+                    </div>
+
+                    <div className="pt-4 mt-6 border-t border-gray-100 relative z-10 flex items-center justify-between">
+                      <Link
+                        href={item.link || item.application_url || '/scholarships'}
+                        className={`text-xs font-black uppercase tracking-wider transition-colors inline-flex items-center gap-1 ${
+                          isActive ? 'text-[#014900] hover:text-[#D9A000]' : 'text-gray-500 hover:text-[#D9A000]'
+                        }`}
+                      >
+                        {isActive ? 'Apply Now →' : 'Learn More →'}
+                      </Link>
+                      {item.deadline && (
+                        <span className="text-[11px] font-semibold text-gray-400">
+                          Deadline: {String(item.deadline).split('T')[0]}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          </div>
+          )}
         </div>
       </section>
 
@@ -179,88 +209,101 @@ export default async function HomePage() {
       {/* 6. News & Events Section */}
       <NewsSection dbNews={news} />
 
-      {/* 7. Executive Leadership */}
-      <section id="executives-section" className="py-16 sm:py-24 bg-white border-b border-gray-200">
+      {/* 7. Executive Leadership Section — Curved Cards (rounded-3xl), 1 Card per row on Mobile */}
+      <section id="executives-section" className="py-16 sm:py-24 bg-white border-b border-gray-200 scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-4 border-b border-gray-100 gap-3">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 pb-4 border-b border-gray-100 gap-3">
             <div>
               <div className="relative inline-block pb-2">
-                <h2 className="text-3xl sm:text-4xl font-extrabold text-[#014900] tracking-tight">GNUTS Executives</h2>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#014900] tracking-tight uppercase">GNUTS Executives</h2>
                 <div className="absolute left-0 bottom-0 w-16 h-1.5 bg-[#D9A000] rounded-full" />
               </div>
-              <p className="text-gray-500 text-sm sm:text-base mt-4 font-medium">The National Executive Committee</p>
+              <p className="text-gray-500 text-sm sm:text-base mt-2 font-medium">The National Executive Committee</p>
             </div>
-            <Link
-              href="/about#leadership"
-              className="inline-flex items-center gap-1.5 text-sm sm:text-base font-bold text-[#014900] hover:text-[#D9A000] transition-colors mt-2 md:mt-0"
+            <a
+              href="/executives"
+              className="inline-flex items-center gap-1.5 text-sm sm:text-base font-black uppercase text-[#014900] hover:text-[#D9A000] transition-colors mt-2 md:mt-0"
             >
-              View All →
-            </Link>
+              Our Leadership →
+            </a>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-x-8 sm:gap-y-12 reveal-on-scroll">
-            {(executives.length > 0 ? executives : [
-              { name: 'National President', position: 'President', email: 'president@gnuts.org.gh', phone: '+233 20 000 0001', photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop' },
-              { name: 'Vice President', position: 'Vice President', email: 'vp@gnuts.org.gh', phone: '+233 20 000 0002', photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop' },
-              { name: 'General Secretary', position: 'General Secretary', email: 'gensec@gnuts.org.gh', phone: '+233 20 000 0003', photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop' },
-              { name: 'Financial Controller', position: 'Financial Controller', email: 'finance@gnuts.org.gh', phone: '+233 20 000 0004', photo: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=600&auto=format&fit=crop' },
-            ]).map((exec: any, index: number) => {
-              const bgCol = cardBgColors[index % cardBgColors.length];
-              const demoPhotos = [
-                'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=600&auto=format&fit=crop',
-              ];
-              const photoUrl = exec.photo 
-                ? (exec.photo.startsWith('http') ? exec.photo : `/${exec.photo}`)
-                : demoPhotos[index % demoPhotos.length];
+          {executives.length === 0 ? (
+            <div className="text-center py-12 px-6 bg-white rounded-3xl border border-gray-200 shadow-sm max-w-xl mx-auto">
+              <div className="text-4xl mb-3">👥</div>
+              <p className="text-gray-500 font-medium text-sm">
+                National Executive Committee directory is currently being updated. Check back soon.
+              </p>
+            </div>
+          ) : (
+            /* Responsive Grid: 1 per row on Mobile, 2 on Tablet, 4 on Desktop with smooth rounded-3xl corners */
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-6 lg:gap-8 reveal-on-scroll">
+              {executives.map((exec: any, index: number) => {
+                const bgCol = cardBgColors[index % cardBgColors.length];
+                const photoUrl = exec.photo 
+                  ? (exec.photo.startsWith('http') ? exec.photo : `/${exec.photo.replace(/^\/+/, '')}`)
+                  : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop';
 
-              return (
-                <div key={exec.id || index} className="group flex flex-col bg-white rounded-none border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden">
-                  {/* Photo container with sharp edges */}
-                  <div className="relative aspect-[4/5] w-full overflow-hidden bg-gray-900" style={{ backgroundColor: bgCol }}>
-                    <img
-                      src={photoUrl}
-                      alt={exec.full_name || exec.name}
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
+                return (
+                  <div key={exec.id || index} className="group flex flex-col bg-white rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden max-w-md mx-auto sm:max-w-none w-full">
+                    {/* Photo container with top curved corners */}
+                    <div className="relative aspect-[4/5] w-full overflow-hidden bg-gray-900 rounded-t-3xl" style={{ backgroundColor: bgCol }}>
+                      <img
+                        src={photoUrl}
+                        alt={exec.full_name || exec.name}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
 
-                  {/* Name / Position Card Block */}
-                  <div className="p-3 sm:p-4.5 text-center flex flex-col justify-between flex-grow bg-white border-t border-gray-100">
-                    <div>
-                      <h3 className="text-sm sm:text-base font-bold text-gray-900 group-hover:text-[#014900] transition-colors truncate">
-                        {exec.full_name || exec.name}
-                      </h3>
-                      <p className="text-[11px] font-semibold text-[#D9A000] uppercase tracking-wider mt-0.5 truncate">
-                        {exec.position}
-                      </p>
-                    </div>
-                    
-                    {/* Socials / Contacts */}
-                    <div className="flex items-center justify-center gap-3 mt-3 pt-2.5 border-t border-gray-100">
-                      {exec.email && (
-                        <a href={`mailto:${exec.email}`} className="text-gray-400 hover:text-[#014900] transition-colors p-0.5" title="Email">
-                          <Mail className="w-3.5 h-3.5" />
+                    {/* Name / Position Card Block */}
+                    <div className="p-5 sm:p-5 text-center flex flex-col justify-between flex-grow bg-white border-t border-gray-100 rounded-b-3xl">
+                      <div>
+                        <h3 className="text-base sm:text-sm lg:text-base font-black text-[#014900] group-hover:text-[#D9A000] transition-colors leading-snug">
+                          {exec.full_name || exec.name}
+                        </h3>
+                        <p className="text-xs sm:text-[11px] lg:text-xs font-black text-[#D9A000] uppercase tracking-wider mt-1">
+                          {exec.position}
+                        </p>
+                      </div>
+                      
+                      {/* Socials / Contacts */}
+                      <div className="flex items-center justify-center gap-4 mt-4 pt-3 border-t border-gray-100">
+                        {exec.email && (
+                          <a href={`mailto:${exec.email}`} className="text-gray-400 hover:text-[#014900] transition-colors p-1.5 rounded-full hover:bg-gray-100" title="Email">
+                            <Mail className="w-4 h-4" />
+                          </a>
+                        )}
+                        {exec.phone && (
+                          <a href={`tel:${exec.phone}`} className="text-gray-400 hover:text-[#014900] transition-colors p-1.5 rounded-full hover:bg-gray-100" title="Phone">
+                            <Phone className="w-4 h-4" />
+                          </a>
+                        )}
+                        <a href="#" className="text-gray-400 hover:text-[#014900] transition-colors p-1.5 rounded-full hover:bg-gray-100" title="Facebook">
+                          <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                          </svg>
                         </a>
-                      )}
-                      {exec.phone && (
-                        <a href={`tel:${exec.phone}`} className="text-gray-400 hover:text-[#014900] transition-colors p-0.5" title="Phone">
-                          <Phone className="w-3.5 h-3.5" />
+                        <a href="#" className="text-gray-400 hover:text-[#014900] transition-colors p-1.5 rounded-full hover:bg-gray-100" title="Instagram">
+                          <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                          </svg>
                         </a>
-                      )}
-                      <a href="#" className="text-gray-400 hover:text-[#014900] transition-colors p-0.5" title="Website">
-                        <Globe className="w-3.5 h-3.5" />
-                      </a>
+                        <a href="#" className="text-gray-400 hover:text-[#014900] transition-colors p-1.5 rounded-full hover:bg-gray-100" title="Twitter / X">
+                          <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                          </svg>
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
+          )}
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* 8. Join the Movement CTA Banner */}
       <UnionCtaBanner />
