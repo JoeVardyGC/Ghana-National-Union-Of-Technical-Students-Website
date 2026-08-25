@@ -542,153 +542,162 @@ export default function NewsManagementClient({ initialNews = [] }: { initialNews
 
       {/* 6. CREATE / EDIT MODAL */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs font-['Montserrat',sans-serif] overflow-y-auto">
-          <div className="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-gray-200 relative my-8">
-            <button
-              type="button"
-              onClick={() => setIsModalOpen(false)}
-              className="absolute top-6 right-6 text-gray-400 hover:text-gray-600 p-2 rounded-full hover:bg-gray-100 transition-colors cursor-pointer"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <h3 className="text-xl font-black uppercase text-[#014900] tracking-tight mb-1">
-              {editingItem ? 'Edit Press Release' : 'Publish New Announcement'}
-            </h3>
-            <p className="text-xs text-gray-500 font-medium mb-6">
-              Create an official news item visible to technical students across Ghana.
-            </p>
-
-            {feedbackMsg && (
-              <div className="mb-4 p-3 bg-red-50 text-red-700 border border-red-200 rounded-2xl text-xs font-bold flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 shrink-0" />
-                <span>{feedbackMsg}</span>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 bg-black/60 backdrop-blur-xs font-['Montserrat',sans-serif]">
+          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] shadow-2xl border border-gray-200 flex flex-col overflow-hidden animate-fadeIn">
+            
+            {/* Fixed Modal Header */}
+            <div className="p-5 sm:p-6 pb-4 border-b border-gray-100 flex items-start justify-between shrink-0 bg-white">
+              <div>
+                <h3 className="text-lg sm:text-xl font-black uppercase text-[#014900] tracking-tight">
+                  {editingItem ? 'Edit Press Release' : 'Publish New Announcement'}
+                </h3>
+                <p className="text-xs text-gray-500 font-medium mt-0.5">
+                  Create an official news item visible to technical students across Ghana.
+                </p>
               </div>
-            )}
+              <button
+                type="button"
+                onClick={() => setIsModalOpen(false)}
+                className="text-gray-400 hover:text-gray-600 p-2 rounded-full hover:bg-gray-100 transition-colors cursor-pointer shrink-0 ml-2"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Title */}
-              <div className="space-y-1">
-                <label className="text-xs font-black uppercase tracking-wider text-gray-700">
-                  Headline Title *
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  placeholder="e.g. 34th National Delegates Congress Date Announced"
-                  className="w-full px-4 py-2.5 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-medium outline-none focus:border-[#014900] focus:bg-white"
-                />
-              </div>
+            {/* Scrollable Form Body */}
+            <div className="p-5 sm:p-6 overflow-y-auto space-y-4 flex-grow custom-scrollbar">
+              {feedbackMsg && (
+                <div className="p-3 bg-red-50 text-red-700 border border-red-200 rounded-2xl text-xs font-bold flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  <span>{feedbackMsg}</span>
+                </div>
+              )}
 
-              {/* Author & Date */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <form id="news-upload-form" onSubmit={handleSubmit} className="space-y-4">
+                {/* Title */}
                 <div className="space-y-1">
                   <label className="text-xs font-black uppercase tracking-wider text-gray-700">
-                    Author / Desk *
+                    Headline Title *
                   </label>
                   <input
                     type="text"
                     required
-                    value={formData.author}
-                    onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-                    placeholder="e.g. GNUTS PRO / General Secretary"
-                    className="w-full px-4 py-2 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-medium outline-none focus:border-[#014900]"
+                    value={formData.title}
+                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    placeholder="e.g. 34th National Delegates Congress Date Announced"
+                    className="w-full px-4 py-2.5 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-medium outline-none focus:border-[#014900] focus:bg-white"
                   />
                 </div>
 
+                {/* Author & Date */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="space-y-1">
+                    <label className="text-xs font-black uppercase tracking-wider text-gray-700">
+                      Author / Desk *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.author}
+                      onChange={(e) => setFormData({ ...formData, author: e.target.value })}
+                      placeholder="e.g. GNUTS PRO / General Secretary"
+                      className="w-full px-4 py-2 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-medium outline-none focus:border-[#014900]"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-xs font-black uppercase tracking-wider text-gray-700">
+                      Publication Date *
+                    </label>
+                    <input
+                      type="date"
+                      required
+                      value={formData.published_at}
+                      onChange={(e) => setFormData({ ...formData, published_at: e.target.value })}
+                      className="w-full px-4 py-2 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-medium outline-none focus:border-[#014900]"
+                    />
+                  </div>
+                </div>
+
+                {/* Main Event Flyer / Cover Photo */}
+                <DirectImageUploader
+                  label="Main Event Flyer / Cover Photo"
+                  value={formData.image}
+                  onChange={(url) => setFormData({ ...formData, image: url })}
+                  helperText="Upload official event poster, flyer, or photo"
+                />
+
+                {/* In-Article Additional Photos */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <DirectImageUploader
+                    label="In-Article Photo 2 (Optional)"
+                    value={formData.image2}
+                    onChange={(url) => setFormData({ ...formData, image2: url })}
+                    helperText="Secondary photo inside article body"
+                  />
+                  <DirectImageUploader
+                    label="In-Article Photo 3 (Optional)"
+                    value={formData.image3}
+                    onChange={(url) => setFormData({ ...formData, image3: url })}
+                    helperText="Additional photo inside article body"
+                  />
+                </div>
+
+                {/* Article Content */}
                 <div className="space-y-1">
-                  <label className="text-xs font-black uppercase tracking-wider text-gray-700">
-                    Publication Date *
-                  </label>
-                  <input
-                    type="date"
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-black uppercase tracking-wider text-gray-700">
+                      Full Article Content *
+                    </label>
+                    <span className="text-[10px] text-gray-400 font-bold">
+                      {formData.content.length} characters
+                    </span>
+                  </div>
+                  <textarea
                     required
-                    value={formData.published_at}
-                    onChange={(e) => setFormData({ ...formData, published_at: e.target.value })}
-                    className="w-full px-4 py-2 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-medium outline-none focus:border-[#014900]"
+                    rows={8}
+                    value={formData.content}
+                    onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                    placeholder="Enter the full article body, statements, bullet points, and official communique..."
+                    className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-medium outline-none focus:border-[#014900] focus:bg-white leading-relaxed"
                   />
                 </div>
-              </div>
 
-              {/* Main Event Flyer / Cover Photo */}
-              <DirectImageUploader
-                label="Main Event Flyer / Cover Photo"
-                value={formData.image}
-                onChange={(url) => setFormData({ ...formData, image: url })}
-                helperText="Upload official event poster, flyer, or photo"
-              />
-
-              {/* In-Article Additional Photos */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <DirectImageUploader
-                  label="In-Article Photo 2 (Optional)"
-                  value={formData.image2}
-                  onChange={(url) => setFormData({ ...formData, image2: url })}
-                  helperText="Secondary photo inside article body"
-                />
-                <DirectImageUploader
-                  label="In-Article Photo 3 (Optional)"
-                  value={formData.image3}
-                  onChange={(url) => setFormData({ ...formData, image3: url })}
-                  helperText="Additional photo inside article body"
-                />
-              </div>
-
-              {/* Article Content */}
-              <div className="space-y-1">
-                <div className="flex items-center justify-between">
-                  <label className="text-xs font-black uppercase tracking-wider text-gray-700">
-                    Full Article Content *
-                  </label>
-                  <span className="text-[10px] text-gray-400 font-bold">
-                    {formData.content.length} characters
-                  </span>
+                {/* Social Sharing Switch */}
+                <div className="flex items-center justify-between p-3.5 bg-gray-50 rounded-2xl border border-gray-200">
+                  <div className="flex items-center gap-2">
+                    <Share2 className="w-4 h-4 text-[#014900]" />
+                    <span className="text-xs font-bold text-gray-700">Allow WhatsApp & Social Sharing</span>
+                  </div>
+                  <input
+                    type="checkbox"
+                    checked={formData.allow_sharing}
+                    onChange={(e) => setFormData({ ...formData, allow_sharing: e.target.checked })}
+                    className="w-4 h-4 accent-[#014900] cursor-pointer"
+                  />
                 </div>
-                <textarea
-                  required
-                  rows={8}
-                  value={formData.content}
-                  onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                  placeholder="Enter the full article body, statements, bullet points, and official communique..."
-                  className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-medium outline-none focus:border-[#014900] focus:bg-white leading-relaxed"
-                />
-              </div>
+              </form>
+            </div>
 
-              {/* Social Sharing Switch */}
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-2xl border border-gray-200">
-                <div className="flex items-center gap-2">
-                  <Share2 className="w-4 h-4 text-[#014900]" />
-                  <span className="text-xs font-bold text-gray-700">Allow WhatsApp & Social Sharing</span>
-                </div>
-                <input
-                  type="checkbox"
-                  checked={formData.allow_sharing}
-                  onChange={(e) => setFormData({ ...formData, allow_sharing: e.target.checked })}
-                  className="w-4 h-4 accent-[#014900] cursor-pointer"
-                />
-              </div>
+            {/* Fixed Modal Footer Actions */}
+            <div className="p-4 sm:p-5 border-t border-gray-100 bg-gray-50/80 flex items-center justify-end gap-3 shrink-0">
+              <button
+                type="button"
+                onClick={() => setIsModalOpen(false)}
+                className="px-5 py-2.5 rounded-2xl bg-gray-200 hover:bg-gray-300 text-gray-700 font-black text-xs uppercase tracking-wider cursor-pointer transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                form="news-upload-form"
+                disabled={isSaving}
+                className="px-6 py-2.5 rounded-2xl bg-[#014900] hover:bg-[#003300] text-white font-black text-xs uppercase tracking-wider shadow-md hover:shadow-xl transition-all cursor-pointer disabled:opacity-70 flex items-center gap-2"
+              >
+                {isSaving ? 'Saving Article...' : (editingItem ? 'Update Release' : 'Publish Article')}
+              </button>
+            </div>
 
-              {/* Modal Footer Actions */}
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
-                <button
-                  type="button"
-                  onClick={() => setIsModalOpen(false)}
-                  className="px-5 py-2.5 rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-black text-xs uppercase tracking-wider cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={isSaving}
-                  className="px-6 py-2.5 rounded-2xl bg-[#014900] hover:bg-[#003300] text-white font-black text-xs uppercase tracking-wider shadow-md hover:shadow-xl transition-all cursor-pointer disabled:opacity-70"
-                >
-                  {isSaving ? 'Saving Article...' : (editingItem ? 'Update Release' : 'Publish Article')}
-                </button>
-              </div>
-
-            </form>
           </div>
         </div>
       )}
