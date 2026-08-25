@@ -38,3 +38,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 # GNUTS-Website
 # Ghana-National-Union-Of-Technical-Students-Website
 # Ghana-National-Union-Of-Technical-Students-Website
+# Ghana-National-Union-Of-Technical-Students-Website
