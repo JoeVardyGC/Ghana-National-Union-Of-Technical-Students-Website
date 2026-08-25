@@ -5,6 +5,7 @@ import OpportunitiesSection from '@/components/OpportunitiesSection';
 import UnionCtaBanner from '@/components/UnionCtaBanner';
 import NewsSection from '@/components/NewsSection';
 import ScrollAnimationProvider from '@/components/ScrollAnimationProvider';
+import { resolveImgUrl } from '@/lib/imageUtils';
 import { Layers, Clock, MessageSquare, Mail, Phone, Share2 } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
@@ -240,9 +241,7 @@ export default async function HomePage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-6 lg:gap-8 reveal-on-scroll">
               {executives.map((exec: any, index: number) => {
                 const bgCol = cardBgColors[index % cardBgColors.length];
-                const photoUrl = exec.photo 
-                  ? (exec.photo.startsWith('http') ? exec.photo : `/${exec.photo.replace(/^\/+/, '')}`)
-                  : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop';
+                const photoUrl = resolveImgUrl(exec.photo || exec.image_url || exec.image);
 
                 return (
                   <div key={exec.id || index} className="group flex flex-col bg-white rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden max-w-md mx-auto sm:max-w-none w-full">

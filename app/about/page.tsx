@@ -422,9 +422,7 @@ export default async function AboutPage() {
                 {executives.map((exec: any, idx: number) => {
                   const cardBgColors = ['#014900', '#013300', '#025202', '#012800'];
                   const bgCol = cardBgColors[idx % cardBgColors.length];
-                  const photoUrl = exec.photo 
-                    ? (exec.photo.startsWith('http') ? exec.photo : `/${exec.photo}`)
-                    : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop';
+                  const photoUrl = resolveImgUrl(exec.photo || exec.image_url || exec.image);
 
                   return (
                     <div 
