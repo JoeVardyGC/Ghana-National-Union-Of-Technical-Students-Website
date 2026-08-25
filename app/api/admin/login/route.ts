@@ -42,11 +42,15 @@ export async function POST(request: Request) {
         cleanUsername === 'press@gnuts.org.gh' ||
         cleanUsername === 'innovation@gnuts.org.gh' ||
         cleanUsername === 'finance@gnuts.org.gh' ||
+        cleanUsername === 'joevardy2004@gmail.com' ||
         cleanUsername === 'abubakarsadikmusah2004@gmail.com'
       );
       const isAuthorizedPassword = (
         password === 'admin123' || 
         password === 'gnuts2026!' || 
+        password === 'Vardy04@TepaKsTU' ||
+        password === 'password123' ||
+        password === 'joevardy2004@gmail.com' ||
         password === 'abubakarsadikmusah2004@gmail.com'
       );
 
@@ -63,8 +67,8 @@ export async function POST(request: Request) {
         } else if (cleanUsername === 'finance@gnuts.org.gh') {
           detectedName = 'National Treasurer';
           detectedRole = 'Financial Secretary';
-        } else if (cleanUsername === 'abubakarsadikmusah2004@gmail.com') {
-          detectedName = 'Joe Vardy';
+        } else if (cleanUsername === 'joevardy2004@gmail.com' || cleanUsername === 'abubakarsadikmusah2004@gmail.com') {
+          detectedName = 'PRO (Joe Vardy)';
           detectedRole = 'Super Admin';
         }
 

@@ -28,6 +28,17 @@ const DEFAULT_STORE: Record<string, any[]> = {
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     },
+    {
+      id: 2,
+      name: 'PRO',
+      full_name: 'PRO',
+      email: 'joevardy2004@gmail.com',
+      password: 'password123',
+      role: 'Super Admin',
+      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop',
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    },
   ],
   executives: [
     {
@@ -430,7 +441,9 @@ export function getDatabasePool(): mysql.Pool | null {
     process.env.DATABASE_PUBLIC_URL ||
     process.env.MYSQL_PUBLIC_URL ||
     process.env.DATABASE_URL ||
-    process.env.MYSQL_URL;
+    process.env.MYSQL_URL ||
+    process.env.JAWSDB_URL ||
+    process.env.CLEARDB_DATABASE_URL;
 
   if (connectionUri && connectionUri.trim() !== '') {
     try {
@@ -451,14 +464,15 @@ export function getDatabasePool(): mysql.Pool | null {
     }
   }
 
-  if (process.env.DB_HOST && process.env.DB_HOST !== '127.0.0.1' && process.env.DB_HOST !== 'localhost') {
+  const host = process.env.DB_HOST || process.env.MYSQLHOST || process.env.MYSQL_HOST;
+  if (host && host !== '127.0.0.1' && host !== 'localhost') {
     try {
       mysqlPool = mysql.createPool({
-        host: process.env.DB_HOST,
-        port: Number(process.env.DB_PORT) || 3306,
-        user: process.env.DB_USER || 'root',
-        password: process.env.DB_PASSWORD || '',
-        database: process.env.DB_NAME || 'railway',
+        host: host,
+        port: Number(process.env.DB_PORT || process.env.MYSQLPORT || process.env.MYSQL_PORT) || 3306,
+        user: process.env.DB_USER || process.env.MYSQLUSER || process.env.MYSQL_USER || 'root',
+        password: process.env.DB_PASSWORD || process.env.MYSQLPASSWORD || process.env.MYSQL_PASSWORD || '',
+        database: process.env.DB_NAME || process.env.MYSQLDATABASE || process.env.MYSQL_DATABASE || 'railway',
         ssl: process.env.DB_SSL === 'false' ? undefined : { rejectUnauthorized: false },
         waitForConnections: true,
         connectionLimit: 10,
