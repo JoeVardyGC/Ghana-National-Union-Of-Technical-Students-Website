@@ -88,24 +88,24 @@ export default function ExecutivesClient({ initialExecutives }: ExecutivesClient
               className="bg-white rounded-3xl border border-gray-200/80 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden group hover:-translate-y-1"
             >
               <div>
-                {/* Officer Portrait */}
-                <div className="relative h-64 sm:h-72 overflow-hidden bg-gray-100">
+                {/* Officer Portrait - Compact, refined height with object-top */}
+                <div className="relative h-52 sm:h-56 overflow-hidden bg-gray-100">
                   <img
                     src={officer.image_url}
                     alt={officer.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
 
-                  <span className="absolute top-4 left-4 px-3 py-1 bg-[#014900] text-white font-black text-[10px] uppercase tracking-wider rounded-full shadow-md border border-white/20">
+                  <span className="absolute top-3.5 left-3.5 px-2.5 py-0.5 bg-[#014900] text-white font-black text-[9px] uppercase tracking-wider rounded-full shadow-md border border-white/20">
                     {officer.tenure || '2025/2026 Admin'}
                   </span>
 
-                  <div className="absolute bottom-4 left-4 right-4 text-white">
-                    <span className="text-[10px] font-black text-[#D9A000] uppercase tracking-widest bg-black/40 px-2.5 py-0.5 rounded-full border border-white/10">
+                  <div className="absolute bottom-3 left-3.5 right-3.5 text-white">
+                    <span className="text-[9px] font-black text-[#D9A000] uppercase tracking-widest bg-black/50 px-2 py-0.5 rounded-full border border-white/10">
                       {officer.position}
                     </span>
-                    <h3 className="font-['Montserrat'] font-black text-lg sm:text-xl text-white mt-1 leading-snug">
+                    <h3 className="font-['Montserrat'] font-black text-base sm:text-lg text-white mt-1 leading-snug">
                       {officer.name}
                     </h3>
                   </div>

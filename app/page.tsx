@@ -246,8 +246,8 @@ export default async function HomePage() {
 
                 return (
                   <div key={exec.id || index} className="group flex flex-col bg-white rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden max-w-md mx-auto sm:max-w-none w-full">
-                    {/* Photo container with top curved corners */}
-                    <div className="relative aspect-[4/5] w-full overflow-hidden bg-gray-900 rounded-t-3xl" style={{ backgroundColor: bgCol }}>
+                    {/* Photo container with balanced square aspect ratio */}
+                    <div className="relative aspect-[1/1] w-full overflow-hidden bg-gray-900 rounded-t-3xl" style={{ backgroundColor: bgCol }}>
                       <img
                         src={photoUrl}
                         alt={exec.full_name || exec.name}
