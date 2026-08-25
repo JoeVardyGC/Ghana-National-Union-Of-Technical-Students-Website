@@ -12,7 +12,10 @@ import {
   Share2, 
   ArrowRight,
   Sparkles,
-  HelpCircle
+  User,
+  Building2,
+  Tag,
+  MessageSquare
 } from 'lucide-react';
 
 export default function ContactClient() {
@@ -81,7 +84,7 @@ export default function ContactClient() {
         <div className="lg:col-span-5 space-y-6">
           
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 border border-emerald-200 text-[#014900] text-[11px] font-extrabold uppercase tracking-widest rounded-full">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-50 border border-emerald-200 text-[#014900] text-[11px] font-extrabold uppercase tracking-widest rounded-none">
               <Sparkles className="w-3.5 h-3.5" />
               <span>National Secretariat</span>
             </div>
@@ -93,13 +96,13 @@ export default function ContactClient() {
             </p>
           </div>
 
-          {/* Contact Info Cards (Curved & Polished) */}
+          {/* Contact Info Cards */}
           <div className="space-y-3.5">
             
             {/* Phone Card */}
-            <div className="group p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
+            <div className="group p-4 bg-white border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 rounded-none">
               <div className="flex items-center gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-[#014900] group-hover:bg-[#D9A000] text-white group-hover:text-[#014900] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
+                <div className="w-10 h-10 bg-[#014900] group-hover:bg-[#D9A000] text-white group-hover:text-[#014900] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm rounded-none">
                   <Phone className="w-4 h-4" />
                 </div>
                 <div>
@@ -113,9 +116,9 @@ export default function ContactClient() {
             </div>
 
             {/* Email Card */}
-            <div className="group p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
+            <div className="group p-4 bg-white border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 rounded-none">
               <div className="flex items-center gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-[#014900] group-hover:bg-[#D9A000] text-white group-hover:text-[#014900] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
+                <div className="w-10 h-10 bg-[#014900] group-hover:bg-[#D9A000] text-white group-hover:text-[#014900] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm rounded-none">
                   <Mail className="w-4 h-4" />
                 </div>
                 <div>
@@ -129,9 +132,9 @@ export default function ContactClient() {
             </div>
 
             {/* Location Card */}
-            <div className="group p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
+            <div className="group p-4 bg-white border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 rounded-none">
               <div className="flex items-center gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-[#014900] group-hover:bg-[#D9A000] text-white group-hover:text-[#014900] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
+                <div className="w-10 h-10 bg-[#014900] group-hover:bg-[#D9A000] text-white group-hover:text-[#014900] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm rounded-none">
                   <MapPin className="w-4 h-4" />
                 </div>
                 <div>
@@ -145,9 +148,9 @@ export default function ContactClient() {
             </div>
 
             {/* Office Hours Card */}
-            <div className="group p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
+            <div className="group p-4 bg-white border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 rounded-none">
               <div className="flex items-center gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-[#014900] group-hover:bg-[#D9A000] text-white group-hover:text-[#014900] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
+                <div className="w-10 h-10 bg-[#014900] group-hover:bg-[#D9A000] text-white group-hover:text-[#014900] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm rounded-none">
                   <Clock className="w-4 h-4" />
                 </div>
                 <div>
@@ -163,7 +166,7 @@ export default function ContactClient() {
           </div>
 
           {/* OFFICIAL SOCIAL CHANNELS STRIP */}
-          <div className="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm space-y-2.5">
+          <div className="bg-white p-4 border border-gray-200 shadow-sm space-y-2.5 rounded-none">
             <div className="flex items-center gap-2 text-[11px] font-extrabold text-gray-700 uppercase tracking-wider">
               <Share2 className="w-3.5 h-3.5 text-[#014900]" />
               <span>Connect On Social Platforms</span>
@@ -174,7 +177,7 @@ export default function ContactClient() {
                 href="https://wa.me/233243163135"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#25D366]/10 hover:bg-[#25D366] text-[#25D366] hover:text-white transition-colors text-xs font-bold"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#25D366]/10 hover:bg-[#25D366] text-[#25D366] hover:text-white transition-colors text-xs font-bold rounded-none"
               >
                 <span>WhatsApp</span>
               </a>
@@ -184,7 +187,7 @@ export default function ContactClient() {
                 href="https://twitter.com/gnutsonline"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gray-100 hover:bg-black text-gray-800 hover:text-white transition-colors text-xs font-bold"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 hover:bg-black text-gray-800 hover:text-white transition-colors text-xs font-bold rounded-none"
               >
                 <span>X (Twitter)</span>
               </a>
@@ -194,7 +197,7 @@ export default function ContactClient() {
                 href="https://facebook.com/gnutsonline"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#1877F2]/10 hover:bg-[#1877F2] text-[#1877F2] hover:text-white transition-colors text-xs font-bold"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#1877F2]/10 hover:bg-[#1877F2] text-[#1877F2] hover:text-white transition-colors text-xs font-bold rounded-none"
               >
                 <span>Facebook</span>
               </a>
@@ -204,7 +207,7 @@ export default function ContactClient() {
                 href="https://linkedin.com/company/gnuts-ghana"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0A66C2]/10 hover:bg-[#0A66C2] text-[#0A66C2] hover:text-white transition-colors text-xs font-bold"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#0A66C2]/10 hover:bg-[#0A66C2] text-[#0A66C2] hover:text-white transition-colors text-xs font-bold rounded-none"
               >
                 <span>LinkedIn</span>
               </a>
@@ -214,7 +217,7 @@ export default function ContactClient() {
                 href="https://youtube.com/@gnutsghana"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FF0000]/10 hover:bg-[#FF0000] text-[#FF0000] hover:text-white transition-colors text-xs font-bold"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#FF0000]/10 hover:bg-[#FF0000] text-[#FF0000] hover:text-white transition-colors text-xs font-bold rounded-none"
               >
                 <span>YouTube</span>
               </a>
@@ -224,7 +227,7 @@ export default function ContactClient() {
         </div>
 
         {/* Right Column: Contact Form (7 Cols) */}
-        <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-gray-200 shadow-md space-y-5">
+        <div className="lg:col-span-7 bg-white p-6 sm:p-8 border border-gray-200 shadow-md space-y-5 rounded-none">
           
           <div className="space-y-1 pb-3 border-b border-gray-100">
             <h3 className="text-lg sm:text-xl font-extrabold text-gray-900 uppercase tracking-wide">
@@ -237,7 +240,7 @@ export default function ContactClient() {
 
           {/* Success Banner */}
           {successMessage && (
-            <div className="p-4 bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-bold flex items-start gap-2.5 rounded-2xl animate-fadeIn">
+            <div className="p-4 bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-bold flex items-start gap-2.5 rounded-none animate-fadeIn">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
               <div>
                 <strong className="block font-black text-emerald-950 uppercase">Message Sent Successfully!</strong>
@@ -248,7 +251,7 @@ export default function ContactClient() {
 
           {/* Error Banner */}
           {errorMessage && (
-            <div className="p-4 bg-rose-50 border border-rose-300 text-rose-900 text-xs font-bold flex items-start gap-2.5 rounded-2xl animate-fadeIn">
+            <div className="p-4 bg-rose-50 border border-rose-300 text-rose-900 text-xs font-bold flex items-start gap-2.5 rounded-none animate-fadeIn">
               <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
               <div>
                 <strong className="block font-black text-rose-950 uppercase">Submission Failed</strong>
@@ -272,7 +275,7 @@ export default function ContactClient() {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="e.g. Kwame Mensah"
-                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-xs font-medium text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-2xl"
+                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-xs font-medium text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-none"
                 />
               </div>
 
@@ -288,7 +291,7 @@ export default function ContactClient() {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="e.g. kwame@example.com"
-                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-xs font-medium text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-2xl"
+                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-xs font-medium text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-none"
                 />
               </div>
 
@@ -303,7 +306,7 @@ export default function ContactClient() {
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="e.g. +233 24 123 4567"
-                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-xs font-medium text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-2xl"
+                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-xs font-medium text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-none"
                 />
               </div>
 
@@ -318,7 +321,7 @@ export default function ContactClient() {
                   value={formData.institution}
                   onChange={handleChange}
                   placeholder="e.g. Accra Technical University"
-                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-xs font-medium text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-2xl"
+                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-xs font-medium text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-none"
                 />
               </div>
 
@@ -336,7 +339,7 @@ export default function ContactClient() {
                 value={formData.subject}
                 onChange={handleChange}
                 placeholder="What is your message regarding?"
-                className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-xs font-medium text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-2xl"
+                className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-xs font-medium text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-none"
               />
             </div>
 
@@ -352,7 +355,7 @@ export default function ContactClient() {
                 value={formData.message}
                 onChange={handleChange}
                 placeholder="Provide detailed description of your inquiry, proposal, or feedback..."
-                className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-xs font-medium text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-2xl resize-none"
+                className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-xs font-medium text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-none resize-none"
               />
             </div>
 
@@ -361,7 +364,7 @@ export default function ContactClient() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#014900] hover:bg-[#D9A000] text-white hover:text-[#014900] text-xs font-black uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-xl rounded-2xl cursor-pointer disabled:opacity-60"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#014900] hover:bg-[#D9A000] text-white hover:text-[#014900] text-xs font-black uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-xl rounded-none cursor-pointer disabled:opacity-60"
               >
                 <Send className="w-4 h-4" />
                 <span>{isSubmitting ? 'Transmitting Message...' : 'Submit Inquiries to Secretariat'}</span>
@@ -375,7 +378,7 @@ export default function ContactClient() {
       </div>
 
       {/* 2. INTERACTIVE GOOGLE MAP EMBED SECTION */}
-      <div className="bg-white p-6 sm:p-7 rounded-3xl border border-gray-200 shadow-md space-y-4">
+      <div className="bg-white p-6 sm:p-7 border border-gray-200 shadow-md space-y-4 rounded-none">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-gray-100 pb-3">
           <div>
             <h3 className="text-sm sm:text-base font-extrabold text-gray-900 uppercase">
@@ -396,7 +399,7 @@ export default function ContactClient() {
           </a>
         </div>
 
-        <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 shadow-inner">
+        <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden bg-gray-100 border border-gray-200 shadow-inner rounded-none">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.3672285627476!2d-0.051864526355732944!3d5.659911732598822!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf81002f0e4dc5%3A0xda91f42bccf2908a!2sGNUTS%20RESIDENT!5e0!3m2!1sen!2sgh!4v1766881325375!5m2!1sen!2sgh"
             className="absolute inset-0 w-full h-full border-0"
@@ -409,7 +412,7 @@ export default function ContactClient() {
       </div>
 
       {/* 3. QUICK ASSISTANCE BANNER */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-[#014900] via-[#026b00] to-[#013300] text-white p-6 sm:p-10 rounded-3xl shadow-xl border border-emerald-800/40">
+      <div className="relative overflow-hidden bg-gradient-to-r from-[#014900] via-[#026b00] to-[#013300] text-white p-6 sm:p-10 shadow-xl border border-emerald-800/40 rounded-none">
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="space-y-1.5 max-w-xl">
             <h3 className="text-lg sm:text-xl font-extrabold text-white">
@@ -423,7 +426,7 @@ export default function ContactClient() {
           <div className="flex flex-wrap items-center gap-3">
             <a
               href="tel:+233243163135"
-              className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#D9A000] hover:bg-yellow-500 text-[#014900] text-xs font-black uppercase tracking-wider rounded-2xl transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#D9A000] hover:bg-yellow-500 text-[#014900] text-xs font-black uppercase tracking-wider rounded-none transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
             >
               <Phone className="w-3.5 h-3.5 text-[#014900]" />
               <span>Call Us Now</span>
@@ -431,7 +434,7 @@ export default function ContactClient() {
 
             <a
               href="mailto:infos@gnuts.org.gh"
-              className="inline-flex items-center gap-2 px-6 py-3.5 bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#014900] text-xs font-black uppercase tracking-wider rounded-2xl transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-6 py-3.5 bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#014900] text-xs font-black uppercase tracking-wider rounded-none transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
             >
               <Mail className="w-3.5 h-3.5 text-[#D9A000]" />
               <span>Email Secretariat</span>
