@@ -7,7 +7,7 @@
       "email": "admin@gnuts.org.gh",
       "password": "password123",
       "role": "Super Admin",
-      "avatar": "https://res.cloudinary.com/dslngzls6/image/upload/v1786991593/photo_2026-08-17_18-24-49_bg2c1g.jpg",
+      "avatar": "https://res.cloudinary.com/dslngzls6/image/upload/v1786982867/gnuts_fav_htclbt.png",
       "created_at": "2026-08-24T15:49:04.468Z",
       "updated_at": "2026-08-24T15:49:04.468Z"
     },
@@ -18,7 +18,7 @@
       "email": "joevardy2004@gmail.com",
       "password": "password123",
       "role": "Super Admin",
-      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop",
+      "avatar": "https://res.cloudinary.com/dslngzls6/image/upload/v1786982867/gnuts_fav_htclbt.png",
       "created_at": "2026-08-25T16:00:00.000Z",
       "updated_at": "2026-08-25T16:00:00.000Z"
     }

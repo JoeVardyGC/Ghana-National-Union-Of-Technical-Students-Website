@@ -21,7 +21,6 @@ import {
   CheckSquare,
   Square
 } from 'lucide-react';
-import DirectImageUploader from '@/components/DirectImageUploader';
 
 interface AdminUserItem {
   id: number;
@@ -32,13 +31,23 @@ interface AdminUserItem {
   created_at?: string;
 }
 
+const UNION_LOGO_AVATAR = 'https://res.cloudinary.com/dslngzls6/image/upload/v1786982867/gnuts_fav_htclbt.png';
+
 const DEFAULT_USERS_SEED: AdminUserItem[] = [
   {
     id: 1,
-    name: 'Comrade Joe Vardy',
+    name: 'GNUTS Secretariat',
     email: 'admin@gnuts.org.gh',
     role: 'Super Admin',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop',
+    avatar: UNION_LOGO_AVATAR,
+    created_at: '2026-01-01',
+  },
+  {
+    id: 2,
+    name: 'PRO',
+    email: 'joevardy2004@gmail.com',
+    role: 'Super Admin',
+    avatar: UNION_LOGO_AVATAR,
     created_at: '2026-01-01',
   },
 ];
@@ -418,11 +427,11 @@ export default function UsersManagementClient({
                     </button>
                   )}
 
-                  <div className="relative w-14 h-14 rounded-2xl overflow-hidden bg-gray-100 border-2 border-[#D9A000]/40 shrink-0">
+                  <div className="relative w-14 h-14 rounded-2xl bg-white p-2 border-2 border-[#D9A000]/60 shadow-xs flex items-center justify-center shrink-0">
                     <img
-                      src={avatarSrc}
-                      alt={item.name}
-                      className="w-full h-full object-cover"
+                      src={UNION_LOGO_AVATAR}
+                      alt="GNUTS Union Logo"
+                      className="w-full h-full object-contain"
                     />
                   </div>
 
@@ -618,13 +627,20 @@ export default function UsersManagementClient({
                 />
               </div>
 
-              {/* Officer Avatar Photo */}
-              <DirectImageUploader
-                label="Officer Profile Photo (Avatar)"
-                value={formData.avatar}
-                onChange={(url) => setFormData({ ...formData, avatar: url })}
-                helperText="Upload square headshot image for executive identification"
-              />
+              {/* Account Avatar Badge */}
+              <div className="p-3.5 bg-gray-50 border border-gray-200 rounded-2xl flex items-center gap-3">
+                <div className="w-12 h-12 rounded-xl bg-white p-1.5 border border-[#D9A000]/60 shadow-xs flex items-center justify-center shrink-0">
+                  <img
+                    src={UNION_LOGO_AVATAR}
+                    alt="GNUTS Union Logo"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <div>
+                  <p className="text-xs font-black text-[#014900] uppercase tracking-wide">Official Union Emblem</p>
+                  <p className="text-[11px] text-gray-500 font-medium">Standardized as the official account avatar for all executive officers.</p>
+                </div>
+              </div>
 
               {/* Modal Footer */}
               <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">

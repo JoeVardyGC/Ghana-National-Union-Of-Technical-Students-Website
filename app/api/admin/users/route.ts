@@ -44,7 +44,7 @@ export async function GET(request: Request) {
         name: u.full_name || u.name || 'Executive Officer',
         email: u.email,
         role: u.role || 'Super Admin',
-        avatar: u.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop',
+        avatar: 'https://res.cloudinary.com/dslngzls6/image/upload/v1786982867/gnuts_fav_htclbt.png',
         created_at: u.created_at || new Date().toISOString(),
       }));
 
@@ -86,7 +86,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Name, email, and password are required' }, { status: 400 });
     }
 
-    const avatarUrl = avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop';
+    const avatarUrl = 'https://res.cloudinary.com/dslngzls6/image/upload/v1786982867/gnuts_fav_htclbt.png';
 
     // Insert user into MySQL users table (full_name, email, password, role)
     const insertResult = await query(

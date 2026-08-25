@@ -119,8 +119,12 @@ export default function AdminLayoutClient({ children, sessionUser }: AdminLayout
           {/* Current Admin User Badge */}
           <div className="p-3 bg-emerald-950/70 border border-emerald-800/60 rounded-2xl flex items-center justify-between">
             <div className="flex items-center gap-2.5 overflow-hidden">
-              <div className="w-8 h-8 rounded-xl bg-[#D9A000] text-[#014900] font-black text-xs flex items-center justify-center shrink-0 shadow-xs">
-                {currentUser.name.charAt(0)}
+              <div className="w-8 h-8 rounded-xl bg-white p-1 border border-[#D9A000]/60 flex items-center justify-center shrink-0 shadow-xs">
+                <img
+                  src="https://res.cloudinary.com/dslngzls6/image/upload/v1786982867/gnuts_fav_htclbt.png"
+                  alt="GNUTS Emblem"
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div className="overflow-hidden">
                 <p className="text-xs font-bold text-white truncate leading-tight">{currentUser.name}</p>
