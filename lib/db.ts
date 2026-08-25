@@ -420,40 +420,58 @@ function saveStore(store: Record<string, any[]>) {
   }
 }
 
-// MySQL Pool Setup
+// MySQL Pool Setup with dynamic lazy initialization and SSL support
 let mysqlPool: mysql.Pool | null = null;
-let isMySqlAvailable: boolean | null = null;
 
-function createDatabasePool() {
-  const connectionUri = process.env.DATABASE_URL || process.env.MYSQL_URL;
+export function getDatabasePool(): mysql.Pool | null {
+  if (mysqlPool) return mysqlPool;
 
-  if (connectionUri) {
-    return mysql.createPool({
-      uri: connectionUri,
-      waitForConnections: true,
-      connectionLimit: 10,
-      connectTimeout: 3000,
-      ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : undefined,
-    });
+  const connectionUri = 
+    process.env.DATABASE_PUBLIC_URL ||
+    process.env.MYSQL_PUBLIC_URL ||
+    process.env.DATABASE_URL ||
+    process.env.MYSQL_URL;
+
+  if (connectionUri && connectionUri.trim() !== '') {
+    try {
+      const cleanUri = connectionUri.trim();
+      const isRemote = !cleanUri.includes('127.0.0.1') && !cleanUri.includes('localhost');
+      
+      mysqlPool = mysql.createPool({
+        uri: cleanUri,
+        ssl: process.env.DB_SSL === 'false' ? undefined : (isRemote ? { rejectUnauthorized: false } : undefined),
+        waitForConnections: true,
+        connectionLimit: 10,
+        connectTimeout: 10000,
+        enableKeepAlive: true,
+      });
+      return mysqlPool;
+    } catch (err) {
+      console.error('MySQL URI Pool Creation Error:', err);
+    }
   }
 
-  return mysql.createPool({
-    host: process.env.DB_HOST || '127.0.0.1',
-    port: Number(process.env.DB_PORT) || 3306,
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'gnuts',
-    waitForConnections: true,
-    connectionLimit: 10,
-    connectTimeout: 2000,
-    ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : undefined,
-  });
-}
+  if (process.env.DB_HOST && process.env.DB_HOST !== '127.0.0.1' && process.env.DB_HOST !== 'localhost') {
+    try {
+      mysqlPool = mysql.createPool({
+        host: process.env.DB_HOST,
+        port: Number(process.env.DB_PORT) || 3306,
+        user: process.env.DB_USER || 'root',
+        password: process.env.DB_PASSWORD || '',
+        database: process.env.DB_NAME || 'railway',
+        ssl: process.env.DB_SSL === 'false' ? undefined : { rejectUnauthorized: false },
+        waitForConnections: true,
+        connectionLimit: 10,
+        connectTimeout: 10000,
+        enableKeepAlive: true,
+      });
+      return mysqlPool;
+    } catch (err) {
+      console.error('MySQL Host Pool Creation Error:', err);
+    }
+  }
 
-try {
-  mysqlPool = createDatabasePool();
-} catch {
-  mysqlPool = null;
+  return null;
 }
 
 /**
@@ -462,17 +480,15 @@ try {
  */
 export async function query<T = any>(sql: string, params: any[] = []): Promise<T[]> {
   const trimmed = sql.trim();
+  const pool = getDatabasePool();
 
-  // Try MySQL if not permanently flagged offline
-  if (isMySqlAvailable !== false && mysqlPool) {
+  // Try MySQL if pool exists
+  if (pool) {
     try {
-      const [rows] = await mysqlPool.execute(sql, params);
-      isMySqlAvailable = true;
+      const [rows] = await pool.execute(sql, params);
       return rows as T[];
     } catch (error: any) {
-      if (error?.code === 'ECONNREFUSED' || error?.code === 'ETIMEDOUT' || error?.code === 'ENOTFOUND') {
-        isMySqlAvailable = false;
-      }
+      console.error('MySQL Query Execution Error:', error?.message || error, 'SQL:', sql);
     }
   }
 
