@@ -28,7 +28,7 @@ export default function InnovationsSection({ dbInnovations = [] }: { dbInnovatio
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-3">
           <div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#014900] tracking-tight uppercase">
-              Student Innovations
+              Student&apos;s Innovations
             </h2>
             <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-3" />
             <p className="text-gray-500 text-sm sm:text-base font-medium">
