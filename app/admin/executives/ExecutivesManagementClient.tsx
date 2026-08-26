@@ -140,7 +140,7 @@ export default function ExecutivesManagementClient({
     setEditingItem(null);
     setFormData({
       full_name: '',
-      position: 'National President',
+      position: '',
       email: '',
       phone: '',
       bio: '',
@@ -641,16 +641,20 @@ export default function ExecutivesManagementClient({
                   <label className="text-xs font-black uppercase tracking-wider text-gray-700">
                     Executive Portfolio / Position *
                   </label>
-                  <select
+                  <input
+                    type="text"
+                    required
+                    list="portfolio-suggestions"
                     value={formData.position}
                     onChange={(e) => setFormData({ ...formData, position: e.target.value })}
-                    className="w-full px-4 py-2 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-bold outline-none focus:border-[#014900]"
-                  >
+                    placeholder="e.g. National President, PRO, General Secretary..."
+                    className="w-full px-4 py-2 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-bold outline-none focus:border-[#014900] focus:bg-white transition-colors"
+                  />
+                  <datalist id="portfolio-suggestions">
                     {STANDARD_PORTFOLIOS.map((p) => (
-                      <option key={p} value={p}>{p}</option>
+                      <option key={p} value={p} />
                     ))}
-                    <option value="Other Executive Portfolio">Other Executive Portfolio</option>
-                  </select>
+                  </datalist>
                 </div>
 
                 <div className="space-y-1">
