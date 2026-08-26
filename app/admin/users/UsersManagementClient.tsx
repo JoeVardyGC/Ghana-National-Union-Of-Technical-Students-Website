@@ -410,8 +410,8 @@ export default function UsersManagementClient({
               }`}
             >
               {/* User Profile Top */}
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex items-center gap-3.5">
+              <div className="flex items-start justify-between gap-2 sm:gap-3 min-w-0">
+                <div className="flex items-center gap-3 min-w-0 flex-1">
                   {!isRoot && (
                     <button
                       type="button"
@@ -427,7 +427,7 @@ export default function UsersManagementClient({
                     </button>
                   )}
 
-                  <div className="relative w-14 h-14 rounded-2xl bg-white p-2 border-2 border-[#D9A000]/60 shadow-xs flex items-center justify-center shrink-0">
+                  <div className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white p-1.5 sm:p-2 border-2 border-[#D9A000]/60 shadow-xs flex items-center justify-center shrink-0">
                     <img
                       src={UNION_LOGO_AVATAR}
                       alt="GNUTS Union Logo"
@@ -435,19 +435,19 @@ export default function UsersManagementClient({
                     />
                   </div>
 
-                  <div>
-                    <h3 className="text-base font-black text-[#014900] group-hover:text-[#D9A000] transition-colors leading-snug">
+                  <div className="min-w-0 flex-1 space-y-0.5">
+                    <h3 className="text-sm sm:text-base font-black text-[#014900] group-hover:text-[#D9A000] transition-colors leading-snug break-words">
                       {item.name}
                     </h3>
-                    <p className="text-xs font-semibold text-gray-500 flex items-center gap-1 mt-0.5">
-                      <Mail className="w-3 h-3 text-gray-400" />
-                      <span>{item.email}</span>
+                    <p className="text-[11px] sm:text-xs font-semibold text-gray-500 flex items-center gap-1 min-w-0">
+                      <Mail className="w-3 h-3 text-gray-400 shrink-0" />
+                      <span className="break-all">{item.email}</span>
                     </p>
                   </div>
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1 shrink-0">
                   <button
                     type="button"
                     onClick={() => handleOpenEditModal(item)}

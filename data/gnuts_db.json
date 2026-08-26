@@ -92,32 +92,7 @@
       "updated_at": "2026-08-24T15:54:41.678Z"
     }
   ],
-  "opportunities": [
-    {
-      "id": 1,
-      "title": "AmaliTech Immersive Software Engineering Internship",
-      "description": "The AmaliTech Immersive Internship Programme is a structured, paid technical internship designed to bridge the gap between classroom theory and professional software engineering environments.\n\nKey Focus Areas: Frontend and Backend Engineering specializations where participants write code, build responsive web apps, and learn modern software workflows.\n\nRequired Skills & Eligibility:\n\nBe a third-year bachelor's student or second-year Higher National Diploma (HND) student\n\nStudying Computer Science, Engineering, Information Technology, or related technical programs\n\nGood foundation in programming fundamentals and an eagerness to learn professional development pipelines",
-      "type": "internship",
-      "location": "Ghana (On-site / Structured Training Centers)",
-      "deadline": "2026-11-19",
-      "link": "https://opportunitiesforyouth.org/2026/07/09/amalitech-immersive-internship-programme-2026-in-ghana-paid-gain-real-world-software-engineering-experience-with-mentorship-and-a-stipend/",
-      "status": "active",
-      "created_at": "2026-08-24T15:56:50.479Z",
-      "updated_at": "2026-08-24T15:56:50.479Z"
-    },
-    {
-      "id": 2,
-      "title": "Stain Studios Graphic Designer Internship",
-      "description": "Stain Studios is a creative design agency offering a hands-on graphic design internship tailored for emerging visual communicators and students. The role involves supporting the design team with visual assets for branding, layout design, and digital projects.\n\nKey Responsibilities: Assisting with graphics for web and social media, contributing to logo and brand identity design, image retouching, preparing files for print and digital delivery, and maintaining organized design files.\n\nRequired Skills & Eligibility:\n\nProficiency in industry-standard design tools (such as Adobe Photoshop, Illustrator, Figma, or similar)\n\nStrong visual communication skills and meticulous attention to detail\n\nCurrent enrollment in or recent completion of a design-related program (or equivalent practical experience)\n\nA portfolio showcasing relevant academic, personal, or professional design work",
-      "type": "internship",
-      "location": "Accra, Ghana (Hybrid / Remote options)",
-      "deadline": "2026-09-16",
-      "link": "https://bebee.com/gh/jobs/graphic-designer-internship-stain-studios-accra-greater-accra-region--t7xk-765064028",
-      "status": "active",
-      "created_at": "2026-08-24T15:58:02.810Z",
-      "updated_at": "2026-08-24T15:58:02.810Z"
-    }
-  ],
+  "opportunities": [],
   "innovations": [],
   "resources": [
     {
@@ -133,19 +108,7 @@
       "updated_at": "2026-08-24T16:40:51.292Z"
     }
   ],
-  "contact_messages": [
-    {
-      "id": 1,
-      "name": "Musah Abubakar Sadik",
-      "email": "abubakarsadikmusah2004@gmail.com",
-      "phone": "0256259336",
-      "subject": "fffffffffffffffffff",
-      "message": "fffffffffffffffffff",
-      "created_at": "2026-08-25T11:48:04.813Z",
-      "updated_at": "2026-08-25T11:48:28.722Z",
-      "status": "replied"
-    }
-  ],
+  "contact_messages": [],
   "audit_logs": [
     {
       "id": 1,
@@ -425,6 +388,16 @@
       "details": "Appointed Danga as National President (Display Order: #2)",
       "created_at": "2026-08-25T12:22:52.987Z",
       "updated_at": "2026-08-25T12:22:52.987Z"
+    },
+    {
+      "id": 29,
+      "user_name": "GNUTS Secretariat",
+      "user_role": "Super Admin",
+      "action": "USER_LOGIN",
+      "target": "Executive Portal",
+      "details": "Authenticated with auto-detected role: Super Admin",
+      "created_at": "2026-08-25T16:53:04.730Z",
+      "updated_at": "2026-08-25T16:53:04.730Z"
     }
   ],
   "about_page": [

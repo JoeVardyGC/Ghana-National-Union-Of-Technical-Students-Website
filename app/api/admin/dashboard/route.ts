@@ -39,7 +39,7 @@ export async function GET() {
       query('SELECT COUNT(*) as count FROM contact_messages WHERE status = "unread"').catch(() => [{ count: 0 }]),
       query('SELECT COUNT(*) as count FROM contact_messages').catch(() => [{ count: 0 }]),
       query('SELECT COUNT(*) as count FROM resources').catch(() => [{ count: 0 }]),
-      query('SELECT COUNT(*) as count FROM opportunities WHERE status = "active" OR is_active = 1').catch(() => [{ count: 0 }]),
+      query('SELECT COUNT(*) as count FROM opportunities WHERE status = "active"').catch(() => [{ count: 0 }]),
       query('SELECT COUNT(*) as count FROM users').catch(() => [{ count: 0 }]),
       query('SELECT COUNT(*) as count FROM gallery').catch(() => [{ count: 0 }]),
       query('SELECT id, title, published_at, status, author, view_count FROM news ORDER BY published_at DESC, id DESC LIMIT 5').catch(() => []),

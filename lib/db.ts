@@ -103,25 +103,7 @@ const DEFAULT_STORE: Record<string, any[]> = {
       updated_at: new Date().toISOString(),
     }
   ],
-  opportunities: [
-    {
-      id: 1,
-      title: 'Ghana Grid Company (GRIDCo) Industrial Engineering Internship',
-      description: '12-week hands-on industrial placement across electrical transmission substations, control centers, and automation facilities.',
-      type: 'internship',
-      category: 'Industrial Attachment',
-      partner: 'GRIDCo Ghana',
-      eligibility: 'Electrical, Mechanical & Computer Engineering Level 200 & 300 students',
-      location: 'Tema / Takoradi / Kumasi',
-      stipend_reward: 'Monthly Allowance + Field Protective Gear',
-      application_url: 'https://gridcogh.com/careers',
-      deadline: new Date(Date.now() + 45 * 24 * 60 * 60 * 1000).toISOString().substring(0, 10),
-      link: 'https://gridcogh.com/careers',
-      status: 'active',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    }
-  ],
+  opportunities: [],
   innovations: [
     {
       id: 1,
