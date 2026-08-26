@@ -276,7 +276,7 @@ export default function ScholarshipsManagementClient({
         </div>
 
         {/* Status Tabs */}
-        <div className="flex items-center gap-1.5 w-full sm:w-auto">
+        <div className="flex items-center gap-1.5 overflow-x-auto touch-pan-x w-full sm:w-auto pb-1 sm:pb-0 no-scrollbar scrollbar-none -mx-1 px-1 sm:mx-0 sm:px-0">
           {['ALL', 'ACTIVE', 'CLOSED'].map((tab) => (
             <button
               key={tab}

@@ -204,7 +204,7 @@ export default function MessagesManagementClient({
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex items-center gap-1.5 w-full md:w-auto overflow-x-auto no-scrollbar scrollbar-none pb-1 md:pb-0">
+        <div className="flex items-center gap-1.5 w-full md:w-auto overflow-x-auto touch-pan-x no-scrollbar scrollbar-none pb-1 md:pb-0 -mx-1 px-1 sm:mx-0 sm:px-0">
           {[
             { id: 'ALL', label: 'All Inquiries' },
             { id: 'UNREAD', label: `Unread ${unreadCount > 0 ? `(${unreadCount})` : ''}` },
@@ -214,7 +214,7 @@ export default function MessagesManagementClient({
             <button
               key={tab.id}
               onClick={() => setStatusFilter(tab.id)}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer shrink-0 ${
                 statusFilter === tab.id
                   ? 'bg-[#014900] text-white shadow-xs'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'

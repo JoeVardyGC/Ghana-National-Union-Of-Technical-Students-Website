@@ -288,7 +288,7 @@ export default function ResourcesManagementClient({
         </div>
 
         {/* Category Tabs */}
-        <div className="flex flex-wrap items-center gap-1.5 w-full md:w-auto">
+        <div className="flex items-center gap-1.5 overflow-x-auto touch-pan-x sm:flex-wrap w-full md:w-auto pb-1 sm:pb-0 no-scrollbar scrollbar-none -mx-1 px-1 sm:mx-0 sm:px-0">
           {[{ id: 'ALL', label: 'All Documents' }, ...RESOURCE_CATEGORIES].map((tab) => (
             <button
               key={tab.id}

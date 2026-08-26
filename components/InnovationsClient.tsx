@@ -290,7 +290,7 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
           </div>
 
           {/* Discipline Filters */}
-          <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 no-scrollbar scrollbar-none">
+          <div className="flex items-center gap-2 overflow-x-auto touch-pan-x w-full md:w-auto pb-1 md:pb-0 no-scrollbar scrollbar-none -mx-1 px-1 sm:mx-0 sm:px-0">
             <SlidersHorizontal className="w-4 h-4 text-[#014900] shrink-0 hidden sm:block" />
             <span className="text-xs font-bold text-gray-500 uppercase tracking-wider shrink-0 hidden sm:block">Filter:</span>
             {DISCIPLINE_CATEGORIES.map((cat) => (

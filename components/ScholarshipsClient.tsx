@@ -149,7 +149,7 @@ export default function ScholarshipsClient({
           </div>
 
           {/* Filter Chips */}
-          <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+          <div className="flex items-center gap-2 overflow-x-auto touch-pan-x sm:flex-wrap w-full md:w-auto pb-1 sm:pb-0 no-scrollbar scrollbar-none -mx-1 px-1 sm:mx-0 sm:px-0">
             <button
               onClick={() => setSelectedCategory('ALL')}
               className={`px-4 py-2 text-xs font-extrabold uppercase tracking-wider rounded-xl transition-all border ${

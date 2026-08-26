@@ -370,12 +370,12 @@ export default function UsersManagementClient({
         </div>
 
         {/* Role Tabs */}
-        <div className="flex flex-wrap items-center gap-1.5 w-full md:w-auto">
+        <div className="flex items-center gap-1.5 overflow-x-auto touch-pan-x sm:flex-wrap w-full md:w-auto pb-1 sm:pb-0 no-scrollbar scrollbar-none -mx-1 px-1 sm:mx-0 sm:px-0">
           {['ALL', 'Super Admin', 'Press & Media', 'Innovation Director', 'Financial Secretary'].map((r) => (
             <button
               key={r}
               onClick={() => setRoleFilter(r)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer shrink-0 ${
                 roleFilter === r
                   ? 'bg-[#014900] text-white shadow-xs'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'

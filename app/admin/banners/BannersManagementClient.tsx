@@ -375,29 +375,29 @@ export default function BannersManagementClient({ initialBanners = [] }: Banners
       )}
 
       {/* 2. Navigation Tabs */}
-      <div className="flex items-center gap-3 border-b border-gray-200 pb-2">
+      <div className="flex items-center gap-3 border-b border-gray-200 pb-2 overflow-x-auto touch-pan-x sm:flex-wrap no-scrollbar scrollbar-none -mx-1 px-1 sm:mx-0 sm:px-0">
         <button
           onClick={() => setActiveTab('carousel')}
-          className={`px-5 py-3 rounded-2xl font-black text-xs uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer ${
+          className={`px-5 py-3 rounded-2xl font-black text-xs uppercase tracking-wider flex items-center gap-2 whitespace-nowrap transition-all cursor-pointer shrink-0 ${
             activeTab === 'carousel'
               ? 'bg-[#014900] text-white shadow-md'
               : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
           }`}
         >
           <Sliders className="w-4 h-4" />
-          <span>Homepage Carousel ({carouselSlides.length} Images)</span>
+          <span>Homepage Carousel ({carouselSlides.length})</span>
         </button>
 
         <button
           onClick={() => setActiveTab('page_headers')}
-          className={`px-5 py-3 rounded-2xl font-black text-xs uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer ${
+          className={`px-5 py-3 rounded-2xl font-black text-xs uppercase tracking-wider flex items-center gap-2 whitespace-nowrap transition-all cursor-pointer shrink-0 ${
             activeTab === 'page_headers'
               ? 'bg-[#014900] text-white shadow-md'
               : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'
           }`}
         >
           <LayoutTemplate className="w-4 h-4" />
-          <span>Page Hero Headers ({PAGE_HERO_SLOTS.length} Pages)</span>
+          <span>Page Hero Headers ({PAGE_HERO_SLOTS.length})</span>
         </button>
       </div>
 

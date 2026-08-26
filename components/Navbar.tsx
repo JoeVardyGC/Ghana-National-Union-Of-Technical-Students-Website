@@ -284,7 +284,7 @@ export default function Navbar() {
             mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
-          <div className="space-y-6">
+          <div className="space-y-6 overflow-y-auto flex-1 pr-1">
             <div className="flex items-center justify-between pb-4 border-b border-white/15">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 flex items-center justify-center overflow-hidden">

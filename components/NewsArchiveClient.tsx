@@ -1,25 +1,60 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Calendar, ChevronLeft, ChevronRight, Search, X, SlidersHorizontal, Sparkles } from 'lucide-react';
 import { NewsItem } from '@/lib/newsData';
+import { resolveImgUrl, formatDate, stripHtml } from '@/lib/imageUtils';
 
 interface NewsArchiveClientProps {
   newsList: NewsItem[];
 }
 
-import { resolveImgUrl, formatDate, stripHtml } from '@/lib/imageUtils';
+const NEWS_CATEGORIES = [
+  { id: 'ALL', label: 'All Releases' },
+  { id: 'COMMUNIQUE', label: 'Communiqués' },
+  { id: 'PRESS', label: 'Press Releases' },
+  { id: 'POLICY', label: 'TVET Policy' },
+  { id: 'CONGRESS', label: 'Congress' },
+];
 
 export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
-  const totalPages = Math.ceil(newsList.length / itemsPerPage);
+  const filteredNews = useMemo(() => {
+    return newsList.filter((item) => {
+      const q = searchQuery.toLowerCase();
+      const title = (item.title || '').toLowerCase();
+      const content = (item.content || '').toLowerCase();
+      const author = (item.author || '').toLowerCase();
+      const cat = (item.category || '').toUpperCase();
 
+      const matchesSearch = title.includes(q) || content.includes(q) || author.includes(q);
+
+      let matchesCat = true;
+      if (selectedCategory !== 'ALL') {
+        if (selectedCategory === 'COMMUNIQUE') {
+          matchesCat = cat.includes('COMMUNIQUE') || title.includes('COMMUNIQUÉ') || title.includes('COMMUNIQUE');
+        } else if (selectedCategory === 'PRESS') {
+          matchesCat = cat.includes('PRESS') || title.includes('PRESS');
+        } else if (selectedCategory === 'POLICY') {
+          matchesCat = cat.includes('POLICY') || title.includes('POLICY') || content.includes('TVET');
+        } else if (selectedCategory === 'CONGRESS') {
+          matchesCat = cat.includes('CONGRESS') || title.includes('CONGRESS');
+        }
+      }
+
+      return matchesSearch && matchesCat;
+    });
+  }, [newsList, searchQuery, selectedCategory]);
+
+  const totalPages = Math.ceil(filteredNews.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentNewsSlice = newsList.slice(startIndex, endIndex);
+  const currentNewsSlice = filteredNews.slice(startIndex, endIndex);
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
@@ -31,23 +66,74 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
     }
   };
 
-  if (newsList.length === 0) {
-    return (
-      <div className="text-center py-16 px-6 bg-white rounded-3xl border border-gray-200 shadow-sm max-w-lg mx-auto space-y-3 font-['Montserrat',sans-serif]">
-        <div className="text-4xl">📰</div>
-        <h3 className="text-lg font-black text-gray-900 uppercase">No News Articles Found</h3>
-        <p className="text-xs text-gray-500 font-medium">
-          There are currently no published news articles or press communiqués in the database.
-        </p>
-      </div>
-    );
-  }
-
   return (
-    <div id="news-grid-start" className="space-y-12 font-['Montserrat',sans-serif]">
-      {/* Cards Grid — Identical in details, cards, images, and dimensions to Homepage NewsSection */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {currentNewsSlice.map((item, idx) => {
+    <div id="news-grid-start" className="space-y-10 font-['Montserrat',sans-serif]">
+      
+      {/* 1. Responsive Search & Category Filter Toolbar */}
+      <div className="bg-white p-4 sm:p-6 rounded-3xl border border-gray-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+        {/* Search Box */}
+        <div className="relative w-full md:w-80">
+          <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <input
+            type="text"
+            placeholder="Search news, statements, authors..."
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-xs sm:text-sm font-medium outline-none focus:border-[#014900] focus:bg-white transition-all"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => {
+                setSearchQuery('');
+                setCurrentPage(1);
+              }}
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xs font-bold"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
+
+        {/* Category Filter Chips with Horizontal Mobile Swipe */}
+        <div className="flex items-center gap-2 overflow-x-auto touch-pan-x w-full md:w-auto pb-1 md:pb-0 no-scrollbar scrollbar-none">
+          {NEWS_CATEGORIES.map((cat) => {
+            const isActive = selectedCategory === cat.id;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => {
+                  setSelectedCategory(cat.id);
+                  setCurrentPage(1);
+                }}
+                className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer shrink-0 ${
+                  isActive
+                    ? 'bg-[#014900] text-white shadow-md font-black'
+                    : 'bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200'
+                }`}
+              >
+                {cat.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {filteredNews.length === 0 ? (
+        <div className="text-center py-16 px-6 bg-white rounded-3xl border border-gray-200 shadow-sm max-w-lg mx-auto space-y-3">
+          <div className="text-4xl">📰</div>
+          <h3 className="text-lg font-black text-gray-900 uppercase">No Articles Found</h3>
+          <p className="text-xs text-gray-500 font-medium">
+            {searchQuery || selectedCategory !== 'ALL'
+              ? `No releases found matching "${searchQuery || selectedCategory}". Try clearing your filters.`
+              : 'There are currently no published news articles in the database.'}
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {currentNewsSlice.map((item, idx) => {
           const cleanContent = stripHtml(item.content || '');
           const imgUrl = resolveImgUrl(item.image);
           const authorName = item.author || 'GNUTS Secretariat';
@@ -101,6 +187,7 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
           );
         })}
       </div>
+    )}
 
       {/* Pagination Controls Bar */}
       {totalPages > 1 && (

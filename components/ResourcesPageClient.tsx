@@ -89,7 +89,7 @@ export default function ResourcesPageClient({
         </div>
 
         {/* Category Pills */}
-        <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+        <div className="flex items-center gap-2 overflow-x-auto touch-pan-x sm:flex-wrap w-full md:w-auto pb-1 sm:pb-0 no-scrollbar scrollbar-none -mx-1 px-1 sm:mx-0 sm:px-0">
           {CATEGORIES.map((cat) => {
             const isActive = selectedCategory.toLowerCase() === cat.id.toLowerCase();
             return (
