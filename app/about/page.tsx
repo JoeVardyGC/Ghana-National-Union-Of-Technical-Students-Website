@@ -427,7 +427,7 @@ export default async function AboutPage() {
                   return (
                     <div 
                       key={exec.id || idx}
-                      className="group flex flex-col bg-white rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden max-w-md mx-auto sm:max-w-none w-full"
+                      className="group flex flex-col bg-white rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden max-w-[290px] mx-auto sm:max-w-none w-full"
                     >
                       {/* Photo container with balanced square aspect ratio */}
                       <div className="relative aspect-[1/1] w-full overflow-hidden bg-gray-900 rounded-t-3xl" style={{ backgroundColor: bgCol }}>

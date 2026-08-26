@@ -85,7 +85,7 @@ export default function ExecutivesClient({ initialExecutives }: ExecutivesClient
             {filteredExecutives.map((officer) => (
             <div
               key={officer.id}
-              className="bg-white rounded-3xl border border-gray-200/80 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden group hover:-translate-y-1"
+              className="bg-white rounded-3xl border border-gray-200/80 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden group hover:-translate-y-1 max-w-[290px] mx-auto md:max-w-none w-full"
             >
               <div>
                 {/* Officer Portrait - Compact, refined height with object-top */}
