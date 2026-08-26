@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { FileText, Download } from 'lucide-react';
+import { resolveDocumentUrl } from '@/lib/imageUtils';
 
 export interface Resource {
   id?: number;
@@ -126,8 +127,7 @@ export default function ResourcesSection({ initialResources, dbResources }: Reso
                     </div>
 
                     <a
-                      href={res.file_path ? (res.file_path.startsWith('http') ? res.file_path : `/${res.file_path}`) : '#'}
-                      download
+                      href={resolveDocumentUrl(res.file_path)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={`w-full py-3 px-4 text-xs sm:text-sm font-extrabold rounded-2xl transition-all duration-300 shadow-md flex items-center justify-center gap-2 tracking-wider uppercase group-hover:shadow-lg cursor-pointer ${

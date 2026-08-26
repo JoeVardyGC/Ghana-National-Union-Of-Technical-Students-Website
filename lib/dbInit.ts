@@ -301,6 +301,7 @@ export async function initializeDatabase(): Promise<{ success: boolean; message:
     await query('ALTER TABLE executives MODIFY COLUMN photo LONGTEXT').catch(() => null);
     await query('ALTER TABLE hero_banners MODIFY COLUMN image_url LONGTEXT').catch(() => null);
     await query('ALTER TABLE gallery MODIFY COLUMN image LONGTEXT').catch(() => null);
+    await query('ALTER TABLE resources MODIFY COLUMN file_path LONGTEXT').catch(() => null);
     await query('ALTER TABLE about_page MODIFY COLUMN hero_image LONGTEXT').catch(() => null);
     await query('ALTER TABLE about_page MODIFY COLUMN who_we_are_image LONGTEXT').catch(() => null);
     await query('ALTER TABLE users MODIFY COLUMN avatar LONGTEXT').catch(() => null);

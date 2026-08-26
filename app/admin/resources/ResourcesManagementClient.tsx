@@ -20,9 +20,10 @@ import {
   Shield,
   Layers,
   CheckSquare,
-  Square
+  Square,
+  Info
 } from 'lucide-react';
-import DirectDocumentUploader from '@/components/DirectDocumentUploader';
+import { resolveDocumentUrl } from '@/lib/imageUtils';
 
 interface ResourceItem {
   id: number;
@@ -387,11 +388,10 @@ export default function ResourcesManagementClient({
                 </div>
 
                 <a
-                  href={item.file_path}
+                  href={resolveDocumentUrl(item.file_path)}
                   target="_blank"
-                  rel="noreferrer"
-                  download
-                  className="px-3.5 py-1.5 bg-[#014900] hover:bg-[#D9A000] text-white hover:text-[#014900] rounded-xl text-[11px] font-black uppercase tracking-wider transition-all inline-flex items-center gap-1.5 shadow-xs shrink-0"
+                  rel="noopener noreferrer"
+                  className="px-3.5 py-1.5 bg-[#014900] hover:bg-[#D9A000] text-white hover:text-[#014900] rounded-xl text-[11px] font-black uppercase tracking-wider transition-all inline-flex items-center gap-1.5 shadow-xs shrink-0 cursor-pointer"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Download</span>
@@ -514,22 +514,70 @@ export default function ResourcesManagementClient({
                 </div>
               </div>
 
-              {/* Document File Uploader */}
-              <DirectDocumentUploader
-                label="PDF Document File *"
-                filePath={formData.file_path}
-                fileName={formData.file_name}
-                fileSize={formData.file_size}
-                onFileSelected={(fileData) => {
-                  setFormData({
-                    ...formData,
-                    file_path: fileData.filePath,
-                    file_name: fileData.fileName,
-                    file_size: fileData.fileSize,
-                  });
-                }}
-                helperText="Upload official PDF document (Constitution, Financial Audit, Resolution)"
-              />
+              {/* Document File / Public Share Link */}
+              <div className="space-y-2 bg-gray-50 p-4 rounded-2xl border border-gray-200">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-black uppercase tracking-wider text-[#014900] flex items-center gap-1.5">
+                    <FileText className="w-3.5 h-3.5 text-[#014900]" />
+                    <span>Document File / Direct Download Link *</span>
+                  </label>
+                  <span className="text-[10px] bg-[#014900] text-white px-2 py-0.5 rounded-full font-bold">REQUIRED</span>
+                </div>
+
+                <input
+                  type="url"
+                  required
+                  placeholder="e.g. https://drive.google.com/file/d/... or https://res.cloudinary.com/... or direct PDF link"
+                  value={formData.file_path}
+                  onChange={(e) => setFormData({ ...formData, file_path: e.target.value })}
+                  className="w-full px-3.5 py-2.5 bg-white rounded-xl border border-gray-300 text-xs font-semibold outline-none focus:border-[#014900]"
+                />
+
+                <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-[11px] text-amber-900 flex items-start gap-2">
+                  <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                  <div className="leading-relaxed">
+                    <span className="font-bold block">How to host & link your document:</span>
+                    <span>Upload your PDF/Word doc to <strong>Google Drive</strong> (set sharing to <em>'Anyone with the link can view'</em>), <strong>Cloudinary</strong>, or <strong>Dropbox</strong>, and paste the share link here.</span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                  <div className="space-y-1">
+                    <label className="text-[11px] font-bold text-gray-600 uppercase">
+                      File Display Name *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. GNUTS_Constitution_2025.pdf"
+                      value={formData.file_name}
+                      onChange={(e) => setFormData({ ...formData, file_name: e.target.value })}
+                      className="w-full px-3 py-2 bg-white rounded-xl border border-gray-300 text-xs font-semibold outline-none focus:border-[#014900]"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="text-[11px] font-bold text-gray-600 uppercase">
+                      Test Document Access
+                    </label>
+                    {formData.file_path ? (
+                      <a
+                        href={resolveDocumentUrl(formData.file_path)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full px-3 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        <span>Test & Open Link</span>
+                      </a>
+                    ) : (
+                      <div className="px-3 py-2 bg-gray-100 text-gray-400 rounded-xl text-xs font-medium text-center">
+                        Enter link above to test
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
 
               {/* Description */}
               <div className="space-y-1">

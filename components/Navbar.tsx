@@ -53,7 +53,7 @@ export default function Navbar() {
     { name: 'Our History', href: '/about#history' },
     { name: 'Legacy & Leadership Gallery', href: '/gallery' },
     { name: 'Check your CTVET result', href: 'https://ctvet.gov.gh/results/', external: true },
-    { name: 'Resources / Constitution', href: '/about#resources' },
+    { name: 'Resources / Constitution', href: '/resources' },
   ];
 
   const handleDrawerLinkClick = (e: React.MouseEvent, href: string) => {

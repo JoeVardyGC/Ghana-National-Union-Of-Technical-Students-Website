@@ -81,6 +81,14 @@ const PAGE_HERO_SLOTS = [
     defaultTitle: 'Contact GNUTS Secretariat',
     defaultSubtitle: 'Get in touch with the National Executive Council and regional secretariats.',
   },
+  {
+    key: 'resources_hero',
+    name: 'Resources & Constitution Page Header',
+    route: '/resources',
+    description: 'Header background banner for the constitutional registry and public resources archive.',
+    defaultTitle: 'Resources & Constitution',
+    defaultSubtitle: 'Download official union charters, communiqués, and policy frameworks.',
+  },
 ];
 
 export default function BannersManagementClient({ initialBanners = [] }: BannersManagementClientProps) {

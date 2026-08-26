@@ -29,3 +29,25 @@ export const formatDate = (val: any): string => {
 export const stripHtml = (htmlStr: string = ''): string => {
   return htmlStr.replace(/<[^>]*>?/gm, '').trim();
 };
+
+export const resolveDocumentUrl = (docUrl?: string): string => {
+  if (!docUrl || docUrl.trim() === '') return '#';
+  const clean = docUrl.trim();
+
+  // Handle Google Drive links
+  if (clean.includes('drive.google.com/file/d/')) {
+    const match = clean.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    if (match && match[1]) {
+      return `https://drive.google.com/file/d/${match[1]}/view?usp=sharing`;
+    }
+  }
+
+  // Handle Cloudinary raw documents / direct HTTP URLs
+  if (clean.startsWith('http://') || clean.startsWith('https://')) {
+    return clean;
+  }
+
+  const stripped = clean.replace(/^\/+/, '');
+  return `/${stripped}`;
+};
+
