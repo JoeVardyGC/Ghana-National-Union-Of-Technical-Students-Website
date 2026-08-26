@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { query } from '@/lib/db';
 import HeroSlider from '@/components/HeroSlider';
 import OpportunitiesSection from '@/components/OpportunitiesSection';
+import InnovationsSection from '@/components/InnovationsSection';
 import UnionCtaBanner from '@/components/UnionCtaBanner';
 import NewsSection from '@/components/NewsSection';
 import ScrollAnimationProvider from '@/components/ScrollAnimationProvider';
@@ -16,6 +17,7 @@ export default async function HomePage() {
   const [
     scholarships,
     opportunities,
+    innovations,
     executives,
     news,
     statsResult,
@@ -24,6 +26,7 @@ export default async function HomePage() {
   ] = await Promise.all([
     query('SELECT * FROM scholarships ORDER BY created_at DESC LIMIT 2').catch(() => []),
     query('SELECT * FROM opportunities WHERE status = "active" ORDER BY created_at DESC LIMIT 3').catch(() => []),
+    query('SELECT * FROM innovations WHERE status = "approved" ORDER BY created_at DESC, id DESC LIMIT 2').catch(() => []),
     query('SELECT * FROM executives ORDER BY display_order ASC, created_at DESC LIMIT 8').catch(() => []),
     query('SELECT * FROM news WHERE status = "published" ORDER BY published_at DESC, created_at DESC, id DESC LIMIT 6').catch(() => []),
     query('SELECT COUNT(*) as count FROM innovations WHERE status = "approved"').catch(() => [{ count: 0 }]),
@@ -204,8 +207,11 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 5. Opportunities Section */}
+      {/* 4. Opportunities Section */}
       <OpportunitiesSection dbOpportunities={opportunities} />
+
+      {/* 5. Student Innovations Section (Latest 2 Projects) */}
+      <InnovationsSection dbInnovations={innovations} />
 
       {/* 6. News & Events Section */}
       <NewsSection dbNews={news} />
