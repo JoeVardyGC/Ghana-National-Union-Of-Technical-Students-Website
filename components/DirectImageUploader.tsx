@@ -53,32 +53,6 @@ const compressImage = (file: File): Promise<string> => {
   });
 };
 
-const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'dslngzls6';
-const CLOUDINARY_UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || 'gnuts_uploads';
-
-export const uploadDirectToCloudinary = async (file: File | Blob): Promise<string | null> => {
-  try {
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-
-    const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
-      method: 'POST',
-      body: formData,
-    });
-
-    if (res.ok) {
-      const data = await res.json();
-      if (data.secure_url) {
-        return data.secure_url;
-      }
-    }
-  } catch (err) {
-    console.warn('Cloudinary upload error, falling back:', err);
-  }
-  return null;
-};
-
 export default function DirectImageUploader({
   label,
   value,
@@ -101,14 +75,6 @@ export default function DirectImageUploader({
     setUploadError('');
 
     try {
-      // 1. Direct Cloudinary CDN Upload with gnuts_uploads preset
-      const cldUrl = await uploadDirectToCloudinary(file);
-      if (cldUrl) {
-        onChange(cldUrl);
-        return;
-      }
-
-      // 2. Server API Upload Attempt
       const formData = new FormData();
       formData.append('file', file);
 
@@ -122,7 +88,7 @@ export default function DirectImageUploader({
       if (res.ok && data.url) {
         onChange(data.url);
       } else {
-        // 3. Fallback: Compressed DataURL
+        // Fallback: Read as compressed DataURL for instant zero-error storage
         const compressed = await compressImage(file);
         if (compressed) {
           onChange(compressed);

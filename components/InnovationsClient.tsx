@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { 
   Building2, 
@@ -24,11 +24,9 @@ import {
   AlertCircle,
   Play,
   Image as ImageIcon,
-  Info,
-  Upload,
-  Loader2
+  Info
 } from 'lucide-react';
-import DirectImageUploader, { uploadDirectToCloudinary } from '@/components/DirectImageUploader';
+import DirectImageUploader from '@/components/DirectImageUploader';
 
 export interface InnovationItem {
   id: number;
@@ -118,27 +116,6 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
     image4: '',
     image5: ''
   });
-
-  // Cloudinary Direct Auto-Upload for Student Submissions
-  const [isUploadingCover, setIsUploadingCover] = useState(false);
-  const coverInputRef = useRef<HTMLInputElement>(null);
-
-  const handleCoverFileUpload = async (file: File) => {
-    setIsUploadingCover(true);
-    setSubmitError('');
-    try {
-      const cldUrl = await uploadDirectToCloudinary(file);
-      if (cldUrl) {
-        setFormData((prev) => ({ ...prev, project_image: cldUrl }));
-      } else {
-        alert('Could not auto-upload photo. Please verify your internet or paste an image link.');
-      }
-    } catch {
-      alert('Photo upload failed. Please paste an image link.');
-    } finally {
-      setIsUploadingCover(false);
-    }
-  };
 
   // Reset pagination on search or filter change
   useEffect(() => {
@@ -600,60 +577,31 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
                     </select>
                   </div>
 
-                  {/* 5. Main Cover Picture (Direct Cloudinary Upload or Link) */}
-                  <div className="space-y-2.5 bg-gray-50/90 p-4 rounded-2xl border border-gray-200">
+                  {/* 5. Main Cover Picture Link (Compulsory Link Only) */}
+                  <div className="space-y-2 bg-gray-50/90 p-4 rounded-2xl border border-gray-200">
                     <div className="flex items-center justify-between">
                       <label className="text-xs font-extrabold text-[#014900] uppercase tracking-wider flex items-center gap-1.5">
                         <ImageIcon className="w-4 h-4 text-[#014900]" />
-                        <span>Main Project Cover Photo *</span>
+                        <span>Main Project Cover Photo Link *</span>
                       </label>
                       <span className="text-[10px] bg-[#014900] text-white px-2 py-0.5 rounded-full font-bold">REQUIRED</span>
                     </div>
 
-                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                      <input
-                        type="url"
-                        required
-                        placeholder="e.g. https://res.cloudinary.com/... or paste direct link"
-                        value={formData.project_image}
-                        onChange={(e) => setFormData({ ...formData, project_image: e.target.value })}
-                        className="flex-1 px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs focus:ring-2 focus:ring-[#014900] outline-none bg-white font-medium"
-                      />
-                      <input
-                        type="file"
-                        ref={coverInputRef}
-                        accept="image/*"
-                        className="hidden"
-                        onChange={(e) => {
-                          if (e.target.files?.[0]) handleCoverFileUpload(e.target.files[0]);
-                        }}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => coverInputRef.current?.click()}
-                        disabled={isUploadingCover}
-                        className="px-4 py-2.5 bg-[#014900] hover:bg-[#D9A000] text-white hover:text-[#014900] rounded-xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-xs cursor-pointer shrink-0 disabled:opacity-50"
-                      >
-                        {isUploadingCover ? (
-                          <>
-                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                            <span>Uploading...</span>
-                          </>
-                        ) : (
-                          <>
-                            <Upload className="w-3.5 h-3.5" />
-                            <span>Upload from Phone/PC</span>
-                          </>
-                        )}
-                      </button>
-                    </div>
+                    <input
+                      type="url"
+                      required
+                      placeholder="e.g. https://res.cloudinary.com/... or direct image link"
+                      value={formData.project_image}
+                      onChange={(e) => setFormData({ ...formData, project_image: e.target.value })}
+                      className="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs focus:ring-2 focus:ring-[#014900] outline-none bg-white font-medium"
+                    />
 
                     {/* Helpful instructions for students */}
-                    <div className="p-3 bg-emerald-50/90 border border-emerald-200/90 rounded-xl text-[11px] text-emerald-950 flex items-start gap-2">
-                      <Info className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
+                    <div className="p-3 bg-amber-50/90 border border-amber-200/90 rounded-xl text-[11px] text-amber-900 flex items-start gap-2">
+                      <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                       <div className="leading-relaxed">
-                        <span className="font-bold block">Instant Upload Ready:</span>
-                        <span>Click <strong>"Upload from Phone/PC"</strong> to pick a photo from your gallery, or paste a link from <strong>Cloudinary</strong>, <strong>Postimages</strong>, or <strong>ImgBB</strong>.</span>
+                        <span className="font-bold block">How to get your image link:</span>
+                        <span>Log into <strong>Cloudinary</strong> (or free hosting like <strong>Postimages.org</strong> / <strong>ImgBB.com</strong>), upload your prototype picture, copy the direct image address/link, and paste it here.</span>
                       </div>
                     </div>
 

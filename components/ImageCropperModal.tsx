@@ -14,7 +14,6 @@ import {
   Sparkles,
   UserCheck
 } from 'lucide-react';
-import { uploadDirectToCloudinary } from '@/components/DirectImageUploader';
 
 interface ImageCropperModalProps {
   isOpen: boolean;
@@ -201,21 +200,12 @@ export default function ImageCropperModal({
 
       ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
 
-      // Convert to Blob and Upload to Cloudinary or /api/admin/upload
+      // Convert to Blob and Upload to /api/admin/upload
       const blob = await new Promise<Blob | null>((resolve) => {
         canvas.toBlob((b) => resolve(b), 'image/jpeg', 0.92);
       });
 
       if (blob) {
-        // 1. Direct Cloudinary CDN Upload
-        const cldUrl = await uploadDirectToCloudinary(blob);
-        if (cldUrl) {
-          onCropComplete(cldUrl);
-          onClose();
-          return;
-        }
-
-        // 2. Server Upload Fallback
         const file = new File([blob], `executive-crop-${Date.now()}.jpg`, { type: 'image/jpeg' });
         const formData = new FormData();
         formData.append('file', file);
