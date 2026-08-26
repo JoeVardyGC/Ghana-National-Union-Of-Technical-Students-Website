@@ -24,6 +24,7 @@ import {
   Square
 } from 'lucide-react';
 import { resolveImgUrl } from '@/lib/imageUtils';
+import { uploadDirectToCloudinary } from '@/components/DirectImageUploader';
 
 export interface AdminGalleryItem {
   id: number;
@@ -146,13 +147,23 @@ export default function GalleryManagementClient({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 5 * 1024 * 1024) {
-      showToast('error', 'File size exceeds 5MB limit. Please upload a smaller image.');
+    if (file.size > 10 * 1024 * 1024) {
+      showToast('error', 'File size exceeds 10MB limit. Please upload a smaller image.');
       return;
     }
 
     try {
       setIsUploading(true);
+
+      // 1. Direct Cloudinary CDN Upload
+      const cldUrl = await uploadDirectToCloudinary(file);
+      if (cldUrl) {
+        setFormImage(cldUrl);
+        showToast('success', 'Image uploaded directly to Cloudinary CDN!');
+        return;
+      }
+
+      // 2. Server API upload fallback
       const formData = new FormData();
       formData.append('file', file);
 
