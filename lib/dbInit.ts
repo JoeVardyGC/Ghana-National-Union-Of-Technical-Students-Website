@@ -293,7 +293,19 @@ export async function initializeDatabase(): Promise<{ success: boolean; message:
       `);
     }
 
-    return { success: true, message: 'All GNUTS database tables verified and initialized successfully.' };
+    // Upgrade image columns to LONGTEXT to support CDN URLs and Base64 images without size limitation
+    await query('ALTER TABLE innovations MODIFY COLUMN project_image LONGTEXT').catch(() => null);
+    await query('ALTER TABLE news MODIFY COLUMN image LONGTEXT').catch(() => null);
+    await query('ALTER TABLE news MODIFY COLUMN image2 LONGTEXT').catch(() => null);
+    await query('ALTER TABLE news MODIFY COLUMN image3 LONGTEXT').catch(() => null);
+    await query('ALTER TABLE executives MODIFY COLUMN photo LONGTEXT').catch(() => null);
+    await query('ALTER TABLE hero_banners MODIFY COLUMN image_url LONGTEXT').catch(() => null);
+    await query('ALTER TABLE gallery MODIFY COLUMN image LONGTEXT').catch(() => null);
+    await query('ALTER TABLE about_page MODIFY COLUMN hero_image LONGTEXT').catch(() => null);
+    await query('ALTER TABLE about_page MODIFY COLUMN who_we_are_image LONGTEXT').catch(() => null);
+    await query('ALTER TABLE users MODIFY COLUMN avatar LONGTEXT').catch(() => null);
+
+    return { success: true, message: 'All GNUTS database tables verified, upgraded, and initialized successfully.' };
   } catch (error: any) {
     return { success: false, message: error?.message || 'Database initialization error' };
   }

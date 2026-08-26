@@ -10,11 +10,54 @@ interface DirectImageUploaderProps {
   helperText?: string;
 }
 
+// Helper to compress image in browser to ~50KB-100KB for instant storage
+const compressImage = (file: File): Promise<string> => {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const MAX_WIDTH = 1200;
+        const MAX_HEIGHT = 1200;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height = Math.round((height * MAX_WIDTH) / width);
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width = Math.round((width * MAX_HEIGHT) / height);
+            height = MAX_HEIGHT;
+          }
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL('image/jpeg', 0.82));
+        } else {
+          resolve(e.target?.result as string);
+        }
+      };
+      img.onerror = () => resolve(e.target?.result as string || '');
+      img.src = e.target?.result as string;
+    };
+    reader.onerror = () => resolve('');
+    reader.readAsDataURL(file);
+  });
+};
+
 export default function DirectImageUploader({
   label,
   value,
   onChange,
-  helperText = 'PNG, JPG, WebP up to 5MB'
+  helperText = 'PNG, JPG, WebP up to 10MB'
 }: DirectImageUploaderProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [showUrlInput, setShowUrlInput] = useState(false);
@@ -35,7 +78,7 @@ export default function DirectImageUploader({
       const formData = new FormData();
       formData.append('file', file);
 
-      const res = await fetch('/api/admin/upload', {
+      const res = await fetch('/api/upload', {
         method: 'POST',
         body: formData,
       });
@@ -45,24 +88,18 @@ export default function DirectImageUploader({
       if (res.ok && data.url) {
         onChange(data.url);
       } else {
-        // Fallback: Read as base64 DataURL if server write is sandboxed
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          if (e.target?.result) {
-            onChange(e.target.result as string);
-          }
-        };
-        reader.readAsDataURL(file);
+        // Fallback: Read as compressed DataURL for instant zero-error storage
+        const compressed = await compressImage(file);
+        if (compressed) {
+          onChange(compressed);
+        }
       }
     } catch {
-      // Offline fallback: DataURL
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        if (e.target?.result) {
-          onChange(e.target.result as string);
-        }
-      };
-      reader.readAsDataURL(file);
+      // Offline / serverless fallback: Compressed DataURL
+      const compressed = await compressImage(file);
+      if (compressed) {
+        onChange(compressed);
+      }
     } finally {
       setIsUploading(false);
     }
