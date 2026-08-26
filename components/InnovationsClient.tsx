@@ -21,7 +21,10 @@ import {
   Compass,
   ChevronLeft,
   ChevronRight,
-  AlertCircle
+  AlertCircle,
+  Play,
+  Image as ImageIcon,
+  Info
 } from 'lucide-react';
 import DirectImageUploader from '@/components/DirectImageUploader';
 
@@ -488,6 +491,7 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
                     </div>
                   )}
 
+                  {/* 1. Project Title */}
                   <div className="space-y-1">
                     <label className="text-xs font-extrabold text-gray-700 uppercase">
                       Project Title *
@@ -502,6 +506,25 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
                     />
                   </div>
 
+                  {/* 2. Demonstration Video Link at the Top (Optional) */}
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-extrabold text-gray-700 uppercase flex items-center gap-1.5">
+                        <Play className="w-3.5 h-3.5 text-[#014900]" />
+                        <span>Demonstration Video URL (Optional)</span>
+                      </label>
+                      <span className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">NOT COMPULSORY</span>
+                    </div>
+                    <input
+                      type="url"
+                      placeholder="e.g. https://www.youtube.com/watch?v=... (Optional prototype video)"
+                      value={formData.video_url}
+                      onChange={(e) => setFormData({ ...formData, video_url: e.target.value })}
+                      className="w-full px-4 py-2.5 border border-gray-300 rounded-2xl text-xs focus:ring-2 focus:ring-[#014900] focus:border-[#014900] outline-none bg-white"
+                    />
+                  </div>
+
+                  {/* 3. Developer Name & Technical Institution */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1">
                       <label className="text-xs font-extrabold text-gray-700 uppercase">
@@ -538,60 +561,82 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-1">
-                      <label className="text-xs font-extrabold text-gray-700 uppercase">
-                        Technical Discipline Category *
-                      </label>
-                      <select
-                        value={formData.category}
-                        onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                        className="w-full px-4 py-2.5 border border-gray-300 rounded-2xl text-xs focus:ring-2 focus:ring-[#014900] focus:border-[#014900] outline-none bg-white"
-                      >
-                        {DISCIPLINE_CATEGORIES.filter(c => c !== 'All Disciplines').map((cat, idx) => (
-                          <option key={idx} value={cat}>{cat}</option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div className="space-y-1">
-                      <label className="text-xs font-extrabold text-gray-700 uppercase">
-                        Demonstration Video URL (Optional)
-                      </label>
-                      <input
-                        type="url"
-                        placeholder="https://youtube.com/watch?v=..."
-                        value={formData.video_url}
-                        onChange={(e) => setFormData({ ...formData, video_url: e.target.value })}
-                        className="w-full px-4 py-2.5 border border-gray-300 rounded-2xl text-xs focus:ring-2 focus:ring-[#014900] outline-none"
-                      />
-                    </div>
+                  {/* 4. Discipline Category */}
+                  <div className="space-y-1">
+                    <label className="text-xs font-extrabold text-gray-700 uppercase">
+                      Technical Discipline Category *
+                    </label>
+                    <select
+                      value={formData.category}
+                      onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                      className="w-full px-4 py-2.5 border border-gray-300 rounded-2xl text-xs focus:ring-2 focus:ring-[#014900] focus:border-[#014900] outline-none bg-white font-medium"
+                    >
+                      {DISCIPLINE_CATEGORIES.filter(c => c !== 'All Disciplines').map((cat, idx) => (
+                        <option key={idx} value={cat}>{cat}</option>
+                      ))}
+                    </select>
                   </div>
 
-                  {/* Main Project Cover Image Uploader */}
-                  <DirectImageUploader
-                    label="Main Project Cover Photo *"
-                    value={formData.project_image}
-                    onChange={(url) => setFormData({ ...formData, project_image: url })}
-                    helperText="Upload or attach clear photo of the prototype or engineering design"
-                  />
+                  {/* 5. Main Cover Picture Link (Compulsory Link Only) */}
+                  <div className="space-y-2 bg-gray-50/90 p-4 rounded-2xl border border-gray-200">
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-extrabold text-[#014900] uppercase tracking-wider flex items-center gap-1.5">
+                        <ImageIcon className="w-4 h-4 text-[#014900]" />
+                        <span>Main Project Cover Photo Link *</span>
+                      </label>
+                      <span className="text-[10px] bg-[#014900] text-white px-2 py-0.5 rounded-full font-bold">REQUIRED</span>
+                    </div>
 
-                  {/* Additional In-Project Gallery Photos */}
-                  <div className="space-y-2 bg-gray-50 p-4 rounded-2xl border border-gray-200">
-                    <label className="text-xs font-extrabold text-[#014900] uppercase block">
-                      Additional Project Photos (Optional URLs)
+                    <input
+                      type="url"
+                      required
+                      placeholder="e.g. https://res.cloudinary.com/... or direct image link"
+                      value={formData.project_image}
+                      onChange={(e) => setFormData({ ...formData, project_image: e.target.value })}
+                      className="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs focus:ring-2 focus:ring-[#014900] outline-none bg-white font-medium"
+                    />
+
+                    {/* Helpful instructions for students */}
+                    <div className="p-3 bg-amber-50/90 border border-amber-200/90 rounded-xl text-[11px] text-amber-900 flex items-start gap-2">
+                      <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                      <div className="leading-relaxed">
+                        <span className="font-bold block">How to get your image link:</span>
+                        <span>Log into <strong>Cloudinary</strong> (or free hosting like <strong>Postimages.org</strong> / <strong>ImgBB.com</strong>), upload your prototype picture, copy the direct image address/link, and paste it here.</span>
+                      </div>
+                    </div>
+
+                    {/* Live Image Preview Thumbnail if link is provided */}
+                    {formData.project_image && (
+                      <div className="mt-2 relative w-32 h-20 rounded-xl overflow-hidden border border-gray-300 shadow-xs bg-gray-900 group">
+                        <img
+                          src={formData.project_image}
+                          alt="Cover Preview"
+                          className="w-full h-full object-cover"
+                          onError={(e) => (e.currentTarget.style.display = 'none')}
+                        />
+                        <div className="absolute bottom-1 right-1 bg-black/70 text-white text-[9px] px-1.5 py-0.5 rounded font-bold">
+                          Cover Preview
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* 6. Optional Additional Photo Links */}
+                  <div className="space-y-2 bg-gray-50/70 p-3.5 rounded-2xl border border-gray-200">
+                    <label className="text-xs font-extrabold text-gray-700 uppercase block">
+                      Additional Project Photos (Optional Links)
                     </label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       <input
                         type="url"
-                        placeholder="Additional Photo 2 URL"
+                        placeholder="Additional Photo 2 Link (Optional)"
                         value={formData.image2 || ''}
                         onChange={(e) => setFormData({ ...formData, image2: e.target.value })}
                         className="w-full px-3 py-2 border border-gray-300 rounded-xl text-xs focus:ring-2 focus:ring-[#014900] outline-none bg-white"
                       />
                       <input
                         type="url"
-                        placeholder="Additional Photo 3 URL"
+                        placeholder="Additional Photo 3 Link (Optional)"
                         value={formData.image3 || ''}
                         onChange={(e) => setFormData({ ...formData, image3: e.target.value })}
                         className="w-full px-3 py-2 border border-gray-300 rounded-xl text-xs focus:ring-2 focus:ring-[#014900] outline-none bg-white"
@@ -599,6 +644,7 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
                     </div>
                   </div>
 
+                  {/* 7. Detailed Description */}
                   <div className="space-y-1">
                     <label className="text-xs font-extrabold text-gray-700 uppercase">
                       Detailed Project Overview & Technical Specifications *
@@ -609,7 +655,7 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
                       placeholder="Describe the problem, engineering solution, components used, and target community impact..."
                       value={formData.description}
                       onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                      className="w-full px-4 py-2.5 border border-gray-300 rounded-2xl text-xs focus:ring-2 focus:ring-[#014900] focus:border-[#014900] outline-none"
+                      className="w-full px-4 py-2.5 border border-gray-300 rounded-2xl text-xs focus:ring-2 focus:ring-[#014900] focus:border-[#014900] outline-none leading-relaxed"
                     />
                   </div>
 

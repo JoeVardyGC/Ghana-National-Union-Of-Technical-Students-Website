@@ -223,9 +223,17 @@ export default async function NewsDetailPage({ params }: PageProps) {
                 </div>
               )}
 
-              {/* 2. RIGHT AFTER BLOCK IMAGE: Article Content Text */}
-              <div className="prose prose-lg max-w-none text-gray-800 leading-relaxed space-y-5 whitespace-pre-line text-sm sm:text-base font-medium font-sans">
-                {article.content}
+              {/* 2. RIGHT AFTER BLOCK IMAGE: Article Content Text with Automatic Paragraphing */}
+              <div className="space-y-4 text-gray-800 leading-relaxed text-sm sm:text-base font-medium font-sans">
+                {(article.content || '')
+                  .split(/\r?\n\s*\r?\n|\r?\n/)
+                  .map((p) => p.trim())
+                  .filter((p) => p.length > 0)
+                  .map((paragraph, idx) => (
+                    <p key={idx} className="leading-relaxed">
+                      {paragraph}
+                    </p>
+                  ))}
               </div>
 
               {/* 3. UNDER CONTENT: Tags / Hashtags */}

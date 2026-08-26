@@ -403,46 +403,74 @@ export default async function InnovationDetailPage({ params }: { params: Promise
                 </div>
               )}
 
-              {/* Project Description Text */}
-              <div className="prose prose-lg max-w-none text-gray-800 leading-relaxed space-y-5 text-sm sm:text-base font-medium font-sans">
-                {project.description.split('\n\n').map((paragraph, idx) => (
-                  <p key={idx}>{paragraph}</p>
-                ))}
-              </div>
+              {/* Project Overview & Content with Early Video Integration and Automatic Paragraphing */}
+              {(() => {
+                const paragraphs = (project.description || '')
+                  .split(/\r?\n\s*\r?\n|\r?\n/)
+                  .map((p) => p.trim())
+                  .filter((p) => p.length > 0);
 
-              {/* YouTube Video Demonstration */}
-              {youtubeId && (
-                <div className="space-y-3 pt-6 border-t border-gray-100">
-                  <h3 className="text-xs sm:text-sm font-extrabold text-[#014900] uppercase tracking-wider flex items-center gap-2">
-                    <Play className="w-4 h-4 text-[#D9A000]" />
-                    <span>Project Demonstration Video</span>
-                  </h3>
-                  <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-black shadow-lg border border-gray-200">
-                    <iframe
-                      src={`https://www.youtube.com/embed/${youtubeId}`}
-                      title={project.title}
-                      className="absolute inset-0 w-full h-full border-0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
+                const introParagraphs = youtubeId ? paragraphs.slice(0, 1) : paragraphs;
+                const restParagraphs = youtubeId ? paragraphs.slice(1) : [];
+
+                return (
+                  <div className="space-y-6">
+                    {/* Opening Overview (First 2-5 lines) */}
+                    <div className="space-y-4 text-gray-800 leading-relaxed text-sm sm:text-base font-medium font-sans">
+                      {introParagraphs.map((p, idx) => (
+                        <p key={`intro-${idx}`} className="leading-relaxed">
+                          {p}
+                        </p>
+                      ))}
+                    </div>
+
+                    {/* YouTube Video Demonstration in Upper Part */}
+                    {youtubeId && (
+                      <div className="space-y-2.5 my-6 p-4 sm:p-5 bg-gray-50 rounded-2xl border border-gray-200">
+                        <div className="flex items-center gap-2 text-xs font-black text-[#014900] uppercase tracking-wider">
+                          <Play className="w-4 h-4 text-[#D9A000]" />
+                          <span>Demonstration & Prototype Video</span>
+                        </div>
+                        <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-black shadow-md border border-gray-200">
+                          <iframe
+                            src={`https://www.youtube.com/embed/${youtubeId}`}
+                            title={project.title}
+                            className="absolute inset-0 w-full h-full border-0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* External Non-YouTube Project Link */}
+                    {project.video_url && !youtubeId && (
+                      <div className="p-4 bg-emerald-50/80 rounded-2xl border border-emerald-200">
+                        <a
+                          href={project.video_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-xs sm:text-sm font-black text-[#014900] hover:text-[#D9A000] transition-colors"
+                        >
+                          <span>Visit Demonstration Resource</span>
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                      </div>
+                    )}
+
+                    {/* Continuation Paragraphs (Rest of the text continues below video) */}
+                    {restParagraphs.length > 0 && (
+                      <div className="space-y-4 text-gray-800 leading-relaxed text-sm sm:text-base font-medium font-sans pt-2">
+                        {restParagraphs.map((p, idx) => (
+                          <p key={`rest-${idx}`} className="leading-relaxed">
+                            {p}
+                          </p>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                </div>
-              )}
-
-              {/* External Project Link */}
-              {project.video_url && !youtubeId && (
-                <div className="pt-4 border-t border-gray-100">
-                  <a
-                    href={project.video_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[#014900] hover:text-[#D9A000] underline"
-                  >
-                    <span>Visit Official Project Resource</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                </div>
-              )}
+                );
+              })()}
 
               {/* Hashtags Bar */}
               <div className="pt-6 border-t border-gray-100 flex items-center gap-2 flex-wrap">

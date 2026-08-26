@@ -21,7 +21,10 @@ import {
   Sparkles,
   Tag,
   CheckSquare,
-  Square
+  Square,
+  Play,
+  Image as ImageIcon,
+  Info
 } from 'lucide-react';
 import DirectImageUploader from '@/components/DirectImageUploader';
 
@@ -587,6 +590,24 @@ export default function InnovationsManagementClient({
                 />
               </div>
 
+              {/* Video Demo URL at the Top (Optional) */}
+              <div className="space-y-1">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-black uppercase tracking-wider text-gray-700 flex items-center gap-1.5">
+                    <Play className="w-3.5 h-3.5 text-[#014900]" />
+                    <span>Demonstration Video URL (Optional)</span>
+                  </label>
+                  <span className="text-[10px] text-gray-400 font-semibold uppercase">Optional</span>
+                </div>
+                <input
+                  type="url"
+                  value={formData.video_url}
+                  onChange={(e) => setFormData({ ...formData, video_url: e.target.value })}
+                  placeholder="https://www.youtube.com/watch?v=... (Optional YouTube video)"
+                  className="w-full px-3.5 py-2.5 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-semibold outline-none focus:border-[#014900] focus:bg-white"
+                />
+              </div>
+
               {/* Student Innovator & Institution */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-1">
@@ -624,11 +645,11 @@ export default function InnovationsManagementClient({
                 </div>
               </div>
 
-              {/* Category & Status & Video Link 3-col */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {/* Category & Status 2-col */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="space-y-1">
                   <label className="text-xs font-black uppercase tracking-wider text-gray-700">
-                    Discipline / Category
+                    Discipline / Category *
                   </label>
                   <select
                     value={formData.category}
@@ -643,7 +664,7 @@ export default function InnovationsManagementClient({
 
                 <div className="space-y-1">
                   <label className="text-xs font-black uppercase tracking-wider text-gray-700">
-                    Review Status
+                    Review Status *
                   </label>
                   <select
                     value={formData.status}
@@ -655,28 +676,46 @@ export default function InnovationsManagementClient({
                     <option value="rejected">Rejected</option>
                   </select>
                 </div>
-
-                <div className="space-y-1">
-                  <label className="text-xs font-black uppercase tracking-wider text-gray-700">
-                    Video Demo URL (Optional)
-                  </label>
-                  <input
-                    type="url"
-                    value={formData.video_url}
-                    onChange={(e) => setFormData({ ...formData, video_url: e.target.value })}
-                    placeholder="https://youtube.com/..."
-                    className="w-full px-3.5 py-2.5 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-semibold outline-none focus:border-[#014900] focus:bg-white"
-                  />
-                </div>
               </div>
 
-              {/* Direct Project Photo Uploader */}
-              <DirectImageUploader
-                label="Project Prototype Photograph / Blueprint"
-                value={formData.project_image}
-                onChange={(url) => setFormData({ ...formData, project_image: url })}
-                helperText="Upload high-res photo of the physical prototype, circuitry, or 3D render"
-              />
+              {/* Main Cover Picture Link (Compulsory Link Only) */}
+              <div className="space-y-2 bg-gray-50 p-3.5 rounded-2xl border border-gray-200">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-black uppercase tracking-wider text-[#014900] flex items-center gap-1.5">
+                    <ImageIcon className="w-3.5 h-3.5 text-[#014900]" />
+                    <span>Project Cover Image Link *</span>
+                  </label>
+                  <span className="text-[10px] bg-[#014900] text-white px-2 py-0.5 rounded-full font-bold">REQUIRED</span>
+                </div>
+
+                <input
+                  type="url"
+                  required
+                  placeholder="https://res.cloudinary.com/... or direct image URL"
+                  value={formData.project_image}
+                  onChange={(e) => setFormData({ ...formData, project_image: e.target.value })}
+                  className="w-full px-3.5 py-2.5 bg-white rounded-xl border border-gray-300 text-xs font-semibold outline-none focus:border-[#014900]"
+                />
+
+                <div className="p-2.5 bg-amber-50 border border-amber-200 rounded-xl text-[11px] text-amber-900 flex items-start gap-2">
+                  <Info className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                  <span>Tip: Upload image to <strong>Cloudinary</strong>, copy the image link, and paste here.</span>
+                </div>
+
+                {formData.project_image && (
+                  <div className="mt-2 relative w-32 h-20 rounded-xl overflow-hidden border border-gray-300 shadow-xs bg-gray-900">
+                    <img
+                      src={formData.project_image}
+                      alt="Cover Preview"
+                      className="w-full h-full object-cover"
+                      onError={(e) => (e.currentTarget.style.display = 'none')}
+                    />
+                    <div className="absolute bottom-1 right-1 bg-black/70 text-white text-[9px] px-1.5 py-0.5 rounded font-bold">
+                      Cover Preview
+                    </div>
+                  </div>
+                )}
+              </div>
 
               {/* Description */}
               <div className="space-y-1">
