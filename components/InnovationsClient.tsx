@@ -99,7 +99,7 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
   const [formData, setFormData] = useState({
     title: '',
     student_name: '',
-    institution: GHANA_INSTITUTIONS[0],
+    institution: '',
     category: DISCIPLINE_CATEGORIES[1],
     description: '',
     video_url: '',
@@ -187,7 +187,7 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
       setFormData({
         title: '',
         student_name: '',
-        institution: GHANA_INSTITUTIONS[0],
+        institution: '',
         category: DISCIPLINE_CATEGORIES[1],
         description: '',
         video_url: '',
@@ -489,15 +489,20 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
                       <label className="text-xs font-extrabold text-gray-700 uppercase">
                         Technical Institution *
                       </label>
-                      <select
+                      <input
+                        type="text"
+                        required
+                        list="ghana-institutions"
                         value={formData.institution}
                         onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
-                        className="w-full px-4 py-2.5 border border-gray-300 rounded-2xl text-xs focus:ring-2 focus:ring-[#014900] focus:border-[#014900] outline-none bg-white"
-                      >
+                        placeholder="e.g. Takoradi Technical University (TTU)"
+                        className="w-full px-4 py-2.5 border border-gray-300 rounded-2xl text-xs focus:ring-2 focus:ring-[#014900] focus:border-[#014900] outline-none bg-white font-medium"
+                      />
+                      <datalist id="ghana-institutions">
                         {GHANA_INSTITUTIONS.map((inst, idx) => (
-                          <option key={idx} value={inst}>{inst}</option>
+                          <option key={idx} value={inst} />
                         ))}
-                      </select>
+                      </datalist>
                     </div>
                   </div>
 
