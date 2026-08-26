@@ -20,8 +20,10 @@ import {
   Cpu,
   Compass,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  AlertCircle
 } from 'lucide-react';
+import DirectImageUploader from '@/components/DirectImageUploader';
 
 export interface InnovationItem {
   id: number;
@@ -96,6 +98,8 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
   // Submit Project Modal state
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const [submittedSuccess, setSubmittedSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [formData, setFormData] = useState({
     title: '',
     student_name: '',
@@ -178,26 +182,47 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
   const paginatedInnovations = filteredInnovations.slice(startIndex, endIndex);
 
   // Submit Modal Handler
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmittedSuccess(true);
-    setTimeout(() => {
-      setSubmittedSuccess(false);
-      setIsSubmitModalOpen(false);
-      setFormData({
-        title: '',
-        student_name: '',
-        institution: '',
-        category: DISCIPLINE_CATEGORIES[1],
-        description: '',
-        video_url: '',
-        project_image: '',
-        image2: '',
-        image3: '',
-        image4: '',
-        image5: ''
+    setIsSubmitting(true);
+    setSubmitError('');
+
+    try {
+      const res = await fetch('/api/innovations/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
       });
-    }, 2500);
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to submit innovation project. Please try again.');
+      }
+
+      setSubmittedSuccess(true);
+      setTimeout(() => {
+        setSubmittedSuccess(false);
+        setIsSubmitModalOpen(false);
+        setFormData({
+          title: '',
+          student_name: '',
+          institution: '',
+          category: DISCIPLINE_CATEGORIES[1],
+          description: '',
+          video_url: '',
+          project_image: '',
+          image2: '',
+          image3: '',
+          image4: '',
+          image5: ''
+        });
+      }, 3000);
+    } catch (err: any) {
+      setSubmitError(err.message || 'An error occurred while submitting your project.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Resolve Image Path
@@ -456,6 +481,13 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
                 </div>
               ) : (
                 <form onSubmit={handleFormSubmit} className="space-y-4 text-left">
+                  {submitError && (
+                    <div className="p-3.5 bg-red-50 text-red-700 border border-red-200 rounded-2xl text-xs font-bold flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4 shrink-0" />
+                      <span>{submitError}</span>
+                    </div>
+                  )}
+
                   <div className="space-y-1">
                     <label className="text-xs font-extrabold text-gray-700 uppercase">
                       Project Title *
@@ -536,47 +568,35 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
                     </div>
                   </div>
 
-                  {/* PROJECT PICTURES (UP TO 5 PHOTOS) */}
-                  <div className="space-y-2.5 bg-gray-50 p-4 rounded-2xl border border-gray-200">
+                  {/* Main Project Cover Image Uploader */}
+                  <DirectImageUploader
+                    label="Main Project Cover Photo *"
+                    value={formData.project_image}
+                    onChange={(url) => setFormData({ ...formData, project_image: url })}
+                    helperText="Upload or attach clear photo of the prototype or engineering design"
+                  />
+
+                  {/* Additional In-Project Gallery Photos */}
+                  <div className="space-y-2 bg-gray-50 p-4 rounded-2xl border border-gray-200">
                     <label className="text-xs font-extrabold text-[#014900] uppercase block">
-                      Project Pictures (Attach Up to 5 Photos) *
+                      Additional Project Photos (Optional URLs)
                     </label>
-                    <input
-                      type="url"
-                      required
-                      placeholder="Picture 1 (Main Cover Photo URL) *"
-                      value={formData.project_image}
-                      onChange={(e) => setFormData({ ...formData, project_image: e.target.value })}
-                      className="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs focus:ring-2 focus:ring-[#014900] outline-none bg-white"
-                    />
-                    <input
-                      type="url"
-                      placeholder="Picture 2 URL (Optional)"
-                      value={formData.image2 || ''}
-                      onChange={(e) => setFormData({ ...formData, image2: e.target.value })}
-                      className="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs focus:ring-2 focus:ring-[#014900] outline-none bg-white"
-                    />
-                    <input
-                      type="url"
-                      placeholder="Picture 3 URL (Optional)"
-                      value={formData.image3 || ''}
-                      onChange={(e) => setFormData({ ...formData, image3: e.target.value })}
-                      className="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs focus:ring-2 focus:ring-[#014900] outline-none bg-white"
-                    />
-                    <input
-                      type="url"
-                      placeholder="Picture 4 URL (Optional)"
-                      value={formData.image4 || ''}
-                      onChange={(e) => setFormData({ ...formData, image4: e.target.value })}
-                      className="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs focus:ring-2 focus:ring-[#014900] outline-none bg-white"
-                    />
-                    <input
-                      type="url"
-                      placeholder="Picture 5 URL (Optional)"
-                      value={formData.image5 || ''}
-                      onChange={(e) => setFormData({ ...formData, image5: e.target.value })}
-                      className="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs focus:ring-2 focus:ring-[#014900] outline-none bg-white"
-                    />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <input
+                        type="url"
+                        placeholder="Additional Photo 2 URL"
+                        value={formData.image2 || ''}
+                        onChange={(e) => setFormData({ ...formData, image2: e.target.value })}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-xl text-xs focus:ring-2 focus:ring-[#014900] outline-none bg-white"
+                      />
+                      <input
+                        type="url"
+                        placeholder="Additional Photo 3 URL"
+                        value={formData.image3 || ''}
+                        onChange={(e) => setFormData({ ...formData, image3: e.target.value })}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-xl text-xs focus:ring-2 focus:ring-[#014900] outline-none bg-white"
+                      />
+                    </div>
                   </div>
 
                   <div className="space-y-1">
@@ -597,16 +617,26 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
                     <button
                       type="button"
                       onClick={() => setIsSubmitModalOpen(false)}
-                      className="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold rounded-2xl transition-all"
+                      className="px-5 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold rounded-2xl transition-all cursor-pointer"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="px-6 py-2.5 bg-[#014900] hover:bg-[#013300] text-white text-xs font-black uppercase tracking-wider rounded-2xl transition-all shadow-md flex items-center gap-2"
+                      disabled={isSubmitting}
+                      className="px-6 py-2.5 bg-[#014900] hover:bg-[#013300] text-white text-xs font-black uppercase tracking-wider rounded-2xl transition-all shadow-md flex items-center gap-2 cursor-pointer disabled:opacity-70"
                     >
-                      <span>Submit Project</span>
-                      <ArrowRight className="w-4 h-4" />
+                      {isSubmitting ? (
+                        <>
+                          <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                          <span>Submitting...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Submit Project</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </>
+                      )}
                     </button>
                   </div>
                 </form>
