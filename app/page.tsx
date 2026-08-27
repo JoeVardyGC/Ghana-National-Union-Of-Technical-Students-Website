@@ -7,7 +7,7 @@ import UnionCtaBanner from '@/components/UnionCtaBanner';
 import NewsSection from '@/components/NewsSection';
 import ScrollAnimationProvider from '@/components/ScrollAnimationProvider';
 import { resolveImgUrl } from '@/lib/imageUtils';
-import { Layers, Clock, MessageSquare, Mail, Phone, Share2, Calendar } from 'lucide-react';
+import { Layers, Clock, Calendar, MessageSquare, Mail, Phone, Share2 } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0; // Fresh real-time data on every visit
@@ -178,27 +178,23 @@ export default async function HomePage() {
                       <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-medium line-clamp-4 break-words">
                         {item.description}
                       </p>
-
-                      {/* Prominent Visible Deadline Badge */}
-                      {item.deadline && (
-                        <div className="pt-2">
-                          <div className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-gray-900 bg-amber-50 border border-amber-200/80 px-2.5 sm:px-3 py-1.5 rounded-xl shadow-xs">
-                            <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D9A000] shrink-0" />
-                            <span>Deadline: <strong className="font-black text-gray-900">{String(item.deadline).split('T')[0]}</strong></span>
-                          </div>
-                        </div>
-                      )}
                     </div>
 
-                    <div className="pt-3 sm:pt-4 mt-4 sm:mt-6 border-t border-gray-100 relative z-10 flex items-center justify-between gap-2">
+                    <div className="pt-3.5 sm:pt-4 mt-4 sm:mt-6 border-t border-gray-100 relative z-10 flex flex-wrap items-center justify-between gap-2.5">
                       <Link
                         href={item.link || item.application_url || '/scholarships'}
-                        className={`text-xs font-black uppercase tracking-wider transition-colors inline-flex items-center gap-1 ${
+                        className={`text-xs sm:text-sm font-black uppercase tracking-wider transition-colors inline-flex items-center gap-1 shrink-0 ${
                           isGold ? 'text-[#D9A000] hover:text-[#014900]' : 'text-[#014900] hover:text-[#D9A000]'
                         }`}
                       >
                         {isActive ? 'Apply Now →' : 'Learn More →'}
                       </Link>
+                      {item.deadline && (
+                        <span className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-800 bg-gray-100 px-2.5 py-1 rounded-xl shrink-0">
+                          <Calendar className="w-3.5 h-3.5 text-[#D9A000] shrink-0" />
+                          <span>Deadline: {String(item.deadline).split('T')[0]}</span>
+                        </span>
+                      )}
                     </div>
                   </div>
                 );
