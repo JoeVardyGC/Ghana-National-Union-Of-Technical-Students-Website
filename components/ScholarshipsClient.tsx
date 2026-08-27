@@ -54,6 +54,46 @@ export default function ScholarshipsClient({
     setExpandedRequirements(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
+  // Auto-expand and scroll to scholarship when arrived via link with hash (e.g., #scholarship-2)
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      const hash = window.location.hash;
+      const match = hash.match(/#scholarship-(\d+)/);
+      if (match && match[1]) {
+        const targetId = Number(match[1]);
+        // Automatically expand the requirements for this scholarship card
+        setExpandedRequirements(prev => ({ ...prev, [targetId]: true }));
+        
+        // Smoothly scroll and highlight the card
+        setTimeout(() => {
+          const el = document.getElementById(`scholarship-${targetId}`);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            el.classList.add('ring-4', 'ring-[#014900]', 'ring-offset-4');
+            setTimeout(() => {
+              el.classList.remove('ring-4', 'ring-[#014900]', 'ring-offset-4');
+            }, 3500);
+          }
+        }, 400);
+      } else {
+        const oppMatch = hash.match(/#opportunity-(\d+)/);
+        if (oppMatch && oppMatch[1]) {
+          const oppId = Number(oppMatch[1]);
+          setTimeout(() => {
+            const el = document.getElementById(`opportunity-${oppId}`);
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              el.classList.add('ring-4', 'ring-[#D9A000]', 'ring-offset-4');
+              setTimeout(() => {
+                el.classList.remove('ring-4', 'ring-[#D9A000]', 'ring-offset-4');
+              }, 3500);
+            }
+          }, 400);
+        }
+      }
+    }
+  }, []);
+
   // Trigger popup when student comes to the page
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -227,7 +267,8 @@ export default function ScholarshipsClient({
                 return (
                   <div
                     key={item.id}
-                    className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-7 shadow-sm hover:shadow-xl border border-gray-200 flex flex-col justify-between transition-all duration-300 group min-w-0 w-full hover:-translate-y-1"
+                    id={`scholarship-${item.id}`}
+                    className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-7 shadow-sm hover:shadow-xl border border-gray-200 flex flex-col justify-between transition-all duration-300 group min-w-0 w-full hover:-translate-y-1 scroll-mt-28"
                   >
                     <div className="space-y-3 sm:space-y-4 min-w-0">
                       {/* Badge Header: Active Badge + Urgency Pill */}
@@ -474,7 +515,8 @@ export default function ScholarshipsClient({
                 return (
                   <div
                     key={item.id}
-                    className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-7 shadow-sm hover:shadow-xl border border-gray-200 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 group min-w-0 w-full"
+                    id={`opportunity-${item.id}`}
+                    className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-7 shadow-sm hover:shadow-xl border border-gray-200 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 group min-w-0 w-full scroll-mt-28"
                   >
                     <div className="space-y-3 sm:space-y-4 min-w-0">
                       {/* Header Badges */}

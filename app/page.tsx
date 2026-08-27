@@ -152,9 +152,10 @@ export default async function HomePage() {
                 const isGold = idx % 2 === 1;
 
                 return (
-                  <div
+                  <Link
                     key={item.id || idx}
-                    className="group relative bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 lg:p-8 shadow-md border border-gray-200/90 flex flex-col justify-between overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1.5 min-w-0 w-full"
+                    href={`/scholarships#scholarship-${item.id}`}
+                    className="group relative bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 lg:p-8 shadow-md border border-gray-200/90 flex flex-col justify-between overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1.5 min-w-0 w-full cursor-pointer"
                   >
                     <div className="space-y-3 sm:space-y-4 relative z-10 min-w-0">
                       <div className="flex justify-between items-start gap-2 flex-wrap min-w-0">
@@ -181,21 +182,20 @@ export default async function HomePage() {
                     </div>
 
                     <div className="pt-3 sm:pt-4 mt-4 sm:mt-6 border-t border-gray-100 relative z-10 flex items-center justify-between gap-2">
-                      <Link
-                        href={item.link || item.application_url || '/scholarships'}
+                      <span
                         className={`text-xs font-black uppercase tracking-wider transition-colors inline-flex items-center gap-1 ${
-                          isGold ? 'text-[#D9A000] hover:text-[#014900]' : 'text-[#014900] hover:text-[#D9A000]'
+                          isGold ? 'text-[#D9A000] group-hover:text-[#014900]' : 'text-[#014900] group-hover:text-[#D9A000]'
                         }`}
                       >
-                        {isActive ? 'Apply Now →' : 'Learn More →'}
-                      </Link>
+                        <span>View Requirements & Apply →</span>
+                      </span>
                       {item.deadline && (
                         <span className="text-[11px] font-semibold text-gray-400 truncate">
                           Deadline: {String(item.deadline).split('T')[0]}
                         </span>
                       )}
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>
