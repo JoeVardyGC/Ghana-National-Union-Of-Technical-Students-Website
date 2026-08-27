@@ -75,21 +75,6 @@ export default function ScholarshipsClient({
             }, 3500);
           }
         }, 400);
-      } else {
-        const oppMatch = hash.match(/#opportunity-(\d+)/);
-        if (oppMatch && oppMatch[1]) {
-          const oppId = Number(oppMatch[1]);
-          setTimeout(() => {
-            const el = document.getElementById(`opportunity-${oppId}`);
-            if (el) {
-              el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              el.classList.add('ring-4', 'ring-[#D9A000]', 'ring-offset-4');
-              setTimeout(() => {
-                el.classList.remove('ring-4', 'ring-[#D9A000]', 'ring-offset-4');
-              }, 3500);
-            }
-          }, 400);
-        }
       }
     }
   }, []);
@@ -515,8 +500,7 @@ export default function ScholarshipsClient({
                 return (
                   <div
                     key={item.id}
-                    id={`opportunity-${item.id}`}
-                    className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-7 shadow-sm hover:shadow-xl border border-gray-200 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 group min-w-0 w-full scroll-mt-28"
+                    className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-7 shadow-sm hover:shadow-xl border border-gray-200 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 group min-w-0 w-full"
                   >
                     <div className="space-y-3 sm:space-y-4 min-w-0">
                       {/* Header Badges */}
