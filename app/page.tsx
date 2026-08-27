@@ -7,7 +7,7 @@ import UnionCtaBanner from '@/components/UnionCtaBanner';
 import NewsSection from '@/components/NewsSection';
 import ScrollAnimationProvider from '@/components/ScrollAnimationProvider';
 import { resolveImgUrl } from '@/lib/imageUtils';
-import { Layers, Clock, Calendar, MessageSquare, Mail, Phone, Share2 } from 'lucide-react';
+import { Layers, Clock, MessageSquare, Mail, Phone, Share2 } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0; // Fresh real-time data on every visit
@@ -180,19 +180,18 @@ export default async function HomePage() {
                       </p>
                     </div>
 
-                    <div className="pt-3.5 sm:pt-4 mt-4 sm:mt-6 border-t border-gray-100 relative z-10 flex flex-wrap items-center justify-between gap-2.5">
+                    <div className="pt-3 sm:pt-4 mt-4 sm:mt-6 border-t border-gray-100 relative z-10 flex items-center justify-between gap-2">
                       <Link
                         href={item.link || item.application_url || '/scholarships'}
-                        className={`text-xs sm:text-sm font-black uppercase tracking-wider transition-colors inline-flex items-center gap-1 shrink-0 ${
+                        className={`text-xs font-black uppercase tracking-wider transition-colors inline-flex items-center gap-1 ${
                           isGold ? 'text-[#D9A000] hover:text-[#014900]' : 'text-[#014900] hover:text-[#D9A000]'
                         }`}
                       >
                         {isActive ? 'Apply Now →' : 'Learn More →'}
                       </Link>
                       {item.deadline && (
-                        <span className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-800 bg-gray-100 px-2.5 py-1 rounded-xl shrink-0">
-                          <Calendar className="w-3.5 h-3.5 text-[#D9A000] shrink-0" />
-                          <span>Deadline: {String(item.deadline).split('T')[0]}</span>
+                        <span className="text-[11px] font-semibold text-gray-400 truncate">
+                          Deadline: {String(item.deadline).split('T')[0]}
                         </span>
                       )}
                     </div>
