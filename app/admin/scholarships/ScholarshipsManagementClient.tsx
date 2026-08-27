@@ -302,7 +302,7 @@ export default function ScholarshipsManagementClient({
           return (
             <div
               key={item.id}
-              className={`bg-white rounded-3xl border shadow-md hover:shadow-xl transition-all duration-300 p-6 flex flex-col justify-between space-y-4 border-l-4 border-l-[#014900] relative group ${
+              className={`bg-white rounded-3xl border shadow-md hover:shadow-xl transition-all duration-300 p-6 flex flex-col justify-between space-y-4 relative group ${
                 isSelected ? 'border-[#014900] ring-2 ring-[#014900]/20 bg-emerald-50/10' : 'border-gray-200/90'
               }`}
             >

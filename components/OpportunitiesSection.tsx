@@ -54,9 +54,7 @@ export default function OpportunitiesSection({ dbOpportunities = [] }: { dbOppor
             return (
               <div
                 key={opp.id || idx}
-                className={`bg-white rounded-3xl p-7 sm:p-8 shadow-md border border-gray-100 flex flex-col justify-between hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 ${
-                  isGold ? 'border-l-4 border-l-[#D9A000]' : 'border-l-4 border-l-[#014900]'
-                }`}
+                className="bg-white rounded-3xl p-7 sm:p-8 shadow-md border border-gray-200/90 flex flex-col justify-between hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300"
               >
                 <div className="space-y-4">
                   {/* Type Badge */}

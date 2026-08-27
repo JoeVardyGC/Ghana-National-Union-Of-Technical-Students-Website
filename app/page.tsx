@@ -77,7 +77,7 @@ export default async function HomePage() {
             {/* Right side: 3 stacked curved cards (rounded-2xl) */}
             <div className="flex flex-col gap-5">
               {/* Card 1 */}
-              <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl border border-gray-100 border-l-4 border-l-[#014900] flex gap-5 hover:border-[#014900]/30 hover:-translate-y-1 transition-all group">
+              <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl border border-gray-200/90 flex gap-5 hover:border-[#014900]/30 hover:-translate-y-1 transition-all group">
                 <div className="w-12 h-12 rounded-xl bg-[#f8f9fa] group-hover:bg-[#014900] group-hover:text-white text-[#014900] flex items-center justify-center shrink-0 transition-colors border border-gray-200/60 shadow-xs">
                   <Layers className="w-6 h-6" />
                 </div>
@@ -90,7 +90,7 @@ export default async function HomePage() {
               </div>
 
               {/* Card 2 */}
-              <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl border border-gray-100 border-l-4 border-l-[#D9A000] flex gap-5 hover:border-[#D9A000]/40 hover:-translate-y-1 transition-all group">
+              <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl border border-gray-200/90 flex gap-5 hover:border-[#D9A000]/40 hover:-translate-y-1 transition-all group">
                 <div className="w-12 h-12 rounded-xl bg-[#f8f9fa] group-hover:bg-[#D9A000] group-hover:text-[#014900] text-[#014900] flex items-center justify-center shrink-0 transition-colors border border-gray-200/60 shadow-xs">
                   <Clock className="w-6 h-6" />
                 </div>
@@ -103,7 +103,7 @@ export default async function HomePage() {
               </div>
 
               {/* Card 3 */}
-              <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl border border-gray-100 border-l-4 border-l-[#014900] flex gap-5 hover:border-[#014900]/30 hover:-translate-y-1 transition-all group">
+              <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl border border-gray-200/90 flex gap-5 hover:border-[#014900]/30 hover:-translate-y-1 transition-all group">
                 <div className="w-12 h-12 rounded-xl bg-[#f8f9fa] group-hover:bg-[#014900] group-hover:text-white text-[#014900] flex items-center justify-center shrink-0 transition-colors border border-gray-200/60 shadow-xs">
                   <MessageSquare className="w-6 h-6" />
                 </div>
@@ -154,11 +154,7 @@ export default async function HomePage() {
                 return (
                   <div
                     key={item.id || idx}
-                    className={`group relative bg-white rounded-3xl p-7 sm:p-8 shadow-md border border-gray-100 flex flex-col justify-between overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1.5 ${
-                      isActive && !isGold
-                        ? 'border-l-4 border-l-[#014900]'
-                        : 'border-l-4 border-l-[#D9A000]'
-                    }`}
+                    className="group relative bg-white rounded-3xl p-7 sm:p-8 shadow-md border border-gray-200/90 flex flex-col justify-between overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1.5"
                   >
                     <div className="space-y-4 relative z-10">
                       <div className="flex justify-between items-start gap-3">

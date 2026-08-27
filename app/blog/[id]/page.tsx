@@ -263,7 +263,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
             {/* Sidebar (4 Cols) */}
             <div className="lg:col-span-4 space-y-8">
               {/* Recent News & Events Widget */}
-              <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-200 border-l-4 border-l-[#014900]">
+              <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-200">
                 <h3 className="text-lg font-extrabold text-[#014900] pb-3 mb-5 border-b-2 border-[#D9A000] uppercase">
                   Recent News & Events
                 </h3>
@@ -296,7 +296,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
               </div>
 
               {/* Secretariat Press Office Box */}
-              <div className="bg-[#014900] text-white p-6 sm:p-7 rounded-3xl shadow-md space-y-4 border-l-4 border-l-[#D9A000]">
+              <div className="bg-[#014900] text-white p-6 sm:p-7 rounded-3xl shadow-md space-y-4 border border-[#014900]">
                 <div>
                   <h4 className="font-extrabold text-base text-[#D9A000] uppercase">GNUTS Press Office</h4>
                 </div>

@@ -2,7 +2,7 @@
 
 export function CardSkeleton() {
   return (
-    <div className="bg-white rounded-none p-6 shadow-sm border border-gray-200 border-l-4 border-l-gray-300 space-y-4 animate-pulse">
+    <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-200 space-y-4 animate-pulse">
       <div className="flex items-center justify-between">
         <div className="h-6 w-24 bg-gray-200 rounded animate-shimmer"></div>
         <div className="h-5 w-20 bg-gray-200 rounded animate-shimmer"></div>

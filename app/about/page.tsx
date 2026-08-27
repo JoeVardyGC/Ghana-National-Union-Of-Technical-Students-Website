@@ -288,9 +288,7 @@ export default async function AboutPage() {
                   return (
                     <div
                       key={val.id || idx}
-                      className={`bg-white p-7 rounded-3xl border border-gray-200/80 shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 relative group flex flex-col justify-between ${
-                        isGreen ? 'border-l-4 border-l-[#014900]' : 'border-l-4 border-l-[#D9A000]'
-                      }`}
+                      className="bg-white p-7 rounded-3xl border border-gray-200/80 shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 relative group flex flex-col justify-between"
                     >
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">

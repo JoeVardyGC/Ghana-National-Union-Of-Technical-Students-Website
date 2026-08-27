@@ -222,7 +222,7 @@ export default function ScholarshipsClient({
                 return (
                   <div
                     key={item.id}
-                    className="bg-white rounded-3xl p-6 sm:p-7 shadow-md border border-gray-200 border-l-4 border-l-[#014900] flex flex-col justify-between transition-all duration-300 hover-green-glow group"
+                    className="bg-white rounded-3xl p-6 sm:p-7 shadow-md border border-gray-200 flex flex-col justify-between transition-all duration-300 hover-green-glow group"
                   >
                     <div className="space-y-4">
                       {/* Badge Header: Active Badge + Urgency Pill */}
@@ -251,13 +251,13 @@ export default function ScholarshipsClient({
                         {item.description}
                       </p>
 
-                      {/* Collapsible Application Requirements Accordion (Gold Border, Green Text) */}
+                      {/* Collapsible Application Requirements Accordion */}
                       {item.requirements && (
                         <div className="my-3">
                           <button
                             type="button"
                             onClick={() => toggleRequirements(item.id)}
-                            className="w-full flex items-center justify-between p-3 bg-amber-50/60 hover:bg-amber-100/70 border-l-4 border-l-[#D9A000] rounded-xl transition-colors text-left group/req"
+                            className="w-full flex items-center justify-between p-3 bg-amber-50/60 hover:bg-amber-100/70 border border-amber-200/60 rounded-xl transition-colors text-left group/req"
                           >
                             <div className="flex items-center gap-2">
                               <FileText className="w-4 h-4 text-[#014900]" />
@@ -271,7 +271,7 @@ export default function ScholarshipsClient({
                           </button>
 
                           {expandedRequirements[item.id] && (
-                            <div className="mt-2 p-4 bg-amber-50/40 border border-amber-200/70 border-l-4 border-l-[#D9A000] rounded-2xl space-y-3 animate-fadeIn">
+                            <div className="mt-2 p-4 bg-amber-50/40 border border-amber-200/70 rounded-2xl space-y-3 animate-fadeIn">
                               {(() => {
                                 const reqLines = item.requirements
                                   ? item.requirements.split(/\r?\n/).map(l => l.trim()).filter(Boolean)
@@ -462,9 +462,7 @@ export default function ScholarshipsClient({
                 return (
                   <div
                     key={item.id}
-                    className={`bg-white rounded-3xl p-6 sm:p-7 shadow-md border border-gray-200 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl group ${
-                      isGold ? 'border-l-4 border-l-[#D9A000]' : 'border-l-4 border-l-[#014900]'
-                    }`}
+                    className="bg-white rounded-3xl p-6 sm:p-7 shadow-md border border-gray-200 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl group"
                   >
                     <div className="space-y-4">
                       {/* Header Badges */}
@@ -572,7 +570,7 @@ export default function ScholarshipsClient({
               {closedScholarships.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-white rounded-3xl p-6 shadow-sm border border-gray-200 border-l-4 border-l-gray-400 opacity-75 hover:opacity-100 transition-opacity"
+                  className="bg-white rounded-3xl p-6 shadow-sm border border-gray-200 opacity-75 hover:opacity-100 transition-opacity"
                 >
                   <div className="flex items-center justify-between mb-3">
                     <span className="px-3 py-1 bg-red-600 text-white text-[11px] font-bold uppercase tracking-wider rounded-full">
@@ -614,7 +612,7 @@ export default function ScholarshipsClient({
               {closedOpportunities.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-white rounded-3xl p-6 shadow-sm border border-gray-200 border-l-4 border-l-gray-400 opacity-75 hover:opacity-100 transition-opacity"
+                  className="bg-white rounded-3xl p-6 shadow-sm border border-gray-200 opacity-75 hover:opacity-100 transition-opacity"
                 >
                   <div className="flex items-center justify-between mb-3">
                     <span className="px-3 py-1 bg-gray-100 text-gray-700 text-[11px] font-bold uppercase tracking-wider rounded-full">

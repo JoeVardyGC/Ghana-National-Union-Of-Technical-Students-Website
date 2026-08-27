@@ -531,7 +531,7 @@ export default async function InnovationDetailPage({ params }: { params: Promise
             <div className="lg:col-span-4 space-y-8">
               
               {/* Recent Innovative Projects Widget */}
-              <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-200 border-l-4 border-l-[#014900]">
+              <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-200">
                 <h3 className="text-lg font-extrabold text-[#014900] pb-3 mb-5 border-b-2 border-[#D9A000]">
                   More Projects
                 </h3>
@@ -574,7 +574,7 @@ export default async function InnovationDetailPage({ params }: { params: Promise
               </div>
 
               {/* Quick Union Advocacy Box */}
-              <div className="bg-[#014900] text-white p-6 sm:p-7 rounded-3xl shadow-sm border-l-4 border-l-[#D9A000] space-y-3">
+              <div className="bg-[#014900] text-white p-6 sm:p-7 rounded-3xl shadow-sm border border-[#014900] space-y-3">
                 <div className="text-xs font-extrabold uppercase tracking-wider text-[#D9A000]">
                   GNUTS INNOVATION LAB
                 </div>

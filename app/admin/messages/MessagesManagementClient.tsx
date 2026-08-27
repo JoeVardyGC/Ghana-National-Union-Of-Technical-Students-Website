@@ -242,7 +242,7 @@ export default function MessagesManagementClient({
                 isSelected
                   ? 'border-[#014900] ring-2 ring-[#014900]/20 bg-emerald-50/10'
                   : isUnread
-                  ? 'border-l-4 border-l-amber-500 bg-amber-50/20 border-gray-200'
+                  ? 'border-amber-300 bg-amber-50/20'
                   : 'border-gray-200'
               }`}
             >

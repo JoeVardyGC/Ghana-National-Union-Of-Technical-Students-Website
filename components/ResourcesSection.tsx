@@ -85,9 +85,7 @@ export default function ResourcesSection({ initialResources, dbResources }: Reso
               return (
                 <div
                   key={res.id || idx}
-                  className={`bg-white p-7 sm:p-8 rounded-3xl border border-gray-200 shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group ${
-                    isGoldAccent ? 'border-l-4 border-l-[#D9A000]' : 'border-l-4 border-l-[#014900]'
-                  }`}
+                  className="bg-white p-7 sm:p-8 rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">

@@ -139,9 +139,7 @@ export default function ResourcesPageClient({
             return (
               <div
                 key={res.id || idx}
-                className={`bg-white p-6 sm:p-7 rounded-3xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group ${
-                  isGoldAccent ? 'border-l-4 border-l-[#D9A000]' : 'border-l-4 border-l-[#014900]'
-                }`}
+                className="bg-white p-6 sm:p-7 rounded-3xl border border-gray-200/90 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
               >
                 <div className="space-y-4">
                   {/* Category Badge & Icon */}
