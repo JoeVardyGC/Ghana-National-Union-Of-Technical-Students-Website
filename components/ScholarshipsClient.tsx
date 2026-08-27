@@ -222,8 +222,7 @@ export default function ScholarshipsClient({
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
               {filteredScholarships.map((item, idx) => {
                 const urgency = getUrgencyInfo(item.deadline);
-                // First card (idx === 0) is the YELLOW/GOLD version!
-                const isGold = idx % 2 === 0;
+                const isGold = idx % 2 === 1;
 
                 return (
                   <div

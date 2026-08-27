@@ -149,8 +149,7 @@ export default async function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 reveal-on-scroll">
               {scholarships.slice(0, 3).map((item: any, idx: number) => {
                 const isActive = (item.status || 'active').toLowerCase() === 'active';
-                // First card (idx === 0) is the YELLOW/GOLD version!
-                const isGold = idx % 2 === 0;
+                const isGold = idx % 2 === 1;
 
                 return (
                   <div

@@ -57,7 +57,7 @@ export default function InnovationsSection({ dbInnovations = [] }: { dbInnovatio
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 reveal-on-scroll">
             {innovations.map((item, idx) => {
               const imgUrl = resolveImgUrl(item.project_image);
-              const isGold = idx % 2 === 0;
+              const isGold = idx % 2 === 1;
 
               return (
                 <Link
