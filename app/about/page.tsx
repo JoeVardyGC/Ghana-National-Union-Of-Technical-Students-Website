@@ -293,7 +293,7 @@ export default async function AboutPage() {
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
                           <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold transition-colors ${
-                            isGreen ? 'bg-[#014900]/10 text-[#014900] group-hover:bg-[#D9A000]/20' : 'bg-[#D9A000]/15 text-[#014900] group-hover:bg-[#014900]/10'
+                            isGreen ? 'bg-[#014900]/10 text-[#014900] group-hover:bg-[#D9A000]/20' : 'bg-[#D9A000]/15 text-[#D9A000] group-hover:bg-[#014900]/10'
                           }`}>
                             {icon}
                           </div>
@@ -304,7 +304,9 @@ export default async function AboutPage() {
                           </div>
                         </div>
 
-                        <h4 className="font-extrabold text-xl text-[#014900] font-montserrat group-hover:text-[#D9A000] transition-colors pt-1">
+                        <h4 className={`font-extrabold text-xl font-montserrat transition-colors pt-1 ${
+                          isGreen ? 'text-[#014900] group-hover:text-[#D9A000]' : 'text-[#D9A000] group-hover:text-[#014900]'
+                        }`}>
                           {val.title}
                         </h4>
 

@@ -67,7 +67,9 @@ export default function OpportunitiesSection({ dbOpportunities = [] }: { dbOppor
                   </div>
 
                   {/* Title */}
-                  <h3 className="font-['Montserrat'] font-black text-lg sm:text-xl text-gray-900 leading-snug group-hover:text-[#014900] transition-colors">
+                  <h3 className={`font-['Montserrat'] font-black text-lg sm:text-xl text-gray-900 leading-snug transition-colors ${
+                    isGold ? 'group-hover:text-[#D9A000]' : 'group-hover:text-[#014900]'
+                  }`}>
                     {opp.title}
                   </h3>
 
@@ -86,7 +88,9 @@ export default function OpportunitiesSection({ dbOpportunities = [] }: { dbOppor
                   <div>
                     <Link
                       href={opp.link || '/scholarships'}
-                      className="text-xs font-black uppercase tracking-wider text-[#014900] hover:text-[#D9A000] transition-colors inline-flex items-center gap-1"
+                      className={`text-xs font-black uppercase tracking-wider transition-colors inline-flex items-center gap-1 ${
+                        isGold ? 'text-[#D9A000] hover:text-[#014900]' : 'text-[#014900] hover:text-[#D9A000]'
+                      }`}
                     >
                       Learn More →
                     </Link>

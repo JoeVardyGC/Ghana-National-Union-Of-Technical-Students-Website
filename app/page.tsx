@@ -91,7 +91,7 @@ export default async function HomePage() {
 
               {/* Card 2 */}
               <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl border border-gray-200/90 flex gap-5 hover:border-[#D9A000]/40 hover:-translate-y-1 transition-all group">
-                <div className="w-12 h-12 rounded-xl bg-[#f8f9fa] group-hover:bg-[#D9A000] group-hover:text-[#014900] text-[#014900] flex items-center justify-center shrink-0 transition-colors border border-gray-200/60 shadow-xs">
+                <div className="w-12 h-12 rounded-xl bg-[#f8f9fa] group-hover:bg-[#D9A000] group-hover:text-white text-[#D9A000] flex items-center justify-center shrink-0 transition-colors border border-gray-200/60 shadow-xs">
                   <Clock className="w-6 h-6" />
                 </div>
                 <div>

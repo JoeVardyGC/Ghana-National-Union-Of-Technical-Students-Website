@@ -507,14 +507,14 @@ export default function ScholarshipsClient({
                       <div className="pt-4 border-t border-gray-100 space-y-2 text-xs text-gray-500 font-medium">
                         {item.location && (
                           <div className="flex items-center gap-1.5 text-gray-700">
-                            <MapPin className={`w-4 h-4 shrink-0 ${isGold ? 'text-[#014900]' : 'text-[#D9A000]'}`} />
+                            <MapPin className={`w-4 h-4 shrink-0 ${isGold ? 'text-[#D9A000]' : 'text-[#014900]'}`} />
                             <span>{item.location}</span>
                           </div>
                         )}
                         <div className="flex flex-wrap items-center gap-4">
                           {item.deadline && (
                             <span className="flex items-center gap-1.5 text-gray-700 font-semibold">
-                              <Calendar className={`w-4 h-4 shrink-0 ${isGold ? 'text-[#014900]' : 'text-[#D9A000]'}`} />
+                              <Calendar className={`w-4 h-4 shrink-0 ${isGold ? 'text-[#D9A000]' : 'text-[#014900]'}`} />
                               Deadline: {item.deadline}
                             </span>
                           )}
