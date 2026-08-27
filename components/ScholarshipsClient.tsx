@@ -341,17 +341,17 @@ export default function ScholarshipsClient({
                       )}
 
                       {/* Meta Details: Deadline & Posted Date */}
-                      <div className="pt-3 sm:pt-4 border-t border-gray-100 flex flex-wrap items-center gap-2 sm:gap-4 text-[11px] sm:text-xs font-medium text-gray-500">
+                      <div className="pt-3 sm:pt-4 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                         {item.deadline && (
-                          <span className="flex items-center gap-1 text-gray-700 font-semibold">
-                            <Calendar className="w-3.5 h-3.5 text-[#D9A000] shrink-0" />
-                            Deadline: {item.deadline}
-                          </span>
+                          <div className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-gray-900 bg-amber-50/90 border border-amber-200/90 px-2.5 sm:px-3 py-1.5 rounded-xl w-fit shadow-2xs">
+                            <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D9A000] shrink-0" />
+                            <span>Deadline: <strong className="font-black text-gray-900">{item.deadline}</strong></span>
+                          </div>
                         )}
                         {item.createdAt && (
-                          <span className="flex items-center gap-1">
+                          <span className="flex items-center gap-1 text-[11px] sm:text-xs text-gray-500 font-medium">
                             <Clock className="w-3.5 h-3.5 text-gray-400 shrink-0" />
-                            Posted: {item.createdAt}
+                            <span>Posted: {item.createdAt}</span>
                           </span>
                         )}
                       </div>
@@ -523,17 +523,17 @@ export default function ScholarshipsClient({
                             <span className="truncate">{item.location}</span>
                           </div>
                         )}
-                        <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1">
                           {item.deadline && (
-                            <span className="flex items-center gap-1 text-gray-700 font-semibold">
-                              <Calendar className={`w-3.5 h-3.5 shrink-0 ${isGold ? 'text-[#014900]' : 'text-[#D9A000]'}`} />
-                              Deadline: {item.deadline}
-                            </span>
+                            <div className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-gray-900 bg-amber-50/90 border border-amber-200/90 px-2.5 sm:px-3 py-1.5 rounded-xl w-fit shadow-2xs">
+                              <Calendar className={`w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 ${isGold ? 'text-[#014900]' : 'text-[#D9A000]'}`} />
+                              <span>Deadline: <strong className="font-black text-gray-900">{item.deadline}</strong></span>
+                            </div>
                           )}
                           {item.createdAt && (
-                            <span className="flex items-center gap-1">
+                            <span className="flex items-center gap-1 text-[11px] sm:text-xs text-gray-500 font-medium">
                               <Clock className="w-3.5 h-3.5 text-gray-400 shrink-0" />
-                              Posted: {item.createdAt}
+                              <span>Posted: {item.createdAt}</span>
                             </span>
                           )}
                         </div>

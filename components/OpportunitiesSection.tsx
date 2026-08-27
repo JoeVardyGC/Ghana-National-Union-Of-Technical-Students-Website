@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { MapPin } from 'lucide-react';
+import { MapPin, Calendar } from 'lucide-react';
 
 interface Opportunity {
   id?: number;
@@ -79,12 +79,23 @@ export default function OpportunitiesSection({ dbOpportunities = [] }: { dbOppor
                   </p>
                 </div>
 
-                {/* Footer: Red Pin Location + Learn More Link */}
+                {/* Footer: Location, Deadline + Learn More Link */}
                 <div className="pt-3 sm:pt-4 mt-4 sm:mt-6 border-t border-gray-100 space-y-2.5 sm:space-y-3">
-                  <div className="flex items-center gap-1.5 text-xs text-gray-500 font-medium min-w-0">
-                    <MapPin className="w-3.5 h-3.5 text-red-500 shrink-0" />
-                    <span className="truncate">{opp.location || 'Takoradi / Accra'}</span>
+                  <div className="flex flex-col gap-1.5 text-xs text-gray-600 font-medium">
+                    {opp.location && (
+                      <div className="flex items-center gap-1.5 text-gray-500 min-w-0">
+                        <MapPin className="w-3.5 h-3.5 text-red-500 shrink-0" />
+                        <span className="truncate">{opp.location}</span>
+                      </div>
+                    )}
+                    {opp.deadline && (
+                      <div className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-bold text-gray-900 bg-amber-50/90 border border-amber-200/90 px-2 sm:px-2.5 py-1 rounded-lg w-fit shadow-2xs">
+                        <Calendar className="w-3.5 h-3.5 text-[#D9A000] shrink-0" />
+                        <span>Deadline: <strong className="font-black text-gray-900">{String(opp.deadline).split('T')[0]}</strong></span>
+                      </div>
+                    )}
                   </div>
+
                   <div>
                     <Link
                       href={opp.link || '/scholarships'}
