@@ -357,12 +357,12 @@ export default async function InnovationDetailPage({ params }: { params: Promise
       </section>
 
       {/* Main Content & Sidebar Layout */}
-      <section className="py-10 sm:py-16 flex-grow">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+      <section className="py-6 sm:py-12 lg:py-16 flex-grow font-sans">
+        <div className="max-w-5xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10">
             
             {/* Main Project Column (8 Cols) */}
-            <div className="lg:col-span-8 bg-white p-6 sm:p-10 rounded-3xl shadow-sm border border-gray-200 space-y-8">
+            <div className="lg:col-span-8 bg-white p-4 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl shadow-sm border border-gray-200 space-y-6 sm:space-y-8 min-w-0">
               
               {/* Primary Poster Image & Multi-Picture Gallery Container */}
               {projectImages.length > 0 && (
@@ -528,15 +528,15 @@ export default async function InnovationDetailPage({ params }: { params: Promise
             </div>
 
             {/* Sidebar Column (4 Cols) */}
-            <div className="lg:col-span-4 space-y-8">
+            <div className="lg:col-span-4 space-y-6 sm:space-y-8">
               
               {/* Recent Innovative Projects Widget */}
-              <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-200">
-                <h3 className="text-lg font-extrabold text-[#014900] pb-3 mb-5 border-b-2 border-[#D9A000]">
+              <div className="bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl shadow-sm border border-gray-200">
+                <h3 className="text-base sm:text-lg font-extrabold text-[#014900] pb-3 mb-5 border-b-2 border-[#D9A000]">
                   More Projects
                 </h3>
 
-                <div className="space-y-5">
+                <div className="space-y-4 sm:space-y-5">
                   {otherProjects.map((item) => {
                     const itemImg = getImagePath(item.project_image);
                     return (
@@ -545,7 +545,7 @@ export default async function InnovationDetailPage({ params }: { params: Promise
                         href={`/innovations/${item.id}`}
                         className="group flex items-start gap-3.5 pb-4 border-b border-gray-100 last:border-0 last:pb-0"
                       >
-                        <div className="w-16 h-16 rounded-2xl overflow-hidden bg-gray-900 shrink-0 border border-gray-200 flex items-center justify-center">
+                        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl overflow-hidden bg-gray-900 shrink-0 border border-gray-200 flex items-center justify-center">
                           {itemImg ? (
                             <img
                               src={itemImg}
@@ -556,8 +556,8 @@ export default async function InnovationDetailPage({ params }: { params: Promise
                             <Zap className="w-6 h-6 text-white/40" />
                           )}
                         </div>
-                        <div className="space-y-1">
-                          <h4 className="text-xs sm:text-sm font-extrabold text-gray-900 group-hover:text-[#014900] transition-colors line-clamp-2 leading-snug">
+                        <div className="space-y-1 min-w-0 flex-1">
+                          <h4 className="text-xs sm:text-sm font-extrabold text-gray-900 group-hover:text-[#014900] transition-colors line-clamp-2 leading-snug break-words">
                             {item.title}
                           </h4>
                           {item.institution && (
@@ -574,7 +574,7 @@ export default async function InnovationDetailPage({ params }: { params: Promise
               </div>
 
               {/* Quick Union Advocacy Box */}
-              <div className="bg-[#014900] text-white p-6 sm:p-7 rounded-3xl shadow-sm border border-[#014900] space-y-3">
+              <div className="bg-[#014900] text-white p-5 sm:p-7 rounded-2xl sm:rounded-3xl shadow-sm border border-[#014900] space-y-3">
                 <div className="text-xs font-extrabold uppercase tracking-wider text-[#D9A000]">
                   GNUTS INNOVATION LAB
                 </div>

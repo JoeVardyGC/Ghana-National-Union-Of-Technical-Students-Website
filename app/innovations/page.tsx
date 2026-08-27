@@ -80,7 +80,7 @@ export default async function InnovationsPage() {
       </section>
 
       {/* Main Content Component */}
-      <section className="py-8">
+      <section className="py-4 sm:py-8">
         <InnovationsClient dbInnovations={innovationsList} />
       </section>
     </div>
