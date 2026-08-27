@@ -237,7 +237,7 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
   };
 
   return (
-    <div className="py-4 sm:py-8 lg:py-10 space-y-6 sm:space-y-10 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 font-sans">
+    <div className="py-4 sm:py-8 lg:py-10 space-y-6 sm:space-y-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-sans">
       
       {/* 1. HERO CTA BANNER & STATS DISPLAY */}
       <div className="relative overflow-hidden bg-gradient-to-r from-[#014900] via-[#025c00] to-[#013300] text-white p-5 sm:p-8 lg:p-12 rounded-2xl sm:rounded-3xl shadow-xl border border-emerald-800/40">

@@ -358,7 +358,7 @@ export default async function InnovationDetailPage({ params }: { params: Promise
 
       {/* Main Content & Sidebar Layout */}
       <section className="py-6 sm:py-12 lg:py-16 flex-grow font-sans">
-        <div className="max-w-5xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10">
             
             {/* Main Project Column (8 Cols) */}

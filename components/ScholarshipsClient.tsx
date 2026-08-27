@@ -156,7 +156,7 @@ export default function ScholarshipsClient({
   };
 
   return (
-    <div className="py-6 sm:py-10 lg:py-16 space-y-8 sm:space-y-12 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 font-sans">
+    <div className="py-6 sm:py-10 lg:py-16 space-y-8 sm:space-y-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-sans">
 
       {/* 2. LIVE SEARCH & MULTI-TAG FILTER BAR */}
       <section className="bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl shadow-xs border border-gray-200 space-y-4">

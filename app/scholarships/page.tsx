@@ -110,7 +110,7 @@ export default async function ScholarshipsPage() {
   return (
     <div className="flex flex-col min-h-screen bg-[#f8f9fa] font-sans">
       {/* 1. Hero Section - 50% opacity green overlay & border-b-4 border-[#D9A000] */}
-      <section className="relative text-white py-12 sm:py-16 lg:py-20 px-3 sm:px-6 lg:px-8 border-b-4 border-[#D9A000] overflow-hidden bg-gray-900">
+      <section className="relative text-white py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 border-b-4 border-[#D9A000] overflow-hidden bg-gray-900">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url('${heroImage}')` }}

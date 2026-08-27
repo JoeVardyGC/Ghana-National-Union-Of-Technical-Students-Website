@@ -20,7 +20,7 @@ export default function NewsSection({ dbNews = [] }: { dbNews?: NewsItem[] }) {
 
   return (
     <section className="py-10 sm:py-16 lg:py-24 bg-[#f8f9fa] font-['Montserrat',sans-serif]" id="news-section">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-3">
           <div>
