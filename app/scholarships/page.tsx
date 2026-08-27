@@ -108,9 +108,9 @@ export default async function ScholarshipsPage() {
   }));
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#f8f9fa] font-sans">
+    <div className="flex flex-col min-h-screen bg-[#f8f9fa] font-sans w-full max-w-full overflow-x-hidden">
       {/* 1. Hero Section - 50% opacity green overlay & border-b-4 border-[#D9A000] */}
-      <section className="relative text-white py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 border-b-4 border-[#D9A000] overflow-hidden bg-gray-900">
+      <section className="relative text-white py-10 sm:py-16 lg:py-20 px-3 sm:px-6 lg:px-8 border-b-4 border-[#D9A000] overflow-hidden bg-gray-900 w-full">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url('${heroImage}')` }}
@@ -118,11 +118,11 @@ export default async function ScholarshipsPage() {
         {/* Semi-transparent Green Overlay (50% Green Opacity) */}
         <div className="absolute inset-0 bg-[#014900]/50 backdrop-brightness-90" />
 
-        <div className="max-w-7xl mx-auto text-center relative z-10">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight mb-3 drop-shadow-md">
+        <div className="max-w-7xl mx-auto text-center relative z-10 px-2 sm:px-0">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight mb-2.5 sm:mb-3 drop-shadow-md break-words">
             GNUTS Opportunities Hub
           </h1>
-          <p className="text-gray-100 text-sm sm:text-base max-w-2xl mx-auto font-medium drop-shadow-sm">
+          <p className="text-gray-100 text-xs sm:text-sm md:text-base max-w-2xl mx-auto font-medium drop-shadow-sm break-words">
             Training and funding opportunities to support your technical and vocational education journey
           </p>
         </div>

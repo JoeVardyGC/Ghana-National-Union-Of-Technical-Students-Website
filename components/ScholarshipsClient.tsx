@@ -156,13 +156,13 @@ export default function ScholarshipsClient({
   };
 
   return (
-    <div className="py-6 sm:py-10 lg:py-16 space-y-8 sm:space-y-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-sans">
+    <div className="py-6 sm:py-10 lg:py-16 space-y-8 sm:space-y-12 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 font-sans w-full max-w-full overflow-x-hidden min-w-0">
 
       {/* 2. LIVE SEARCH & MULTI-TAG FILTER BAR */}
-      <section className="bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl shadow-xs border border-gray-200 space-y-4">
-        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 sm:gap-4">
+      <section className="bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl shadow-xs border border-gray-200 space-y-4 w-full min-w-0">
+        <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3.5 sm:gap-4">
           {/* Live Search Input */}
-          <div className="relative w-full md:w-80 lg:w-96">
+          <div className="relative w-full lg:w-96 min-w-0">
             <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
@@ -173,12 +173,12 @@ export default function ScholarshipsClient({
             />
           </div>
 
-          {/* Filter Chips */}
-          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto touch-pan-x sm:flex-wrap w-full md:w-auto pb-1 sm:pb-0 no-scrollbar scrollbar-none -mx-1 px-1 sm:mx-0 sm:px-0">
+          {/* Filter Chips — Wrap cleanly to new lines at edge, naturally increasing filter height */}
+          <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto">
             <button
               type="button"
               onClick={() => setSelectedCategory('ALL')}
-              className={`px-3.5 sm:px-4 py-2 text-[11px] sm:text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all border cursor-pointer whitespace-nowrap shrink-0 ${
+              className={`px-3.5 sm:px-4 py-2 text-[11px] sm:text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all border cursor-pointer ${
                 selectedCategory === 'ALL'
                   ? 'bg-[#014900] text-white border-[#014900] shadow-xs'
                   : 'bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200'
@@ -189,7 +189,7 @@ export default function ScholarshipsClient({
             <button
               type="button"
               onClick={() => setSelectedCategory('SCHOLARSHIPS')}
-              className={`px-3.5 sm:px-4 py-2 text-[11px] sm:text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all border cursor-pointer whitespace-nowrap shrink-0 ${
+              className={`px-3.5 sm:px-4 py-2 text-[11px] sm:text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all border cursor-pointer ${
                 selectedCategory === 'SCHOLARSHIPS'
                   ? 'bg-[#014900] text-white border-[#014900] shadow-xs'
                   : 'bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200'
@@ -200,7 +200,7 @@ export default function ScholarshipsClient({
             <button
               type="button"
               onClick={() => setSelectedCategory('INTERNSHIPS')}
-              className={`px-3.5 sm:px-4 py-2 text-[11px] sm:text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all border cursor-pointer whitespace-nowrap shrink-0 ${
+              className={`px-3.5 sm:px-4 py-2 text-[11px] sm:text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all border cursor-pointer ${
                 selectedCategory === 'INTERNSHIPS'
                   ? 'bg-[#014900] text-white border-[#014900] shadow-xs'
                   : 'bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200'
@@ -211,7 +211,7 @@ export default function ScholarshipsClient({
             <button
               type="button"
               onClick={() => setSelectedCategory('SKILL_CAMPS')}
-              className={`px-3.5 sm:px-4 py-2 text-[11px] sm:text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all border cursor-pointer whitespace-nowrap shrink-0 ${
+              className={`px-3.5 sm:px-4 py-2 text-[11px] sm:text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all border cursor-pointer ${
                 selectedCategory === 'SKILL_CAMPS'
                   ? 'bg-[#014900] text-white border-[#014900] shadow-xs'
                   : 'bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200'
@@ -592,8 +592,8 @@ export default function ScholarshipsClient({
 
       {/* 6. RECENTLY CLOSED SCHOLARSHIPS SECTION */}
       {closedScholarships.length > 0 && (
-        <section className="bg-gray-100 py-8 sm:py-12 border-t border-b border-gray-200 -mx-3 px-3 sm:mx-0 sm:px-0 sm:rounded-3xl">
-          <div className="max-w-7xl mx-auto px-1 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
+        <section className="bg-gray-100/80 py-8 sm:py-12 border border-gray-200 w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-xs">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
             <div className="text-center">
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-gray-800 tracking-tight relative inline-block pb-3">
                 Recently Closed Scholarships
@@ -634,8 +634,8 @@ export default function ScholarshipsClient({
 
       {/* 7. RECENTLY CLOSED OPPORTUNITIES SECTION */}
       {closedOpportunities.length > 0 && (
-        <section className="bg-gray-100 py-8 sm:py-12 border-t border-b border-gray-200 -mx-3 px-3 sm:mx-0 sm:px-0 sm:rounded-3xl">
-          <div className="max-w-7xl mx-auto px-1 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
+        <section className="bg-gray-100/80 py-8 sm:py-12 border border-gray-200 w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-xs">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
             <div className="text-center">
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-gray-800 tracking-tight relative inline-block pb-3">
                 Recently Closed Opportunities
