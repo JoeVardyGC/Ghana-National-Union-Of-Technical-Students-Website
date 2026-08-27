@@ -24,9 +24,9 @@ export default async function HomePage() {
     scholarshipsCountResult,
     carouselSlidesResult
   ] = await Promise.all([
-    query('SELECT * FROM scholarships ORDER BY created_at DESC LIMIT 2').catch(() => []),
-    query('SELECT * FROM opportunities WHERE status = "active" ORDER BY created_at DESC LIMIT 3').catch(() => []),
-    query('SELECT * FROM innovations WHERE status = "approved" ORDER BY created_at DESC, id DESC LIMIT 2').catch(() => []),
+    query('SELECT * FROM scholarships WHERE status = "active" ORDER BY created_at DESC LIMIT 3').catch(() => []),
+    query('SELECT * FROM opportunities WHERE status = "active" ORDER BY created_at DESC LIMIT 4').catch(() => []),
+    query('SELECT * FROM innovations WHERE status = "approved" ORDER BY created_at DESC, id DESC LIMIT 3').catch(() => []),
     query('SELECT * FROM executives ORDER BY display_order ASC, created_at DESC LIMIT 8').catch(() => []),
     query('SELECT * FROM news WHERE status = "published" ORDER BY published_at DESC, created_at DESC, id DESC LIMIT 6').catch(() => []),
     query('SELECT COUNT(*) as count FROM innovations WHERE status = "approved"').catch(() => [{ count: 0 }]),
@@ -91,7 +91,7 @@ export default async function HomePage() {
 
               {/* Card 2 */}
               <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl border border-gray-200/90 flex gap-5 hover:border-[#D9A000]/40 hover:-translate-y-1 transition-all group">
-                <div className="w-12 h-12 rounded-xl bg-[#f8f9fa] group-hover:bg-[#D9A000] group-hover:text-white text-[#D9A000] flex items-center justify-center shrink-0 transition-colors border border-gray-200/60 shadow-xs">
+                <div className="w-12 h-12 rounded-xl bg-[#f8f9fa] group-hover:bg-[#D9A000] group-hover:text-[#014900] text-[#014900] flex items-center justify-center shrink-0 transition-colors border border-gray-200/60 shadow-xs">
                   <Clock className="w-6 h-6" />
                 </div>
                 <div>
@@ -120,77 +120,78 @@ export default async function HomePage() {
       </section>
 
       {/* 3. Available Scholarships Section — Connected to Live Database */}
-      <section className="py-16 sm:py-24 bg-white border-y border-gray-200" id="scholarships-section">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-3">
+      <section className="py-10 sm:py-16 lg:py-24 bg-white border-y border-gray-200" id="scholarships-section">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-3">
             <div>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#014900] tracking-tight uppercase">Available Scholarships</h2>
-              <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-3" />
-              <p className="text-gray-500 text-sm sm:text-base font-medium">
+              <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-2.5 sm:my-3" />
+              <p className="text-gray-500 text-xs sm:text-sm lg:text-base font-medium">
                 Funding opportunities for technical and vocational students
               </p>
             </div>
             <Link
               href="/scholarships"
-              className="inline-flex items-center gap-1 text-sm sm:text-base font-black uppercase text-[#014900] hover:text-[#D9A000] transition-colors mt-2 md:mt-0"
+              className="inline-flex items-center gap-1 text-xs sm:text-sm lg:text-base font-black uppercase text-[#014900] hover:text-[#D9A000] transition-colors mt-1 md:mt-0"
             >
               View All →
             </Link>
           </div>
 
           {scholarships.length === 0 ? (
-            <div className="text-center py-12 px-6 bg-white rounded-3xl border border-gray-200 shadow-sm max-w-xl mx-auto">
+            <div className="text-center py-12 px-6 bg-white rounded-2xl sm:rounded-3xl border border-gray-200 shadow-sm max-w-xl mx-auto">
               <div className="text-4xl mb-3">🎓</div>
-              <p className="text-gray-500 font-medium text-sm">
+              <p className="text-gray-500 font-medium text-xs sm:text-sm">
                 No active scholarships currently available. Check back soon for new bursary announcements.
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 reveal-on-scroll">
-              {scholarships.map((item: any, idx: number) => {
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 reveal-on-scroll">
+              {scholarships.slice(0, 3).map((item: any, idx: number) => {
                 const isActive = (item.status || 'active').toLowerCase() === 'active';
-                const isGold = idx % 2 === 1;
+                // First card (idx === 0) is the YELLOW/GOLD version!
+                const isGold = idx % 2 === 0;
 
                 return (
                   <div
                     key={item.id || idx}
-                    className="group relative bg-white rounded-3xl p-7 sm:p-8 shadow-md border border-gray-200/90 flex flex-col justify-between overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1.5"
+                    className="group relative bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 lg:p-8 shadow-md border border-gray-200/90 flex flex-col justify-between overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1.5 min-w-0 w-full"
                   >
-                    <div className="space-y-4 relative z-10">
-                      <div className="flex justify-between items-start gap-3">
-                        <h3
-                          className={`font-black text-lg sm:text-xl text-gray-900 leading-snug transition-colors ${
-                            isActive && !isGold ? 'group-hover:text-[#014900]' : 'group-hover:text-[#D9A000]'
-                          }`}
-                        >
-                          {item.title}
-                        </h3>
+                    <div className="space-y-3 sm:space-y-4 relative z-10 min-w-0">
+                      <div className="flex justify-between items-start gap-2 flex-wrap min-w-0">
                         <span
-                          className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider shrink-0 shadow-xs ${
-                            isActive
-                              ? 'bg-[#014900] text-white'
-                              : 'bg-[#D9A000] text-[#014900]'
+                          className={`px-2.5 sm:px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider shrink-0 shadow-xs text-white ${
+                            isGold ? 'bg-[#D9A000]' : 'bg-[#014900]'
                           }`}
                         >
                           {item.status ? item.status.toUpperCase() : 'ACTIVE'}
                         </span>
                       </div>
-                      <p className="text-sm text-gray-600 leading-relaxed font-medium line-clamp-4">
+
+                      <h3
+                        className={`font-black text-base sm:text-lg lg:text-xl text-gray-900 leading-snug transition-colors break-words ${
+                          isGold ? 'group-hover:text-[#D9A000]' : 'group-hover:text-[#014900]'
+                        }`}
+                      >
+                        {item.title}
+                      </h3>
+
+                      <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-medium line-clamp-4 break-words">
                         {item.description}
                       </p>
                     </div>
 
-                    <div className="pt-4 mt-6 border-t border-gray-100 relative z-10 flex items-center justify-between">
+                    <div className="pt-3 sm:pt-4 mt-4 sm:mt-6 border-t border-gray-100 relative z-10 flex items-center justify-between gap-2">
                       <Link
                         href={item.link || item.application_url || '/scholarships'}
                         className={`text-xs font-black uppercase tracking-wider transition-colors inline-flex items-center gap-1 ${
-                          isActive ? 'text-[#014900] hover:text-[#D9A000]' : 'text-gray-500 hover:text-[#D9A000]'
+                          isGold ? 'text-[#D9A000] hover:text-[#014900]' : 'text-[#014900] hover:text-[#D9A000]'
                         }`}
                       >
                         {isActive ? 'Apply Now →' : 'Learn More →'}
                       </Link>
                       {item.deadline && (
-                        <span className="text-[11px] font-semibold text-gray-400">
+                        <span className="text-[11px] font-semibold text-gray-400 truncate">
                           Deadline: {String(item.deadline).split('T')[0]}
                         </span>
                       )}

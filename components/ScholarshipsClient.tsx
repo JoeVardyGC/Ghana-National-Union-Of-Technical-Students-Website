@@ -220,8 +220,10 @@ export default function ScholarshipsClient({
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
-              {filteredScholarships.map((item) => {
+              {filteredScholarships.map((item, idx) => {
                 const urgency = getUrgencyInfo(item.deadline);
+                // First card (idx === 0) is the YELLOW/GOLD version!
+                const isGold = idx % 2 === 0;
 
                 return (
                   <div
@@ -231,7 +233,9 @@ export default function ScholarshipsClient({
                     <div className="space-y-3 sm:space-y-4 min-w-0">
                       {/* Badge Header: Active Badge + Urgency Pill */}
                       <div className="flex items-center justify-between gap-2 flex-wrap min-w-0">
-                        <span className="inline-block px-2.5 sm:px-3 py-1 bg-[#014900] text-white text-[10px] sm:text-[11px] font-bold uppercase tracking-wider rounded-full">
+                        <span className={`inline-block px-2.5 sm:px-3 py-1 text-white text-[10px] sm:text-[11px] font-bold uppercase tracking-wider rounded-full shadow-xs ${
+                          isGold ? 'bg-[#D9A000]' : 'bg-[#014900]'
+                        }`}>
                           Active
                         </span>
 
@@ -246,7 +250,9 @@ export default function ScholarshipsClient({
                       </div>
 
                       {/* Title */}
-                      <h3 className="text-base sm:text-lg lg:text-xl font-black text-gray-900 group-hover:text-[#014900] transition-colors leading-snug break-words">
+                      <h3 className={`text-base sm:text-lg lg:text-xl font-black text-gray-900 leading-snug break-words transition-colors ${
+                        isGold ? 'group-hover:text-[#D9A000]' : 'group-hover:text-[#014900]'
+                      }`}>
                         {item.title}
                       </h3>
 
@@ -359,7 +365,9 @@ export default function ScholarshipsClient({
                           href={item.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center gap-2 w-full px-4 sm:px-6 py-2.5 sm:py-3 bg-[#014900] hover:bg-[#013300] text-white text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all duration-300 shadow-xs hover:shadow"
+                          className={`inline-flex items-center justify-center gap-2 w-full px-4 sm:px-6 py-2.5 sm:py-3 text-white text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all duration-300 shadow-xs hover:shadow ${
+                            isGold ? 'bg-[#D9A000] hover:bg-yellow-600' : 'bg-[#014900] hover:bg-[#013300]'
+                          }`}
                         >
                           <span>Apply Now</span>
                           <ArrowRight className="w-4 h-4" />
