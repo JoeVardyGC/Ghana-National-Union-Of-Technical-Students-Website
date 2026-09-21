@@ -296,7 +296,7 @@ export default async function InnovationDetailPage({ params }: { params: Promise
       <section className="relative text-white pt-10 pb-14 px-4 sm:px-6 lg:px-8 overflow-hidden border-b-4 border-[#D9A000] bg-gray-900">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url('https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg')` }}
+          style={{ backgroundImage: `url('/images/header_for_pages.jpg')` }}
         />
         <div className="absolute inset-0 bg-[#014900]/55 backdrop-brightness-90" />
 

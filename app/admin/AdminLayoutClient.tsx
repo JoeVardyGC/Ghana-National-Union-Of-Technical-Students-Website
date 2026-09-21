@@ -101,7 +101,7 @@ export default function AdminLayoutClient({ children, sessionUser }: AdminLayout
           <Link href="/admin" className="flex items-center gap-3.5 group">
             <div className="w-11 h-11 rounded-2xl bg-white p-1.5 shadow-md flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform duration-300">
               <img
-                src="https://res.cloudinary.com/dslngzls6/image/upload/v1786982867/gnuts_fav_htclbt.png"
+                src="/images/gnuts_fav.png"
                 alt="GNUTS"
                 className="w-full h-full object-contain"
               />
@@ -121,7 +121,7 @@ export default function AdminLayoutClient({ children, sessionUser }: AdminLayout
             <div className="flex items-center gap-2.5 overflow-hidden">
               <div className="w-8 h-8 rounded-xl bg-white p-1 border border-[#D9A000]/60 flex items-center justify-center shrink-0 shadow-xs">
                 <img
-                  src="https://res.cloudinary.com/dslngzls6/image/upload/v1786982867/gnuts_fav_htclbt.png"
+                  src="/images/gnuts_fav.png"
                   alt="GNUTS Emblem"
                   className="w-full h-full object-contain"
                 />
@@ -253,7 +253,7 @@ export default function AdminLayoutClient({ children, sessionUser }: AdminLayout
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-2xl bg-white p-1.5 shadow-md flex items-center justify-center">
                     <img
-                      src="https://res.cloudinary.com/dslngzls6/image/upload/v1786982867/gnuts_fav_htclbt.png"
+                      src="/images/gnuts_fav.png"
                       alt="GNUTS"
                       className="w-full h-full object-contain"
                     />

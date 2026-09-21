@@ -108,7 +108,7 @@ export default async function AboutPage() {
   const executives = executivesResult;
   const resources = resourcesResult;
   const designatedHero = aboutHeroResult[0]?.image_url;
-  const heroImage = resolveImgUrl(designatedHero || aboutData.hero_image || 'https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg');
+  const heroImage = resolveImgUrl(designatedHero || aboutData.hero_image || '/images/header_for_pages.jpg');
 
   let coreValues = [
     { title: 'Integrity', desc: 'Upholding honesty, transparency, and ethical leadership in all union activities.', num: '01' },

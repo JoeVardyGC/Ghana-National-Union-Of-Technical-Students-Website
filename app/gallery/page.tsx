@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default async function GalleryPage() {
-  let heroImage = 'https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg';
+  let heroImage = '/images/header_for_pages.jpg';
   let initialItems: GalleryItem[] = [];
 
   try {

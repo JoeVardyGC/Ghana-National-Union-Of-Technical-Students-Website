@@ -9,7 +9,7 @@ const DEFAULT_ABOUT = {
   id: 1,
   hero_title: 'About GNUTS',
   hero_subtitle: 'Empowering Technical & TVET Students Across Ghana',
-  hero_image: 'https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg',
+  hero_image: '/images/header_for_pages.jpg',
   who_we_are_title: 'Who We Are',
   who_we_are_subtitle: 'The sole democratic, non-partisan representative council for technical students in Ghana',
   who_we_are_content: 'The Ghana National Union of Technical Students (GNUTS) is the sole democratic, non-partisan representative council for all technical and vocational education students across Ghana.\n\nFrom advocating for industrial training allowances and modern laboratory equipment to participating in national education policy reform, GNUTS empowers technical students to become skilled engineers, tech pioneers, and industrial leaders.',

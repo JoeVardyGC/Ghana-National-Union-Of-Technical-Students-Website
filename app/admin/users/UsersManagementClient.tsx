@@ -31,7 +31,7 @@ interface AdminUserItem {
   created_at?: string;
 }
 
-const UNION_LOGO_AVATAR = 'https://res.cloudinary.com/dslngzls6/image/upload/v1786982867/gnuts_fav_htclbt.png';
+const UNION_LOGO_AVATAR = '/images/gnuts_fav.png';
 
 const DEFAULT_USERS_SEED: AdminUserItem[] = [
   {

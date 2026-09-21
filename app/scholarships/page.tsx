@@ -30,7 +30,7 @@ export interface Opportunity {
 }
 
 export default async function ScholarshipsPage() {
-  let heroImage = 'https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg';
+  let heroImage = '/images/header_for_pages.jpg';
 
   const [dbActiveScholarships, dbClosedScholarships, dbActiveOpportunities, dbClosedOpportunities, bannerRows] = await Promise.all([
     query<any>("SELECT * FROM scholarships WHERE status = 'active' ORDER BY created_at DESC").catch(() => []),

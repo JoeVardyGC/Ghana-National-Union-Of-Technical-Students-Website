@@ -71,7 +71,7 @@ const DEFAULT_RESOURCES_SEED: ResourceItem[] = [
 
 export default async function ResourcesPage() {
   let resourcesList: ResourceItem[] = [];
-  let heroImage = 'https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg';
+  let heroImage = '/images/header_for_pages.jpg';
 
   try {
     const [rows, bannerRows] = await Promise.all([

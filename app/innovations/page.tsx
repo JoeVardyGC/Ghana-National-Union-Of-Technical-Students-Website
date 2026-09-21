@@ -26,7 +26,7 @@ function formatDate(dateVal: any): string {
 
 export default async function InnovationsPage() {
   let innovationsList: InnovationItem[] = [];
-  let heroImage = 'https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg';
+  let heroImage = '/images/header_for_pages.jpg';
 
   try {
     const [rawInnovations, bannerRows] = await Promise.all([

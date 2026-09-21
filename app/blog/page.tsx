@@ -14,7 +14,7 @@ export const revalidate = 0;
 
 export default async function NewsArchivePage() {
   let dbNews: NewsItem[] = [];
-  let heroImage = 'https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg';
+  let heroImage = '/images/header_for_pages.jpg';
 
   try {
     const [rows, bannerRows] = await Promise.all([

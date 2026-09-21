@@ -412,7 +412,7 @@ export default function AboutManagementClient({
               <span className="text-xs font-black uppercase text-gray-400 tracking-wider block">Live Banner Preview</span>
               <div className="relative rounded-3xl overflow-hidden shadow-xl border-4 border-white bg-gray-900 aspect-video flex items-center justify-center p-6 text-center">
                 <img
-                  src={aboutForm.hero_image || 'https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg'}
+                  src={aboutForm.hero_image || '/images/header_for_pages.jpg'}
                   alt="Hero Preview"
                   className="absolute inset-0 w-full h-full object-cover"
                 />

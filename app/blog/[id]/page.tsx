@@ -118,7 +118,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
         {/* Background Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url('https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg')` }}
+          style={{ backgroundImage: `url('/images/header_for_pages.jpg')` }}
         />
         {/* Semi-transparent Green Overlay (55% Green Opacity) */}
         <div className="absolute inset-0 bg-[#014900]/55 backdrop-brightness-90" />

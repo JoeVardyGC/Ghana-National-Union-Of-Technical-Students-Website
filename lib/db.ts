@@ -24,7 +24,7 @@ const DEFAULT_STORE: Record<string, any[]> = {
       email: 'admin@gnuts.org.gh',
       password: 'password123',
       role: 'Super Admin',
-      avatar: 'https://res.cloudinary.com/dslngzls6/image/upload/v1786982867/gnuts_fav_htclbt.png',
+      avatar: '/images/gnuts_fav.png',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     },
@@ -35,7 +35,7 @@ const DEFAULT_STORE: Record<string, any[]> = {
       email: 'joevardy2004@gmail.com',
       password: 'password123',
       role: 'Super Admin',
-      avatar: 'https://res.cloudinary.com/dslngzls6/image/upload/v1786982867/gnuts_fav_htclbt.png',
+      avatar: '/images/gnuts_fav.png',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     },
@@ -165,7 +165,7 @@ const DEFAULT_STORE: Record<string, any[]> = {
       id: 1,
       hero_title: 'About GNUTS',
       hero_subtitle: 'Empowering Technical & TVET Students Across Ghana',
-      hero_image: 'https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg',
+      hero_image: '/images/header_for_pages.jpg',
       who_we_are_title: 'Who We Are',
       who_we_are_subtitle: 'The Recognized National Voice of Technical & TVET Students',
       who_we_are_content: 'The Ghana National Union of Technical Students (GNUTS) is the sole democratic, non-partisan representative council for all technical and vocational education students across Ghana.\n\nFrom advocating for industrial training allowances and modern laboratory equipment to participating in national education policy reform, GNUTS empowers technical students to become skilled engineers, tech pioneers, and industrial leaders.',
@@ -262,7 +262,7 @@ const DEFAULT_STORE: Record<string, any[]> = {
       id: 4,
       page_key: 'about_hero',
       title: 'About GNUTS Page Hero Banner',
-      image_url: 'https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg',
+      image_url: '/images/header_for_pages.jpg',
       display_order: 1,
       status: 'active'
     },
@@ -270,7 +270,7 @@ const DEFAULT_STORE: Record<string, any[]> = {
       id: 5,
       page_key: 'news_hero',
       title: 'News & Press Releases Hero Banner',
-      image_url: 'https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg',
+      image_url: '/images/header_for_pages.jpg',
       display_order: 1,
       status: 'active'
     },
@@ -278,7 +278,7 @@ const DEFAULT_STORE: Record<string, any[]> = {
       id: 6,
       page_key: 'innovations_hero',
       title: 'Student Innovations Hero Banner',
-      image_url: 'https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg',
+      image_url: '/images/header_for_pages.jpg',
       display_order: 1,
       status: 'active'
     },
@@ -286,7 +286,7 @@ const DEFAULT_STORE: Record<string, any[]> = {
       id: 7,
       page_key: 'scholarships_hero',
       title: 'Scholarships & Opportunities Hero Banner',
-      image_url: 'https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg',
+      image_url: '/images/header_for_pages.jpg',
       display_order: 1,
       status: 'active'
     },
@@ -294,7 +294,7 @@ const DEFAULT_STORE: Record<string, any[]> = {
       id: 8,
       page_key: 'contact_hero',
       title: 'Contact Hero Banner',
-      image_url: 'https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg',
+      image_url: '/images/header_for_pages.jpg',
       display_order: 1,
       status: 'active'
     }

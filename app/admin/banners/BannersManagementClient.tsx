@@ -121,7 +121,7 @@ export default function BannersManagementClient({ initialBanners = [] }: Banners
     PAGE_HERO_SLOTS.forEach((slot) => {
       const found = initialBanners.find((b) => b.page_key === slot.key);
       map[slot.key] = {
-        image_url: found?.image_url || 'https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg',
+        image_url: found?.image_url || '/images/header_for_pages.jpg',
         status: found?.status || 'active',
       };
     });
@@ -634,7 +634,7 @@ export default function BannersManagementClient({ initialBanners = [] }: Banners
                     {/* Live Preview Box with Real UI Overlay */}
                     <div className="relative aspect-[16/6] rounded-2xl overflow-hidden bg-gray-900 border border-gray-300 shadow-sm">
                       <img
-                        src={currentData.image_url || 'https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg'}
+                        src={currentData.image_url || '/images/header_for_pages.jpg'}
                         alt={slot.name}
                         className="w-full h-full object-cover object-center"
                       />

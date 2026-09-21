@@ -12,9 +12,9 @@ export const metadata: Metadata = {
   title: 'GNUTS | Ghana National Union of Technical Students',
   description: 'Official portal of the Ghana National Union of Technical Students (GNUTS). Serving technical university and TVET students across Ghana.',
   icons: {
-    icon: 'https://res.cloudinary.com/dslngzls6/image/upload/v1786982867/gnuts_fav_htclbt.png',
-    shortcut: 'https://res.cloudinary.com/dslngzls6/image/upload/v1786982867/gnuts_fav_htclbt.png',
-    apple: 'https://res.cloudinary.com/dslngzls6/image/upload/v1786982867/gnuts_fav_htclbt.png',
+    icon: '/images/gnuts_fav.png',
+    shortcut: '/images/gnuts_fav.png',
+    apple: '/images/gnuts_fav.png',
   },
 };
 
@@ -44,9 +44,9 @@ export default function RootLayout({
         <link rel="preload" as="image" href="https://res.cloudinary.com/dslngzls6/image/upload/v1786991593/photo_2026-08-17_18-24-49_bg2c1g.jpg" />
 
         {/* Favicon configurations */}
-        <link rel="icon" type="image/png" href="https://res.cloudinary.com/dslngzls6/image/upload/v1786982867/gnuts_fav_htclbt.png" />
-        <link rel="shortcut icon" href="https://res.cloudinary.com/dslngzls6/image/upload/v1786982867/gnuts_fav_htclbt.png" />
-        <link rel="apple-touch-icon" href="https://res.cloudinary.com/dslngzls6/image/upload/v1786982867/gnuts_fav_htclbt.png" />
+        <link rel="icon" type="image/png" href="/images/gnuts_fav.png" />
+        <link rel="shortcut icon" href="/images/gnuts_fav.png" />
+        <link rel="apple-touch-icon" href="/images/gnuts_fav.png" />
       </head>
       <body className="font-sans antialiased bg-[#f8f9fa] text-gray-900 flex flex-col min-h-screen">
         <LayoutWrapper>{children}</LayoutWrapper>
