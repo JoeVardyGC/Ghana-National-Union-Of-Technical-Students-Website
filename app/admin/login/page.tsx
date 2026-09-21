@@ -71,7 +71,7 @@ export default function AdminLoginPage() {
           <Link href="/" className="inline-flex items-center gap-3 group">
             <div className="w-16 h-16 rounded-2xl bg-white p-2 shadow-xl border-2 border-[#D9A000] flex items-center justify-center group-hover:scale-105 transition-transform">
               <img
-                src="/images/gnuts_fav.png"
+                src="/images/gnuts_logo1_main.png"
                 alt="GNUTS Emblem"
                 className="w-full h-full object-contain"
               />

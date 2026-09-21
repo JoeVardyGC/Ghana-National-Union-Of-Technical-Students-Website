@@ -133,7 +133,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-3.5 group py-1">
             <div className="w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform duration-300 overflow-hidden">
               <img
-                src="/images/gnuts_fav.png"
+                src="/images/gnuts_logo1_main.png"
                 alt="GNUTS Emblem"
                 className="w-full h-full object-cover scale-110"
               />
@@ -254,7 +254,7 @@ export default function Navbar() {
             <div className="pt-6 border-t border-white/15 space-y-2 text-xs text-gray-200">
               <div className="flex items-center gap-2.5">
                 <img
-                  src="/images/gnuts_fav.png"
+                  src="/images/gnuts_logo1_main.png"
                   alt="GNUTS"
                   className="w-6 h-6 object-contain"
                 />
@@ -289,7 +289,7 @@ export default function Navbar() {
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 flex items-center justify-center overflow-hidden">
                   <img
-                    src="/images/gnuts_fav.png"
+                    src="/images/gnuts_logo1_main.png"
                     alt="GNUTS"
                     className="w-full h-full object-contain"
                   />

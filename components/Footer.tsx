@@ -10,7 +10,7 @@ export default function Footer() {
           <div className="space-y-4">
             <Link href="/" className="inline-block">
               <img
-                src="/images/gnuts_logo1.png"
+                src="/images/gnuts_logo1_main.png"
                 alt="GNUTS Logo"
                 className="h-16 w-auto object-contain"
               />

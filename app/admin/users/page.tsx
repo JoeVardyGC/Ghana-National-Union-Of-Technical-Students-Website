@@ -11,7 +11,7 @@ export default async function AdminUsersPage() {
     name: u.full_name || u.name || 'Executive Officer',
     email: u.email,
     role: u.role || 'Super Admin',
-    avatar: '/images/gnuts_fav.png',
+    avatar: '/images/gnuts_logo1_main.png',
     created_at: u.created_at || new Date().toISOString(),
   }));
   

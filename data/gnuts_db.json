@@ -7,7 +7,7 @@
       "email": "admin@gnuts.org.gh",
       "password": "password123",
       "role": "Super Admin",
-      "avatar": "/images/gnuts_fav.png",
+      "avatar": "/images/gnuts_logo1_main.png",
       "created_at": "2026-08-24T15:49:04.468Z",
       "updated_at": "2026-08-24T15:49:04.468Z"
     },
@@ -18,7 +18,7 @@
       "email": "joevardy2004@gmail.com",
       "password": "password123",
       "role": "Super Admin",
-      "avatar": "/images/gnuts_fav.png",
+      "avatar": "/images/gnuts_logo1_main.png",
       "created_at": "2026-08-25T16:00:00.000Z",
       "updated_at": "2026-08-25T16:00:00.000Z"
     }

@@ -31,7 +31,7 @@ interface AdminUserItem {
   created_at?: string;
 }
 
-const UNION_LOGO_AVATAR = '/images/gnuts_fav.png';
+const UNION_LOGO_AVATAR = '/images/gnuts_logo1_main.png';
 
 const DEFAULT_USERS_SEED: AdminUserItem[] = [
   {
