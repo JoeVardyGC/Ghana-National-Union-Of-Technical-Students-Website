@@ -116,7 +116,7 @@ export default function HeroSlider({
       setCurrentIndex((prev) => (prev + 1) % activeSlides.length);
     }, 6000);
     return () => clearInterval(timer);
-  }, [activeSlides.length]);
+  }, [currentIndex, activeSlides.length]);
 
   useEffect(() => {
     setProgress(0);
@@ -149,15 +149,24 @@ export default function HeroSlider({
                 isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
               }`}
             >
-              {/* Ken Burns Background Image */}
-              <div
-                className={`absolute inset-0 bg-cover bg-center transition-transform duration-[10000ms] ease-out ${
-                  isActive ? 'scale-110' : 'scale-100'
-                }`}
-                style={{
-                  backgroundImage: `url("${slide.image}")`,
-                }}
-              />
+              {/* Ken Burns Background Image via robust img element */}
+              <div className="absolute inset-0 overflow-hidden">
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  className={`w-full h-full object-cover transition-transform duration-[10000ms] ease-out ${
+                    isActive ? 'scale-110' : 'scale-100'
+                  }`}
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  decoding="async"
+                  onError={(e) => {
+                    const fallbackImg = `/images/carousel_${(index % 3) + 1}.jpg`;
+                    if (!e.currentTarget.src.endsWith(fallbackImg)) {
+                      e.currentTarget.src = fallbackImg;
+                    }
+                  }}
+                />
+              </div>
               
               {/* Better gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent" />
@@ -196,14 +205,14 @@ export default function HeroSlider({
         {/* Slider Controls */}
         <button
           onClick={prevSlide}
-          className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 text-white flex items-center justify-center hover:bg-black/70 transition-colors z-20"
+          className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 text-white flex items-center justify-center hover:bg-black/70 transition-colors z-20 cursor-pointer"
           aria-label="Previous Slide"
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 text-white flex items-center justify-center hover:bg-black/70 transition-colors z-20"
+          className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 text-white flex items-center justify-center hover:bg-black/70 transition-colors z-20 cursor-pointer"
           aria-label="Next Slide"
         >
           <ChevronRight className="w-6 h-6" />
@@ -217,7 +226,7 @@ export default function HeroSlider({
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className="group relative py-2 focus:outline-none"
+                className="group relative py-2 focus:outline-none cursor-pointer"
                 aria-label={`Go to slide ${index + 1}`}
               >
                 <div
