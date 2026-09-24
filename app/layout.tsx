@@ -41,7 +41,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
 
         {/* Preload High Priority Hero Image for Instant LCP Rendering */}
-        <link rel="preload" as="image" href="https://res.cloudinary.com/dslngzls6/image/upload/v1786991593/photo_2026-08-17_18-24-49_bg2c1g.jpg" />
+        <link rel="preload" as="image" href="/images/carousel_1.jpg" />
 
         {/* Favicon configurations */}
         <link rel="icon" type="image/png" href="/images/gnuts_logo1_main.png" />

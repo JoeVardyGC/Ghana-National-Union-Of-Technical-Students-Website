@@ -238,7 +238,7 @@ const DEFAULT_STORE: Record<string, any[]> = {
       id: 1,
       page_key: 'home_carousel',
       title: 'Ghana National Union of Technical Students (GNUTS)',
-      image_url: 'https://res.cloudinary.com/dslngzls6/image/upload/v1786991593/photo_2026-08-17_18-24-49_bg2c1g.jpg',
+      image_url: '/images/carousel_1.jpg',
       display_order: 1,
       status: 'active'
     },
@@ -246,7 +246,7 @@ const DEFAULT_STORE: Record<string, any[]> = {
       id: 2,
       page_key: 'home_carousel',
       title: 'Empowering Technical Students for National Development',
-      image_url: 'https://res.cloudinary.com/dslngzls6/image/upload/v1786991595/photo_2026-08-17_18-24-46_w6zphs.jpg',
+      image_url: '/images/carousel_2.jpg',
       display_order: 2,
       status: 'active'
     },
@@ -254,7 +254,7 @@ const DEFAULT_STORE: Record<string, any[]> = {
       id: 3,
       page_key: 'home_carousel',
       title: 'Creating Opportunities Beyond the Classroom',
-      image_url: 'https://res.cloudinary.com/dslngzls6/image/upload/v1786991595/photo_2026-08-17_18-24-43_hkzlai.jpg',
+      image_url: '/images/carousel_3.jpg',
       display_order: 3,
       status: 'active'
     },

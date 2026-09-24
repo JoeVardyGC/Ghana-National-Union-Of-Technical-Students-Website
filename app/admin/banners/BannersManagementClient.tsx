@@ -423,7 +423,7 @@ export default function BannersManagementClient({ initialBanners = [] }: Banners
               {/* Banner Image Frame with 50% Green Overlay */}
               <div className="relative aspect-[16/7] sm:aspect-[21/9] w-full rounded-2xl overflow-hidden bg-black border-2 border-emerald-700/60 shadow-2xl">
                 <img
-                  src={carouselSlides[previewSlideIdx]?.image_url || 'https://res.cloudinary.com/dslngzls6/image/upload/v1786991593/photo_2026-08-17_18-24-49_bg2c1g.jpg'}
+                  src={carouselSlides[previewSlideIdx]?.image_url || '/images/carousel_1.jpg'}
                   alt="Carousel Slide"
                   className="w-full h-full object-cover object-center transition-all duration-700"
                 />

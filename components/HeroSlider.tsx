@@ -19,7 +19,7 @@ const PHP_HERO_SLIDES: Slide[] = [
   {
     title: 'Ghana National Union of Technical Students (GNUTS)',
     subtitle: 'The unified voice of Technical and TVET students in Ghana.',
-    image: 'https://res.cloudinary.com/dslngzls6/image/upload/v1786991593/photo_2026-08-17_18-24-49_bg2c1g.jpg',
+    image: '/images/carousel_1.jpg',
     btn1_text: 'Who We Are →',
     btn1_link: '/about',
     btn2_text: 'Our Events',
@@ -28,7 +28,7 @@ const PHP_HERO_SLIDES: Slide[] = [
   {
     title: 'Empowering Technical Students for National Development',
     subtitle: 'Professionals with Integrity.',
-    image: 'https://res.cloudinary.com/dslngzls6/image/upload/v1786991595/photo_2026-08-17_18-24-46_w6zphs.jpg',
+    image: '/images/carousel_2.jpg',
     btn1_text: 'Who We Are →',
     btn1_link: '/about',
     btn2_text: 'Our Events',
@@ -37,7 +37,7 @@ const PHP_HERO_SLIDES: Slide[] = [
   {
     title: 'Creating Opportunities Beyond the Classroom',
     subtitle: 'Scholarships, skills, leadership, and innovation.',
-    image: 'https://res.cloudinary.com/dslngzls6/image/upload/v1786991595/photo_2026-08-17_18-24-43_hkzlai.jpg',
+    image: '/images/carousel_3.jpg',
     btn1_text: 'Who We Are →',
     btn1_link: '/about',
     btn2_text: 'Our Events',
