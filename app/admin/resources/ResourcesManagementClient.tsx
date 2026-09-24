@@ -21,7 +21,9 @@ import {
   Layers,
   CheckSquare,
   Square,
-  Info
+  Info,
+  Upload,
+  Loader2
 } from 'lucide-react';
 import { resolveDocumentUrl } from '@/lib/imageUtils';
 
@@ -67,6 +69,8 @@ export default function ResourcesManagementClient({
   const [isDeletingId, setIsDeletingId] = useState<number | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [feedbackMsg, setFeedbackMsg] = useState('');
+  const [isUploadingDoc, setIsUploadingDoc] = useState(false);
+  const [uploadDocFeedback, setUploadDocFeedback] = useState('');
 
   // Form State
   const [formData, setFormData] = useState({
@@ -78,6 +82,43 @@ export default function ResourcesManagementClient({
     file_size: 2048000,
     display_order: 1,
   });
+
+  const handleDocFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploadingDoc(true);
+    setUploadDocFeedback('');
+
+    try {
+      const uploadData = new FormData();
+      uploadData.append('file', file);
+      uploadData.append('folder', '/gnuts_documents');
+
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: uploadData,
+      });
+
+      const data = await res.json();
+      if (res.ok && data.url) {
+        setFormData((prev) => ({
+          ...prev,
+          file_path: data.url,
+          file_name: data.fileName || data.file_name || file.name,
+          file_size: data.size || file.size,
+          title: prev.title || file.name.replace(/\.[^/.]+$/, '').replace(/_/g, ' '),
+        }));
+        setUploadDocFeedback('Document uploaded successfully to the system!');
+      } else {
+        setUploadDocFeedback(data.error || 'Failed to upload document');
+      }
+    } catch (err: any) {
+      setUploadDocFeedback('Upload failed. Please check your connection.');
+    } finally {
+      setIsUploadingDoc(false);
+    }
+  };
 
   const formatBytes = (bytes: number) => {
     if (!bytes || bytes === 0) return '2.1 MB';
@@ -127,6 +168,7 @@ export default function ResourcesManagementClient({
       display_order: resourcesList.length + 1,
     });
     setFeedbackMsg('');
+    setUploadDocFeedback('');
     setIsModalOpen(true);
   };
 
@@ -515,7 +557,7 @@ export default function ResourcesManagementClient({
               </div>
 
               {/* Document File / Public Share Link */}
-              <div className="space-y-2 bg-gray-50 p-4 rounded-2xl border border-gray-200">
+              <div className="space-y-3 bg-gray-50 p-4 rounded-2xl border border-gray-200">
                 <div className="flex items-center justify-between">
                   <label className="text-xs font-black uppercase tracking-wider text-[#014900] flex items-center gap-1.5">
                     <FileText className="w-3.5 h-3.5 text-[#014900]" />
@@ -524,21 +566,58 @@ export default function ResourcesManagementClient({
                   <span className="text-[10px] bg-[#014900] text-white px-2 py-0.5 rounded-full font-bold">REQUIRED</span>
                 </div>
 
-                <input
-                  type="url"
-                  required
-                  placeholder="e.g. https://drive.google.com/file/d/... or https://res.cloudinary.com/... or direct PDF link"
-                  value={formData.file_path}
-                  onChange={(e) => setFormData({ ...formData, file_path: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-white rounded-xl border border-gray-300 text-xs font-semibold outline-none focus:border-[#014900]"
-                />
-
-                <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-[11px] text-amber-900 flex items-start gap-2">
-                  <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-                  <div className="leading-relaxed">
-                    <span className="font-bold block">How to host & link your document:</span>
-                    <span>Upload your PDF/Word doc to <strong>Google Drive</strong> (set sharing to <em>'Anyone with the link can view'</em>), <strong>Cloudinary</strong>, or <strong>Dropbox</strong>, and paste the share link here.</span>
+                {/* 1-Click Direct File Upload */}
+                <div className="p-3.5 bg-white border border-dashed border-emerald-600/40 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-9 h-9 rounded-xl bg-emerald-50 text-[#014900] flex items-center justify-center shrink-0">
+                      <Upload className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-gray-800">Upload PDF or Document</p>
+                      <p className="text-[10px] text-gray-500">Auto-uploads to CDN / System Storage (Max 25MB)</p>
+                    </div>
                   </div>
+
+                  <label className="shrink-0 inline-flex items-center gap-2 px-4 py-2 bg-[#014900] hover:bg-[#D9A000] text-white hover:text-[#014900] font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow-sm cursor-pointer">
+                    {isUploadingDoc ? (
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        <span>Uploading...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Upload className="w-3.5 h-3.5" />
+                        <span>Choose File</span>
+                      </>
+                    )}
+                    <input
+                      type="file"
+                      accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt"
+                      onChange={handleDocFileUpload}
+                      disabled={isUploadingDoc}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+
+                {uploadDocFeedback && (
+                  <p className={`text-xs font-bold ${uploadDocFeedback.includes('successfully') ? 'text-emerald-700' : 'text-red-600'}`}>
+                    {uploadDocFeedback}
+                  </p>
+                )}
+
+                <div className="space-y-1 pt-1">
+                  <label className="text-[10px] font-black uppercase tracking-wider text-gray-500">
+                    Direct Public Link / File URL
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. /uploads/... or https://ik.imagekit.io/... or https://drive.google.com/..."
+                    value={formData.file_path}
+                    onChange={(e) => setFormData({ ...formData, file_path: e.target.value })}
+                    className="w-full px-3.5 py-2.5 bg-white rounded-xl border border-gray-300 text-xs font-semibold outline-none focus:border-[#014900]"
+                  />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
@@ -572,7 +651,7 @@ export default function ResourcesManagementClient({
                       </a>
                     ) : (
                       <div className="px-3 py-2 bg-gray-100 text-gray-400 rounded-xl text-xs font-medium text-center">
-                        Enter link above to test
+                        Upload or enter link above
                       </div>
                     )}
                   </div>

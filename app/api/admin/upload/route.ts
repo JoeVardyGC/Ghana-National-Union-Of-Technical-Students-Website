@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
 import { getAdminSession } from '@/lib/auth';
+import { uploadToImageKit } from '@/lib/imagekit';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,10 +12,34 @@ const ALLOWED_MIME_TYPES = new Set([
   'image/webp',
   'image/gif',
   'image/svg+xml',
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'application/vnd.ms-excel',
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  'application/vnd.ms-powerpoint',
+  'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+  'text/plain',
 ]);
 
-const ALLOWED_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg']);
-const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB
+const ALLOWED_EXTENSIONS = new Set([
+  '.jpg',
+  '.jpeg',
+  '.png',
+  '.webp',
+  '.gif',
+  '.svg',
+  '.pdf',
+  '.doc',
+  '.docx',
+  '.xls',
+  '.xlsx',
+  '.ppt',
+  '.pptx',
+  '.txt',
+]);
+
+const MAX_FILE_SIZE_BYTES = 25 * 1024 * 1024; // 25 MB
 
 export async function POST(request: Request) {
   try {
@@ -25,15 +50,20 @@ export async function POST(request: Request) {
 
     const formData = await request.formData();
     const file = formData.get('file') as File | null;
+    const customFolder = (formData.get('folder') as string | null) || '/gnuts_uploads';
 
     if (!file) {
-      return NextResponse.json({ error: 'No image file provided' }, { status: 400 });
+      return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
-    // Validate MIME Type
-    if (!ALLOWED_MIME_TYPES.has(file.type.toLowerCase())) {
+    // Validate MIME Type or Extension
+    const rawExt = path.extname(file.name).toLowerCase() || '.jpg';
+    const isMimeAllowed = ALLOWED_MIME_TYPES.has(file.type.toLowerCase());
+    const isExtAllowed = ALLOWED_EXTENSIONS.has(rawExt);
+
+    if (!isMimeAllowed && !isExtAllowed) {
       return NextResponse.json(
-        { error: 'Invalid file type. Only JPEG, PNG, WebP, GIF, and SVG images are allowed.' },
+        { error: 'Invalid file type. Allowed: Images (JPG, PNG, WebP, GIF, SVG) and Documents (PDF, Word, Excel, PowerPoint).' },
         { status: 400 }
       );
     }
@@ -41,16 +71,7 @@ export async function POST(request: Request) {
     // Validate File Size
     if (file.size > MAX_FILE_SIZE_BYTES) {
       return NextResponse.json(
-        { error: 'File size exceeds 5MB limit. Please crop or compress your image.' },
-        { status: 400 }
-      );
-    }
-
-    // Validate Extension
-    const rawExt = path.extname(file.name).toLowerCase();
-    if (!ALLOWED_EXTENSIONS.has(rawExt)) {
-      return NextResponse.json(
-        { error: 'Invalid file extension. Allowed: .jpg, .jpeg, .png, .webp, .gif, .svg' },
+        { error: 'File size exceeds 25MB limit. Please compress or optimize your file.' },
         { status: 400 }
       );
     }
@@ -58,16 +79,31 @@ export async function POST(request: Request) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Ensure uploads directory exists
+    const baseName = path.basename(file.name, rawExt).replace(/[^a-zA-Z0-9_-]/g, '_');
+    const uniqueFileName = `${Date.now()}-${baseName}${rawExt}`;
+    const isDocument = ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx'].includes(rawExt);
+
+    // 1. Try uploading to ImageKit.io CDN if configured
+    const imagekitFolder = isDocument ? '/gnuts_documents' : customFolder;
+    const imagekitResult = await uploadToImageKit(buffer, uniqueFileName, imagekitFolder);
+
+    if (imagekitResult && imagekitResult.url) {
+      return NextResponse.json({
+        success: true,
+        url: imagekitResult.url,
+        fileName: file.name || uniqueFileName,
+        file_name: file.name || uniqueFileName,
+        size: file.size,
+        provider: 'imagekit',
+        isDocument,
+      });
+    }
+
+    // 2. Fallback: Save file locally in public/uploads/
     const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
     await mkdir(uploadsDir, { recursive: true });
 
-    // Generate clean unique filename with sanitized basename
-    const baseName = path.basename(file.name, rawExt).replace(/[^a-zA-Z0-9_-]/g, '_');
-    const uniqueFileName = `${Date.now()}-${baseName}${rawExt}`;
     const filePath = path.join(uploadsDir, uniqueFileName);
-
-    // Save file locally in public/uploads/
     await writeFile(filePath, buffer);
 
     const publicUrl = `/uploads/${uniqueFileName}`;
@@ -75,11 +111,14 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       url: publicUrl,
-      fileName: uniqueFileName,
+      fileName: file.name || uniqueFileName,
+      file_name: file.name || uniqueFileName,
       size: file.size,
+      provider: 'local',
+      isDocument,
     });
   } catch (error: any) {
-    console.error('File upload error:', error);
-    return NextResponse.json({ error: 'Failed to upload image file' }, { status: 500 });
+    console.error('Admin upload error:', error);
+    return NextResponse.json({ error: 'Failed to process file upload' }, { status: 500 });
   }
 }
