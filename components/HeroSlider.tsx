@@ -19,7 +19,7 @@ const PHP_HERO_SLIDES: Slide[] = [
   {
     title: 'Ghana National Union of Technical Students (GNUTS)',
     subtitle: 'The unified voice of Technical and TVET students in Ghana.',
-    image: '/images/carousel_1.jpg',
+    image: 'https://ik.imagekit.io/joevardy/carousel%201.jpg',
     btn1_text: 'Who We Are →',
     btn1_link: '/about',
     btn2_text: 'Our Events',
@@ -28,7 +28,7 @@ const PHP_HERO_SLIDES: Slide[] = [
   {
     title: 'Empowering Technical Students for National Development',
     subtitle: 'Professionals with Integrity.',
-    image: '/images/carousel_2.jpg',
+    image: 'https://ik.imagekit.io/joevardy/carousel%202.jpg',
     btn1_text: 'Who We Are →',
     btn1_link: '/about',
     btn2_text: 'Our Events',
@@ -37,7 +37,7 @@ const PHP_HERO_SLIDES: Slide[] = [
   {
     title: 'Creating Opportunities Beyond the Classroom',
     subtitle: 'Scholarships, skills, leadership, and innovation.',
-    image: '/images/carousel_3.jpg',
+    image: 'https://ik.imagekit.io/joevardy/carousel%203.jpg',
     btn1_text: 'Who We Are →',
     btn1_link: '/about',
     btn2_text: 'Our Events',
@@ -155,7 +155,7 @@ export default function HeroSlider({
                   isActive ? 'scale-110' : 'scale-100'
                 }`}
                 style={{
-                  backgroundImage: `url(${slide.image})`,
+                  backgroundImage: `url("${slide.image}")`,
                 }}
               />
               

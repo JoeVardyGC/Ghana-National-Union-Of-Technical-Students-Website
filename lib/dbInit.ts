@@ -252,9 +252,9 @@ export async function initializeDatabase(): Promise<{ success: boolean; message:
     if (!existingBanners || existingBanners.length === 0) {
       await query(`
         INSERT INTO hero_banners (page_key, title, image_url, display_order, status) VALUES
-        ('home_carousel', 'Ghana National Union of Technical Students (GNUTS)', '/images/carousel_1.jpg', 1, 'active'),
-        ('home_carousel', 'Empowering Technical Students for National Development', '/images/carousel_2.jpg', 2, 'active'),
-        ('home_carousel', 'Creating Opportunities Beyond the Classroom', '/images/carousel_3.jpg', 3, 'active'),
+        ('home_carousel', 'Ghana National Union of Technical Students (GNUTS)', 'https://ik.imagekit.io/joevardy/carousel%201.jpg', 1, 'active'),
+        ('home_carousel', 'Empowering Technical Students for National Development', 'https://ik.imagekit.io/joevardy/carousel%202.jpg', 2, 'active'),
+        ('home_carousel', 'Creating Opportunities Beyond the Classroom', 'https://ik.imagekit.io/joevardy/carousel%203.jpg', 3, 'active'),
         ('about_hero', 'About GNUTS Page Hero Banner', '/images/header_for_pages.jpg', 1, 'active'),
         ('news_hero', 'News & Press Releases Hero Banner', '/images/header_for_pages.jpg', 1, 'active'),
         ('innovations_hero', 'Student Innovations Hero Banner', '/images/header_for_pages.jpg', 1, 'active'),
