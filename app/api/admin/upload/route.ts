@@ -56,9 +56,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
-    // Validate MIME Type or Extension
-    const rawExt = path.extname(file.name).toLowerCase() || '.jpg';
-    const isMimeAllowed = ALLOWED_MIME_TYPES.has(file.type.toLowerCase());
+    const fileName = file.name || 'document.pdf';
+    const fileType = (file.type || '').toLowerCase();
+    const rawExt = path.extname(fileName).toLowerCase() || (fileType.includes('pdf') ? '.pdf' : '.jpg');
+
+    const isMimeAllowed = !fileType || ALLOWED_MIME_TYPES.has(fileType) || fileType === 'application/octet-stream';
     const isExtAllowed = ALLOWED_EXTENSIONS.has(rawExt);
 
     if (!isMimeAllowed && !isExtAllowed) {
@@ -69,7 +71,7 @@ export async function POST(request: Request) {
     }
 
     // Validate File Size
-    if (file.size > MAX_FILE_SIZE_BYTES) {
+    if (file.size && file.size > MAX_FILE_SIZE_BYTES) {
       return NextResponse.json(
         { error: 'File size exceeds 25MB limit. Please compress or optimize your file.' },
         { status: 400 }
@@ -79,9 +81,9 @@ export async function POST(request: Request) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const baseName = path.basename(file.name, rawExt).replace(/[^a-zA-Z0-9_-]/g, '_');
-    const uniqueFileName = `${Date.now()}-${baseName}${rawExt}`;
-    const isDocument = ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx'].includes(rawExt);
+    const baseName = path.basename(fileName, rawExt).replace(/[^a-zA-Z0-9_-]/g, '_');
+    const uniqueFileName = `${Date.now()}-${baseName || 'file'}${rawExt}`;
+    const isDocument = ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', '.txt'].includes(rawExt) || fileType.includes('pdf');
 
     // 1. Try uploading to ImageKit.io CDN if configured
     const imagekitFolder = isDocument ? '/gnuts_documents' : customFolder;
@@ -91,34 +93,52 @@ export async function POST(request: Request) {
       return NextResponse.json({
         success: true,
         url: imagekitResult.url,
-        fileName: file.name || uniqueFileName,
-        file_name: file.name || uniqueFileName,
-        size: file.size,
+        fileName: fileName,
+        file_name: fileName,
+        size: file.size || buffer.length,
         provider: 'imagekit',
         isDocument,
       });
     }
 
     // 2. Fallback: Save file locally in public/uploads/
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-    await mkdir(uploadsDir, { recursive: true });
+    try {
+      const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+      await mkdir(uploadsDir, { recursive: true });
 
-    const filePath = path.join(uploadsDir, uniqueFileName);
-    await writeFile(filePath, buffer);
+      const filePath = path.join(uploadsDir, uniqueFileName);
+      await writeFile(filePath, buffer);
 
-    const publicUrl = `/uploads/${uniqueFileName}`;
+      const publicUrl = `/uploads/${uniqueFileName}`;
 
-    return NextResponse.json({
-      success: true,
-      url: publicUrl,
-      fileName: file.name || uniqueFileName,
-      file_name: file.name || uniqueFileName,
-      size: file.size,
-      provider: 'local',
-      isDocument,
-    });
+      return NextResponse.json({
+        success: true,
+        url: publicUrl,
+        fileName: fileName,
+        file_name: fileName,
+        size: file.size || buffer.length,
+        provider: 'local',
+        isDocument,
+      });
+    } catch (fsErr: any) {
+      console.warn('Local filesystem write failed, using data-url fallback:', fsErr.message);
+      const mime = fileType || (isDocument ? 'application/pdf' : 'image/jpeg');
+      const dataUrl = `data:${mime};base64,${buffer.toString('base64')}`;
+
+      return NextResponse.json({
+        success: true,
+        url: dataUrl,
+        fileName: fileName,
+        file_name: fileName,
+        size: file.size || buffer.length,
+        provider: 'data-url',
+        isDocument,
+      });
+    }
   } catch (error: any) {
     console.error('Admin upload error:', error);
-    return NextResponse.json({ error: 'Failed to process file upload' }, { status: 500 });
+    return NextResponse.json({ 
+      error: error?.message || 'Failed to process file upload' 
+    }, { status: 500 });
   }
 }

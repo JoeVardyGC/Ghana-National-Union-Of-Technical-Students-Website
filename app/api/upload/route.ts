@@ -26,8 +26,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'No image file provided' }, { status: 400 });
     }
 
-    // Validate MIME Type
-    if (!ALLOWED_MIME_TYPES.has(file.type.toLowerCase())) {
+    const fileName = file.name || 'image.jpg';
+    const fileType = (file.type || '').toLowerCase();
+    const rawExt = path.extname(fileName).toLowerCase() || '.jpg';
+
+    // Validate MIME Type if provided
+    if (fileType && !ALLOWED_MIME_TYPES.has(fileType) && fileType !== 'application/octet-stream') {
       return NextResponse.json(
         { error: 'Invalid file type. Only JPEG, PNG, WebP, GIF, and SVG images are allowed.' },
         { status: 400 }
@@ -35,17 +39,16 @@ export async function POST(request: Request) {
     }
 
     // Validate File Size
-    if (file.size > MAX_FILE_SIZE_BYTES) {
+    if (file.size && file.size > MAX_FILE_SIZE_BYTES) {
       return NextResponse.json(
         { error: 'File size exceeds 15MB limit.' },
         { status: 400 }
       );
     }
 
-    const rawExt = path.extname(file.name).toLowerCase() || '.jpg';
     if (!ALLOWED_EXTENSIONS.has(rawExt)) {
       return NextResponse.json(
-        { error: 'Invalid file extension.' },
+        { error: 'Invalid file extension. Allowed: .jpg, .jpeg, .png, .webp, .gif, .svg' },
         { status: 400 }
       );
     }
