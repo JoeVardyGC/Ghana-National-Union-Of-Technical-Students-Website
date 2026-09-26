@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { 
   Newspaper, 
   GraduationCap, 
@@ -54,6 +55,7 @@ export default function AdminDashboardClient({
   userName = 'Executive Officer',
   userRole = 'Super Admin',
 }: AdminDashboardClientProps) {
+  const router = useRouter();
   const [stats, setStats] = useState<DashboardStats>(initialStats);
   const [recentNews, setRecentNews] = useState<any[]>(initialRecentNews);
   const [pendingInnovations, setPendingInnovations] = useState<any[]>(initialPendingInnovations);
@@ -89,11 +91,14 @@ export default function AdminDashboardClient({
     }
   }, []);
 
-  // Background auto-polling interval every 10 seconds permanently enabled
+  // Background auto-polling interval every 30 seconds when tab is active/visible
   useEffect(() => {
     const interval = setInterval(() => {
+      if (typeof document !== 'undefined' && document.visibilityState !== 'visible') {
+        return;
+      }
       fetchLiveMetrics(false);
-    }, 10000);
+    }, 30000);
     return () => clearInterval(interval);
   }, [fetchLiveMetrics]);
 
@@ -237,6 +242,7 @@ export default function AdminDashboardClient({
 
             <Link
               href="/admin/news"
+              prefetch={true}
               className="px-4 py-2.5 bg-[#D9A000] hover:bg-white text-[#014900] font-black text-xs uppercase tracking-wider rounded-2xl transition-all shadow-md flex items-center gap-2 hover:scale-105"
             >
               <PlusCircle className="w-4 h-4" />
@@ -254,6 +260,7 @@ export default function AdminDashboardClient({
             <Link
               key={card.title}
               href={card.link}
+              prefetch={true}
               className={`bg-white rounded-3xl p-5 border ${card.border} shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col justify-between group cursor-pointer relative overflow-hidden`}
             >
               {card.unreadAlert && (
@@ -343,9 +350,17 @@ export default function AdminDashboardClient({
                   </thead>
                   <tbody className="divide-y divide-gray-100">
                     {recentNews.map((item: any) => (
-                      <tr key={item.id} className="hover:bg-gray-50/80 transition-colors group">
+                      <tr
+                        key={item.id}
+                        onClick={() => router.push('/admin/news')}
+                        className="hover:bg-emerald-50/60 transition-colors group cursor-pointer"
+                        title="Click to manage press releases"
+                      >
                         <td className="py-3.5 pr-4 font-bold text-gray-900 group-hover:text-[#014900] transition-colors max-w-xs truncate">
-                          {item.title}
+                          <span className="flex items-center gap-1.5">
+                            <span>{item.title}</span>
+                            <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 text-[#014900] transition-opacity shrink-0" />
+                          </span>
                         </td>
                         <td className="py-3.5 font-medium text-gray-500 hidden sm:table-cell">
                           {item.author || 'Secretariat'}
@@ -378,6 +393,7 @@ export default function AdminDashboardClient({
               </div>
               <Link
                 href="/admin/messages"
+                prefetch={true}
                 className="text-xs font-black uppercase tracking-wider text-[#014900] hover:text-[#D9A000] transition-colors inline-flex items-center gap-1"
               >
                 <span>View All Inquiries ({stats.totalMessages})</span>
@@ -396,15 +412,17 @@ export default function AdminDashboardClient({
                   return (
                     <div 
                       key={msg.id} 
-                      className={`p-4 rounded-2xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+                      onClick={() => router.push('/admin/messages')}
+                      className={`p-4 rounded-2xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer group ${
                         isUnread 
-                          ? 'bg-rose-50/40 border-rose-200/80 hover:bg-rose-50/70' 
-                          : 'bg-gray-50/80 border-gray-200/60 hover:bg-gray-100/80'
+                          ? 'bg-rose-50/40 border-rose-200/80 hover:bg-rose-50/80 hover:border-rose-300' 
+                          : 'bg-gray-50/80 border-gray-200/60 hover:bg-emerald-50/50 hover:border-emerald-300'
                       }`}
+                      title="Click to view and respond to inquiry"
                     >
                       <div className="space-y-1 overflow-hidden">
                         <div className="flex items-center gap-2">
-                          <span className="text-xs font-black text-gray-900 truncate">{msg.name}</span>
+                          <span className="text-xs font-black text-gray-900 group-hover:text-[#014900] transition-colors truncate">{msg.name}</span>
                           {isUnread && (
                             <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase bg-rose-600 text-white">
                               New
@@ -416,12 +434,9 @@ export default function AdminDashboardClient({
                         <p className="text-[11px] text-gray-600 font-medium line-clamp-1">{msg.message}</p>
                       </div>
 
-                      <Link
-                        href="/admin/messages"
-                        className="px-3 py-1.5 bg-white border border-gray-200 hover:border-[#014900] text-[#014900] text-[10px] font-black uppercase tracking-wider rounded-xl shrink-0 transition-colors shadow-xs text-center"
-                      >
-                        Open Message
-                      </Link>
+                      <div className="px-3 py-1.5 bg-white border border-gray-200 group-hover:border-[#014900] text-[#014900] text-[10px] font-black uppercase tracking-wider rounded-xl shrink-0 transition-colors shadow-xs text-center">
+                        Open Message →
+                      </div>
                     </div>
                   );
                 })}
@@ -459,9 +474,14 @@ export default function AdminDashboardClient({
             ) : (
               <div className="space-y-3">
                 {pendingInnovations.map((proj: any) => (
-                  <div key={proj.id} className="p-3.5 bg-amber-50/50 hover:bg-amber-50 rounded-2xl border border-amber-200/70 transition-colors flex items-center justify-between gap-3">
+                  <div
+                    key={proj.id}
+                    onClick={() => router.push('/admin/innovations')}
+                    className="p-3.5 bg-amber-50/50 hover:bg-amber-100/70 rounded-2xl border border-amber-200/70 hover:border-amber-300 transition-colors flex items-center justify-between gap-3 cursor-pointer group"
+                    title="Click to review student project"
+                  >
                     <div className="overflow-hidden space-y-0.5">
-                      <p className="text-xs font-black text-gray-900 truncate">{proj.title}</p>
+                      <p className="text-xs font-black text-gray-900 group-hover:text-[#014900] transition-colors truncate">{proj.title}</p>
                       <p className="text-[10px] text-gray-600 font-medium truncate">
                         {proj.student_name} • {proj.institution}
                       </p>
@@ -471,12 +491,9 @@ export default function AdminDashboardClient({
                         </span>
                       )}
                     </div>
-                    <Link
-                      href="/admin/innovations"
-                      className="px-3 py-1.5 bg-[#014900] text-white hover:bg-[#D9A000] hover:text-[#014900] text-[10px] font-black uppercase tracking-wider rounded-xl shrink-0 transition-colors shadow-xs"
-                    >
-                      Review
-                    </Link>
+                    <div className="px-3 py-1.5 bg-[#014900] text-white group-hover:bg-[#D9A000] group-hover:text-[#014900] text-[10px] font-black uppercase tracking-wider rounded-xl shrink-0 transition-colors shadow-xs">
+                      Review →
+                    </div>
                   </div>
                 ))}
               </div>
@@ -484,6 +501,7 @@ export default function AdminDashboardClient({
 
             <Link
               href="/admin/innovations"
+              prefetch={true}
               className="w-full py-2.5 bg-gray-100 hover:bg-[#014900] text-gray-700 hover:text-white rounded-xl text-xs font-black text-center block transition-colors uppercase tracking-wider"
             >
               Open Project Queue ({stats.approvedInnovations + stats.pendingInnovations}) →

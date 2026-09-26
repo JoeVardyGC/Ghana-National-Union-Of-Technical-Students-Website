@@ -12,9 +12,9 @@ export const metadata: Metadata = {
   title: 'GNUTS | Ghana National Union of Technical Students',
   description: 'Official portal of the Ghana National Union of Technical Students (GNUTS). Serving technical university and TVET students across Ghana.',
   icons: {
-    icon: '/images/gnuts_logo1_main.png',
-    shortcut: '/images/gnuts_logo1_main.png',
-    apple: '/images/gnuts_logo1_main.png',
+    icon: '/images/gnuts_fav.png',
+    shortcut: '/images/gnuts_fav.png',
+    apple: '/images/gnuts_fav.png',
   },
 };
 
@@ -35,18 +35,20 @@ export default function RootLayout({
         />
 
         {/* Resource Hints for High-Speed CDN Asset Loading */}
+        <link rel="preconnect" href="https://ik.imagekit.io" />
+        <link rel="dns-prefetch" href="https://ik.imagekit.io" />
         <link rel="preconnect" href="https://res.cloudinary.com" />
-        <link rel="preconnect" href="https://images.unsplash.com" />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+        <link rel="preconnect" href="https://images.unsplash.com" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
 
         {/* Preload High Priority Hero Image for Instant LCP Rendering */}
         <link rel="preload" as="image" href="/images/carousel_1.jpg" />
 
         {/* Favicon configurations */}
-        <link rel="icon" type="image/png" href="/images/gnuts_logo1_main.png" />
-        <link rel="shortcut icon" href="/images/gnuts_logo1_main.png" />
-        <link rel="apple-touch-icon" href="/images/gnuts_logo1_main.png" />
+        <link rel="icon" type="image/png" href="/images/gnuts_fav.png" />
+        <link rel="shortcut icon" href="/images/gnuts_fav.png" />
+        <link rel="apple-touch-icon" href="/images/gnuts_fav.png" />
       </head>
       <body className="font-['Montserrat',sans-serif] antialiased bg-[#f8f9fa] text-gray-900 flex flex-col min-h-screen">
         <LayoutWrapper>{children}</LayoutWrapper>

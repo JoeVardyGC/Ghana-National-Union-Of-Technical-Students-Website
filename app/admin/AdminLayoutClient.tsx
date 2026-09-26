@@ -53,6 +53,12 @@ export default function AdminLayoutClient({ children, sessionUser }: AdminLayout
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  // Turn off navigation indicator whenever pathname updates
+  useEffect(() => {
+    setIsNavigating(false);
+  }, [pathname]);
 
   // If unauthenticated on any other admin route, redirect to login
   useEffect(() => {
@@ -91,17 +97,26 @@ export default function AdminLayoutClient({ children, sessionUser }: AdminLayout
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] flex font-['Montserrat',sans-serif] text-gray-900">
+    <div className="min-h-screen bg-[#f8f9fa] flex font-['Montserrat',sans-serif] text-gray-900 relative">
+      {/* Top Instant Navigation Progress Bar */}
+      {isNavigating && (
+        <div className="fixed top-0 left-0 right-0 z-50 h-[3px] bg-gradient-to-r from-[#D9A000] via-emerald-400 to-[#D9A000] shadow-sm animate-pulse" />
+      )}
       
       {/* 1. Desktop Executive Sidebar */}
       <aside className="hidden lg:flex w-72 bg-[#014900] text-white flex-col justify-between shrink-0 shadow-2xl border-r border-emerald-800/60 sticky top-0 h-screen z-30">
         
         {/* Top Header / Branding */}
         <div className="p-6 border-b border-white/10 space-y-4">
-          <Link href="/admin" className="flex items-center gap-3.5 group">
+          <Link 
+            href="/admin" 
+            prefetch={true}
+            onClick={() => { if (pathname !== '/admin') setIsNavigating(true); }}
+            className="flex items-center gap-3.5 group"
+          >
             <div className="w-11 h-11 rounded-2xl bg-white p-1.5 shadow-md flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform duration-300">
               <img
-                src="/images/gnuts_logo1_main.png"
+                src="/images/gnuts_fav.png"
                 alt="GNUTS"
                 className="w-full h-full object-contain"
               />
@@ -121,7 +136,7 @@ export default function AdminLayoutClient({ children, sessionUser }: AdminLayout
             <div className="flex items-center gap-2.5 overflow-hidden">
               <div className="w-8 h-8 rounded-xl bg-white p-1 border border-[#D9A000]/60 flex items-center justify-center shrink-0 shadow-xs">
                 <img
-                  src="/images/gnuts_logo1_main.png"
+                  src="/images/gnuts_fav.png"
                   alt="GNUTS Emblem"
                   className="w-full h-full object-contain"
                 />
@@ -147,6 +162,10 @@ export default function AdminLayoutClient({ children, sessionUser }: AdminLayout
               <Link
                 key={item.href}
                 href={item.href}
+                prefetch={true}
+                onClick={() => {
+                  if (pathname !== item.href) setIsNavigating(true);
+                }}
                 className={`flex items-center justify-between px-3.5 py-3 rounded-2xl text-xs font-bold transition-all group ${
                   isActive
                     ? 'bg-white text-[#014900] shadow-lg font-black scale-[1.02]'
@@ -253,7 +272,7 @@ export default function AdminLayoutClient({ children, sessionUser }: AdminLayout
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-2xl bg-white p-1.5 shadow-md flex items-center justify-center">
                     <img
-                      src="/images/gnuts_logo1_main.png"
+                      src="/images/gnuts_fav.png"
                       alt="GNUTS"
                       className="w-full h-full object-contain"
                     />
@@ -285,7 +304,11 @@ export default function AdminLayoutClient({ children, sessionUser }: AdminLayout
                     <Link
                       key={item.href}
                       href={item.href}
-                      onClick={() => setMobileMenuOpen(false)}
+                      prefetch={true}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        if (pathname !== item.href) setIsNavigating(true);
+                      }}
                       className={`flex items-center justify-between px-3.5 py-3 rounded-2xl text-xs font-bold transition-all ${
                         isActive
                           ? 'bg-white text-[#014900] font-black'
