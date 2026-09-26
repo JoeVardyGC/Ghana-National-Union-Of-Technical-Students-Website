@@ -19,7 +19,7 @@ const PHP_HERO_SLIDES: Slide[] = [
   {
     title: 'Ghana National Union of Technical Students (GNUTS)',
     subtitle: 'The unified voice of Technical and TVET students in Ghana.',
-    image: 'https://ik.imagekit.io/joevardy/carousel%201.jpg',
+    image: 'https://ik.imagekit.io/joevardy/carousel%201.jpg?updatedAt=1790249603163',
     btn1_text: 'Who We Are →',
     btn1_link: '/about',
     btn2_text: 'Our Events',
@@ -28,7 +28,7 @@ const PHP_HERO_SLIDES: Slide[] = [
   {
     title: 'Empowering Technical Students for National Development',
     subtitle: 'Professionals with Integrity.',
-    image: 'https://ik.imagekit.io/joevardy/carousel%202.jpg',
+    image: 'https://ik.imagekit.io/joevardy/carousel%202.jpg?updatedAt=1790249603210',
     btn1_text: 'Who We Are →',
     btn1_link: '/about',
     btn2_text: 'Our Events',
@@ -37,7 +37,7 @@ const PHP_HERO_SLIDES: Slide[] = [
   {
     title: 'Creating Opportunities Beyond the Classroom',
     subtitle: 'Scholarships, skills, leadership, and innovation.',
-    image: 'https://ik.imagekit.io/joevardy/carousel%203.jpg',
+    image: 'https://ik.imagekit.io/joevardy/carousel%203.jpg?updatedAt=1790249603799',
     btn1_text: 'Who We Are →',
     btn1_link: '/about',
     btn2_text: 'Our Events',
@@ -111,12 +111,15 @@ export default function HeroSlider({
       })
     : PHP_HERO_SLIDES;
 
+  const [isPaused, setIsPaused] = useState(false);
+
   useEffect(() => {
+    if (isPaused) return;
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % activeSlides.length);
     }, 6000);
     return () => clearInterval(timer);
-  }, [currentIndex, activeSlides.length]);
+  }, [currentIndex, isPaused, activeSlides.length]);
 
   useEffect(() => {
     setProgress(0);
@@ -139,9 +142,15 @@ export default function HeroSlider({
   return (
     <div className="relative w-full">
       {/* Hero Section */}
-      <section className="relative h-[520px] sm:h-[580px] lg:h-[620px] w-full overflow-hidden bg-black text-white">
+      <section 
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        className="relative h-[520px] sm:h-[580px] lg:h-[620px] w-full overflow-hidden bg-black text-white"
+      >
         {activeSlides.map((slide, index) => {
           const isActive = index === currentIndex;
+          const localFallback = `/images/carousel_${(index % 3) + 1}.jpg`;
+
           return (
             <div
               key={index}
@@ -149,23 +158,36 @@ export default function HeroSlider({
                 isActive ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
               }`}
             >
-              {/* Ken Burns Background Image via robust img element */}
-              <div className="absolute inset-0 overflow-hidden">
+              {/* Ken Burns Background Image Layer */}
+              <div className="absolute inset-0 overflow-hidden bg-black">
+                {/* 1. Instant local base image (never blank, loads in 1ms) */}
                 <img
-                  src={slide.image}
-                  alt={slide.title}
-                  className={`w-full h-full object-cover transition-transform duration-[10000ms] ease-out ${
+                  src={localFallback}
+                  alt=""
+                  aria-hidden="true"
+                  className={`absolute inset-0 w-full h-full object-cover transition-transform duration-[10000ms] ease-out ${
                     isActive ? 'scale-110' : 'scale-100'
                   }`}
-                  loading={index === 0 ? 'eager' : 'lazy'}
+                  loading="eager"
                   decoding="async"
-                  onError={(e) => {
-                    const fallbackImg = `/images/carousel_${(index % 3) + 1}.jpg`;
-                    if (!e.currentTarget.src.endsWith(fallbackImg)) {
-                      e.currentTarget.src = fallbackImg;
-                    }
-                  }}
                 />
+
+                {/* 2. Primary / CDN image overlay (if different from local fallback) */}
+                {slide.image && slide.image !== localFallback && (
+                  <img
+                    src={slide.image}
+                    alt={slide.title}
+                    className={`absolute inset-0 w-full h-full object-cover transition-transform duration-[10000ms] ease-out ${
+                      isActive ? 'scale-110' : 'scale-100'
+                    }`}
+                    loading="eager"
+                    decoding="async"
+                    onError={(e) => {
+                      // Gracefully hide overlay if CDN fails so instant local base shows
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                )}
               </div>
               
               {/* Better gradient overlay */}
