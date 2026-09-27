@@ -40,41 +40,7 @@ const DEFAULT_STORE: Record<string, any[]> = {
       updated_at: new Date().toISOString(),
     },
   ],
-  executives: [
-    {
-      id: 1,
-      full_name: 'Comrade Joe Vardy',
-      position: 'National President',
-      email: 'president@gnuts.org.gh',
-      phone: '+233 24 123 4567',
-      bio: 'Leading the national technical students union with a focus on TVET innovation and industrial linkage.',
-      photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop',
-      display_order: 1,
-      created_at: new Date().toISOString(),
-    },
-    {
-      id: 2,
-      full_name: 'Comrade Priscilla Mensah',
-      position: 'General Secretary',
-      email: 'gensec@gnuts.org.gh',
-      phone: '+233 20 987 6543',
-      bio: 'Managing secretariat operations, official correspondences, and union communications.',
-      photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800&auto=format&fit=crop',
-      display_order: 2,
-      created_at: new Date().toISOString(),
-    },
-    {
-      id: 3,
-      full_name: 'Comrade Emmanuel Osei',
-      position: 'Treasurer / Financial Controller',
-      email: 'finance@gnuts.org.gh',
-      phone: '+233 55 456 7890',
-      bio: 'Ensuring fiscal discipline, transparent bursary disbursement, and project funding accountability.',
-      photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop',
-      display_order: 3,
-      created_at: new Date().toISOString(),
-    }
-  ],
+  executives: [],
   news: [
     {
       id: 1,

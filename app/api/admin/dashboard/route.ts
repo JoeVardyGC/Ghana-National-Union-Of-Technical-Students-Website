@@ -4,6 +4,7 @@ import { getAdminSession } from '@/lib/auth';
 import { getAuditLogs } from '@/lib/audit';
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function GET() {
   const session = await getAdminSession();
@@ -71,6 +72,10 @@ export async function GET() {
       recentMessages: recentMessagesRes || [],
       auditLogs: auditLogsRes || [],
       timestamp: new Date().toISOString(),
+    }, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+      },
     });
   } catch (error: any) {
     console.error('Error fetching dashboard real-time data:', error);

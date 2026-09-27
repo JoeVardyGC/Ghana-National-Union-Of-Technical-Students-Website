@@ -4,6 +4,7 @@ import { getAuditLogs } from '@/lib/audit';
 import AdminDashboardClient from './AdminDashboardClient';
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function AdminDashboardPage() {
   const session = await getAdminSession();

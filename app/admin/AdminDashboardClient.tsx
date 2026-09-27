@@ -91,15 +91,26 @@ export default function AdminDashboardClient({
     }
   }, []);
 
-  // Background auto-polling interval every 30 seconds when tab is active/visible
+  // Fetch immediately on mount, on window focus, and background poll every 30 seconds
   useEffect(() => {
+    fetchLiveMetrics(false);
+
+    const onFocus = () => {
+      fetchLiveMetrics(false);
+    };
+    window.addEventListener('focus', onFocus);
+
     const interval = setInterval(() => {
       if (typeof document !== 'undefined' && document.visibilityState !== 'visible') {
         return;
       }
       fetchLiveMetrics(false);
     }, 30000);
-    return () => clearInterval(interval);
+
+    return () => {
+      window.removeEventListener('focus', onFocus);
+      clearInterval(interval);
+    };
   }, [fetchLiveMetrics]);
 
   // Second counter for "Updated Xs ago"
@@ -239,6 +250,18 @@ export default function AdminDashboardClient({
               <RefreshCw className={`w-4 h-4 text-[#D9A000] ${isRefreshing ? 'animate-spin' : ''}`} />
               <span>{isRefreshing ? 'Syncing...' : 'Sync Now'}</span>
             </button>
+
+            {/* View Public Site Button */}
+            <Link
+              href="/"
+              target="_blank"
+              prefetch={false}
+              className="px-4 py-2.5 bg-white/15 hover:bg-white/25 text-white font-black text-xs uppercase tracking-wider rounded-2xl border border-white/25 transition-all shadow-md flex items-center gap-2 hover:scale-105"
+              title="Open public website in a new tab"
+            >
+              <ExternalLink className="w-4 h-4 text-[#D9A000]" />
+              <span>Public Site</span>
+            </Link>
 
             <Link
               href="/admin/news"

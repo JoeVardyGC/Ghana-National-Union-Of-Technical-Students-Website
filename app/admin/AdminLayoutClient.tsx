@@ -236,10 +236,12 @@ export default function AdminLayoutClient({ children, sessionUser }: AdminLayout
             <Link
               href="/"
               target="_blank"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gray-100 hover:bg-emerald-50 text-[#014900] font-bold text-xs border border-gray-200 hover:border-emerald-300 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 rounded-xl bg-gray-100 hover:bg-emerald-50 text-[#014900] font-bold text-xs border border-gray-200 hover:border-emerald-300 transition-colors"
+              title="Preview GNUTS public portal"
             >
               <ExternalLink className="w-3.5 h-3.5 text-[#D9A000]" />
-              <span>Preview Public Site</span>
+              <span className="hidden sm:inline">Preview Public Site</span>
+              <span className="sm:hidden">Public Site</span>
             </Link>
 
             <button
@@ -328,6 +330,16 @@ export default function AdminLayoutClient({ children, sessionUser }: AdminLayout
 
             {/* Mobile Footer */}
             <div className="pt-4 border-t border-white/10 space-y-2">
+              <Link
+                href="/"
+                target="_blank"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-2xl bg-white/10 hover:bg-[#D9A000] hover:text-[#014900] text-white text-xs font-black uppercase tracking-wider transition-colors"
+              >
+                <ExternalLink className="w-4 h-4 text-[#D9A000]" />
+                <span>View Public Site ↗</span>
+              </Link>
+
               <button
                 type="button"
                 onClick={handleLogout}

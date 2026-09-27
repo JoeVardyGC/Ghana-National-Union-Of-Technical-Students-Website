@@ -23,32 +23,7 @@
       "updated_at": "2026-08-25T16:00:00.000Z"
     }
   ],
-  "executives": [
-    {
-      "id": 1,
-      "full_name": "Musah Abubakar Sadik",
-      "position": "National Public Relations Officer ",
-      "email": "abubakarsadikmusah2004@gmail.com",
-      "phone": "+233256259336",
-      "bio": "",
-      "photo": "/uploads/1787588109860-6941b5b777238.jpg",
-      "display_order": 1,
-      "created_at": "2026-08-24T16:15:14.638Z",
-      "updated_at": "2026-08-24T16:15:14.638Z"
-    },
-    {
-      "id": 2,
-      "full_name": "Danga",
-      "position": "National President",
-      "email": "infos@gnuts.org.gh",
-      "phone": "+233 24 000 0000",
-      "bio": "",
-      "photo": "/uploads/1787660571076-executive-crop-1787660570994.jpg",
-      "display_order": 2,
-      "created_at": "2026-08-25T12:22:52.985Z",
-      "updated_at": "2026-08-25T12:22:52.985Z"
-    }
-  ],
+  "executives": [],
   "news": [
     {
       "id": 1,
