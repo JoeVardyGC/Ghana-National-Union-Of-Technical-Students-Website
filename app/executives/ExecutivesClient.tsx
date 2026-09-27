@@ -47,8 +47,8 @@ export default function ExecutivesClient({
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url('${safeBgUrl}')` }}
         />
-        {/* Semi-transparent Green Overlay (50% Green Opacity) */}
-        <div className="absolute inset-0 bg-[#014900]/50 backdrop-brightness-90" />
+        {/* Semi-transparent Green Overlay (55% Green Opacity) */}
+        <div className="absolute inset-0 bg-[#014900]/55 backdrop-brightness-90" />
 
         <div className="max-w-7xl mx-auto text-center relative z-10 space-y-3">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-xs font-black uppercase tracking-widest text-[#D9A000]">

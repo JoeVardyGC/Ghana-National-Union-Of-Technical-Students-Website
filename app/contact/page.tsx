@@ -40,8 +40,8 @@ export default async function ContactPage() {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url('${safeBgUrl}')` }}
         />
-        {/* Semi-transparent Green Overlay (50% Green Opacity) */}
-        <div className="absolute inset-0 bg-[#014900]/50 backdrop-brightness-90" />
+        {/* Semi-transparent Green Overlay (55% Green Opacity) */}
+        <div className="absolute inset-0 bg-[#014900]/55 backdrop-brightness-90" />
 
         <div className="max-w-7xl mx-auto text-center relative z-10 space-y-2">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight drop-shadow-md uppercase">

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { 
   Newspaper, 
   PlusCircle, 
@@ -38,6 +39,7 @@ interface NewsItem {
 }
 
 export default function NewsManagementClient({ initialNews = [] }: { initialNews?: NewsItem[] }) {
+  const router = useRouter();
   const [newsList, setNewsList] = useState<NewsItem[]>(initialNews);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('ALL');
@@ -151,6 +153,7 @@ export default function NewsManagementClient({ initialNews = [] }: { initialNews
             )
           );
           setIsModalOpen(false);
+          router.refresh();
         } else {
           setFeedbackMsg('Failed to update article');
         }
@@ -166,6 +169,7 @@ export default function NewsManagementClient({ initialNews = [] }: { initialNews
         if (res.ok && data.article) {
           setNewsList([data.article, ...newsList]);
           setIsModalOpen(false);
+          router.refresh();
         } else {
           setFeedbackMsg('Failed to publish article');
         }
@@ -184,6 +188,7 @@ export default function NewsManagementClient({ initialNews = [] }: { initialNews
         setNewsList((prev) => prev.filter((item) => item.id !== id));
         setSelectedIds((prev) => prev.filter((it) => it !== id));
         setIsDeletingId(null);
+        router.refresh();
       } else {
         const data = await res.json().catch(() => ({}));
         alert(data.error || 'Failed to delete article');
@@ -207,6 +212,7 @@ export default function NewsManagementClient({ initialNews = [] }: { initialNews
         setNewsList((prev) => prev.filter((item) => !selectedIds.includes(item.id)));
         setSelectedIds([]);
         setIsBulkDeleteModalOpen(false);
+        router.refresh();
       } else {
         alert('Failed to bulk delete selected articles');
       }

@@ -124,8 +124,8 @@ export default async function ScholarshipsPage() {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url('${safeBgUrl}')` }}
         />
-        {/* Semi-transparent Green Overlay (50% Green Opacity) */}
-        <div className="absolute inset-0 bg-[#014900]/50 backdrop-brightness-90" />
+        {/* Semi-transparent Green Overlay (55% Green Opacity) */}
+        <div className="absolute inset-0 bg-[#014900]/55 backdrop-brightness-90" />
 
         <div className="max-w-7xl mx-auto text-center relative z-10 px-2 sm:px-0">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight mb-2.5 sm:mb-3 drop-shadow-md break-words uppercase">

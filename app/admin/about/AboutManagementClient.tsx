@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { 
   Building2, 
   Target, 
@@ -68,6 +69,7 @@ export default function AboutManagementClient({
   initialAbout: AboutData;
   initialMilestones?: MilestoneItem[];
 }) {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<'hero' | 'who_we_are' | 'mission_vision' | 'milestones'>('hero');
   const [aboutForm, setAboutForm] = useState<AboutData>(initialAbout);
   const [coreValues, setCoreValues] = useState<any[]>(
@@ -151,6 +153,7 @@ export default function AboutManagementClient({
       const data = await res.json();
       if (data.success) {
         showToast('About page content saved and published to live website!');
+        router.refresh();
       } else {
         showToast(data.message || 'Failed to save about page.', 'error');
       }
@@ -205,6 +208,7 @@ export default function AboutManagementClient({
           );
           setIsMilestoneModalOpen(false);
           showToast('History milestone updated.');
+          router.refresh();
         } else {
           showToast(data.message || 'Update failed.', 'error');
         }
@@ -221,6 +225,7 @@ export default function AboutManagementClient({
           setMilestonesList(prev => [...prev, newItem].sort((a, b) => Number(a.year) - Number(b.year)));
           setIsMilestoneModalOpen(false);
           showToast('New history milestone created.');
+          router.refresh();
         } else {
           showToast(data.message || 'Creation failed.', 'error');
         }
@@ -243,6 +248,7 @@ export default function AboutManagementClient({
       if (data.success) {
         setMilestonesList(prev => prev.filter(m => m.id !== id));
         showToast('Milestone removed from timeline.');
+        router.refresh();
       } else {
         showToast(data.message || 'Delete failed.', 'error');
       }

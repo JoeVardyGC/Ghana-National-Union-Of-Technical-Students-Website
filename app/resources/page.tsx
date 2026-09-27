@@ -118,7 +118,7 @@ export default async function ResourcesPage() {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url('${safeBgUrl}')` }}
         />
-        <div className="absolute inset-0 bg-[#014900]/50 backdrop-brightness-90" />
+        <div className="absolute inset-0 bg-[#014900]/55 backdrop-brightness-90" />
 
         <div className="max-w-5xl mx-auto relative z-10 text-center space-y-3">
           {/* Breadcrumbs */}

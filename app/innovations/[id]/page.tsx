@@ -244,9 +244,18 @@ export default async function InnovationDetailPage({ params }: { params: Promise
 
   let project: (InnovationItem & { images?: any }) | null = null;
   let allProjects: InnovationItem[] = [];
+  let heroImage = '/images/header_for_pages.jpg';
 
   try {
-    const rows = await query<any>("SELECT * FROM innovations WHERE status = 'approved' ORDER BY created_at DESC");
+    const [rows, bannerRows] = await Promise.all([
+      query<any>("SELECT * FROM innovations WHERE status = 'approved' ORDER BY created_at DESC"),
+      query<any>("SELECT * FROM hero_banners WHERE page_key = 'innovations_hero' LIMIT 1").catch(() => []),
+    ]);
+
+    if (bannerRows && bannerRows.length > 0 && bannerRows[0].image_url) {
+      heroImage = bannerRows[0].image_url;
+    }
+
     if (rows && rows.length > 0) {
       allProjects = rows.map((r: any) => ({
         id: r.id,
@@ -277,6 +286,7 @@ export default async function InnovationDetailPage({ params }: { params: Promise
     notFound();
   }
 
+  const safeBgUrl = encodeURI(heroImage);
   const otherProjects = allProjects.filter((item) => item.id !== project!.id).slice(0, 4);
   const currentIndex = allProjects.findIndex((item) => item.id === project!.id);
   const prevProject = currentIndex > 0 ? allProjects[currentIndex - 1] : null;
@@ -296,7 +306,7 @@ export default async function InnovationDetailPage({ params }: { params: Promise
       <section className="relative text-white pt-10 pb-14 px-4 sm:px-6 lg:px-8 overflow-hidden border-b-4 border-[#D9A000] bg-gray-900">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url('/images/header_for_pages.jpg')` }}
+          style={{ backgroundImage: `url('${safeBgUrl}')` }}
         />
         <div className="absolute inset-0 bg-[#014900]/55 backdrop-brightness-90" />
 

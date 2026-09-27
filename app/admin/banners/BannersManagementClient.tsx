@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { 
   Images, 
   Sparkles, 
@@ -116,6 +117,7 @@ const PAGE_HERO_SLOTS = [
 ];
 
 export default function BannersManagementClient({ initialBanners = [] }: BannersManagementClientProps) {
+  const router = useRouter();
   const [bannersList, setBannersList] = useState<BannerItem[]>(initialBanners);
   const [activeTab, setActiveTab] = useState<'carousel' | 'page_headers'>('carousel');
 
@@ -235,6 +237,7 @@ export default function BannersManagementClient({ initialBanners = [] }: Banners
           setIsSlideModalOpen(false);
           setSuccessMsg('Carousel slide updated successfully!');
           setTimeout(() => setSuccessMsg(''), 4000);
+          router.refresh();
         } else {
           setFeedbackMsg('Failed to update slide.');
         }
@@ -255,6 +258,7 @@ export default function BannersManagementClient({ initialBanners = [] }: Banners
           setIsSlideModalOpen(false);
           setSuccessMsg('New carousel slide image added successfully!');
           setTimeout(() => setSuccessMsg(''), 4000);
+          router.refresh();
         } else {
           setFeedbackMsg('Failed to add slide.');
         }
@@ -276,6 +280,7 @@ export default function BannersManagementClient({ initialBanners = [] }: Banners
         setIsDeletingId(null);
         setSuccessMsg('Slide removed from homepage carousel.');
         setTimeout(() => setSuccessMsg(''), 4000);
+        router.refresh();
       }
     } catch (err) {
       console.error('Error deleting banner:', err);
@@ -299,6 +304,7 @@ export default function BannersManagementClient({ initialBanners = [] }: Banners
         setIsBulkDeleteModalOpen(false);
         setSuccessMsg('Selected carousel slides removed.');
         setTimeout(() => setSuccessMsg(''), 4000);
+        router.refresh();
       } else {
         alert('Failed to bulk delete slides');
       }
@@ -334,6 +340,7 @@ export default function BannersManagementClient({ initialBanners = [] }: Banners
       if (res.ok) {
         setSuccessMsg(`Hero banner for ${slotName} updated successfully!`);
         setTimeout(() => setSuccessMsg(''), 4000);
+        router.refresh();
       } else {
         alert('Failed to update hero header banner.');
       }

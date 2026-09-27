@@ -60,9 +60,18 @@ export default async function NewsDetailPage({ params }: PageProps) {
 
   let article: NewsItem | null = null;
   let allPublished: NewsItem[] = [];
+  let heroImage = '/images/header_for_pages.jpg';
 
   try {
-    const rows = await query<any>('SELECT * FROM news WHERE status = "published" ORDER BY published_at DESC, created_at DESC, id DESC');
+    const [rows, bannerRows] = await Promise.all([
+      query<any>('SELECT * FROM news WHERE status = "published" ORDER BY published_at DESC, created_at DESC, id DESC'),
+      query<any>("SELECT * FROM hero_banners WHERE page_key = 'news_hero' LIMIT 1").catch(() => []),
+    ]);
+
+    if (bannerRows && bannerRows.length > 0 && bannerRows[0].image_url) {
+      heroImage = resolveImgUrl(bannerRows[0].image_url);
+    }
+
     if (rows && rows.length > 0) {
       allPublished = rows.map((r: any) => ({
         id: Number(r.id),
@@ -84,6 +93,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
     notFound();
   }
 
+  const safeBgUrl = encodeURI(heroImage);
   const otherArticles = allPublished.filter((item) => item.id !== article!.id).slice(0, 5);
   
   // Calculate Previous and Next article for bottom navigation banner
@@ -117,7 +127,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
         {/* Background Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url('/images/header_for_pages.jpg')` }}
+          style={{ backgroundImage: `url('${safeBgUrl}')` }}
         />
         {/* Semi-transparent Green Overlay (55% Green Opacity) */}
         <div className="absolute inset-0 bg-[#014900]/55 backdrop-brightness-90" />

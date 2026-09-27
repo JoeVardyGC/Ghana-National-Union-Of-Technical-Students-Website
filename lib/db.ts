@@ -44,16 +44,33 @@ const DEFAULT_STORE: Record<string, any[]> = {
   news: [
     {
       id: 1,
-      title: 'GNUTS National Delegates Congress 2026 Scheduled for Sunyani Technical University',
-      content: 'The National Executive Council has officially scheduled the 2026 GNUTS Congress to discuss TVET industrial allowances and student innovation funding across all technical universities in Ghana.',
-      image: 'https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg',
-      author: 'GNUTS Secretariat',
-      published_at: new Date().toISOString().substring(0, 10),
+      title: 'GNUTS Announces 2nd Central Committee Meeting for the 34th Administration',
+      content: 'The Ghana National Union of Technical Students (GNUTS) has officially announced the details for its 2nd Central Committee Meeting under the 34th Administration.\n\nThe high-profile student leadership meeting is scheduled to take place from 3rd to 4th September, 2026. This gathering will bring together student leaders, institutional representatives, and executives to deliberate on key policies, address student welfare concerns, and strategize on advancing technical education in Ghana.\n\nEvent Details at a Glance:\n\nEvent: 2nd Central Committee Meeting (34th GNUTS Administration)\n\nDate: 3rd – 4th September, 2026\n\nVenue: Kumasi Technical University, Ashanti Region\n\nDelegates and invited student leadership figures are entreated to prepare ahead of the summit as the union continues to uphold its core motto: #BeTheDifference. For further updates and official notices, members can visit the official GNUTS portal at www.gnuts.org or follow social media handles via @gnuts_live.',
+      image: '/uploads/1787587306260-WhatsApp_Image_2026-08-20_at_2.33.16_PM.jpeg',
+      author: 'GNUTS PRO',
+      published_at: '2026-08-24',
       status: 'published',
       view_count: 342,
       allow_sharing: 1,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
+      image2: '',
+      image3: '',
+      created_at: '2026-08-24T16:02:01.343Z',
+      updated_at: '2026-08-24T16:02:01.343Z',
+    },
+    {
+      id: 2,
+      title: 'GNUTS Launches "#ChooseTVETFirst" Campaign to Champion Skills Development',
+      content: 'The Ghana National Union of Technical Students (GNUTS) under the 34th Administration has officially rolled out its national advocacy initiative, the "#ChooseTVETFirst" Campaign, anchored on the powerful theme: "Skills Are The Future."\n\nThis visionary campaign is designed to shift public perception, elevate the status of Technical and Vocational Education and Training (TVET), and encourage young people to embrace practical skills acquisition as a primary pathway to national development and sustainable employment.\n\nKey Highlights of the Campaign:\n\nCore Theme: Skills Are The Future (#ChooseTVETFirst)\n\nObjective: Promoting hands-on technical training, robotics, engineering competence, and modern vocational expertise.\n\nInitiator: Ghana National Union of Technical Students (34th Administration)\n\nGNUTS continues to advocate for infrastructure development, innovation, and enhanced opportunities for technical students across Ghana. For more details on the campaign and how to get involved, visit the official union platform at www.gnuts.org or connect via social media channels @gnuts_live.',
+      image: '/uploads/1787587477319-choose_tvet_first.png',
+      author: 'GNUTS PRO',
+      published_at: '2026-06-24',
+      status: 'published',
+      view_count: 512,
+      allow_sharing: 1,
+      image2: '',
+      image3: '',
+      created_at: '2026-08-24T16:04:47.988Z',
+      updated_at: '2026-08-24T16:04:47.988Z',
     }
   ],
   scholarships: [
@@ -89,27 +106,14 @@ const DEFAULT_STORE: Record<string, any[]> = {
   resources: [
     {
       id: 1,
-      title: 'GNUTS Supreme Constitution (Revised Edition)',
-      description: 'The supreme governing charter, legal framework, and administrative guidelines of the Ghana National Union of Technical Students.',
-      category: 'Constitution',
-      file_path: 'https://res.cloudinary.com/dslngzls6/image/upload/v1787056252/choose_tvet_first_kwucvy.png',
+      title: 'Constitution of the Ghana National Union of Technical Students (GNUTS)',
+      description: 'The official supreme legal framework governing the structure, membership, governance, rights, duties, and operational procedures of the Ghana National Union of Technical Students (GNUTS). It outlines the powers of key organs including Congress, the Central Committee, the National Executive Committee, the Judicial Council, and member institution SRCs, alongside election guidelines, financial administration rules, and schedules for institutional membership and rotation.',
+      category: 'constitution',
+      file_path: 'https://ik.imagekit.io/joevardy/gnuts_documents/gnuts_constitution_test_emqWOG7sx.pdf',
       file_name: 'GNUTS_Supreme_Constitution_Official.pdf',
-      file_size: 2450000,
+      file_size: 3873697,
       display_order: 1,
       downloads: 1240,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    },
-    {
-      id: 2,
-      title: 'National Secretariat Official Communiqué on TVET Allowances',
-      description: 'Comprehensive policy resolution and joint union communiqué submitted to the Ministry of Education.',
-      category: 'Communiqué',
-      file_path: 'https://res.cloudinary.com/dslngzls6/image/upload/v1787056252/choose_tvet_first_kwucvy.png',
-      file_name: 'GNUTS_National_Communique_2026.pdf',
-      file_size: 1180000,
-      display_order: 2,
-      downloads: 870,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     }
@@ -369,11 +373,10 @@ const DEFAULT_STORE: Record<string, any[]> = {
 
 // In-Memory Persistent Store Cache for sub-millisecond query performance
 let cachedStore: Record<string, any[]> | null = null;
+let lastMtime: number = 0;
 
-// Ensure data directory and file exist
+// Ensure data directory and file exist with automatic mtime invalidation
 function getStore(): Record<string, any[]> {
-  if (cachedStore) return cachedStore;
-
   try {
     const dir = path.dirname(DB_FILE_PATH);
     if (!fs.existsSync(dir)) {
@@ -382,8 +385,15 @@ function getStore(): Record<string, any[]> {
     if (!fs.existsSync(DB_FILE_PATH)) {
       fs.writeFileSync(DB_FILE_PATH, JSON.stringify(DEFAULT_STORE, null, 2), 'utf8');
       cachedStore = JSON.parse(JSON.stringify(DEFAULT_STORE));
+      lastMtime = fs.statSync(DB_FILE_PATH).mtimeMs;
       return cachedStore!;
     }
+
+    const currentMtime = fs.statSync(DB_FILE_PATH).mtimeMs;
+    if (cachedStore && lastMtime === currentMtime) {
+      return cachedStore;
+    }
+
     const raw = fs.readFileSync(DB_FILE_PATH, 'utf8');
     const parsed = JSON.parse(raw);
     let updated = false;
@@ -398,6 +408,9 @@ function getStore(): Record<string, any[]> {
 
     if (updated) {
       fs.writeFileSync(DB_FILE_PATH, JSON.stringify(parsed, null, 2), 'utf8');
+      lastMtime = fs.statSync(DB_FILE_PATH).mtimeMs;
+    } else {
+      lastMtime = currentMtime;
     }
     cachedStore = parsed;
     return cachedStore!;
@@ -415,6 +428,7 @@ function saveStore(store: Record<string, any[]>) {
       fs.mkdirSync(dir, { recursive: true });
     }
     fs.writeFileSync(DB_FILE_PATH, JSON.stringify(store, null, 2), 'utf8');
+    lastMtime = fs.statSync(DB_FILE_PATH).mtimeMs;
   } catch (err) {
     console.error('Error saving local db store:', err);
   }

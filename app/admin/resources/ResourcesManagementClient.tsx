@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { 
   FileText, 
   PlusCircle, 
@@ -23,7 +24,9 @@ import {
   Square,
   Info,
   Upload,
-  Loader2
+  Loader2,
+  Copy,
+  Check
 } from 'lucide-react';
 import { resolveDocumentUrl } from '@/lib/imageUtils';
 
@@ -55,7 +58,9 @@ export default function ResourcesManagementClient({
 }: {
   initialResources?: ResourceItem[];
 }) {
+  const router = useRouter();
   const [resourcesList, setResourcesList] = useState<ResourceItem[]>(initialResources);
+  const [copiedLink, setCopiedLink] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState<string>('ALL');
 
@@ -95,13 +100,22 @@ export default function ResourcesManagementClient({
       uploadData.append('file', file);
       uploadData.append('folder', '/gnuts_documents');
 
-      const res = await fetch('/api/admin/upload', {
+      // Attempt upload to /api/admin/upload, fallback to /api/upload
+      let res = await fetch('/api/admin/upload', {
         method: 'POST',
         body: uploadData,
       });
 
+      if (!res.ok) {
+        res = await fetch('/api/upload', {
+          method: 'POST',
+          body: uploadData,
+        });
+      }
+
       const data = await res.json();
       if (res.ok && data.url) {
+        const isCdn = data.url.includes('imagekit') || data.url.includes('ik.imagekit.io');
         setFormData((prev) => ({
           ...prev,
           file_path: data.url,
@@ -109,7 +123,7 @@ export default function ResourcesManagementClient({
           file_size: data.size || file.size,
           title: prev.title || file.name.replace(/\.[^/.]+$/, '').replace(/_/g, ' '),
         }));
-        setUploadDocFeedback('Document uploaded successfully to the system!');
+        setUploadDocFeedback(`Document uploaded successfully to ${isCdn ? 'ImageKit.io CDN' : 'storage'}!`);
       } else {
         setUploadDocFeedback(data.error || 'Failed to upload document');
       }
@@ -208,6 +222,7 @@ export default function ResourcesManagementClient({
             )
           );
           setIsModalOpen(false);
+          router.refresh();
         } else {
           setFeedbackMsg('Failed to update document');
         }
@@ -223,6 +238,7 @@ export default function ResourcesManagementClient({
         if (res.ok && data.resource) {
           setResourcesList([data.resource, ...resourcesList]);
           setIsModalOpen(false);
+          router.refresh();
         } else {
           setFeedbackMsg('Failed to publish document');
         }
@@ -241,6 +257,7 @@ export default function ResourcesManagementClient({
         setResourcesList((prev) => prev.filter((item) => item.id !== id));
         setSelectedIds((prev) => prev.filter((it) => it !== id));
         setIsDeletingId(null);
+        router.refresh();
       } else {
         const data = await res.json().catch(() => ({}));
         alert(data.error || 'Failed to delete resource');
@@ -264,6 +281,7 @@ export default function ResourcesManagementClient({
         setResourcesList((prev) => prev.filter((item) => !selectedIds.includes(item.id)));
         setSelectedIds([]);
         setIsBulkDeleteModalOpen(false);
+        router.refresh();
       } else {
         alert('Failed to bulk delete selected documents');
       }
@@ -607,13 +625,31 @@ export default function ResourcesManagementClient({
                 )}
 
                 <div className="space-y-1 pt-1">
-                  <label className="text-[10px] font-black uppercase tracking-wider text-gray-500">
-                    Direct Public Link / File URL
-                  </label>
+                  <div className="flex items-center justify-between">
+                    <label className="text-[10px] font-black uppercase tracking-wider text-gray-500">
+                      Direct Public Link / File URL *
+                    </label>
+                    {formData.file_path && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (navigator.clipboard) {
+                            navigator.clipboard.writeText(formData.file_path);
+                            setCopiedLink(true);
+                            setTimeout(() => setCopiedLink(false), 2000);
+                          }
+                        }}
+                        className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 hover:text-emerald-900 transition-colors cursor-pointer"
+                      >
+                        {copiedLink ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                        <span>{copiedLink ? 'Copied!' : 'Copy CDN Link'}</span>
+                      </button>
+                    )}
+                  </div>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. /uploads/... or https://ik.imagekit.io/... or https://drive.google.com/..."
+                    placeholder="e.g. https://ik.imagekit.io/... or /uploads/... or https://drive.google.com/..."
                     value={formData.file_path}
                     onChange={(e) => setFormData({ ...formData, file_path: e.target.value })}
                     className="w-full px-3.5 py-2.5 bg-white rounded-xl border border-gray-300 text-xs font-semibold outline-none focus:border-[#014900]"
