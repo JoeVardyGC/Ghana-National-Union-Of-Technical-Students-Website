@@ -108,6 +108,10 @@ export default async function AboutPage() {
   const resources = resourcesResult;
   const designatedHero = aboutHeroResult[0]?.image_url;
   const heroImage = resolveImgUrl(designatedHero || aboutData.hero_image || '/images/header_for_pages.jpg');
+  const safeBgUrl = encodeURI(heroImage);
+  const heroTitle = (aboutHeroResult[0]?.title && aboutHeroResult[0]?.title !== 'About GNUTS Page Hero Banner' && aboutHeroResult[0]?.title !== 'About GNUTS Page Header')
+    ? aboutHeroResult[0].title
+    : (aboutData.hero_title || 'About GNUTS');
 
   let coreValues = [
     { title: 'Integrity', desc: 'Upholding honesty, transparency, and ethical leadership in all union activities.', num: '01' },
@@ -146,7 +150,7 @@ export default async function AboutPage() {
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: `url('${heroImage}')`,
+              backgroundImage: `url('${safeBgUrl}')`,
             }}
           />
           {/* Semi-transparent Green Overlay (50% Green Opacity) */}
@@ -154,7 +158,7 @@ export default async function AboutPage() {
 
           <div className="max-w-7xl mx-auto text-center relative z-10">
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-3 drop-shadow-md font-montserrat">
-              {aboutData.hero_title || 'About GNUTS'}
+              {heroTitle}
             </h1>
             <p className="text-gray-100 text-sm sm:text-base max-w-2xl mx-auto font-medium drop-shadow-sm font-montserrat">
               {aboutData.hero_subtitle || 'Empowering Technical & TVET Students Across Ghana'}

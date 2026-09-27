@@ -20,7 +20,7 @@ export async function POST(request: Request) {
   try {
     const formData = await request.formData();
     const file = formData.get('file') as File | null;
-    const customFolder = (formData.get('folder') as string | null) || '/gnuts_innovations';
+    const customFolder = (formData.get('folder') as string | null) || '/gnuts_uploads';
 
     if (!file) {
       return NextResponse.json({ error: 'No image file provided' }, { status: 400 });

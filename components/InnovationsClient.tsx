@@ -583,69 +583,35 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
                     </select>
                   </div>
 
-                  {/* 5. Main Cover Picture Link */}
-                  <div className="space-y-2 bg-gray-50/90 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border border-gray-200">
-                    <div className="flex items-center justify-between">
-                      <label className="text-xs font-extrabold text-[#014900] uppercase tracking-wider flex items-center gap-1.5">
-                        <ImageIcon className="w-4 h-4 text-[#014900]" />
-                        <span>Main Project Cover Photo Link *</span>
-                      </label>
-                      <span className="text-[10px] bg-[#014900] text-white px-2 py-0.5 rounded-full font-bold">REQUIRED</span>
-                    </div>
+                  {/* 5. Main Cover Picture Direct Upload */}
+                  <DirectImageUploader
+                    label="Project Cover Photo"
+                    value={formData.project_image}
+                    onChange={(url) => setFormData({ ...formData, project_image: url })}
+                    folder="/gnuts_innovations"
+                    helperText="Upload prototype picture (auto-uploaded to ImageKit.io CDN)"
+                    required
+                  />
 
-                    <input
-                      type="url"
-                      required
-                      placeholder="e.g. https://res.cloudinary.com/... or direct image link"
-                      value={formData.project_image}
-                      onChange={(e) => setFormData({ ...formData, project_image: e.target.value })}
-                      className="w-full px-3.5 py-2.5 border border-gray-300 rounded-xl text-xs focus:ring-2 focus:ring-[#014900] outline-none bg-white font-medium"
-                    />
-
-                    {/* Instructions */}
-                    <div className="p-3 bg-amber-50/90 border border-amber-200/90 rounded-xl text-[11px] text-amber-900 flex items-start gap-2">
-                      <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-                      <div className="leading-relaxed">
-                        <span className="font-bold block">How to get your image link:</span>
-                        <span>Log into <strong>Cloudinary</strong> (or free image hosting like <strong>Postimages.org</strong> / <strong>ImgBB.com</strong>), upload your prototype picture, copy the direct image link, and paste it here.</span>
-                      </div>
-                    </div>
-
-                    {/* Preview Thumbnail */}
-                    {formData.project_image && (
-                      <div className="mt-2 relative w-32 h-20 rounded-xl overflow-hidden border border-gray-300 shadow-xs bg-gray-900">
-                        <img
-                          src={formData.project_image}
-                          alt="Cover Preview"
-                          className="w-full h-full object-cover"
-                          onError={(e) => (e.currentTarget.style.display = 'none')}
-                        />
-                        <div className="absolute bottom-1 right-1 bg-black/70 text-white text-[9px] px-1.5 py-0.5 rounded font-bold">
-                          Cover Preview
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* 6. Optional Additional Photos */}
+                  {/* 6. Optional Additional Photos Direct Upload */}
                   <div className="space-y-2 bg-gray-50/70 p-3 sm:p-3.5 rounded-xl sm:rounded-2xl border border-gray-200">
                     <label className="text-xs font-extrabold text-gray-700 uppercase block">
-                      Additional Project Photos (Optional Links)
+                      Additional Prototype Photos (Optional)
                     </label>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      <input
-                        type="url"
-                        placeholder="Additional Photo 2 Link (Optional)"
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <DirectImageUploader
+                        label="Extra Photo 2"
                         value={formData.image2 || ''}
-                        onChange={(e) => setFormData({ ...formData, image2: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-xl text-xs focus:ring-2 focus:ring-[#014900] outline-none bg-white"
+                        onChange={(url) => setFormData({ ...formData, image2: url })}
+                        folder="/gnuts_innovations"
+                        helperText="Additional angle or prototype shot"
                       />
-                      <input
-                        type="url"
-                        placeholder="Additional Photo 3 Link (Optional)"
+                      <DirectImageUploader
+                        label="Extra Photo 3"
                         value={formData.image3 || ''}
-                        onChange={(e) => setFormData({ ...formData, image3: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-xl text-xs focus:ring-2 focus:ring-[#014900] outline-none bg-white"
+                        onChange={(url) => setFormData({ ...formData, image3: url })}
+                        folder="/gnuts_innovations"
+                        helperText="Field test or circuit diagram"
                       />
                     </div>
                   </div>

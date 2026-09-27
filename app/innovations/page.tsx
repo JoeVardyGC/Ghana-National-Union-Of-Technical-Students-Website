@@ -26,6 +26,8 @@ function formatDate(dateVal: any): string {
 export default async function InnovationsPage() {
   let innovationsList: InnovationItem[] = [];
   let heroImage = '/images/header_for_pages.jpg';
+  let heroTitle = 'Innovative Projects';
+  let heroSubtitle = 'Showcasing groundbreaking technical innovations and engineering solutions from students across Ghana';
 
   try {
     const [rawInnovations, bannerRows] = await Promise.all([
@@ -33,8 +35,13 @@ export default async function InnovationsPage() {
       query<any>("SELECT * FROM hero_banners WHERE page_key = 'innovations_hero'").catch(() => []),
     ]);
 
-    if (bannerRows && bannerRows.length > 0 && bannerRows[0].image_url) {
-      heroImage = resolveImgUrl(bannerRows[0].image_url);
+    if (bannerRows && bannerRows.length > 0) {
+      if (bannerRows[0].image_url) {
+        heroImage = resolveImgUrl(bannerRows[0].image_url);
+      }
+      if (bannerRows[0].title && bannerRows[0].title !== 'Student Innovations Hero Banner' && bannerRows[0].title !== 'Student Innovations Page Header') {
+        heroTitle = bannerRows[0].title;
+      }
     }
 
     if (rawInnovations && rawInnovations.length > 0) {
@@ -56,24 +63,26 @@ export default async function InnovationsPage() {
     console.error('Error fetching innovations from DB:', error);
   }
 
+  const safeBgUrl = encodeURI(heroImage);
+
   return (
-    <div className="flex flex-col min-h-screen bg-[#f8f9fa] font-sans">
+    <div className="flex flex-col min-h-screen bg-[#f8f9fa] font-['Montserrat',sans-serif]">
       {/* Page Hero Header - 50% opacity green overlay & border-b-4 border-[#D9A000] */}
-      <section className="relative text-white py-16 sm:py-20 px-4 sm:px-6 lg:px-8 border-b-4 border-[#D9A000] overflow-hidden bg-gray-900">
+      <section className="relative text-white py-14 sm:py-20 px-4 sm:px-6 lg:px-8 border-b-4 border-[#D9A000] overflow-hidden bg-gray-900">
         {/* Background Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url('${heroImage}')` }}
+          style={{ backgroundImage: `url('${safeBgUrl}')` }}
         />
         {/* Semi-transparent Green Overlay (50% Green Opacity) */}
         <div className="absolute inset-0 bg-[#014900]/50 backdrop-brightness-90" />
 
         <div className="max-w-7xl mx-auto text-center relative z-10">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight mb-3 drop-shadow-md">
-            Innovative Projects
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight mb-3 drop-shadow-md uppercase">
+            {heroTitle}
           </h1>
-          <p className="text-gray-100 text-sm sm:text-base max-w-2xl mx-auto font-medium drop-shadow-sm">
-            Showcasing groundbreaking technical innovations and engineering solutions from students across Ghana
+          <p className="text-gray-100 text-xs sm:text-sm md:text-base max-w-2xl mx-auto font-medium drop-shadow-sm">
+            {heroSubtitle}
           </p>
         </div>
       </section>

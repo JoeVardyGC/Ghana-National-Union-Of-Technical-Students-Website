@@ -12,16 +12,23 @@ export const metadata: Metadata = {
 
 export default async function GalleryPage() {
   let heroImage = '/images/header_for_pages.jpg';
+  let heroTitle = 'GNUTS Legacy & Leadership Gallery';
+  let heroSubtitle = 'Honoring past National Union Leaders, TVET Pioneer Alumni, and historic National Student Congresses';
   let initialItems: GalleryItem[] = [];
 
   try {
     const [bannerRows, galleryRows] = await Promise.all([
-      query<any>("SELECT image_url FROM hero_banners WHERE page_key = 'gallery_hero' OR page_key = 'about_hero' ORDER BY (page_key = 'gallery_hero') DESC LIMIT 1"),
+      query<any>("SELECT * FROM hero_banners WHERE page_key = 'gallery_hero' LIMIT 1"),
       query<any>('SELECT * FROM gallery ORDER BY display_order ASC, id DESC'),
     ]);
 
-    if (bannerRows && bannerRows.length > 0 && bannerRows[0].image_url) {
-      heroImage = bannerRows[0].image_url;
+    if (bannerRows && bannerRows.length > 0) {
+      if (bannerRows[0].image_url) {
+        heroImage = bannerRows[0].image_url;
+      }
+      if (bannerRows[0].title && bannerRows[0].title !== 'Legacy & Leadership Gallery Hero Banner' && bannerRows[0].title !== 'Legacy & Leadership Gallery Page Header') {
+        heroTitle = bannerRows[0].title;
+      }
     }
 
     if (galleryRows && galleryRows.length > 0) {
@@ -41,24 +48,24 @@ export default async function GalleryPage() {
   }
 
   const resolvedHeroImage = resolveImgUrl(heroImage);
+  const safeBgUrl = encodeURI(resolvedHeroImage);
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#f8f9fa] font-sans">
-      
-      {/* Secondary Hero Header */}
-      <section className="relative text-white py-12 sm:py-16 px-4 sm:px-6 lg:px-8 border-b-4 border-[#D9A000] overflow-hidden bg-gray-900">
+    <div className="flex flex-col min-h-screen bg-[#f8f9fa] font-['Montserrat',sans-serif]">
+      {/* Secondary Hero Header - 50% opacity green overlay & border-b-4 border-[#D9A000] */}
+      <section className="relative text-white py-14 sm:py-20 px-4 sm:px-6 lg:px-8 border-b-4 border-[#D9A000] overflow-hidden bg-gray-900">
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
-          style={{ backgroundImage: `url('${resolvedHeroImage}')` }}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url('${safeBgUrl}')` }}
         />
-        <div className="absolute inset-0 bg-[#014900]/60 backdrop-brightness-90" />
+        <div className="absolute inset-0 bg-[#014900]/50 backdrop-brightness-90" />
 
         <div className="max-w-7xl mx-auto text-center relative z-10 space-y-2">
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight drop-shadow-md uppercase">
-            GNUTS Legacy & Leadership Gallery
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight drop-shadow-md uppercase">
+            {heroTitle}
           </h1>
-          <p className="text-gray-100 text-xs sm:text-sm max-w-2xl mx-auto font-medium drop-shadow-sm">
-            Honoring past National Union Leaders, TVET Pioneer Alumni, and historic National Student Congresses
+          <p className="text-gray-100 text-xs sm:text-sm md:text-base max-w-2xl mx-auto font-medium drop-shadow-sm">
+            {heroSubtitle}
           </p>
         </div>
       </section>
@@ -67,7 +74,6 @@ export default async function GalleryPage() {
       <section className="py-6 flex-grow">
         <GalleryClient initialItems={initialItems} />
       </section>
-
     </div>
   );
 }

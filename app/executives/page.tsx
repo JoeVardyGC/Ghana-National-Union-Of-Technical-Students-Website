@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import ExecutivesClient from './ExecutivesClient';
 import { query } from '@/lib/db';
+import { resolveImgUrl } from '@/lib/imageUtils';
 
 export const metadata: Metadata = {
   title: 'National Executive Officers | GNUTS Ghana',
@@ -24,9 +25,25 @@ export interface ExecutiveOfficer {
 
 export default async function ExecutivesPage() {
   let executives: ExecutiveOfficer[] = [];
+  let heroImage = '/images/header_for_pages.jpg';
+  let heroTitle = 'National Executive Officers';
+  let heroSubtitle = 'Meet the visionary student leaders championing technical university education, TVET industrial advocacy, and student welfare across Ghana.';
 
   try {
-    const dbRows: any[] = await query('SELECT * FROM executives ORDER BY display_order ASC, id ASC');
+    const [dbRows, bannerRows] = await Promise.all([
+      query<any>('SELECT * FROM executives ORDER BY display_order ASC, id ASC'),
+      query<any>("SELECT * FROM hero_banners WHERE page_key = 'executives_hero'").catch(() => []),
+    ]);
+
+    if (bannerRows && bannerRows.length > 0) {
+      if (bannerRows[0].image_url) {
+        heroImage = resolveImgUrl(bannerRows[0].image_url);
+      }
+      if (bannerRows[0].title && bannerRows[0].title !== 'National Executive Officers Hero Banner' && bannerRows[0].title !== 'National Executive Officers Page Header') {
+        heroTitle = bannerRows[0].title;
+      }
+    }
+
     if (dbRows && Array.isArray(dbRows)) {
       executives = dbRows.map((item: any) => ({
         id: Number(item.id),
@@ -45,5 +62,12 @@ export default async function ExecutivesPage() {
     // Fallback data
   }
 
-  return <ExecutivesClient initialExecutives={executives} />;
+  return (
+    <ExecutivesClient 
+      initialExecutives={executives} 
+      heroImage={heroImage}
+      heroTitle={heroTitle}
+      heroSubtitle={heroSubtitle}
+    />
+  );
 }

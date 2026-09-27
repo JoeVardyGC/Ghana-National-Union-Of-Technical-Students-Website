@@ -71,11 +71,12 @@ const DEFAULT_RESOURCES_SEED: ResourceItem[] = [
 export default async function ResourcesPage() {
   let resourcesList: ResourceItem[] = [];
   let heroImage = '/images/header_for_pages.jpg';
+  let heroTitle = 'Constitutional Registry & Public Resources';
 
   try {
     const [rows, bannerRows] = await Promise.all([
       query<any>('SELECT * FROM resources ORDER BY display_order ASC, created_at DESC'),
-      query<any>('SELECT image_url FROM hero_banners WHERE page_key = "resources_hero" AND status = "active" LIMIT 1').catch(() => []),
+      query<any>("SELECT * FROM hero_banners WHERE page_key = 'resources_hero' LIMIT 1").catch(() => []),
     ]);
 
     if (rows && rows.length > 0) {
@@ -95,24 +96,31 @@ export default async function ResourcesPage() {
       resourcesList = DEFAULT_RESOURCES_SEED;
     }
 
-    if (bannerRows && bannerRows.length > 0 && bannerRows[0].image_url) {
-      heroImage = resolveImgUrl(bannerRows[0].image_url);
+    if (bannerRows && bannerRows.length > 0) {
+      if (bannerRows[0].image_url) {
+        heroImage = resolveImgUrl(bannerRows[0].image_url);
+      }
+      if (bannerRows[0].title && bannerRows[0].title !== 'Resources & Constitution Hero Banner' && bannerRows[0].title !== 'Resources & Constitution Page Header') {
+        heroTitle = bannerRows[0].title;
+      }
     }
   } catch (err) {
     resourcesList = DEFAULT_RESOURCES_SEED;
   }
 
+  const safeBgUrl = encodeURI(heroImage);
+
   return (
     <div className="flex flex-col min-h-screen bg-[#f8f9fa] font-['Montserrat',sans-serif]">
-      {/* Editorial Page Hero Header */}
-      <section className="relative text-white pt-16 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden border-b-4 border-[#D9A000] bg-gray-900">
+      {/* Editorial Page Hero Header - 50% opacity green overlay & border-b-4 border-[#D9A000] */}
+      <section className="relative text-white py-14 sm:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden border-b-4 border-[#D9A000] bg-gray-900">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url('${heroImage}')` }}
+          style={{ backgroundImage: `url('${safeBgUrl}')` }}
         />
-        <div className="absolute inset-0 bg-[#014900]/75 backdrop-brightness-75" />
+        <div className="absolute inset-0 bg-[#014900]/50 backdrop-brightness-90" />
 
-        <div className="max-w-5xl mx-auto relative z-10 text-center space-y-4">
+        <div className="max-w-5xl mx-auto relative z-10 text-center space-y-3">
           {/* Breadcrumbs */}
           <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-gray-300 font-medium">
             <Link href="/" className="hover:text-[#D9A000] transition-colors">
@@ -122,11 +130,11 @@ export default async function ResourcesPage() {
             <span className="text-[#D9A000] font-bold">Resources & Constitution</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tight drop-shadow-md uppercase">
-            Constitutional Registry & Public Resources
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tight drop-shadow-md uppercase">
+            {heroTitle}
           </h1>
 
-          <p className="text-sm sm:text-base text-gray-200 max-w-2xl mx-auto font-medium leading-relaxed">
+          <p className="text-xs sm:text-sm md:text-base text-gray-200 max-w-2xl mx-auto font-medium leading-relaxed">
             Download official union charters, Central Committee communiqués, TVET policy resolutions, and institutional publications.
           </p>
         </div>

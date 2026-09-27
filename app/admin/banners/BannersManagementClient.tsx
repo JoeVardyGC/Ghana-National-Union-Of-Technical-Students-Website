@@ -89,6 +89,30 @@ const PAGE_HERO_SLOTS = [
     defaultTitle: 'Resources & Constitution',
     defaultSubtitle: 'Download official union charters, communiqués, and policy frameworks.',
   },
+  {
+    key: 'gallery_hero',
+    name: 'Legacy & Leadership Gallery Page Header',
+    route: '/gallery',
+    description: 'Header background banner for the historic leaders and congress gallery.',
+    defaultTitle: 'GNUTS Legacy & Leadership Gallery',
+    defaultSubtitle: 'Honoring past National Union Leaders, TVET Pioneer Alumni, and historic National Student Congresses.',
+  },
+  {
+    key: 'executives_hero',
+    name: 'National Executive Officers Page Header',
+    route: '/executives',
+    description: 'Header background banner for the National Executive Committee leadership page.',
+    defaultTitle: 'National Executive Officers',
+    defaultSubtitle: 'Meet the visionary student leaders championing technical university education across Ghana.',
+  },
+  {
+    key: 'opportunities_hero',
+    name: 'Student Opportunities Page Header',
+    route: '/opportunities',
+    description: 'Header background banner for TVET placements, industrial attachments, and grants.',
+    defaultTitle: 'Student Opportunities & TVET Placements',
+    defaultSubtitle: 'Empowering Ghanaian Technical University students with direct access to attachments, grants, and championships.',
+  },
 ];
 
 export default function BannersManagementClient({ initialBanners = [] }: BannersManagementClientProps) {

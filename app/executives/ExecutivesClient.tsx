@@ -16,9 +16,17 @@ import {
 
 interface ExecutivesClientProps {
   initialExecutives: ExecutiveOfficer[];
+  heroImage?: string;
+  heroTitle?: string;
+  heroSubtitle?: string;
 }
 
-export default function ExecutivesClient({ initialExecutives }: ExecutivesClientProps) {
+export default function ExecutivesClient({ 
+  initialExecutives,
+  heroImage = '/images/header_for_pages.jpg',
+  heroTitle = 'National Executive Officers',
+  heroSubtitle = 'Meet the visionary student leaders championing technical university education, TVET industrial advocacy, and student welfare across Ghana.'
+}: ExecutivesClientProps) {
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredExecutives = initialExecutives.filter((officer) =>
@@ -27,28 +35,34 @@ export default function ExecutivesClient({ initialExecutives }: ExecutivesClient
     officer.institution.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const safeBgUrl = encodeURI(heroImage);
+
   return (
-    <div className="bg-white min-h-screen font-sans pb-24 text-gray-900">
+    <div className="bg-white min-h-screen font-['Montserrat',sans-serif] pb-24 text-gray-900">
       
-      {/* HERO BANNER */}
-      <section className="px-4 sm:px-6 lg:px-8 pt-6 pb-12 max-w-7xl mx-auto">
-        <div className="bg-gradient-to-br from-[#014900] via-[#013500] to-[#012000] rounded-3xl p-8 sm:p-12 lg:p-16 text-white relative overflow-hidden shadow-2xl border border-emerald-800/40">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#D9A000]/15 rounded-full blur-3xl pointer-events-none" />
+      {/* HERO BANNER - 50% opacity green overlay & border-b-4 border-[#D9A000] */}
+      <section className="relative text-white py-14 sm:py-20 px-4 sm:px-6 lg:px-8 border-b-4 border-[#D9A000] overflow-hidden bg-gray-900 mb-8">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url('${safeBgUrl}')` }}
+        />
+        {/* Semi-transparent Green Overlay (50% Green Opacity) */}
+        <div className="absolute inset-0 bg-[#014900]/50 backdrop-brightness-90" />
 
-          <div className="relative z-10 max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-xs font-black uppercase tracking-widest text-[#D9A000]">
-              <Users className="w-4 h-4" />
-              <span>National Executive Committee (NEC)</span>
-            </div>
-
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-['Montserrat'] font-black uppercase tracking-tight leading-tight text-white">
-              National <span className="text-[#D9A000]">Executive</span> Officers
-            </h1>
-
-            <p className="text-sm sm:text-base text-gray-200 font-medium leading-relaxed pt-1">
-              Meet the visionary student leaders championing technical university education, TVET industrial advocacy, and student welfare across Ghana.
-            </p>
+        <div className="max-w-7xl mx-auto text-center relative z-10 space-y-3">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-xs font-black uppercase tracking-widest text-[#D9A000]">
+            <Users className="w-4 h-4" />
+            <span>National Executive Committee (NEC)</span>
           </div>
+
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight leading-tight text-white drop-shadow-md">
+            {heroTitle}
+          </h1>
+
+          <p className="text-gray-100 text-xs sm:text-sm md:text-base max-w-2xl mx-auto font-medium drop-shadow-sm leading-relaxed">
+            {heroSubtitle}
+          </p>
         </div>
       </section>
 

@@ -1,31 +1,54 @@
 import { Metadata } from 'next';
 import ContactClient from '@/components/ContactClient';
+import { query } from '@/lib/db';
+import { resolveImgUrl } from '@/lib/imageUtils';
+
+export const revalidate = 15;
 
 export const metadata: Metadata = {
   title: 'Contact Us | GNUTS - Ghana National Union of Technical Students',
   description: 'Get in touch with the National Secretariat of GNUTS. Reach out for student welfare inquiries, scholarship support, innovation programs, or union membership.',
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  let heroImage = '/images/header_for_pages.jpg';
+  let heroTitle = 'Contact Us';
+  let heroSubtitle = 'Get in touch with the Ghana National Union of Technical Students National Secretariat';
+
+  try {
+    const bannerRows = await query<any>("SELECT * FROM hero_banners WHERE page_key = 'contact_hero'").catch(() => []);
+    if (bannerRows && bannerRows.length > 0) {
+      if (bannerRows[0].image_url) {
+        heroImage = resolveImgUrl(bannerRows[0].image_url);
+      }
+      if (bannerRows[0].title && bannerRows[0].title !== 'Contact Hero Banner' && bannerRows[0].title !== 'Contact Page Header') {
+        heroTitle = bannerRows[0].title;
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching contact hero banner:', error);
+  }
+
+  const safeBgUrl = encodeURI(heroImage);
+
   return (
-    <div className="flex flex-col min-h-screen bg-[#f8f9fa] font-sans">
-      
-      {/* Page Hero Header - Clean proportional typography */}
-      <section className="relative text-white py-12 sm:py-16 px-4 sm:px-6 lg:px-8 border-b-4 border-[#D9A000] overflow-hidden bg-gray-900">
+    <div className="flex flex-col min-h-screen bg-[#f8f9fa] font-['Montserrat',sans-serif]">
+      {/* Page Hero Header - 50% opacity green overlay & border-b-4 border-[#D9A000] */}
+      <section className="relative text-white py-14 sm:py-20 px-4 sm:px-6 lg:px-8 border-b-4 border-[#D9A000] overflow-hidden bg-gray-900">
         {/* Background Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url('/images/header_for_pages.jpg')` }}
+          style={{ backgroundImage: `url('${safeBgUrl}')` }}
         />
         {/* Semi-transparent Green Overlay (50% Green Opacity) */}
         <div className="absolute inset-0 bg-[#014900]/50 backdrop-brightness-90" />
 
         <div className="max-w-7xl mx-auto text-center relative z-10 space-y-2">
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight drop-shadow-md uppercase">
-            Contact Us
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight drop-shadow-md uppercase">
+            {heroTitle}
           </h1>
-          <p className="text-gray-100 text-xs sm:text-sm max-w-xl mx-auto font-medium drop-shadow-sm">
-            Get in touch with the Ghana National Union of Technical Students National Secretariat
+          <p className="text-gray-100 text-xs sm:text-sm md:text-base max-w-xl mx-auto font-medium drop-shadow-sm">
+            {heroSubtitle}
           </p>
         </div>
       </section>
@@ -34,7 +57,6 @@ export default function ContactPage() {
       <section className="py-6 flex-grow">
         <ContactClient />
       </section>
-
     </div>
   );
 }

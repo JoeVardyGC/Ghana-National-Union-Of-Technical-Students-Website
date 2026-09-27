@@ -263,6 +263,38 @@ const DEFAULT_STORE: Record<string, any[]> = {
       image_url: '/images/header_for_pages.jpg',
       display_order: 1,
       status: 'active'
+    },
+    {
+      id: 9,
+      page_key: 'resources_hero',
+      title: 'Resources & Constitution Hero Banner',
+      image_url: '/images/header_for_pages.jpg',
+      display_order: 1,
+      status: 'active'
+    },
+    {
+      id: 10,
+      page_key: 'gallery_hero',
+      title: 'Legacy & Leadership Gallery Hero Banner',
+      image_url: '/images/header_for_pages.jpg',
+      display_order: 1,
+      status: 'active'
+    },
+    {
+      id: 11,
+      page_key: 'executives_hero',
+      title: 'National Executive Officers Hero Banner',
+      image_url: '/images/header_for_pages.jpg',
+      display_order: 1,
+      status: 'active'
+    },
+    {
+      id: 12,
+      page_key: 'opportunities_hero',
+      title: 'Student Opportunities Hero Banner',
+      image_url: '/images/header_for_pages.jpg',
+      display_order: 1,
+      status: 'active'
     }
   ],
   gallery: [
@@ -578,26 +610,42 @@ async function executeLocalSql(sql: string, params: any[]): Promise<any> {
 
       if (setMatch) {
         const setClauses = setMatch[1].split(',').map((c) => c.trim());
-        let paramIdx = 0;
+        const setCols: string[] = [];
+        setClauses.forEach((clause) => {
+          const colMatch = clause.match(/([a-zA-Z0-9_]+)\s*=\s*\?/);
+          if (colMatch) {
+            setCols.push(colMatch[1]);
+          }
+        });
 
-        // Check if WHERE id = ?
-        let targetId: any = null;
+        // Determine WHERE filter condition
+        let filterFn = (row: any) => true;
+
         if (whereMatch) {
-          const idMatch = whereMatch[1].match(/(?:`?id`?)\s*=\s*(?:\?|['"]?([0-9]+)['"]?)/i);
+          const whereClause = whereMatch[1];
+
+          // 1. Check if WHERE id = ? or WHERE id = 123
+          const idMatch = whereClause.match(/(?:`?id`?)\s*=\s*(?:\?|['"]?([0-9]+)['"]?)/i);
           if (idMatch) {
-            targetId = idMatch[1] ? Number(idMatch[1]) : params[params.length - 1];
+            const targetId = idMatch[1] ? Number(idMatch[1]) : Number(params[setCols.length]);
+            filterFn = (row) => Number(row.id) === targetId;
+          }
+
+          // 2. Check if WHERE page_key = ? or WHERE page_key = '...'
+          const pkMatch = whereClause.match(/page_key\s*=\s*(?:\?|['"]([^'"]+)['"])/i);
+          if (pkMatch) {
+            const targetKey = String(pkMatch[1] || params[setCols.length] || '').toLowerCase();
+            filterFn = (row) => String(row.page_key || '').toLowerCase() === targetKey;
           }
         }
 
         let updatedCount = 0;
         store[tableName] = rows.map((row) => {
-          if (targetId === null || Number(row.id) === Number(targetId)) {
+          if (filterFn(row)) {
             const updatedRow = { ...row };
-            setClauses.forEach((clause) => {
-              const colMatch = clause.match(/([a-zA-Z0-9_]+)\s*=\s*\?/);
-              if (colMatch) {
-                const col = colMatch[1];
-                updatedRow[col] = params[paramIdx++];
+            setCols.forEach((col, idx) => {
+              if (params[idx] !== undefined) {
+                updatedRow[col] = params[idx];
               }
             });
             updatedRow.updated_at = new Date().toISOString();
@@ -727,19 +775,23 @@ async function executeLocalSql(sql: string, params: any[]): Promise<any> {
     } else if (lowerSql.includes('where status = ?')) {
       const st = String(params[0]).toLowerCase();
       rows = rows.filter((r) => String(r.status).toLowerCase() === st);
-    } else if (lowerSql.includes('where page_key = ?')) {
-      const pk = String(params[0]).toLowerCase();
-      rows = rows.filter((r) => String(r.page_key).toLowerCase() === pk);
-    } else if (lowerSql.includes("where page_key = 'home_carousel'") || lowerSql.includes('where page_key = "home_carousel"')) {
-      rows = rows.filter((r) => r.page_key === 'home_carousel');
-    } else if (lowerSql.includes("where page_key = 'about_hero'") || lowerSql.includes('where page_key = "about_hero"')) {
-      rows = rows.filter((r) => r.page_key === 'about_hero');
-    } else if (lowerSql.includes("where page_key = 'news_hero'") || lowerSql.includes('where page_key = "news_hero"')) {
-      rows = rows.filter((r) => r.page_key === 'news_hero');
-    } else if (lowerSql.includes("where page_key = 'innovations_hero'") || lowerSql.includes('where page_key = "innovations_hero"')) {
-      rows = rows.filter((r) => r.page_key === 'innovations_hero');
-    } else if (lowerSql.includes("where page_key = 'scholarships_hero'") || lowerSql.includes('where page_key = "scholarships_hero"')) {
-      rows = rows.filter((r) => r.page_key === 'scholarships_hero');
+    }
+
+    // WHERE page_key filters (supports any page key or dynamic params)
+    const pageKeyParamMatch = sql.match(/page_key\s*=\s*\?/i);
+    const pageKeyLiteralMatch = sql.match(/page_key\s*=\s*['"]([^'"]+)['"]/i);
+    if (pageKeyParamMatch && params.length > 0) {
+      const targetPk = String(params[0] || '').toLowerCase();
+      rows = rows.filter((r) => String(r.page_key || '').toLowerCase() === targetPk);
+    } else if (pageKeyLiteralMatch) {
+      // Check for multi-key OR conditions (e.g. gallery_hero OR about_hero)
+      if (lowerSql.includes(' or ') && lowerSql.includes('page_key')) {
+        const allKeys = [...sql.matchAll(/page_key\s*=\s*['"]([^'"]+)['"]/gi)].map((m) => m[1].toLowerCase());
+        rows = rows.filter((r) => allKeys.includes(String(r.page_key || '').toLowerCase()));
+      } else {
+        const targetPk = pageKeyLiteralMatch[1].toLowerCase();
+        rows = rows.filter((r) => String(r.page_key || '').toLowerCase() === targetPk);
+      }
     }
 
     // ORDER BY

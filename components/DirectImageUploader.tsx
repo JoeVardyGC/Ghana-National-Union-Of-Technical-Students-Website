@@ -8,9 +8,11 @@ interface DirectImageUploaderProps {
   value: string;
   onChange: (url: string) => void;
   helperText?: string;
+  folder?: string;
+  required?: boolean;
 }
 
-// Helper to compress image in browser to ~50KB-100KB for instant storage
+// Helper to compress image in browser to ~50KB-100KB for instant storage fallback
 const compressImage = (file: File): Promise<string> => {
   return new Promise((resolve) => {
     const reader = new FileReader();
@@ -57,12 +59,15 @@ export default function DirectImageUploader({
   label,
   value,
   onChange,
-  helperText = 'PNG, JPG, WebP up to 10MB'
+  helperText = 'PNG, JPG, WebP up to 15MB',
+  folder = '/gnuts_uploads',
+  required = false
 }: DirectImageUploaderProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [showUrlInput, setShowUrlInput] = useState(false);
   const [urlDraft, setUrlDraft] = useState('');
   const [uploadError, setUploadError] = useState('');
+  const [copied, setCopied] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileUpload = async (file: File) => {
@@ -77,6 +82,9 @@ export default function DirectImageUploader({
     try {
       const formData = new FormData();
       formData.append('file', file);
+      if (folder) {
+        formData.append('folder', folder);
+      }
 
       const res = await fetch('/api/upload', {
         method: 'POST',
@@ -121,25 +129,66 @@ export default function DirectImageUploader({
     }
   };
 
+  const handleCopyLink = () => {
+    if (!value) return;
+    try {
+      if (navigator?.clipboard?.writeText) {
+        navigator.clipboard.writeText(value);
+      } else {
+        const tempInput = document.createElement('input');
+        tempInput.value = value;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+      }
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2200);
+    } catch (err) {
+      console.error('Failed to copy link', err);
+    }
+  };
+
+  const isImageKit = value && (value.includes('ik.imagekit.io') || value.includes('imagekit'));
+
   return (
-    <div className="space-y-1.5 bg-gray-50/80 p-3 rounded-2xl border border-gray-200/90 font-['Montserrat',sans-serif]">
-      
+    <div className="space-y-2 bg-gray-50/80 p-3.5 rounded-2xl border border-gray-200/90 font-['Montserrat',sans-serif]">
+      {/* Hidden input to enforce native required validation if needed */}
+      {required && (
+        <input
+          type="text"
+          required
+          tabIndex={-1}
+          value={value}
+          onChange={() => {}}
+          className="sr-only"
+        />
+      )}
+
       {/* Label and Header */}
       <div className="flex items-center justify-between">
         <label className="text-xs font-black uppercase text-gray-700 tracking-wider flex items-center gap-1.5">
           <ImageIcon className="w-3.5 h-3.5 text-[#014900]" />
           <span>{label}</span>
+          {required && <span className="text-[10px] text-red-500 font-bold">*</span>}
         </label>
-        
+
         {value ? (
-          <button
-            type="button"
-            onClick={() => onChange('')}
-            className="text-[11px] font-bold text-red-600 hover:text-red-700 flex items-center gap-1 cursor-pointer"
-          >
-            <X className="w-3.5 h-3.5" />
-            <span>Remove</span>
-          </button>
+          <div className="flex items-center gap-2">
+            {isImageKit && (
+              <span className="hidden sm:inline-flex items-center gap-1 text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">
+                ImageKit.io Cloud CDN
+              </span>
+            )}
+            <button
+              type="button"
+              onClick={() => onChange('')}
+              className="text-[11px] font-bold text-red-600 hover:text-red-700 flex items-center gap-1 cursor-pointer transition-colors"
+            >
+              <X className="w-3.5 h-3.5" />
+              <span>Remove</span>
+            </button>
+          </div>
         ) : (
           <button
             type="button"
@@ -160,40 +209,77 @@ export default function DirectImageUploader({
 
       {/* Upload Zone or Preview */}
       {value ? (
-        /* 1. Image Preview with replace/delete overlay */
-        <div className="relative group rounded-xl overflow-hidden border border-gray-200 bg-white h-32 flex items-center justify-center">
-          <img
-            src={value}
-            alt={label}
-            className="w-full h-full object-contain"
-          />
-          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+        /* 1. Image Preview with replace, copy link, and delete */
+        <div className="space-y-2">
+          <div className="relative group rounded-xl overflow-hidden border border-gray-200 bg-gray-900 h-36 flex items-center justify-center">
+            <img
+              src={value}
+              alt={label}
+              className="w-full h-full object-contain"
+              onError={(e) => {
+                // If preview fails, keep background clean
+                (e.currentTarget as HTMLElement).style.opacity = '0.5';
+              }}
+            />
+            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="px-3 py-1.5 bg-white text-gray-900 font-bold text-xs rounded-xl shadow-md hover:bg-[#014900] hover:text-white transition-colors cursor-pointer"
+              >
+                Replace Photo
+              </button>
+              <button
+                type="button"
+                onClick={() => onChange('')}
+                className="px-3 py-1.5 bg-red-600 text-white font-bold text-xs rounded-xl shadow-md hover:bg-red-700 transition-colors cursor-pointer"
+              >
+                Delete
+              </button>
+            </div>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  handleFileUpload(e.target.files[0]);
+                }
+              }}
+            />
+          </div>
+
+          {/* Direct Link and Copy Bar */}
+          <div className="flex items-center gap-2 bg-white px-2.5 py-1.5 rounded-xl border border-gray-200 text-xs">
+            <input
+              type="text"
+              readOnly
+              value={value}
+              className="flex-1 bg-transparent text-[11px] text-gray-600 font-mono outline-none truncate select-all"
+            />
             <button
               type="button"
-              onClick={() => fileInputRef.current?.click()}
-              className="px-3 py-1.5 bg-white text-gray-900 font-bold text-xs rounded-xl shadow-md hover:bg-[#014900] hover:text-white transition-colors cursor-pointer"
+              onClick={handleCopyLink}
+              className={`shrink-0 flex items-center gap-1 px-3 py-1 rounded-lg text-[11px] font-black transition-all cursor-pointer ${
+                copied
+                  ? 'bg-emerald-600 text-white'
+                  : 'bg-emerald-50 text-[#014900] hover:bg-[#014900] hover:text-white border border-emerald-300'
+              }`}
             >
-              Replace Photo
-            </button>
-            <button
-              type="button"
-              onClick={() => onChange('')}
-              className="px-3 py-1.5 bg-red-600 text-white font-bold text-xs rounded-xl shadow-md hover:bg-red-700 transition-colors cursor-pointer"
-            >
-              Delete
+              {copied ? (
+                <>
+                  <Check className="w-3.5 h-3.5" />
+                  <span>Copied!</span>
+                </>
+              ) : (
+                <>
+                  <LinkIcon className="w-3 h-3" />
+                  <span>Copy Link</span>
+                </>
+              )}
             </button>
           </div>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => {
-              if (e.target.files && e.target.files[0]) {
-                handleFileUpload(e.target.files[0]);
-              }
-            }}
-          />
         </div>
       ) : showUrlInput ? (
         /* 2. URL Input Mode */
@@ -202,7 +288,7 @@ export default function DirectImageUploader({
             type="url"
             value={urlDraft}
             onChange={(e) => setUrlDraft(e.target.value)}
-            placeholder="Paste image link (https://...)"
+            placeholder="Paste direct image link (https://...)"
             className="flex-1 px-3.5 py-2 bg-white border border-gray-300 rounded-xl text-xs font-semibold outline-none focus:border-[#014900]"
           />
           <button
@@ -219,7 +305,7 @@ export default function DirectImageUploader({
           onDragOver={(e) => e.preventDefault()}
           onDrop={handleDrop}
           onClick={() => fileInputRef.current?.click()}
-          className="border-2 border-dashed border-emerald-400/80 hover:border-[#014900] bg-white rounded-2xl p-3 text-center cursor-pointer transition-all hover:bg-emerald-50/40 group flex items-center justify-center gap-3"
+          className="border-2 border-dashed border-emerald-400/80 hover:border-[#014900] bg-white rounded-2xl p-4 text-center cursor-pointer transition-all hover:bg-emerald-50/40 group flex items-center justify-center gap-3.5"
         >
           <input
             ref={fileInputRef}
@@ -233,29 +319,30 @@ export default function DirectImageUploader({
             }}
           />
 
-          <div className="w-8 h-8 rounded-xl bg-emerald-50 text-[#014900] group-hover:bg-[#014900] group-hover:text-white transition-colors flex items-center justify-center shrink-0 shadow-xs">
+          <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#014900] group-hover:bg-[#014900] group-hover:text-white transition-colors flex items-center justify-center shrink-0 shadow-xs">
             {isUploading ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
+              <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
-              <Upload className="w-4 h-4" />
+              <Upload className="w-5 h-5" />
             )}
           </div>
 
           <div className="text-left">
             <p className="text-xs font-bold text-gray-800 leading-tight">
               {isUploading ? (
-                'Uploading image file...'
+                'Uploading to ImageKit CDN...'
               ) : (
                 <>
-                  Click to <span className="text-[#014900] font-black underline">browse image</span> or drag & drop
+                  Click to <span className="text-[#014900] font-black underline">browse picture</span> or drag & drop
                 </>
               )}
             </p>
-            <p className="text-[10px] text-gray-400 font-medium mt-0.5">{helperText}</p>
+            <p className="text-[10px] text-gray-400 font-medium mt-0.5">
+              Direct upload to ImageKit.io &bull; {helperText}
+            </p>
           </div>
         </div>
       )}
-
     </div>
   );
 }

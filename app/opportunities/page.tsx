@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import OpportunitiesClient from './OpportunitiesClient';
 import { query } from '@/lib/db';
+import { resolveImgUrl } from '@/lib/imageUtils';
 
 export const metadata: Metadata = {
   title: 'Student Opportunities & TVET Placements | GNUTS Ghana',
@@ -26,9 +27,25 @@ export interface OpportunityItem {
 
 export default async function OpportunitiesPage() {
   let opportunities: OpportunityItem[] = [];
+  let heroImage = '/images/header_for_pages.jpg';
+  let heroTitle = 'Student Opportunities & TVET Placements';
+  let heroSubtitle = 'Empowering Ghanaian Technical University students with direct access to attachments, grants, and championships.';
 
   try {
-    const dbRows: any[] = await query('SELECT * FROM opportunities ORDER BY created_at DESC, id DESC');
+    const [dbRows, bannerRows] = await Promise.all([
+      query<any>('SELECT * FROM opportunities ORDER BY created_at DESC, id DESC'),
+      query<any>("SELECT * FROM hero_banners WHERE page_key = 'opportunities_hero'").catch(() => []),
+    ]);
+
+    if (bannerRows && bannerRows.length > 0) {
+      if (bannerRows[0].image_url) {
+        heroImage = resolveImgUrl(bannerRows[0].image_url);
+      }
+      if (bannerRows[0].title && bannerRows[0].title !== 'Student Opportunities Hero Banner' && bannerRows[0].title !== 'Student Opportunities Page Header') {
+        heroTitle = bannerRows[0].title;
+      }
+    }
+
     if (dbRows && Array.isArray(dbRows)) {
       opportunities = dbRows.map((item: any) => {
         let mappedCat = item.category;
@@ -60,5 +77,12 @@ export default async function OpportunitiesPage() {
     // Graceful fallback
   }
 
-  return <OpportunitiesClient initialOpportunities={opportunities} />;
+  return (
+    <OpportunitiesClient 
+      initialOpportunities={opportunities} 
+      heroImage={heroImage}
+      heroTitle={heroTitle}
+      heroSubtitle={heroSubtitle}
+    />
+  );
 }
