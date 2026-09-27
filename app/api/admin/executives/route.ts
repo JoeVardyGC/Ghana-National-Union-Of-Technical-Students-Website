@@ -68,7 +68,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Officer full name and portfolio position are required' }, { status: 400 });
     }
 
-    const officerPhoto = photo || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop';
+    const officerPhoto = photo || '';
     const orderNum = Number(display_order) || 1;
 
     const insertResult = await query(

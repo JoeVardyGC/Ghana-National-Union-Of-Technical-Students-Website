@@ -51,7 +51,7 @@ export default async function ExecutivesPage() {
         position: String(item.position || 'National Executive'),
         institution: String(item.institution || 'GNUTS National Secretariat'),
         bio: String(item.bio || 'Serving the Ghanaian technical student community with dedication, integrity, and proactive leadership.'),
-        image_url: String(item.photo || item.image_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop'),
+        image_url: resolveImgUrl(item.photo || item.image_url || '/images/gnuts_fav.png'),
         email: item.email ? String(item.email) : undefined,
         phone: item.phone ? String(item.phone) : undefined,
         display_order: Number(item.display_order || 1),

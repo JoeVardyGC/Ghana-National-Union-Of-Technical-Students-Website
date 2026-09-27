@@ -2,6 +2,8 @@
 
 import { useState, useRef } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { resolveImgUrl } from '@/lib/imageUtils';
 import { 
   Users, 
   PlusCircle, 
@@ -59,6 +61,7 @@ export default function ExecutivesManagementClient({
 }: { 
   initialExecutives?: ExecutiveItem[] 
 }) {
+  const router = useRouter();
   const [executivesList, setExecutivesList] = useState<ExecutiveItem[]>(initialExecutives);
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'table'>('grid');
@@ -144,7 +147,7 @@ export default function ExecutivesManagementClient({
       email: '',
       phone: '',
       bio: '',
-      photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop',
+      photo: '',
       display_order: executivesList.length + 1,
     });
     setFeedbackMsg('');
@@ -187,6 +190,7 @@ export default function ExecutivesManagementClient({
             )
           );
           setIsModalOpen(false);
+          router.refresh();
         } else {
           setFeedbackMsg('Failed to update executive');
         }
@@ -202,6 +206,7 @@ export default function ExecutivesManagementClient({
         if (res.ok && data.executive) {
           setExecutivesList([...executivesList, data.executive]);
           setIsModalOpen(false);
+          router.refresh();
         } else {
           setFeedbackMsg('Failed to add executive officer');
         }
@@ -220,6 +225,7 @@ export default function ExecutivesManagementClient({
         setExecutivesList((prev) => prev.filter((item) => item.id !== id));
         setSelectedIds((prev) => prev.filter((it) => it !== id));
         setIsDeletingId(null);
+        router.refresh();
       } else {
         const data = await res.json().catch(() => ({}));
         alert(data.error || 'Failed to delete executive officer');
@@ -243,6 +249,7 @@ export default function ExecutivesManagementClient({
         setExecutivesList((prev) => prev.filter((item) => !selectedIds.includes(item.id)));
         setSelectedIds([]);
         setIsBulkDeleteModalOpen(false);
+        router.refresh();
       } else {
         alert('Failed to bulk delete selected officers');
       }
@@ -339,12 +346,30 @@ export default function ExecutivesManagementClient({
 
       {/* 3. Officer Cards Display */}
       {viewMode === 'grid' ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredExecutives.map((exec) => {
-            const isSelected = selectedIds.includes(exec.id);
-            const photoSrc = exec.photo 
-              ? (exec.photo.startsWith('http') || exec.photo.startsWith('/') ? exec.photo : `/${exec.photo}`)
-              : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop';
+        filteredExecutives.length === 0 ? (
+          <div className="text-center py-16 px-6 bg-white rounded-3xl border border-gray-200/90 shadow-sm max-w-xl mx-auto">
+            <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-emerald-100">
+              <Users className="w-8 h-8 text-[#014900]" />
+            </div>
+            <h3 className="text-base font-black text-gray-900 uppercase">No Executive Officers Found</h3>
+            <p className="text-gray-500 font-medium text-xs mt-1.5 max-w-sm mx-auto">
+              {searchQuery 
+                ? `No officers match "${searchQuery}". Clear your search query.` 
+                : 'The executive leadership directory is currently empty. Add your first executive officer to populate the portal and website.'}
+            </p>
+            <button
+              onClick={handleOpenCreateModal}
+              className="mt-5 inline-flex items-center gap-2 px-5 py-2.5 bg-[#014900] text-white text-xs font-black uppercase tracking-wider rounded-2xl hover:bg-[#D9A000] hover:text-[#014900] transition-all shadow-md cursor-pointer"
+            >
+              <PlusCircle className="w-4 h-4" />
+              <span>Add Executive Officer</span>
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {filteredExecutives.map((exec) => {
+              const isSelected = selectedIds.includes(exec.id);
+              const photoSrc = exec.photo ? resolveImgUrl(exec.photo) : '/images/gnuts_fav.png';
 
             return (
               <div
@@ -449,7 +474,7 @@ export default function ExecutivesManagementClient({
             );
           })}
         </div>
-      ) : (
+      )) : (
         /* Table View */
         <div className="bg-white rounded-3xl border border-gray-200 shadow-md overflow-hidden">
           <div className="overflow-x-auto">
@@ -480,40 +505,47 @@ export default function ExecutivesManagementClient({
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                {filteredExecutives.map((exec) => {
-                  const isSelected = selectedIds.includes(exec.id);
-                  return (
-                    <tr 
-                      key={exec.id} 
-                      className={`transition-colors group ${
-                        isSelected ? 'bg-emerald-50/30' : 'hover:bg-gray-50'
-                      }`}
-                    >
-                      <td className="py-3 px-5 text-center">
-                        <button
-                          type="button"
-                          onClick={() => handleToggleSelectOne(exec.id)}
-                          className="p-1 text-gray-400 hover:text-[#014900] cursor-pointer"
-                        >
-                          {isSelected ? (
-                            <CheckSquare className="w-4 h-4 text-[#014900]" />
-                          ) : (
-                            <Square className="w-4 h-4" />
-                          )}
-                        </button>
-                      </td>
-                      <td className="py-3 px-5 font-black text-gray-500">
-                        #{exec.display_order || 1}
-                      </td>
-                      <td className="py-3 px-5">
-                        <div className="w-12 h-14 rounded-xl bg-gray-900 overflow-hidden shrink-0 border border-gray-200">
-                          <img
-                            src={exec.photo || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop'}
-                            alt={exec.full_name}
-                            className="w-full h-full object-cover object-top"
-                          />
-                        </div>
-                      </td>
+                {filteredExecutives.length === 0 ? (
+                  <tr>
+                    <td colSpan={8} className="py-12 text-center text-gray-500 font-medium text-xs">
+                      No executive officers found. Click &quot;Add Executive Officer&quot; to add one.
+                    </td>
+                  </tr>
+                ) : (
+                  filteredExecutives.map((exec) => {
+                    const isSelected = selectedIds.includes(exec.id);
+                    return (
+                      <tr 
+                        key={exec.id} 
+                        className={`transition-colors group ${
+                          isSelected ? 'bg-emerald-50/30' : 'hover:bg-gray-50'
+                        }`}
+                      >
+                        <td className="py-3 px-5 text-center">
+                          <button
+                            type="button"
+                            onClick={() => handleToggleSelectOne(exec.id)}
+                            className="p-1 text-gray-400 hover:text-[#014900] cursor-pointer"
+                          >
+                            {isSelected ? (
+                              <CheckSquare className="w-4 h-4 text-[#014900]" />
+                            ) : (
+                              <Square className="w-4 h-4" />
+                            )}
+                          </button>
+                        </td>
+                        <td className="py-3 px-5 font-black text-gray-500">
+                          #{exec.display_order || 1}
+                        </td>
+                        <td className="py-3 px-5">
+                          <div className="w-12 h-14 rounded-xl bg-gray-900 overflow-hidden shrink-0 border border-gray-200">
+                            <img
+                              src={exec.photo ? resolveImgUrl(exec.photo) : '/images/gnuts_fav.png'}
+                              alt={exec.full_name}
+                              className="w-full h-full object-cover object-top"
+                            />
+                          </div>
+                        </td>
                       <td className="py-3 px-5 font-black text-gray-900 group-hover:text-[#014900]">
                         {exec.full_name}
                       </td>
@@ -548,7 +580,7 @@ export default function ExecutivesManagementClient({
                       </td>
                     </tr>
                   );
-                })}
+                }))}
               </tbody>
             </table>
           </div>

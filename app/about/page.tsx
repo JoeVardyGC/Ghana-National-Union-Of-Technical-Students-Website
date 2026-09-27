@@ -397,33 +397,26 @@ export default async function AboutPage() {
           </div>
         </section>
 
-        {/* 6. Executive Leadership — Executive Cards (Surpassing NUGS) */}
-        <section id="leadership" className="py-20 sm:py-28 bg-[#f8f9fa] border-b border-gray-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-gray-200 pb-6 mb-12 gap-4">
-              <div>
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#014900] tracking-tight font-['Montserrat',sans-serif] uppercase">
-                  National Leadership
-                </h2>
-                <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-3" />
+        {/* 6. Executive Leadership — Only display when executives exist in the system */}
+        {executives && executives.length > 0 && (
+          <section id="leadership" className="py-20 sm:py-28 bg-[#f8f9fa] border-b border-gray-200">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-gray-200 pb-6 mb-12 gap-4">
+                <div>
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#014900] tracking-tight font-['Montserrat',sans-serif] uppercase">
+                    National Leadership
+                  </h2>
+                  <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-3" />
+                </div>
+                <p className="text-gray-600 text-sm font-medium">The 34th National Executive Council</p>
               </div>
-              <p className="text-gray-600 text-sm font-medium">The 34th National Executive Council</p>
-            </div>
 
-            {/* Responsive Grid: 1 per row on Mobile, 2 on Tablet, 4 on Desktop */}
-            {executives.length === 0 ? (
-              <div className="text-center py-12 px-6 bg-white rounded-3xl border border-gray-200 shadow-sm max-w-xl mx-auto">
-                <div className="text-4xl mb-3">👥</div>
-                <p className="text-gray-500 font-medium text-sm">
-                  National Executive Council directory is currently being updated. Check back soon.
-                </p>
-              </div>
-            ) : (
+              {/* Responsive Grid: 1 per row on Mobile, 2 on Tablet, 4 on Desktop */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-6 lg:gap-8">
                 {executives.map((exec: any, idx: number) => {
                   const cardBgColors = ['#014900', '#013300', '#025202', '#012800'];
                   const bgCol = cardBgColors[idx % cardBgColors.length];
-                  const photoUrl = resolveImgUrl(exec.photo || exec.image_url || exec.image);
+                  const photoUrl = resolveImgUrl(exec.photo || exec.image_url || exec.image || '/images/gnuts_fav.png');
 
                   return (
                     <div 
@@ -470,9 +463,9 @@ export default async function AboutPage() {
                   );
                 })}
               </div>
-            )}
-          </div>
-        </section>
+            </div>
+          </section>
+        )}
 
         {/* 7. Resources Section */}
         <ResourcesSection dbResources={resources} />

@@ -66,32 +66,41 @@ export default function ExecutivesClient({
         </div>
       </section>
 
-      {/* SEARCH BAR */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-        <div className="bg-gray-50 p-4 rounded-3xl border border-gray-200/80 flex items-center justify-between gap-4">
-          <div className="relative w-full sm:w-96">
-            <Search className="w-4 h-4 text-gray-400 absolute left-4 top-3.5" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by officer name, role, or university..."
-              className="w-full pl-11 pr-4 py-2.5 bg-white rounded-2xl border border-gray-200 text-xs font-medium text-gray-900 outline-none focus:border-[#014900]"
-            />
+      {/* SEARCH BAR (Only show when officers exist) */}
+      {initialExecutives.length > 0 && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+          <div className="bg-gray-50 p-4 rounded-3xl border border-gray-200/80 flex items-center justify-between gap-4">
+            <div className="relative w-full sm:w-96">
+              <Search className="w-4 h-4 text-gray-400 absolute left-4 top-3.5" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search by officer name, role, or university..."
+                className="w-full pl-11 pr-4 py-2.5 bg-white rounded-2xl border border-gray-200 text-xs font-medium text-gray-900 outline-none focus:border-[#014900]"
+              />
+            </div>
+            <p className="text-xs font-extrabold text-gray-500 uppercase tracking-wider hidden sm:block">
+              National Leadership: <span className="text-[#014900] font-black">{filteredExecutives.length} {filteredExecutives.length === 1 ? 'Officer' : 'Officers'}</span>
+            </p>
           </div>
-          <p className="text-xs font-extrabold text-gray-500 uppercase tracking-wider hidden sm:block">
-            National Leadership: <span className="text-[#014900] font-black">{filteredExecutives.length} Officers</span>
-          </p>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* OFFICERS GRID */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {filteredExecutives.length === 0 ? (
-          <div className="text-center py-12 px-6 bg-white rounded-3xl border border-gray-200 shadow-sm max-w-xl mx-auto">
-            <div className="text-4xl mb-3">👥</div>
-            <p className="text-gray-500 font-medium text-sm">
-              {searchQuery ? `No officers found matching "${searchQuery}". Try clearing your search term.` : 'National Executive Committee directory is currently being updated. Check back soon.'}
+          <div className="text-center py-16 px-6 bg-white rounded-3xl border border-gray-200 shadow-sm max-w-xl mx-auto">
+            <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-emerald-100">
+              <Users className="w-8 h-8 text-[#014900]" />
+            </div>
+            <h3 className="text-base font-black text-gray-900 uppercase">
+              {searchQuery ? 'No Officers Found' : 'Directory Updating'}
+            </h3>
+            <p className="text-gray-500 font-medium text-xs sm:text-sm mt-2 max-w-md mx-auto leading-relaxed">
+              {searchQuery 
+                ? `No officers found matching "${searchQuery}". Please try clearing your search.` 
+                : 'The National Executive Committee leadership roster for the current administration is currently being updated by the Secretariat. Check back soon.'}
             </p>
           </div>
         ) : (
