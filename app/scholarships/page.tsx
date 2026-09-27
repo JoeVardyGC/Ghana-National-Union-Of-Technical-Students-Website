@@ -3,8 +3,7 @@ import { query } from '@/lib/db';
 import ScholarshipsClient from '@/components/ScholarshipsClient';
 import { resolveImgUrl } from '@/lib/imageUtils';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 15; // Fast ISR caching
 
 export interface Scholarship {
   id: number;

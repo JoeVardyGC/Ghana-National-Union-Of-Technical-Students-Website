@@ -5,8 +5,7 @@ import { query } from '@/lib/db';
 import ResourcesPageClient, { ResourceItem } from '@/components/ResourcesPageClient';
 import { resolveImgUrl } from '@/lib/imageUtils';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 15; // Fast ISR caching
 
 export const metadata: Metadata = {
   title: 'Resources & Supreme Constitution | GNUTS',

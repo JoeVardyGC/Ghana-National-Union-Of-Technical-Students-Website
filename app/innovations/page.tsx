@@ -8,8 +8,7 @@ export const metadata: Metadata = {
   description: 'Showcasing groundbreaking technical innovations and engineering solutions developed by TVET and Technical University students across Ghana.',
 };
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 15; // Fast ISR caching
 
 function formatDate(dateVal: any): string {
   if (!dateVal) return '';

@@ -9,8 +9,7 @@ import ScrollAnimationProvider from '@/components/ScrollAnimationProvider';
 import { resolveImgUrl } from '@/lib/imageUtils';
 import { Layers, Clock, MessageSquare, Mail, Phone, Share2 } from 'lucide-react';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0; // Fresh real-time data on every visit
+export const revalidate = 15; // Incremental Static Regeneration for instant <5ms loads
 
 export default async function HomePage() {
   // Fetch dynamic data in parallel for maximum server performance

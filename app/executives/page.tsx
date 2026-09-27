@@ -7,8 +7,7 @@ export const metadata: Metadata = {
   description: 'Meet the National Executive Committee leading the Ghana National Union of Technical Students.',
 };
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 15;
 
 export interface ExecutiveOfficer {
   id: number;

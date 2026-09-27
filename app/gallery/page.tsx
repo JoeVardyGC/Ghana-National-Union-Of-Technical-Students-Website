@@ -3,8 +3,7 @@ import GalleryClient, { GalleryItem } from '@/components/GalleryClient';
 import { query } from '@/lib/db';
 import { resolveImgUrl } from '@/lib/imageUtils';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 15;
 
 export const metadata: Metadata = {
   title: 'Legacy & Leadership Gallery | GNUTS - Ghana National Union of Technical Students',

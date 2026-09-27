@@ -168,7 +168,9 @@ export default function HeroSlider({
                   className={`absolute inset-0 w-full h-full object-cover transition-transform duration-[10000ms] ease-out ${
                     isActive ? 'scale-110' : 'scale-100'
                   }`}
-                  loading="eager"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  // @ts-ignore
+                  fetchPriority={index === 0 ? 'high' : 'low'}
                   decoding="async"
                 />
 
@@ -180,7 +182,9 @@ export default function HeroSlider({
                     className={`absolute inset-0 w-full h-full object-cover transition-transform duration-[10000ms] ease-out ${
                       isActive ? 'scale-110' : 'scale-100'
                     }`}
-                    loading="eager"
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    // @ts-ignore
+                    fetchPriority={index === 0 ? 'high' : 'low'}
                     decoding="async"
                     onError={(e) => {
                       // Gracefully hide overlay if CDN fails so instant local base shows

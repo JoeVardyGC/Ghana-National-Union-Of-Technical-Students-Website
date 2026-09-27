@@ -7,8 +7,7 @@ export const metadata: Metadata = {
   description: 'Discover industrial attachments, TVET grants, skill competitions, and fellowships for technical university students in Ghana.',
 };
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 15;
 
 export interface OpportunityItem {
   id: number;

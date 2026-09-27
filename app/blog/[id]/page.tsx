@@ -7,8 +7,7 @@ import { NewsItem } from '@/lib/newsData';
 import { ReadingProgressBar, ShareToolbar, NextPrevNavigation } from '@/components/ArticleDetailClient';
 import { resolveImgUrl, formatDate } from '@/lib/imageUtils';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 15;
 
 interface PageProps {
   params: Promise<{ id: string }>;

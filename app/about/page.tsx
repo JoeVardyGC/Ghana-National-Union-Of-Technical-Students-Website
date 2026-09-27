@@ -84,8 +84,7 @@ const DEFAULT_RESOURCES = [
   },
 ];
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 15; // Fast ISR caching
 
 export default async function AboutPage() {
   // Fetch dynamic data in parallel from MariaDB for maximum server performance

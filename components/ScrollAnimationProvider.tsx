@@ -4,6 +4,17 @@ import { useEffect } from 'react';
 
 export default function ScrollAnimationProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
+    const elements = document.querySelectorAll('.reveal-on-scroll');
+    const windowHeight = typeof window !== 'undefined' ? (window.innerHeight || 800) : 800;
+
+    // Eagerly reveal elements that are already within or just beneath the viewport on load
+    elements.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= windowHeight + 150) {
+        el.classList.add('visible');
+      }
+    });
+
     const observerCallback: IntersectionObserverCallback = (entries, observer) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -15,18 +26,20 @@ export default function ScrollAnimationProvider({ children }: { children: React.
 
     const observerOptions: IntersectionObserverInit = {
       root: null,
-      rootMargin: '0px 0px -40px 0px',
-      threshold: 0.08,
+      rootMargin: '150px 0px',
+      threshold: 0.01,
     };
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
-    // Observe all .reveal-on-scroll elements
-    const elements = document.querySelectorAll('.reveal-on-scroll');
-    elements.forEach((el) => observer.observe(el));
+    // Only observe elements not already marked visible
+    elements.forEach((el) => {
+      if (!el.classList.contains('visible')) {
+        observer.observe(el);
+      }
+    });
 
     return () => {
-      elements.forEach((el) => observer.unobserve(el));
       observer.disconnect();
     };
   }, []);
