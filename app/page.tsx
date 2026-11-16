@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { query } from '@/lib/db';
 import HeroSlider from '@/components/HeroSlider';
@@ -10,6 +11,13 @@ import { resolveImgUrl } from '@/lib/imageUtils';
 import { Layers, Clock, MessageSquare, Mail, Phone, Share2 } from 'lucide-react';
 
 export const revalidate = 15; // Incremental Static Regeneration for instant <5ms loads
+
+export const metadata: Metadata = {
+  title: 'GNUTS | Ghana National Union of Technical Students',
+  description:
+    'Official home of the Ghana National Union of Technical Students (GNUTS): scholarships, student innovations, news and advocacy for technical university and TVET students across Ghana.',
+  alternates: { canonical: '/' },
+};
 
 /** "2026-12-31T00:00:00.000Z" -> "31 Dec 2026" (falls back to the raw date text) */
 function formatDeadline(value: unknown): string {

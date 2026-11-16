@@ -1,9 +1,23 @@
+import type { Metadata } from 'next';
 import { GraduationCap } from 'lucide-react';
 import { query } from '@/lib/db';
 import ScholarshipsClient from '@/components/ScholarshipsClient';
 import { resolveImgUrl } from '@/lib/imageUtils';
 
 export const revalidate = 15; // Fast ISR caching
+
+export const metadata: Metadata = {
+  title: 'Scholarships & Bursaries for Technical Students | GNUTS Ghana',
+  description:
+    'Active scholarships, bursaries and funding opportunities for technical university and TVET students in Ghana, with requirements and deadlines.',
+  alternates: { canonical: '/scholarships' },
+  openGraph: {
+    title: 'Scholarships & Bursaries for Technical Students | GNUTS Ghana',
+    description: 'Active scholarships and funding opportunities for technical and TVET students in Ghana.',
+    url: '/scholarships',
+    images: ['/images/carousel_1.jpg'],
+  },
+};
 
 export interface Scholarship {
   id: number;

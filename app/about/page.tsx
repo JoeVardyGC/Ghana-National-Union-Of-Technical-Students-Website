@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { query } from '@/lib/db';
 import ScrollAnimationProvider from '@/components/ScrollAnimationProvider';
@@ -85,6 +86,19 @@ const DEFAULT_RESOURCES = [
 ];
 
 export const revalidate = 15; // Fast ISR caching
+
+export const metadata: Metadata = {
+  title: 'About GNUTS | History, Mission & Leadership',
+  description:
+    'Learn about the Ghana National Union of Technical Students (GNUTS): our history since 1987, mission, vision and advocacy for technical and TVET students in Ghana.',
+  alternates: { canonical: '/about' },
+  openGraph: {
+    title: 'About GNUTS | History, Mission & Leadership',
+    description: 'History, mission and advocacy of the Ghana National Union of Technical Students.',
+    url: '/about',
+    images: ['/images/carousel_1.jpg'],
+  },
+};
 
 export default async function AboutPage() {
   // Fetch dynamic data in parallel from MariaDB for maximum server performance
