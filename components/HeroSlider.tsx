@@ -56,31 +56,30 @@ export interface CarouselSlideProp {
   title?: string;
 }
 
+// Renders the real number on the server (so search engines and no-JS visitors
+// never see "0+"), then gives it a short count-up from 80% once the page loads.
 const AnimatedCounter = ({ value, suffix = '' }: { value: number; suffix?: string }) => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(value);
 
   useEffect(() => {
-    let startTime: number;
-    const duration = 2000; // 2 seconds
+    // State already starts at the real value, so there is nothing to do here
+    if (value <= 0 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    if (value === 0) {
-      setCount(0);
-      return;
-    }
+    const from = Math.floor(value * 0.8);
+    const duration = 1200;
+    let startTime: number | undefined;
+    let frame: number;
 
     const animate = (currentTime: number) => {
-      if (!startTime) startTime = currentTime;
+      if (startTime === undefined) startTime = currentTime;
       const progress = Math.min((currentTime - startTime) / duration, 1);
-      
       const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-      setCount(Math.floor(value * easeOutQuart));
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
+      setCount(Math.floor(from + (value - from) * easeOutQuart));
+      if (progress < 1) frame = requestAnimationFrame(animate);
     };
 
-    requestAnimationFrame(animate);
+    frame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frame);
   }, [value]);
 
   return <>{count.toLocaleString()}{suffix}</>;
@@ -150,6 +149,8 @@ export default function HeroSlider({
         {activeSlides.map((slide, index) => {
           const isActive = index === currentIndex;
           const localFallback = `/images/carousel_${(index % 3) + 1}.jpg`;
+          // One H1 per page: only the first slide's title is the page heading
+          const TitleTag = index === 0 ? 'h1' : 'h2';
 
           return (
             <div
@@ -200,9 +201,9 @@ export default function HeroSlider({
               {/* Content Container with Animated Text Entrance */}
               <div className="relative h-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 flex flex-col justify-center items-start pb-16 sm:pb-12 pointer-events-none">
                 <div className="max-w-3xl pointer-events-auto">
-                  <h1 className={`text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight drop-shadow-lg mb-3 sm:mb-4 transition-all duration-1000 transform ${isActive ? 'translate-y-0 opacity-100 delay-300' : 'translate-y-8 opacity-0'}`}>
+                  <TitleTag className={`text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight drop-shadow-lg mb-3 sm:mb-4 transition-all duration-1000 transform ${isActive ? 'translate-y-0 opacity-100 delay-300' : 'translate-y-8 opacity-0'}`}>
                     {slide.title}
-                  </h1>
+                  </TitleTag>
 
                   <p className={`text-sm sm:text-lg lg:text-xl text-gray-200 font-medium leading-relaxed max-w-2xl drop-shadow-md mb-5 sm:mb-6 transition-all duration-1000 transform ${isActive ? 'translate-y-0 opacity-100 delay-500' : 'translate-y-8 opacity-0'}`}>
                     {slide.subtitle}

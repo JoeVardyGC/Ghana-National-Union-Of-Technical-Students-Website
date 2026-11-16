@@ -27,6 +27,7 @@ import {
   Info
 } from 'lucide-react';
 import DirectImageUploader from '@/components/DirectImageUploader';
+import DetailUpvoteButton from '@/app/innovations/[id]/DetailUpvoteButton';
 
 export interface InnovationItem {
   id: number;
@@ -89,9 +90,6 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
   const initialList = dbInnovations;
 
   const [innovationsList] = useState<InnovationItem[]>(initialList);
-  const [upvotedIds, setUpvotedIds] = useState<number[]>([]);
-  const [upvoteCounts, setUpvoteCounts] = useState<{ [id: number]: number }>({});
-  
   // Search, Filter & Pagination State
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All Disciplines');
@@ -121,47 +119,6 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
   useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery, selectedCategory]);
-
-  // Load upvote state from localStorage
-  useEffect(() => {
-    try {
-      const savedUpvotes = localStorage.getItem('gnuts_upvoted_projects');
-      if (savedUpvotes) {
-        setUpvotedIds(JSON.parse(savedUpvotes));
-      }
-    } catch {}
-
-    const counts: { [id: number]: number } = {};
-    initialList.forEach((item) => {
-      counts[item.id] = item.upvotes || 100 + (item.id * 12);
-    });
-    setUpvoteCounts(counts);
-  }, [dbInnovations]);
-
-  // Handle Upvote click
-  const handleUpvote = (e: React.MouseEvent, id: number) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const isAlreadyUpvoted = upvotedIds.includes(id);
-    let newUpvotedIds: number[];
-    let newCount = upvoteCounts[id] || 100;
-
-    if (isAlreadyUpvoted) {
-      newUpvotedIds = upvotedIds.filter((item) => item !== id);
-      newCount -= 1;
-    } else {
-      newUpvotedIds = [...upvotedIds, id];
-      newCount += 1;
-    }
-
-    setUpvotedIds(newUpvotedIds);
-    setUpvoteCounts({ ...upvoteCounts, [id]: newCount });
-
-    try {
-      localStorage.setItem('gnuts_upvoted_projects', JSON.stringify(newUpvotedIds));
-    } catch {}
-  };
 
   // Filtered List Computation
   const filteredInnovations = useMemo(() => {
@@ -332,8 +289,12 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
                 const isGold = idx % 2 === 1;
 
                 return (
+                  <div key={item.id} className="relative flex min-w-0 w-full group/card">
+                  {/* Like button sits beside the card link, not inside it, so it stays a valid, separate control */}
+                  <div className="absolute top-3 right-3 z-20 transition-transform duration-300 group-hover/card:-translate-y-1">
+                    <DetailUpvoteButton id={item.id} initialUpvotes={item.upvotes ?? 0} variant="card" />
+                  </div>
                   <Link
-                    key={item.id}
                     href={`/innovations/${item.id}`}
                     className="bg-white rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-xl border border-gray-200 flex flex-col justify-between cursor-pointer transition-all duration-300 group overflow-hidden hover:-translate-y-1 min-w-0 w-full"
                   >
@@ -395,6 +356,7 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
                       </span>
                     </div>
                   </Link>
+                  </div>
                 );
               })}
             </div>

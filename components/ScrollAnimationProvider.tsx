@@ -2,45 +2,53 @@
 
 import { useEffect } from 'react';
 
+/**
+ * Fades sections in as they scroll into view.
+ * Content stays visible until this runs: elements already on screen are marked
+ * visible first, and only then is `reveal-ready` added to <html> (which enables
+ * the hidden state in globals.css), so nothing flashes or disappears.
+ */
 export default function ScrollAnimationProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
+    const root = document.documentElement;
     const elements = document.querySelectorAll('.reveal-on-scroll');
-    const windowHeight = typeof window !== 'undefined' ? (window.innerHeight || 800) : 800;
 
-    // Eagerly reveal elements that are already within or just beneath the viewport on load
+    // Respect "reduce motion": show everything, no animation
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      elements.forEach((el) => el.classList.add('visible'));
+      return;
+    }
+
+    const windowHeight = window.innerHeight || 800;
     elements.forEach((el) => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top <= windowHeight + 150) {
+      if (el.getBoundingClientRect().top <= windowHeight + 150) {
         el.classList.add('visible');
       }
     });
 
-    const observerCallback: IntersectionObserverCallback = (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    };
+    root.classList.add('reveal-ready');
 
-    const observerOptions: IntersectionObserverInit = {
-      root: null,
-      rootMargin: '150px 0px',
-      threshold: 0.01,
-    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      // Start the fade well before the section reaches the screen, so fast
+      // scrolling never lands on a blank area
+      { root: null, rootMargin: '0px 0px 400px 0px', threshold: 0 }
+    );
 
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-    // Only observe elements not already marked visible
     elements.forEach((el) => {
-      if (!el.classList.contains('visible')) {
-        observer.observe(el);
-      }
+      if (!el.classList.contains('visible')) observer.observe(el);
     });
 
     return () => {
       observer.disconnect();
+      root.classList.remove('reveal-ready');
     };
   }, []);
 

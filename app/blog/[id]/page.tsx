@@ -6,6 +6,8 @@ import { query } from '@/lib/db';
 import { NewsItem } from '@/lib/newsData';
 import { ReadingProgressBar, ShareToolbar, NextPrevNavigation } from '@/components/ArticleDetailClient';
 import { resolveImgUrl, formatDate } from '@/lib/imageUtils';
+import { getSiteSettings } from '@/lib/siteSettings';
+import { telHref } from '@/lib/siteSettingsShared';
 
 export const revalidate = 15;
 
@@ -57,6 +59,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function NewsDetailPage({ params }: PageProps) {
   const resolvedParams = await params;
   const numericId = Number(resolvedParams.id);
+  const settings = await getSiteSettings();
 
   let article: NewsItem | null = null;
   let allPublished: NewsItem[] = [];
@@ -315,13 +318,15 @@ export default async function NewsDetailPage({ params }: PageProps) {
                 <div className="space-y-2 pt-2 border-t border-white/10 text-xs text-gray-300 font-medium">
                   <div className="flex items-center gap-2">
                     <Mail className="w-3.5 h-3.5 text-[#D9A000]" />
-                    <a href="mailto:info@gnuts.org.gh" className="hover:text-[#D9A000] transition-colors">
-                      info@gnuts.org.gh
+                    <a href={`mailto:${settings.secretariatEmail}`} className="hover:text-[#D9A000] transition-colors">
+                      {settings.secretariatEmail}
                     </a>
                   </div>
                   <div className="flex items-center gap-2">
                     <Phone className="w-3.5 h-3.5 text-[#D9A000]" />
-                    <span>+233 (0) 302 908 765</span>
+                    <a href={telHref(settings.hotlinePhone)} className="hover:text-[#D9A000] transition-colors">
+                      {settings.hotlinePhone}
+                    </a>
                   </div>
                 </div>
                 <Link

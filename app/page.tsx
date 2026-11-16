@@ -11,6 +11,14 @@ import { Layers, Clock, MessageSquare, Mail, Phone, Share2 } from 'lucide-react'
 
 export const revalidate = 15; // Incremental Static Regeneration for instant <5ms loads
 
+/** "2026-12-31T00:00:00.000Z" -> "31 Dec 2026" (falls back to the raw date text) */
+function formatDeadline(value: unknown): string {
+  const raw = String(value).split('T')[0];
+  const date = new Date(`${raw}T00:00:00Z`);
+  if (isNaN(date.getTime())) return raw;
+  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+}
+
 export default async function HomePage() {
   // Fetch dynamic data in parallel for maximum server performance
   const [
@@ -118,7 +126,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 3. Available Scholarships Section — Connected to Live Database */}
+      {/* 3. Available Scholarships Section — hidden when there are none */}
+      {scholarships.length > 0 && (
       <section className="py-10 sm:py-16 lg:py-24 bg-white border-y border-gray-200" id="scholarships-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-3">
@@ -137,14 +146,6 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          {scholarships.length === 0 ? (
-            <div className="text-center py-12 px-6 bg-white rounded-2xl sm:rounded-3xl border border-gray-200 shadow-sm max-w-xl mx-auto">
-              <div className="text-4xl mb-3">🎓</div>
-              <p className="text-gray-500 font-medium text-xs sm:text-sm">
-                No active scholarships currently available. Check back soon for new bursary announcements.
-              </p>
-            </div>
-          ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 reveal-on-scroll">
               {scholarships.slice(0, 3).map((item: any, idx: number) => {
                 const isActive = (item.status || 'active').toLowerCase() === 'active';
@@ -180,7 +181,12 @@ export default async function HomePage() {
                       </p>
                     </div>
 
-                    <div className="pt-3 sm:pt-4 mt-4 sm:mt-6 border-t border-gray-100 relative z-10 flex items-center justify-between gap-2">
+                    <div className="pt-3 sm:pt-4 mt-4 sm:mt-6 border-t border-gray-100 relative z-10 flex flex-col gap-2">
+                      {item.deadline && (
+                        <span className="text-xs font-semibold text-gray-500">
+                          Deadline: {formatDeadline(item.deadline)}
+                        </span>
+                      )}
                       <span
                         className={`text-xs font-black uppercase tracking-wider transition-colors inline-flex items-center gap-1 ${
                           isGold ? 'text-[#D9A000] group-hover:text-[#014900]' : 'text-[#014900] group-hover:text-[#D9A000]'
@@ -188,19 +194,14 @@ export default async function HomePage() {
                       >
                         <span>View Requirements & Apply →</span>
                       </span>
-                      {item.deadline && (
-                        <span className="text-[11px] font-semibold text-gray-400 truncate">
-                          Deadline: {String(item.deadline).split('T')[0]}
-                        </span>
-                      )}
                     </div>
                   </Link>
                 );
               })}
             </div>
-          )}
         </div>
       </section>
+      )}
 
       {/* 4. Opportunities Section */}
       <OpportunitiesSection dbOpportunities={opportunities} />

@@ -18,6 +18,9 @@ export default function NewsSection({ dbNews = [] }: { dbNews?: NewsItem[] }) {
   // Display only 6 news cards on homepage & mobile view
   const newsList = dbNews.slice(0, 6);
 
+  // Hide the whole section on the home page rather than showing an empty box
+  if (newsList.length === 0) return null;
+
   return (
     <section className="py-10 sm:py-16 lg:py-24 bg-[#f8f9fa] font-['Montserrat',sans-serif]" id="news-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -75,7 +78,7 @@ export default function NewsSection({ dbNews = [] }: { dbNews?: NewsItem[] }) {
                 {/* Content Section */}
                 <div className="p-4 sm:p-6 lg:p-7 flex flex-col justify-between flex-grow rounded-b-2xl sm:rounded-b-3xl min-w-0">
                   <div className="space-y-2.5 sm:space-y-3.5 min-w-0">
-                    <h3 className="font-black text-base sm:text-lg lg:text-xl text-gray-900 leading-snug uppercase group-hover:text-[#014900] transition-colors line-clamp-2 break-words">
+                    <h3 className="font-black text-base sm:text-lg lg:text-xl text-gray-900 leading-snug group-hover:text-[#014900] transition-colors line-clamp-3 break-words">
                       {item.title}
                     </h3>
                     <p className="text-gray-600 text-xs sm:text-sm leading-relaxed font-medium line-clamp-3 sm:line-clamp-4 break-words">

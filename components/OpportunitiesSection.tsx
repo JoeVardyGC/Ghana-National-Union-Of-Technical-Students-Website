@@ -19,6 +19,9 @@ const DEFAULT_OPPORTUNITIES: Opportunity[] = [];
 export default function OpportunitiesSection({ dbOpportunities = [] }: { dbOpportunities?: Opportunity[] }) {
   const opportunities = dbOpportunities;
 
+  // Hide the whole section on the home page rather than showing an empty box
+  if (opportunities.length === 0) return null;
+
   return (
     <section className="py-10 sm:py-16 lg:py-24 bg-[#f8f9fa] border-b border-gray-200 font-['Montserrat',sans-serif]" id="opportunities-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
