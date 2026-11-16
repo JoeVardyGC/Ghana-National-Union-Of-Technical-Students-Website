@@ -13,9 +13,10 @@ import { Layers, Clock, MessageSquare, Mail, Phone, Share2 } from 'lucide-react'
 export const revalidate = 15; // Incremental Static Regeneration for instant <5ms loads
 
 export const metadata: Metadata = {
-  title: 'GNUTS | Ghana National Union of Technical Students',
+  // Both "GNUTS" and the full name up front, so the result matches either search
+  title: { absolute: 'GNUTS | Ghana National Union of Technical Students - Official Website' },
   description:
-    'Official home of the Ghana National Union of Technical Students (GNUTS): scholarships, student innovations, news and advocacy for technical university and TVET students across Ghana.',
+    'Official website of GNUTS, the Ghana National Union of Technical Students: scholarships, student innovations, news, executives and advocacy for technical university and TVET students across Ghana.',
   alternates: { canonical: '/' },
 };
 

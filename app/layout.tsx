@@ -3,6 +3,7 @@ import './globals.css';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import { getSiteSettings } from '@/lib/siteSettings';
 import { SITE_URL } from '@/lib/siteUrl';
+import StructuredData from '@/components/StructuredData';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -35,11 +36,7 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
     images: ['/images/carousel_1.jpg'],
   },
-  icons: {
-    icon: '/images/gnuts_fav.png',
-    shortcut: '/images/gnuts_fav.png',
-    apple: '/images/gnuts_fav.png',
-  },
+  // Icons come from app/favicon.ico, app/icon.png and app/apple-icon.png
 };
 
 export default async function RootLayout({
@@ -71,13 +68,9 @@ export default async function RootLayout({
 
         {/* Preload High Priority Hero Image for Instant LCP Rendering */}
         <link rel="preload" as="image" href="/images/carousel_1.jpg" />
-
-        {/* Favicon configurations */}
-        <link rel="icon" type="image/png" href="/images/gnuts_fav.png" />
-        <link rel="shortcut icon" href="/images/gnuts_fav.png" />
-        <link rel="apple-touch-icon" href="/images/gnuts_fav.png" />
       </head>
       <body className="font-['Montserrat',sans-serif] antialiased bg-[#f8f9fa] text-gray-900 flex flex-col min-h-screen">
+        <StructuredData settings={settings} />
         <LayoutWrapper settings={settings}>{children}</LayoutWrapper>
       </body>
     </html>
