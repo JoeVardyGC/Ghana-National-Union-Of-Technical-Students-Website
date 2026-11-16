@@ -56,7 +56,7 @@ export default async function InnovationsPage() {
         status: row.status || 'approved',
         created_at: formatDate(row.created_at),
         category: row.category || 'Renewable Energy',
-        upvotes: row.upvotes || 150,
+        upvotes: Number(row.upvotes) || 0,
       }));
     }
   } catch (error) {

@@ -18,6 +18,7 @@ import {
   Images
 } from 'lucide-react';
 import ShareButtons from './ShareButtons';
+import DetailUpvoteButton from './DetailUpvoteButton';
 import { ReadingProgressBar } from '@/components/ArticleDetailClient';
 
 export const revalidate = 60;
@@ -268,7 +269,7 @@ export default async function InnovationDetailPage({ params }: { params: Promise
         status: r.status || 'approved',
         created_at: r.created_at ? new Date(r.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '2026-02-14',
         category: r.category || 'Renewable Energy',
-        upvotes: r.upvotes || 150,
+        upvotes: Number(r.upvotes) || 0,
         images: r.images || null,
       }));
       project = allProjects.find((item) => item.id === idNum) || null;
@@ -276,6 +277,9 @@ export default async function InnovationDetailPage({ params }: { params: Promise
   } catch (error) {
     console.error('Error fetching project detail:', error);
   }
+
+  // Likes can only be saved for projects that exist in the database, not the built-in samples
+  const isSavedProject = project !== null;
 
   if (!project) {
     allProjects = DEFAULT_INNOVATIONS;
@@ -362,6 +366,10 @@ export default async function InnovationDetailPage({ params }: { params: Promise
               <Clock className="w-4 h-4 text-[#D9A000]" />
               <span>{getReadTime(project.description)} min read</span>
             </div>
+
+            {isSavedProject && (
+              <DetailUpvoteButton id={project.id} initialUpvotes={project.upvotes ?? 0} />
+            )}
           </div>
         </div>
       </section>
