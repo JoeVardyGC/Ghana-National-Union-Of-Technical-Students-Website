@@ -71,7 +71,7 @@ export async function POST(request: Request) {
   } catch (error: any) {
     console.error('Error submitting innovation project:', error);
     return NextResponse.json(
-      { error: error?.message || 'An error occurred while submitting your innovation project. Please try again.' },
+      { error: 'An error occurred while submitting your innovation project. Please try again.' },
       { status: 500 }
     );
   }

@@ -1,10 +1,16 @@
 import { NextResponse } from 'next/server';
 import { getDatabasePool, query } from '@/lib/db';
+import { getAdminSession } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const connectionUri = 
+  const session = await getAdminSession();
+  if (!session || session.role !== 'Super Admin') {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  const connectionUri =
     process.env.DATABASE_PUBLIC_URL ||
     process.env.MYSQL_PUBLIC_URL ||
     process.env.DATABASE_URL ||
@@ -67,7 +73,7 @@ export async function GET() {
         '1. Ensure you copied the PUBLIC TCP connection URL from Railway (not the internal .railway.internal URL).',
         '2. In Railway MySQL -> Settings -> Public Networking, make sure TCP Proxy / Public Domain is ENABLED.',
         '3. In Vercel -> Settings -> Environment Variables, ensure DATABASE_URL is set and click REDEPLOY.',
-        '4. Visit /api/admin/init-db once to create the tables in Railway MySQL.'
+        '4. While signed in as Super Admin, send a POST to /api/admin/init-db once to create the tables.'
       ]
     } : {
       message: 'Your live Railway MySQL database is fully connected and active!'

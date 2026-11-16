@@ -2,115 +2,131 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { query } from '@/lib/db';
 import { logAuditAction } from '@/lib/audit';
+import { hashPassword, isHashed, KNOWN_DEFAULT_PASSWORDS, verifyPassword } from '@/lib/password';
+import { createSessionToken, SESSION_COOKIE_NAME, SESSION_MAX_AGE_SECONDS } from '@/lib/session';
+import type { AdminSessionUser } from '@/lib/authTypes';
+
+export const dynamic = 'force-dynamic';
+
+const INVALID_LOGIN = 'Invalid login details. Please verify your email and password.';
+
+// Basic in-memory brute-force throttle (per server instance)
+const MAX_ATTEMPTS = 10;
+const WINDOW_MS = 15 * 60 * 1000;
+const attempts = new Map<string, { count: number; first: number }>();
+
+function isRateLimited(key: string): boolean {
+  const now = Date.now();
+  const entry = attempts.get(key);
+  if (!entry || now - entry.first > WINDOW_MS) return false;
+  return entry.count >= MAX_ATTEMPTS;
+}
+
+function recordFailure(key: string) {
+  const now = Date.now();
+  const entry = attempts.get(key);
+  if (!entry || now - entry.first > WINDOW_MS) {
+    attempts.set(key, { count: 1, first: now });
+  } else {
+    entry.count += 1;
+  }
+}
 
 export async function POST(request: Request) {
   try {
     const { username, password } = await request.json();
 
-    if (!username || !password) {
-      return NextResponse.json({ error: 'Please enter your email/username and password.' }, { status: 400 });
+    if (typeof username !== 'string' || typeof password !== 'string' || !username.trim() || !password) {
+      return NextResponse.json({ error: 'Please enter your email and password.' }, { status: 400 });
     }
 
-    let authenticatedUser = null;
     const cleanUsername = username.trim().toLowerCase();
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+    const throttleKey = `${ip}|${cleanUsername}`;
 
-    // 1. Database Lookup — Auto-Detect Role from DB record
+    if (isRateLimited(throttleKey)) {
+      return NextResponse.json(
+        { error: 'Too many failed login attempts. Please wait 15 minutes and try again.' },
+        { status: 429 }
+      );
+    }
+
     const dbUsers = await query(
-      'SELECT id, full_name, email, password, role FROM users WHERE LOWER(email) = ? OR LOWER(full_name) = ? LIMIT 1',
-      [cleanUsername, cleanUsername]
+      'SELECT id, full_name, email, password, role FROM users WHERE LOWER(email) = ? LIMIT 1',
+      [cleanUsername]
     ).catch(() => []);
 
-    if (dbUsers && dbUsers.length > 0) {
-      const user = dbUsers[0];
-      // Compare password directly or default master access
-      if (user.password === password || password === 'admin123' || password === 'gnuts2026!') {
-        authenticatedUser = {
-          id: user.id,
-          username: user.email,
-          name: user.full_name || 'Executive Officer',
-          role: user.role || 'Super Admin',
-          email: user.email
-        };
+    // Double-check the email match in code (the local JSON fallback engine has limited WHERE support)
+    const user =
+      (dbUsers || []).find(
+        (u: any) => String(u.email || '').trim().toLowerCase() === cleanUsername
+      ) || null;
+    const valid = user ? await verifyPassword(password, user.password) : false;
+
+    if (!user || !valid) {
+      recordFailure(throttleKey);
+      return NextResponse.json({ error: INVALID_LOGIN }, { status: 401 });
+    }
+
+    attempts.delete(throttleKey);
+
+    // Passwords published in old code / seed data must not grant access in production
+    if (KNOWN_DEFAULT_PASSWORDS.has(password) && process.env.NODE_ENV === 'production') {
+      return NextResponse.json(
+        { error: 'This account still uses a publicly known default password. Ask a Super Admin to reset it.' },
+        { status: 403 }
+      );
+    }
+
+    const needsRehash = !isHashed(user.password);
+
+    // Upgrade legacy plain-text passwords to a hash on successful login
+    if (needsRehash) {
+      try {
+        const hashed = await hashPassword(password);
+        await query('UPDATE users SET password = ? WHERE id = ?', [hashed, user.id]);
+      } catch (rehashErr) {
+        console.warn('Password hash upgrade failed:', rehashErr);
       }
     }
 
-    // 2. Built-in Auto-Detected Executive Accounts (for instant resilience)
-    if (!authenticatedUser) {
-      const isAuthorizedEmail = (
-        cleanUsername === 'admin' || 
-        cleanUsername === 'admin@gnuts.org.gh' || 
-        cleanUsername === 'press@gnuts.org.gh' ||
-        cleanUsername === 'innovation@gnuts.org.gh' ||
-        cleanUsername === 'finance@gnuts.org.gh' ||
-        cleanUsername === 'joevardy2004@gmail.com' ||
-        cleanUsername === 'abubakarsadikmusah2004@gmail.com'
+    const authenticatedUser: AdminSessionUser = {
+      id: Number(user.id),
+      username: user.email,
+      name: user.full_name || 'Executive Officer',
+      role: user.role || 'Press & Media',
+      email: user.email,
+    };
+
+    const token = await createSessionToken(authenticatedUser);
+    if (!token) {
+      return NextResponse.json(
+        { error: 'Admin login is not configured on this server (SESSION_SECRET missing).' },
+        { status: 503 }
       );
-      const isAuthorizedPassword = (
-        password === 'admin123' || 
-        password === 'gnuts2026!' || 
-        password === 'Vardy04@TepaKsTU' ||
-        password === 'password123' ||
-        password === 'joevardy2004@gmail.com' ||
-        password === 'abubakarsadikmusah2004@gmail.com'
-      );
-
-      if (isAuthorizedEmail && isAuthorizedPassword) {
-        let detectedName = 'General Secretariat';
-        let detectedRole = 'Super Admin';
-
-        if (cleanUsername === 'press@gnuts.org.gh') {
-          detectedName = 'Press & Information Secretary';
-          detectedRole = 'Press & Media';
-        } else if (cleanUsername === 'innovation@gnuts.org.gh') {
-          detectedName = 'Director of TVET & Innovation';
-          detectedRole = 'Innovation Director';
-        } else if (cleanUsername === 'finance@gnuts.org.gh') {
-          detectedName = 'National Treasurer';
-          detectedRole = 'Financial Secretary';
-        } else if (cleanUsername === 'joevardy2004@gmail.com' || cleanUsername === 'abubakarsadikmusah2004@gmail.com') {
-          detectedName = 'PRO (Joe Vardy)';
-          detectedRole = 'Super Admin';
-        }
-
-        authenticatedUser = {
-          id: 1,
-          username: cleanUsername,
-          name: detectedName,
-          role: detectedRole,
-          email: cleanUsername
-        };
-      }
     }
 
-    if (!authenticatedUser) {
-      return NextResponse.json({ error: 'Invalid login details. Please verify your email and password.' }, { status: 401 });
-    }
-
-    // 3. Log Audit Action
     await logAuditAction(
       authenticatedUser.name,
       authenticatedUser.role,
       'USER_LOGIN',
       'Executive Portal',
-      `Authenticated with auto-detected role: ${authenticatedUser.role}`
+      `Signed in with role: ${authenticatedUser.role}`
     );
 
-    // 4. Encode session data and set secure HTTP-only cookie
-    const token = Buffer.from(JSON.stringify(authenticatedUser)).toString('base64');
-
     const cookieStore = await cookies();
-    cookieStore.set('gnuts_admin_session', token, {
+    cookieStore.set(SESSION_COOKIE_NAME, token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 7, // 7 Days
-      path: '/'
+      maxAge: SESSION_MAX_AGE_SECONDS,
+      path: '/',
     });
 
-    return NextResponse.json({ 
-      success: true, 
-      redirect: '/admin', 
-      user: authenticatedUser 
+    return NextResponse.json({
+      success: true,
+      redirect: '/admin',
+      user: authenticatedUser,
     });
   } catch (error: any) {
     console.error('Login API Error:', error);

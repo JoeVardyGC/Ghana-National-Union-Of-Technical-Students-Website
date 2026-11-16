@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { logAuditAction } from '@/lib/audit';
 import { getAdminSession } from '@/lib/auth';
+import { hashPassword, validateNewPassword } from '@/lib/password';
 
 export const dynamic = 'force-dynamic';
 
@@ -86,7 +87,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Name, email, and password are required' }, { status: 400 });
     }
 
+    const passwordError = typeof password === 'string' ? validateNewPassword(password) : 'Password is required.';
+    if (passwordError) {
+      return NextResponse.json({ error: passwordError }, { status: 400 });
+    }
+
     const avatarUrl = '/images/gnuts_fav.png';
+    const hashedPassword = await hashPassword(password);
 
     // Insert user into MySQL users table (full_name, email, password, role)
     const insertResult = await query(
@@ -95,7 +102,7 @@ export async function POST(request: Request) {
       [
         name,
         email.toLowerCase().trim(),
-        password,
+        hashedPassword,
         role || 'Super Admin',
       ]
     );

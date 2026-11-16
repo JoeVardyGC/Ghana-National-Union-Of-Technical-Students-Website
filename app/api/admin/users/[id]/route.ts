@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { logAuditAction } from '@/lib/audit';
 import { getAdminSession } from '@/lib/auth';
+import { hashPassword, validateNewPassword } from '@/lib/password';
 
 export const dynamic = 'force-dynamic';
 
@@ -33,17 +34,22 @@ export async function PUT(
     }
 
     if (password && password.trim() !== '') {
+      const passwordError = validateNewPassword(password);
+      if (passwordError) {
+        return NextResponse.json({ error: passwordError }, { status: 400 });
+      }
+      const hashedPassword = await hashPassword(password);
       await query(
-        `UPDATE users SET 
-          full_name = ?, 
-          email = ?, 
-          password = ?, 
+        `UPDATE users SET
+          full_name = ?,
+          email = ?,
+          password = ?,
           role = ?
          WHERE id = ?`,
         [
           name,
           email.toLowerCase().trim(),
-          password,
+          hashedPassword,
           role || 'Super Admin',
           userId,
         ]

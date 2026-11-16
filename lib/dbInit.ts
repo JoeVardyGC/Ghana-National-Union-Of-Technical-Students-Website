@@ -1,4 +1,5 @@
 import { query } from './db';
+import { hashPassword, validateNewPassword } from './password';
 
 /**
  * Database Auto-Sync & Table Initialization Engine
@@ -26,13 +27,23 @@ export async function initializeDatabase(): Promise<{ success: boolean; message:
     await query('ALTER TABLE users ADD COLUMN full_name VARCHAR(150) DEFAULT NULL').catch(() => null);
     await query('ALTER TABLE users ADD COLUMN avatar VARCHAR(255) DEFAULT NULL').catch(() => null);
 
-    // Seed default primary Super Admin if empty
+    // Seed the first Super Admin from env vars (never a hard-coded password)
     const existingUsers = await query('SELECT id FROM users LIMIT 1');
     if (!existingUsers || existingUsers.length === 0) {
-      await query(`
-        INSERT INTO users (full_name, name, email, password, role) VALUES
-        ('GNUTS Secretariat', 'GNUTS Secretariat', 'admin@gnuts.org.gh', 'admin123', 'Super Admin');
-      `);
+      const adminEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+      const adminPassword = process.env.ADMIN_PASSWORD || '';
+      const passwordError = validateNewPassword(adminPassword);
+
+      if (adminEmail && !passwordError) {
+        await query(
+          'INSERT INTO users (full_name, name, email, password, role) VALUES (?, ?, ?, ?, ?)',
+          ['GNUTS Secretariat', 'GNUTS Secretariat', adminEmail, await hashPassword(adminPassword), 'Super Admin']
+        );
+      } else {
+        console.warn(
+          '[dbInit] No admin users exist. Set ADMIN_EMAIL and ADMIN_PASSWORD (8+ chars) and run init again to create the first Super Admin.'
+        );
+      }
     }
 
     // 2. Executives Table

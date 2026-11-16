@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server';
 
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
+  // Only numeric IDs are valid; anything else could inject HTML/script into this page
+  if (!/^[0-9]{1,10}$/.test(resolvedParams.id)) {
+    return NextResponse.json({ error: 'Invalid project ID' }, { status: 400 });
+  }
   const id = resolvedParams.id;
 
   const htmlContent = `

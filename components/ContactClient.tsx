@@ -24,6 +24,10 @@ export default function ContactClient() {
     message: '',
   });
 
+  // Spam protection: hidden honeypot field + time taken to fill the form
+  const [website, setWebsite] = useState('');
+  const [formStartedAt, setFormStartedAt] = useState(() => Date.now());
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -43,7 +47,7 @@ export default function ContactClient() {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, website, elapsedMs: Date.now() - formStartedAt }),
       });
 
       const data = await response.json();
@@ -59,6 +63,8 @@ export default function ContactClient() {
           subject: '',
           message: '',
         });
+        setWebsite('');
+        setFormStartedAt(Date.now());
       } else {
         setErrorMessage(data.error || 'Failed to submit your message. Please verify your details or try calling our desk directly.');
       }
@@ -258,6 +264,20 @@ export default function ContactClient() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Honeypot: hidden from people and assistive tech, bots fill it in */}
+            <div className="absolute -left-[9999px] w-px h-px overflow-hidden" aria-hidden="true">
+              <label htmlFor="contact-website">Website (leave this field empty)</label>
+              <input
+                id="contact-website"
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+              />
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               
               {/* Full Name */}

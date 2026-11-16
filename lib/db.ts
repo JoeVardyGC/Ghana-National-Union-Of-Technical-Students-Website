@@ -16,30 +16,8 @@ const DB_FILE_PATH = path.join(process.cwd(), 'data', 'gnuts_db.json');
 
 // Initial baseline seed data
 const DEFAULT_STORE: Record<string, any[]> = {
-  users: [
-    {
-      id: 1,
-      name: 'GNUTS Secretariat',
-      full_name: 'GNUTS Secretariat',
-      email: 'admin@gnuts.org.gh',
-      password: 'password123',
-      role: 'Super Admin',
-      avatar: '/images/gnuts_fav.png',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    },
-    {
-      id: 2,
-      name: 'PRO',
-      full_name: 'PRO',
-      email: 'joevardy2004@gmail.com',
-      password: 'password123',
-      role: 'Super Admin',
-      avatar: '/images/gnuts_fav.png',
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    },
-  ],
+  // No seeded accounts: the first Super Admin is created from ADMIN_EMAIL / ADMIN_PASSWORD (see lib/dbInit.ts)
+  users: [],
   executives: [],
   news: [
     {
@@ -789,6 +767,13 @@ async function executeLocalSql(sql: string, params: any[]): Promise<any> {
     } else if (lowerSql.includes('where status = ?')) {
       const st = String(params[0]).toLowerCase();
       rows = rows.filter((r) => String(r.status).toLowerCase() === st);
+    }
+
+    // WHERE email = ? / WHERE LOWER(email) = ? (case-insensitive, used by login)
+    const emailParamMatch = sql.match(/where\s+(?:lower\(\s*)?email(?:\s*\))?\s*=\s*\?/i);
+    if (emailParamMatch) {
+      const targetEmail = String(params[0] ?? '').trim().toLowerCase();
+      rows = rows.filter((r) => String(r.email || '').trim().toLowerCase() === targetEmail);
     }
 
     // WHERE page_key filters (supports any page key or dynamic params)

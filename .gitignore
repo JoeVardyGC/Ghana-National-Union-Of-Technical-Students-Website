@@ -40,3 +40,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# private data: never commit (user accounts, passwords, database dumps)
+/data/
+*.sql
+
+# local Claude Code config
+/.claude/

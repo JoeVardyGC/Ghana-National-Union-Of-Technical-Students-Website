@@ -95,7 +95,7 @@ export default function SettingsManagementClient({
     setFeedbackMsg(null);
 
     try {
-      const res = await fetch('/api/admin/init-db');
+      const res = await fetch('/api/admin/init-db', { method: 'POST' });
       const data = await res.json();
 
       if (res.ok && data.success) {

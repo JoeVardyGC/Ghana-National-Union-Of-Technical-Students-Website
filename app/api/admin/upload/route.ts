@@ -11,7 +11,6 @@ const ALLOWED_MIME_TYPES = new Set([
   'image/png',
   'image/webp',
   'image/gif',
-  'image/svg+xml',
   'application/pdf',
   'application/msword',
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -28,7 +27,6 @@ const ALLOWED_EXTENSIONS = new Set([
   '.png',
   '.webp',
   '.gif',
-  '.svg',
   '.pdf',
   '.doc',
   '.docx',
@@ -63,9 +61,10 @@ export async function POST(request: Request) {
     const isMimeAllowed = !fileType || ALLOWED_MIME_TYPES.has(fileType) || fileType === 'application/octet-stream';
     const isExtAllowed = ALLOWED_EXTENSIONS.has(rawExt);
 
-    if (!isMimeAllowed && !isExtAllowed) {
+    // Both must pass: the extension decides how the file is served, so it is never optional
+    if (!isMimeAllowed || !isExtAllowed) {
       return NextResponse.json(
-        { error: 'Invalid file type. Allowed: Images (JPG, PNG, WebP, GIF, SVG) and Documents (PDF, Word, Excel, PowerPoint).' },
+        { error: 'Invalid file type. Allowed: Images (JPG, PNG, WebP, GIF) and Documents (PDF, Word, Excel, PowerPoint, TXT).' },
         { status: 400 }
       );
     }
@@ -137,8 +136,6 @@ export async function POST(request: Request) {
     }
   } catch (error: any) {
     console.error('Admin upload error:', error);
-    return NextResponse.json({ 
-      error: error?.message || 'Failed to process file upload' 
-    }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to process file upload' }, { status: 500 });
   }
 }
