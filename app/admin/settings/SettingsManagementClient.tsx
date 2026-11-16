@@ -25,6 +25,7 @@ import {
   Sparkles,
   Server
 } from 'lucide-react';
+import type { SiteSettings } from '@/lib/siteSettingsShared';
 
 interface SettingsManagementClientProps {
   initialCounts: {
@@ -39,28 +40,20 @@ interface SettingsManagementClientProps {
     audit_logs: number;
   };
   initialLogs: any[];
+  initialSettings: SiteSettings;
 }
 
 export default function SettingsManagementClient({
   initialCounts,
-  initialLogs = []
+  initialLogs = [],
+  initialSettings
 }: SettingsManagementClientProps) {
   const [activeTab, setActiveTab] = useState<'general' | 'database' | 'audit'>('general');
   const [counts, setCounts] = useState(initialCounts);
   const [logs, setLogs] = useState(initialLogs);
 
   // Form State
-  const [formData, setFormData] = useState({
-    portalName: 'Ghana National Union of Technical Students (GNUTS)',
-    secretariatEmail: 'info@gnuts.org.gh',
-    hotlinePhone: '+233 24 000 0000',
-    headquartersAddress: 'National TVET Secretariat, Accra, Ghana',
-    facebookUrl: 'https://facebook.com/gnutsghana',
-    twitterUrl: 'https://twitter.com/gnutsghana',
-    instagramUrl: 'https://instagram.com/gnutsghana',
-    linkedinUrl: 'https://linkedin.com/company/gnutsghana',
-    youtubeUrl: 'https://youtube.com/@gnutsghana',
-  });
+  const [formData, setFormData] = useState<SiteSettings>(initialSettings);
 
   const [isSaving, setIsSaving] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
@@ -78,10 +71,13 @@ export default function SettingsManagementClient({
         body: JSON.stringify(formData),
       });
 
-      if (res.ok) {
-        setFeedbackMsg({ type: 'success', text: 'Portal settings saved successfully!' });
+      const data = await res.json().catch(() => null);
+
+      if (res.ok && data?.success) {
+        if (data.settings) setFormData(data.settings);
+        setFeedbackMsg({ type: 'success', text: 'Portal settings saved. The public site now shows these details.' });
       } else {
-        setFeedbackMsg({ type: 'error', text: 'Failed to save settings' });
+        setFeedbackMsg({ type: 'error', text: data?.error || 'Failed to save settings' });
       }
     } catch {
       setFeedbackMsg({ type: 'error', text: 'Network error. Please try again.' });
@@ -256,6 +252,32 @@ export default function SettingsManagementClient({
                   className="w-full px-4 py-2.5 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-semibold outline-none focus:border-[#014900] focus:bg-white"
                 />
               </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-black uppercase tracking-wider text-gray-700">
+                  Mobile / WhatsApp Number
+                </label>
+                <input
+                  type="text"
+                  value={formData.mobilePhone}
+                  onChange={(e) => setFormData({ ...formData, mobilePhone: e.target.value })}
+                  placeholder="Leave empty to hide"
+                  className="w-full px-4 py-2.5 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-semibold outline-none focus:border-[#014900] focus:bg-white"
+                />
+              </div>
+
+              <div className="space-y-1">
+                <label className="text-xs font-black uppercase tracking-wider text-gray-700">
+                  Postal Address (P.O. Box)
+                </label>
+                <input
+                  type="text"
+                  value={formData.postalAddress}
+                  onChange={(e) => setFormData({ ...formData, postalAddress: e.target.value })}
+                  placeholder="Leave empty to hide"
+                  className="w-full px-4 py-2.5 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-semibold outline-none focus:border-[#014900] focus:bg-white"
+                />
+              </div>
             </div>
 
             {/* Social Media Links */}
@@ -263,7 +285,7 @@ export default function SettingsManagementClient({
               <h3 className="text-xs font-black uppercase tracking-wider text-gray-700">
                 Official Union Social Handles
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <input
                   type="url"
                   placeholder="Facebook URL"
@@ -283,6 +305,13 @@ export default function SettingsManagementClient({
                   placeholder="Instagram URL"
                   value={formData.instagramUrl}
                   onChange={(e) => setFormData({ ...formData, instagramUrl: e.target.value })}
+                  className="w-full px-3.5 py-2 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-medium outline-none focus:border-[#014900]"
+                />
+                <input
+                  type="url"
+                  placeholder="TikTok URL"
+                  value={formData.tiktokUrl}
+                  onChange={(e) => setFormData({ ...formData, tiktokUrl: e.target.value })}
                   className="w-full px-3.5 py-2 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-medium outline-none focus:border-[#014900]"
                 />
               </div>

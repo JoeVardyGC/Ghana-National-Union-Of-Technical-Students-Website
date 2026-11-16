@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import LayoutWrapper from '@/components/LayoutWrapper';
+import { getSiteSettings } from '@/lib/siteSettings';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -18,11 +19,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Secretariat contacts and social links, managed in Admin > Settings
+  const settings = await getSiteSettings();
+
   return (
     <html lang="en" data-scroll-behavior="smooth" className="scroll-smooth font-['Montserrat',sans-serif]">
       <head>
@@ -51,7 +55,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/images/gnuts_fav.png" />
       </head>
       <body className="font-['Montserrat',sans-serif] antialiased bg-[#f8f9fa] text-gray-900 flex flex-col min-h-screen">
-        <LayoutWrapper>{children}</LayoutWrapper>
+        <LayoutWrapper settings={settings}>{children}</LayoutWrapper>
       </body>
     </html>
   );

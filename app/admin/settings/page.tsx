@@ -1,5 +1,6 @@
 import { query } from '@/lib/db';
 import { getAuditLogs } from '@/lib/audit';
+import { getSiteSettings } from '@/lib/siteSettings';
 import SettingsManagementClient from './SettingsManagementClient';
 
 export const dynamic = 'force-dynamic';
@@ -41,8 +42,9 @@ export default async function AdminSettingsPage() {
   }
 
   const logs = await getAuditLogs(30).catch(() => []);
+  const settings = await getSiteSettings();
 
   return (
-    <SettingsManagementClient initialCounts={counts} initialLogs={logs} />
+    <SettingsManagementClient initialCounts={counts} initialLogs={logs} initialSettings={settings} />
   );
 }

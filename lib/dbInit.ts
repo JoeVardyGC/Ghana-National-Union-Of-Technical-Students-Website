@@ -1,5 +1,6 @@
 import { query } from './db';
 import { hashPassword, validateNewPassword } from './password';
+import { ensureSiteSettingsTable } from './siteSettings';
 
 /**
  * Database Auto-Sync & Table Initialization Engine
@@ -303,6 +304,9 @@ export async function initializeDatabase(): Promise<{ success: boolean; message:
         ('Technical University Campus Tour & Engagement', 'LEADERSHIP', 'https://res.cloudinary.com/dslngzls6/image/upload/v1786991595/photo_2026-08-17_18-24-46_w6zphs.jpg', '2024/2025 Tour', 'Campus Outreach', 'Direct consultation sessions with student body leaders on academic affairs and welfare.', 6);
       `);
     }
+
+    // 14. Site Settings Table (secretariat contacts and social links)
+    await ensureSiteSettingsTable();
 
     // Upgrade image columns to LONGTEXT to support CDN URLs and Base64 images without size limitation
     await query('ALTER TABLE innovations MODIFY COLUMN project_image LONGTEXT').catch(() => null);

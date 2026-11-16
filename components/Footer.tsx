@@ -1,7 +1,8 @@
 import Link from 'next/link';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, Smartphone, MapPin } from 'lucide-react';
+import { telHref, type SiteSettings } from '@/lib/siteSettingsShared';
 
-export default function Footer() {
+export default function Footer({ settings }: { settings: SiteSettings }) {
   return (
     <footer className="bg-[#0e160f] text-gray-300 pt-16 pb-8 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -22,7 +23,8 @@ export default function Footer() {
             {/* Social Icons */}
             <div className="flex items-center gap-3 pt-2">
               <a
-                href="https://facebook.com"
+                href={settings.facebookUrl}
+                hidden={!settings.facebookUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#D9A000] hover:text-[#014900] flex items-center justify-center transition-all duration-300 text-white"
@@ -33,7 +35,8 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="https://twitter.com"
+                href={settings.twitterUrl}
+                hidden={!settings.twitterUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#D9A000] hover:text-[#014900] flex items-center justify-center transition-all duration-300 text-white"
@@ -44,7 +47,8 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="https://instagram.com"
+                href={settings.instagramUrl}
+                hidden={!settings.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#D9A000] hover:text-[#014900] flex items-center justify-center transition-all duration-300 text-white"
@@ -55,7 +59,8 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="https://tiktok.com"
+                href={settings.tiktokUrl}
+                hidden={!settings.tiktokUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#D9A000] hover:text-[#014900] flex items-center justify-center transition-all duration-300 text-white"
@@ -154,15 +159,32 @@ export default function Footer() {
             <div className="space-y-3 text-xs sm:text-sm text-gray-300">
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#D9A000] shrink-0 mt-0.5" />
-                <span>Accra Technical University Campus, Barnes Road, Accra, Ghana</span>
+                <span>
+                  {settings.headquartersAddress}
+                  {settings.postalAddress && (
+                    <span className="block text-gray-400">{settings.postalAddress}</span>
+                  )}
+                </span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#D9A000] shrink-0" />
-                <span>+233 (0) 302 987 654</span>
+                <a href={telHref(settings.hotlinePhone)} className="hover:text-[#D9A000] transition-colors">
+                  {settings.hotlinePhone}
+                </a>
               </div>
+              {settings.mobilePhone && (
+                <div className="flex items-center gap-2.5">
+                  <Smartphone className="w-4 h-4 text-[#D9A000] shrink-0" />
+                  <a href={telHref(settings.mobilePhone)} className="hover:text-[#D9A000] transition-colors">
+                    {settings.mobilePhone} <span className="text-gray-400">(Mobile / WhatsApp)</span>
+                  </a>
+                </div>
+              )}
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-[#D9A000] shrink-0" />
-                <span>info@gnuts.org.gh</span>
+                <a href={`mailto:${settings.secretariatEmail}`} className="hover:text-[#D9A000] transition-colors">
+                  {settings.secretariatEmail}
+                </a>
               </div>
             </div>
           </div>

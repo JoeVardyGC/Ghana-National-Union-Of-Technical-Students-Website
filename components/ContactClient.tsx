@@ -12,8 +12,9 @@ import {
   Share2, 
   ArrowRight
 } from 'lucide-react';
+import { telHref, whatsappHref, type SiteSettings } from '@/lib/siteSettingsShared';
 
-export default function ContactClient() {
+export default function ContactClient({ settings }: { settings: SiteSettings }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -105,8 +106,10 @@ export default function ContactClient() {
                 <div>
                   <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Phone Lines</h3>
                   <div className="text-xs sm:text-sm font-extrabold text-gray-900 flex flex-col pt-0.5">
-                    <a href="tel:+233243163135" className="hover:text-[#014900] transition-colors">+233 24 316 3135</a>
-                    <a href="tel:+233302987654" className="hover:text-[#014900] transition-colors text-[11px] text-gray-500 font-medium">+233 (0) 302 987 654 (Secretariat Desk)</a>
+                    <a href={telHref(settings.hotlinePhone)} className="hover:text-[#014900] transition-colors">{settings.hotlinePhone} <span className="text-[11px] text-gray-500 font-medium">(Secretariat Desk)</span></a>
+                    {settings.mobilePhone && (
+                      <a href={telHref(settings.mobilePhone)} className="hover:text-[#014900] transition-colors text-[11px] text-gray-500 font-medium">{settings.mobilePhone} (Mobile / WhatsApp)</a>
+                    )}
                   </div>
                 </div>
               </div>
@@ -119,10 +122,9 @@ export default function ContactClient() {
                   <Mail className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Email Addresses</h3>
+                  <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Email Address</h3>
                   <div className="text-xs sm:text-sm font-extrabold text-gray-900 flex flex-col pt-0.5">
-                    <a href="mailto:infos@gnuts.org.gh" className="hover:text-[#014900] transition-colors">infos@gnuts.org.gh</a>
-                    <a href="mailto:info@gnuts.org.gh" className="hover:text-[#014900] transition-colors text-[11px] text-gray-500 font-medium">info@gnuts.org.gh</a>
+                    <a href={`mailto:${settings.secretariatEmail}`} className="hover:text-[#014900] transition-colors">{settings.secretariatEmail}</a>
                   </div>
                 </div>
               </div>
@@ -137,9 +139,11 @@ export default function ContactClient() {
                 <div>
                   <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">National Secretariat Location</h3>
                   <p className="text-xs sm:text-sm font-extrabold text-gray-900 leading-snug pt-0.5">
-                    Accra Technical University Campus, Barnes Road, Accra, Ghana
+                    {settings.headquartersAddress}
                   </p>
-                  <p className="text-[11px] text-gray-500 font-medium">P.O. Box LG 1237, Accra, Ghana</p>
+                  {settings.postalAddress && (
+                    <p className="text-[11px] text-gray-500 font-medium">{settings.postalAddress}</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -171,7 +175,8 @@ export default function ContactClient() {
             <div className="flex flex-wrap items-center gap-2.5">
               {/* WhatsApp */}
               <a
-                href="https://wa.me/233243163135"
+                href={whatsappHref(settings.mobilePhone)}
+                hidden={!settings.mobilePhone}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#25D366]/10 hover:bg-[#25D366] text-[#25D366] hover:text-white transition-all duration-300 text-xs font-bold border border-[#25D366]/20 shadow-2xs hover:shadow-md hover:scale-105"
@@ -185,7 +190,8 @@ export default function ContactClient() {
 
               {/* Twitter / X */}
               <a
-                href="https://twitter.com/gnutsonline"
+                href={settings.twitterUrl}
+                hidden={!settings.twitterUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gray-100 hover:bg-black text-gray-800 hover:text-white transition-all duration-300 text-xs font-bold border border-gray-200 shadow-2xs hover:shadow-md hover:scale-105"
@@ -199,7 +205,8 @@ export default function ContactClient() {
 
               {/* Facebook */}
               <a
-                href="https://facebook.com/gnutsonline"
+                href={settings.facebookUrl}
+                hidden={!settings.facebookUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#1877F2]/10 hover:bg-[#1877F2] text-[#1877F2] hover:text-white transition-all duration-300 text-xs font-bold border border-[#1877F2]/20 shadow-2xs hover:shadow-md hover:scale-105"
@@ -213,7 +220,8 @@ export default function ContactClient() {
 
               {/* TikTok */}
               <a
-                href="https://tiktok.com/@gnutsonline"
+                href={settings.tiktokUrl}
+                hidden={!settings.tiktokUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-black/5 hover:bg-black text-gray-900 hover:text-white transition-all duration-300 text-xs font-bold border border-gray-200 shadow-2xs hover:shadow-md hover:scale-105"
@@ -402,7 +410,7 @@ export default function ContactClient() {
               Locate Us in Greater Accra, Ghana
             </h3>
             <p className="text-xs text-gray-500 font-normal">
-              Accra Technical University Campus, Barnes Road, Accra, Ghana
+              {settings.headquartersAddress}
             </p>
           </div>
           <a
@@ -442,7 +450,7 @@ export default function ContactClient() {
 
           <div className="flex flex-wrap items-center gap-3">
             <a
-              href="tel:+233243163135"
+              href={telHref(settings.hotlinePhone)}
               className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#D9A000] hover:bg-yellow-500 text-[#014900] text-xs font-black uppercase tracking-wider rounded-2xl transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
             >
               <Phone className="w-3.5 h-3.5 text-[#014900]" />
@@ -450,7 +458,7 @@ export default function ContactClient() {
             </a>
 
             <a
-              href="mailto:infos@gnuts.org.gh"
+              href={`mailto:${settings.secretariatEmail}`}
               className="inline-flex items-center gap-2 px-6 py-3.5 bg-white hover:bg-gray-100 text-[#014900] text-xs font-black uppercase tracking-wider rounded-2xl transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
             >
               <Mail className="w-3.5 h-3.5 text-[#014900]" />

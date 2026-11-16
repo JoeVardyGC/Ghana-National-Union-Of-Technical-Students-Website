@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import ContactClient from '@/components/ContactClient';
 import { query } from '@/lib/db';
 import { resolveImgUrl } from '@/lib/imageUtils';
+import { getSiteSettings } from '@/lib/siteSettings';
 
 export const revalidate = 15;
 
@@ -55,7 +56,7 @@ export default async function ContactPage() {
 
       {/* Main Content Component */}
       <section className="py-6 flex-grow">
-        <ContactClient />
+        <ContactClient settings={await getSiteSettings()} />
       </section>
     </div>
   );

@@ -1,0 +1,88 @@
+import { query } from '@/lib/db';
+import { DEFAULT_SITE_SETTINGS, type SiteSettings } from '@/lib/siteSettingsShared';
+
+// Server-only: reads and writes the single site_settings row.
+
+const COLUMNS: Record<keyof SiteSettings, string> = {
+  portalName: 'portal_name',
+  secretariatEmail: 'secretariat_email',
+  hotlinePhone: 'hotline_phone',
+  mobilePhone: 'mobile_phone',
+  headquartersAddress: 'headquarters_address',
+  postalAddress: 'postal_address',
+  facebookUrl: 'facebook_url',
+  twitterUrl: 'twitter_url',
+  instagramUrl: 'instagram_url',
+  tiktokUrl: 'tiktok_url',
+  linkedinUrl: 'linkedin_url',
+  youtubeUrl: 'youtube_url',
+};
+
+const KEYS = Object.keys(COLUMNS) as (keyof SiteSettings)[];
+
+// A failed MySQL query makes lib/db.ts switch the whole site to its local store for
+// 60 seconds, so the table must exist before it is queried. Re-checked once a minute.
+const ENSURE_TTL_MS = 60_000;
+let lastEnsured = 0;
+
+export async function ensureSiteSettingsTable(): Promise<void> {
+  if (Date.now() - lastEnsured < ENSURE_TTL_MS) return;
+  await query(`
+    CREATE TABLE IF NOT EXISTS site_settings (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      portal_name VARCHAR(255) NOT NULL,
+      secretariat_email VARCHAR(190) NOT NULL,
+      hotline_phone VARCHAR(60) NOT NULL,
+      mobile_phone VARCHAR(60) DEFAULT '',
+      headquarters_address VARCHAR(255) NOT NULL,
+      postal_address VARCHAR(255) DEFAULT '',
+      facebook_url VARCHAR(255) DEFAULT '',
+      twitter_url VARCHAR(255) DEFAULT '',
+      instagram_url VARCHAR(255) DEFAULT '',
+      tiktok_url VARCHAR(255) DEFAULT '',
+      linkedin_url VARCHAR(255) DEFAULT '',
+      youtube_url VARCHAR(255) DEFAULT '',
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `);
+  lastEnsured = Date.now();
+}
+
+async function readRow(): Promise<Record<string, unknown> | null> {
+  await ensureSiteSettingsTable();
+  const rows = await query<Record<string, unknown>>('SELECT * FROM site_settings LIMIT 1');
+  return rows && rows.length > 0 ? rows[0] : null;
+}
+
+/** Saved settings, with defaults for anything not saved yet. Never throws. */
+export async function getSiteSettings(): Promise<SiteSettings> {
+  try {
+    const row = await readRow();
+    if (!row) return { ...DEFAULT_SITE_SETTINGS };
+
+    const settings = { ...DEFAULT_SITE_SETTINGS };
+    for (const key of KEYS) {
+      const value = row[COLUMNS[key]];
+      if (typeof value === 'string') settings[key] = value;
+    }
+    return settings;
+  } catch (err) {
+    console.error('[Site Settings] Load failed, using defaults:', err);
+    return { ...DEFAULT_SITE_SETTINGS };
+  }
+}
+
+export async function saveSiteSettings(settings: SiteSettings): Promise<void> {
+  const values = KEYS.map((key) => settings[key]);
+  const existing = await readRow();
+
+  if (existing) {
+    const assignments = KEYS.map((key) => `${COLUMNS[key]} = ?`).join(', ');
+    await query(`UPDATE site_settings SET ${assignments} WHERE id = ?`, [...values, existing.id]);
+  } else {
+    const columnList = KEYS.map((key) => COLUMNS[key]).join(', ');
+    const placeholders = KEYS.map(() => '?').join(', ');
+    await query(`INSERT INTO site_settings (${columnList}) VALUES (${placeholders})`, values);
+  }
+}
