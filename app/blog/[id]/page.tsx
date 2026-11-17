@@ -5,7 +5,7 @@ import { Calendar, Clock, ArrowLeft, Tag, Mail, Phone, Images } from 'lucide-rea
 import { query } from '@/lib/db';
 import { NewsItem } from '@/lib/newsData';
 import { ReadingProgressBar, ShareToolbar, NextPrevNavigation } from '@/components/ArticleDetailClient';
-import { resolveImgUrl, formatDate } from '@/lib/imageUtils';
+import { resolveImgUrl, formatDate, stripHtml } from '@/lib/imageUtils';
 import { getSiteSettings } from '@/lib/siteSettings';
 import { telHref } from '@/lib/siteSettingsShared';
 
@@ -20,29 +20,44 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const numericId = Number(resolvedParams.id);
 
   try {
-    const rows = await query<any>('SELECT title, content, image FROM news WHERE id = ? LIMIT 1', [numericId]);
-    if (rows && rows.length > 0) {
-      const art = rows[0];
+    const rows = await query<any>('SELECT * FROM news WHERE id = ? LIMIT 1', [numericId]);
+    const art = (rows || []).find((row: any) => Number(row.id) === numericId);
+    if (art) {
       const title = art.title ? `${art.title} | GNUTS News` : 'GNUTS News & Updates';
-      const description = art.content
-        ? art.content.slice(0, 160).replace(/[\r\n]+/g, ' ')
+      const plain = stripHtml(String(art.content || '')).replace(/\s+/g, ' ').trim();
+      const description = plain
+        ? plain.length > 160 ? `${plain.slice(0, 157).trimEnd()}...` : plain
         : 'Official news release from Ghana National Union of Technical Students (GNUTS).';
-      const image = art.image || 'https://res.cloudinary.com/dslngzls6/image/upload/v1787056250/gnuts_cc_tech-GUEST_jt8cge.png';
+      const url = `/blog/${numericId}`;
+
+      // Share preview: the post's cover, resized to a light 1200x630 card by
+      // /blog/[id]/cover-image. Posts without a cover use the GNUTS logo card.
+      const image = art.image
+        ? { url: `${url}/cover-image`, width: 1200, height: 630, alt: art.title || 'GNUTS news' }
+        : { url: '/images/og-logo.png', width: 1200, height: 630, alt: 'GNUTS logo' };
+
+      const published = art.published_at || art.created_at;
+      const publishedTime = published && !isNaN(new Date(published).getTime()) ? new Date(published).toISOString() : undefined;
 
       return {
         title,
         description,
+        alternates: { canonical: url },
         openGraph: {
+          type: 'article',
+          url,
+          siteName: 'GNUTS - Ghana National Union of Technical Students',
           title,
           description,
-          images: [{ url: image, width: 1200, height: 630, alt: title }],
-          type: 'article',
+          images: [image],
+          publishedTime,
+          authors: art.author ? [String(art.author)] : undefined,
         },
         twitter: {
           card: 'summary_large_image',
           title,
           description,
-          images: [image],
+          images: [image.url],
         },
       };
     }
