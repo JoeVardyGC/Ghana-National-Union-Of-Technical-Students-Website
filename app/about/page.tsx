@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { query } from '@/lib/db';
 import ResourcesSection from '@/components/ResourcesSection';
-import ConstitutionGlance from '@/components/ConstitutionGlance';
 import { resolveImgUrl } from '@/lib/imageUtils';
 import { 
   Target, 
@@ -412,7 +411,6 @@ export default async function AboutPage() {
         </section>
 
         {/* 5b. Constitution at a Glance — facts from the GNUTS Constitution */}
-        <ConstitutionGlance variant="summary" />
 
         {/* 6. Executive Leadership — Only display when executives exist in the system */}
         {executives && executives.length > 0 && (
