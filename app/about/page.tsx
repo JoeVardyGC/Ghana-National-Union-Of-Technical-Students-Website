@@ -208,7 +208,7 @@ export default async function AboutPage() {
                   <div className="p-4 rounded-xl bg-[#f8f9fa] border border-gray-200 flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-[#D9A000] shrink-0 mt-0.5" />
                     <div>
-                      <h4 className="font-extrabold text-sm text-[#014900]">Policy & Legal Advocacy</h4>
+                      <h4 className="font-extrabold text-sm text-[#014900]">Policy Advocacy</h4>
                       <p className="text-xs text-gray-600 font-medium mt-0.5">Defending technical student rights in Parliament and Ministry of Education.</p>
                     </div>
                   </div>
@@ -216,8 +216,8 @@ export default async function AboutPage() {
                   <div className="p-4 rounded-xl bg-[#f8f9fa] border border-gray-200 flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-[#014900] shrink-0 mt-0.5" />
                     <div>
-                      <h4 className="font-extrabold text-sm text-[#014900]">Industrial Attachment</h4>
-                      <p className="text-xs text-gray-600 font-medium mt-0.5">Securing practical industry placements & stipends for students.</p>
+                      <h4 className="font-extrabold text-sm text-[#014900]">Unity & Solidarity</h4>
+                      <p className="text-xs text-gray-600 font-medium mt-0.5">Uniting students of all member Technical Universities and TVET institutions under one national voice.</p>
                     </div>
                   </div>
                 </div>
