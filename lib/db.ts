@@ -1,11 +1,21 @@
 import mysql from 'mysql2/promise';
 import fs from 'fs';
 import path from 'path';
+import { getPostgresPool, getPostgresUrl, isConnectionError, runPostgres } from './postgres';
+
+export type DatabaseDialect = 'postgres' | 'mysql' | 'local';
+
+/** Which database query() talks to, based on the configured connection string. */
+export function getDialect(): DatabaseDialect {
+  if (getPostgresUrl()) return 'postgres';
+  return getDatabasePool() ? 'mysql' : 'local';
+}
 
 /**
  * GNUTS Hybrid Persistence Database Engine
- * 
+ *
  * Features:
+ * 0. Connects to PostgreSQL / Supabase when DATABASE_URL is a postgres:// URL (see lib/postgres.ts).
  * 1. Connects to MySQL / MariaDB (via DATABASE_URL or DB_HOST) when available.
  * 2. Seamlessly falls back to a high-speed, local file-based persistence store (`data/gnuts_db.json`)
  *    when MySQL is offline, ensuring data NEVER vanishes upon page refresh!
@@ -456,13 +466,17 @@ async function isMySQLAvailable(): Promise<boolean> {
 export function getDatabasePool(): mysql.Pool | null {
   if (mysqlPool) return mysqlPool;
 
-  const connectionUri = 
-    process.env.DATABASE_PUBLIC_URL ||
-    process.env.MYSQL_PUBLIC_URL ||
-    process.env.DATABASE_URL ||
-    process.env.MYSQL_URL ||
-    process.env.JAWSDB_URL ||
-    process.env.CLEARDB_DATABASE_URL;
+  // PostgreSQL URLs are handled by lib/postgres.ts, never by the MySQL driver
+  if (getPostgresUrl()) return null;
+
+  const connectionUri = [
+    process.env.DATABASE_PUBLIC_URL,
+    process.env.MYSQL_PUBLIC_URL,
+    process.env.DATABASE_URL,
+    process.env.MYSQL_URL,
+    process.env.JAWSDB_URL,
+    process.env.CLEARDB_DATABASE_URL,
+  ].find((url) => url && url.trim() !== '' && !/^postgres(ql)?:\/\//i.test(url.trim()));
 
   if (connectionUri && connectionUri.trim() !== '') {
     try {
@@ -507,12 +521,72 @@ export function getDatabasePool(): mysql.Pool | null {
   return null;
 }
 
+export interface DatabaseStatus {
+  dialect: DatabaseDialect;
+  connected: boolean;
+  version: string | null;
+  tables: string[];
+  userCount: number;
+  error: string | null;
+}
+
+/** Connection check for the admin database-status page. Never throws. */
+export async function getDatabaseStatus(): Promise<DatabaseStatus> {
+  const status: DatabaseStatus = { dialect: getDialect(), connected: false, version: null, tables: [], userCount: 0, error: null };
+  try {
+    if (status.dialect === 'postgres') {
+      const pg = getPostgresPool()!;
+      const version = await pg.query('SELECT version() AS version');
+      status.version = String(version.rows[0]?.version || '').split(' on ')[0] || 'PostgreSQL';
+      const tables = await pg.query(
+        "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' ORDER BY table_name"
+      );
+      status.tables = tables.rows.map((r) => String(r.table_name));
+      status.connected = true;
+      if (status.tables.includes('users')) {
+        const users = await pg.query('SELECT COUNT(*) AS count FROM users');
+        status.userCount = Number(users.rows[0]?.count) || 0;
+      }
+    } else if (status.dialect === 'mysql') {
+      const pool = getDatabasePool()!;
+      const [versionRows]: any = await pool.execute('SELECT VERSION() AS version');
+      status.version = versionRows?.[0]?.version || 'MySQL';
+      const [tables]: any = await pool.execute('SHOW TABLES');
+      status.tables = Array.isArray(tables) ? tables.map((t: any) => String(Object.values(t)[0])) : [];
+      status.connected = true;
+      const [userRows]: any = await pool.execute('SELECT COUNT(*) AS count FROM users').catch(() => [[{ count: 0 }]]);
+      status.userCount = Number(userRows?.[0]?.count) || 0;
+    } else {
+      const local = await query<{ count: number }>('SELECT COUNT(*) as count FROM users');
+      status.userCount = Number(local[0]?.count) || 0;
+    }
+  } catch (err) {
+    status.error = (err as Error)?.message || String(err);
+  }
+  return status;
+}
+
 /**
  * Universal query runner: executes against MySQL if available,
  * or against high-speed local in-memory store in <0.1ms with zero data loss.
  */
 export async function query<T = any>(sql: string, params: any[] = []): Promise<T[]> {
   const trimmed = sql.trim();
+
+  // PostgreSQL / Supabase (DATABASE_URL starting with postgres:// or postgresql://)
+  if (getPostgresUrl()) {
+    try {
+      return (await runPostgres(trimmed, params)) as T[];
+    } catch (error) {
+      // Real query errors are reported to the caller. Only an unreachable database
+      // falls back to the local JSON store, and only outside production, so live
+      // data is never silently written to a throwaway file.
+      if (process.env.NODE_ENV === 'production' || !isConnectionError(error)) throw error;
+      console.warn(`[DB Engine] PostgreSQL unreachable (${(error as Error)?.message}). Using local JSON store (development only).`);
+      return executeLocalSql(trimmed, params) as Promise<T[]>;
+    }
+  }
+
   const available = await isMySQLAvailable();
 
   if (available && mysqlPool) {

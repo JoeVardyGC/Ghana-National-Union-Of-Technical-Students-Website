@@ -1,8 +1,18 @@
 import { NextResponse } from 'next/server';
-import { getDatabasePool, query } from '@/lib/db';
+import { getDatabaseStatus } from '@/lib/db';
 import { getAdminSession } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
+
+/** Shows a database URL without its password, e.g. postgres.abc@aws-0-eu.pooler.supabase.com:6543/postgres */
+function maskUrl(url: string): string {
+  try {
+    const parsed = new URL(url.replace(/^(mysql|postgres(ql)?):\/\//i, 'http://'));
+    return `${parsed.username ? `${parsed.username}@` : ''}${parsed.hostname}${parsed.port ? `:${parsed.port}` : ''}${parsed.pathname}`;
+  } catch {
+    return 'Configured (masked)';
+  }
+}
 
 export async function GET() {
   const session = await getAdminSession();
@@ -10,73 +20,42 @@ export async function GET() {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const connectionUri =
-    process.env.DATABASE_PUBLIC_URL ||
-    process.env.MYSQL_PUBLIC_URL ||
-    process.env.DATABASE_URL ||
-    process.env.MYSQL_URL;
+  const connectionUri = [
+    process.env.DATABASE_URL,
+    process.env.POSTGRES_URL,
+    process.env.SUPABASE_DB_URL,
+    process.env.DATABASE_PUBLIC_URL,
+    process.env.MYSQL_PUBLIC_URL,
+    process.env.MYSQL_URL,
+  ].find((url) => url && url.trim() !== '');
 
-  const hasEnvConfigured = !!(connectionUri && connectionUri.trim() !== '');
-  const pool = getDatabasePool();
-
-  let isConnectedToMysql = false;
-  let mysqlError: string | null = null;
-  let tablesList: string[] = [];
-  let userCount = 0;
-  let serverVersion = '';
-
-  if (pool) {
-    try {
-      const [testRows]: any = await pool.execute('SELECT 1 + 1 AS test, VERSION() as version');
-      if (testRows && testRows.length > 0) {
-        isConnectedToMysql = true;
-        serverVersion = testRows[0].version || 'MySQL';
-      }
-
-      const [tables]: any = await pool.execute('SHOW TABLES');
-      if (Array.isArray(tables)) {
-        tablesList = tables.map((t: any) => Object.values(t)[0] as string);
-      }
-
-      const [userRows]: any = await pool.execute('SELECT COUNT(*) as count FROM users').catch(() => [{ count: 0 }]);
-      if (userRows && userRows.length > 0) {
-        userCount = Number(userRows[0].count) || 0;
-      }
-    } catch (err: any) {
-      mysqlError = err?.message || String(err);
-    }
-  }
-
-  // Sanitized Host preview (hiding passwords)
-  let hostPreview = 'None / Localhost';
-  if (connectionUri) {
-    try {
-      const parsed = new URL(connectionUri.replace(/^mysql:\/\//, 'http://'));
-      hostPreview = `${parsed.username ? parsed.username + '@' : ''}${parsed.hostname}:${parsed.port || 3306}${parsed.pathname}`;
-    } catch {
-      hostPreview = 'Configured (Masked)';
-    }
-  }
+  const status = await getDatabaseStatus();
+  const label = status.dialect === 'postgres' ? 'PostgreSQL (Supabase)' : status.dialect === 'mysql' ? 'MySQL' : 'Local JSON file';
+  const live = status.connected && status.dialect !== 'local';
 
   return NextResponse.json({
-    active_storage_mode: isConnectedToMysql ? 'LIVE_MYSQL_DATABASE' : 'LOCAL_JSON_FALLBACK',
-    connected_to_mysql: isConnectedToMysql,
-    environment_variable_detected: hasEnvConfigured,
-    configured_host: hostPreview,
-    mysql_version: serverVersion || null,
-    total_users_in_active_db: isConnectedToMysql ? userCount : (await query('SELECT COUNT(*) as count FROM users'))[0]?.count || 0,
-    tables_found: tablesList,
-    error: mysqlError,
-    guide: !isConnectedToMysql ? {
-      issue: 'The application is running in local JSON fallback mode because it cannot reach the MySQL database.',
-      solution_steps: [
-        '1. Ensure you copied the PUBLIC TCP connection URL from Railway (not the internal .railway.internal URL).',
-        '2. In Railway MySQL -> Settings -> Public Networking, make sure TCP Proxy / Public Domain is ENABLED.',
-        '3. In Vercel -> Settings -> Environment Variables, ensure DATABASE_URL is set and click REDEPLOY.',
-        '4. While signed in as Super Admin, send a POST to /api/admin/init-db once to create the tables.'
-      ]
-    } : {
-      message: 'Your live Railway MySQL database is fully connected and active!'
-    }
+    active_storage_mode: live ? (status.dialect === 'postgres' ? 'LIVE_POSTGRES_DATABASE' : 'LIVE_MYSQL_DATABASE') : 'LOCAL_JSON_FALLBACK',
+    database_type: label,
+    dialect: status.dialect,
+    connected: live,
+    // Kept for older admin screens: true whenever a live database (MySQL or PostgreSQL) is connected
+    connected_to_mysql: live,
+    environment_variable_detected: !!connectionUri,
+    configured_host: connectionUri ? maskUrl(connectionUri.trim()) : 'None',
+    database_version: status.version,
+    mysql_version: status.version,
+    total_users_in_active_db: status.userCount,
+    tables_found: status.tables,
+    error: status.error,
+    guide: live
+      ? { message: `Your live ${label} database is connected.` }
+      : {
+          issue: 'The site is not connected to a live database, so it is using the local JSON file (development only).',
+          solution_steps: [
+            '1. In Supabase: Project Settings > Database > Connection string > "Transaction pooler" (port 6543). Copy it and insert your database password.',
+            '2. In Vercel: Settings > Environment Variables, set DATABASE_URL to that connection string, then Redeploy.',
+            '3. While signed in as Super Admin (or with INIT_DB_TOKEN), send a POST to /api/admin/init-db once to create the tables.',
+          ],
+        },
   });
 }

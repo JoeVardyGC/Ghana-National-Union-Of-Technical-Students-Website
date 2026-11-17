@@ -87,8 +87,9 @@ export async function POST(request: Request) {
         (category || 'constitution').toLowerCase(),
         file_path,
         file_name || 'document.pdf',
-        file_size,
-        display_order,
+        // Numbers only: PostgreSQL rejects "" or text in integer columns
+        Number(file_size) || 2048000,
+        Number(display_order) || 1,
       ]
     ).catch(() => null);
 
