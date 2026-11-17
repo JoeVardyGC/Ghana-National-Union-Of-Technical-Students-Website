@@ -18,8 +18,6 @@ export default function NewsSection({ dbNews = [] }: { dbNews?: NewsItem[] }) {
   // Display only 6 news cards on homepage & mobile view
   const newsList = dbNews.slice(0, 6);
 
-  // Hide the whole section on the home page rather than showing an empty box
-  if (newsList.length === 0) return null;
 
   return (
     <section className="py-10 sm:py-16 lg:py-24 bg-[#f8f9fa]" id="news-section">
@@ -60,7 +58,7 @@ export default function NewsSection({ dbNews = [] }: { dbNews?: NewsItem[] }) {
               <Link
                 key={item.id || idx}
                 href={`/blog/${item.id || idx + 1}`}
-                className="bg-white rounded-2xl sm:rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col overflow-hidden group cursor-pointer h-full min-w-0 w-full"
+                className="bg-white rounded-2xl sm:rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col overflow-hidden group cursor-pointer h-full min-w-0 w-full"
               >
                 {/* Poster Flyer Container — Responsive height with top curved corners */}
                 <div className="w-full h-64 sm:h-80 md:h-[380px] lg:h-[420px] relative overflow-hidden bg-gray-900 shrink-0 rounded-t-2xl sm:rounded-t-3xl">

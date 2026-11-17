@@ -21,8 +21,6 @@ export default function InnovationsSection({ dbInnovations = [] }: { dbInnovatio
   // Display 3 innovation cards on homepage
   const innovations = dbInnovations.slice(0, 3);
 
-  // Hide the whole section on the home page rather than showing an empty box
-  if (innovations.length === 0) return null;
 
   return (
     <section className="py-10 sm:py-16 lg:py-24 bg-white border-b border-gray-200" id="innovations-section">
@@ -66,7 +64,7 @@ export default function InnovationsSection({ dbInnovations = [] }: { dbInnovatio
                 <Link
                   key={item.id || idx}
                   href={`/innovations/${item.id || idx + 1}`}
-                  className="bg-white rounded-2xl sm:rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden group cursor-pointer min-w-0 w-full"
+                  className="bg-white rounded-2xl sm:rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden group cursor-pointer min-w-0 w-full"
                 >
                   <div className="min-w-0">
                     {/* Project Image Banner with Top Rounded Corners */}

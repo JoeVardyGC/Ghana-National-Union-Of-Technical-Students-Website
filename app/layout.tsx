@@ -6,7 +6,6 @@ import '@fontsource-variable/montserrat';
 import './globals.css';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import { getSiteSettings } from '@/lib/siteSettings';
-import { query } from '@/lib/db';
 import { SITE_URL } from '@/lib/siteUrl';
 import StructuredData from '@/components/StructuredData';
 
@@ -59,10 +58,6 @@ export default async function RootLayout({
 }>) {
   // Secretariat contacts and social links, managed in Admin > Settings
   const settings = await getSiteSettings();
-  // Hide the Gallery link in the menu and footer until at least one photo exists
-  const galleryCount = await query<{ count: number | string }>('SELECT COUNT(*) as count FROM gallery')
-    .then((rows) => Number(rows[0]?.count) || 0)
-    .catch(() => 1);
 
   return (
     <html
@@ -84,7 +79,7 @@ export default async function RootLayout({
       </head>
       <body className="font-sans antialiased bg-[#f8f9fa] text-gray-900 flex flex-col min-h-screen">
         <StructuredData settings={settings} />
-        <LayoutWrapper settings={settings} hasGallery={galleryCount > 0}>{children}</LayoutWrapper>
+        <LayoutWrapper settings={settings}>{children}</LayoutWrapper>
       </body>
     </html>
   );

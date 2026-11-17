@@ -296,7 +296,7 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
                   </div>
                   <Link
                     href={`/innovations/${item.id}`}
-                    className="bg-white rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-xl border border-gray-200 flex flex-col justify-between cursor-pointer transition-all duration-300 group overflow-hidden min-w-0 w-full"
+                    className="bg-white rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-xl hover:-translate-y-1.5 border border-gray-200 flex flex-col justify-between cursor-pointer transition-all duration-300 group overflow-hidden min-w-0 w-full"
                   >
                     <div className="min-w-0">
                       {/* Project Image Banner */}

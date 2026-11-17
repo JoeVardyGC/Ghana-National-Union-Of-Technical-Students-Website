@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { query } from '@/lib/db';
-import ScrollAnimationProvider from '@/components/ScrollAnimationProvider';
 import ResourcesSection from '@/components/ResourcesSection';
 import { resolveImgUrl } from '@/lib/imageUtils';
 import { 
@@ -155,7 +154,7 @@ export default async function AboutPage() {
   ];
 
   return (
-    <ScrollAnimationProvider>
+    <>
       <div className="w-full min-h-screen bg-[#f8f9fa] font-sans text-gray-900 overflow-x-hidden">
         
         {/* Page Hero Header — Connected to live DB hero image, title and subtitle */}
@@ -485,6 +484,6 @@ export default async function AboutPage() {
         <ResourcesSection dbResources={resources} />
 
       </div>
-    </ScrollAnimationProvider>
+    </>
   );
 }

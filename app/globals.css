@@ -212,11 +212,11 @@ html.dark .animate-shimmer {
    Content is visible by default. It is only hidden for the fade-in once
    ScrollAnimationProvider has run and added `reveal-ready` to <html>, so
    visitors without JavaScript (and search engines) always see everything. */
+/* 1. Sections fade up as they scroll into view */
 html.reveal-ready .reveal-on-scroll {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+  transform: translateY(32px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html.reveal-ready .reveal-on-scroll.visible {
@@ -224,12 +224,62 @@ html.reveal-ready .reveal-on-scroll.visible {
   transform: translateY(0);
 }
 
+/* 2. Card grids: cards rise in one after another.
+   Uses a keyframe animation (not transitions) so each card keeps its own hover effects. */
+@keyframes revealCard {
+  from { opacity: 0; transform: translateY(28px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+html.reveal-ready .reveal-stagger:not(.visible) > * {
+  opacity: 0;
+}
+
+html.reveal-ready .reveal-stagger.visible > * {
+  animation: revealCard 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+html.reveal-ready .reveal-stagger.visible > *:nth-child(2) { animation-delay: 90ms; }
+html.reveal-ready .reveal-stagger.visible > *:nth-child(3) { animation-delay: 180ms; }
+html.reveal-ready .reveal-stagger.visible > *:nth-child(4) { animation-delay: 270ms; }
+html.reveal-ready .reveal-stagger.visible > *:nth-child(5) { animation-delay: 360ms; }
+html.reveal-ready .reveal-stagger.visible > *:nth-child(6) { animation-delay: 450ms; }
+html.reveal-ready .reveal-stagger.visible > *:nth-child(n + 7) { animation-delay: 520ms; }
+
+/* 3. Inner page headers (the green photo banner at the top of each page):
+   the photo settles from a gentle zoom while the title and subtitle glide in.
+   Pure CSS, so it plays from the first paint, even before JavaScript loads. */
+@keyframes heroPhotoSettle {
+  from { transform: scale(1.12); }
+  to   { transform: scale(1); }
+}
+
+@keyframes heroTextIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+main section[class*="border-b-4"][class*="text-white"] > div:first-child {
+  animation: heroPhotoSettle 1.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+main section[class*="border-b-4"][class*="text-white"] h1 {
+  animation: heroTextIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+main section[class*="border-b-4"][class*="text-white"] h1 ~ p,
+main section[class*="border-b-4"][class*="text-white"] h1 + div {
+  animation: heroTextIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.28s both;
+}
+
 /* Visitors who turn on "reduce motion" get no zooms, slides or fades anywhere */
 @media (prefers-reduced-motion: reduce) {
-  .reveal-on-scroll {
+  .reveal-on-scroll,
+  .reveal-stagger > * {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+    animation: none !important;
   }
 
   *, *::before, *::after {
@@ -241,11 +291,6 @@ html.reveal-ready .reveal-on-scroll.visible {
   }
 }
 
-/* Automatic Child Card Stagger when container becomes visible */
-.reveal-on-scroll.visible > *:nth-child(1) { transition-delay: 30ms; }
-.reveal-on-scroll.visible > *:nth-child(2) { transition-delay: 80ms; }
-.reveal-on-scroll.visible > *:nth-child(3) { transition-delay: 130ms; }
-.reveal-on-scroll.visible > *:nth-child(4) { transition-delay: 180ms; }
 
 /* ==========================================================================
    Modern Minimalist Custom Scrollbars & Utilities

@@ -142,7 +142,7 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
             <Link
               key={item.id || idx}
               href={`/blog/${item.id}`}
-              className="bg-white rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col overflow-hidden group cursor-pointer h-full"
+              className="bg-white rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col overflow-hidden group cursor-pointer h-full"
             >
               {/* Poster Flyer Container — Tall generous height matching Home page */}
               <div className="w-full h-80 sm:h-[400px] lg:h-[440px] relative overflow-hidden bg-gray-900 shrink-0 rounded-t-3xl">

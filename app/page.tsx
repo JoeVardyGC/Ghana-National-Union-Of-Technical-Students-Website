@@ -5,9 +5,7 @@ import HeroSlider from '@/components/HeroSlider';
 import OpportunitiesSection from '@/components/OpportunitiesSection';
 import InnovationsSection from '@/components/InnovationsSection';
 import UnionCtaBanner from '@/components/UnionCtaBanner';
-import FaqSection from '@/components/FaqSection';
 import NewsSection from '@/components/NewsSection';
-import ScrollAnimationProvider from '@/components/ScrollAnimationProvider';
 import { resolveImgUrl } from '@/lib/imageUtils';
 import { Layers, Clock, MessageSquare, Mail, Phone, Share2 } from 'lucide-react';
 
@@ -80,7 +78,7 @@ export default async function HomePage() {
   ];
 
   return (
-    <ScrollAnimationProvider>
+    <>
       <div className="flex flex-col min-h-screen bg-[#f8f9fa] overflow-x-hidden">
         {/* 1. Hero Section + Floating Stats Overlay */}
         <HeroSlider stats={{ projectsCount, scholarshipsCount }} carouselSlides={carouselSlides} />
@@ -151,8 +149,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 3. Available Scholarships Section — hidden when there are none */}
-      {scholarships.length > 0 && (
+      {/* 3. Available Scholarships Section */}
       <section className="py-10 sm:py-16 lg:py-24 bg-white border-y border-gray-200" id="scholarships-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-3">
@@ -171,6 +168,14 @@ export default async function HomePage() {
             </Link>
           </div>
 
+          {scholarships.length === 0 ? (
+            <div className="text-center py-12 px-6 bg-white rounded-2xl sm:rounded-3xl border border-gray-200 shadow-sm max-w-xl mx-auto">
+              <div className="text-4xl mb-3">🎓</div>
+              <p className="text-gray-600 text-sm">
+                No active scholarships at the moment. Check back soon for new bursary announcements.
+              </p>
+            </div>
+          ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 reveal-on-scroll">
               {scholarships.slice(0, 3).map((item: any, idx: number) => {
                 const isActive = (item.status || 'active').toLowerCase() === 'active';
@@ -224,9 +229,9 @@ export default async function HomePage() {
                 );
               })}
             </div>
+          )}
         </div>
       </section>
-      )}
 
       {/* 4. Opportunities Section */}
       <OpportunitiesSection dbOpportunities={opportunities} />
@@ -312,11 +317,8 @@ export default async function HomePage() {
       )}
 
       {/* 8. Join the Movement CTA Banner */}
-      {/* 8. "What is GNUTS?" questions (also structured data for Google) */}
-      <FaqSection />
-
       <UnionCtaBanner />
     </div>
-    </ScrollAnimationProvider>
+    </>
   );
 }

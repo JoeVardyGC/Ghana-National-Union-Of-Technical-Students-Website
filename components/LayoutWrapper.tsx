@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import BackToTop from '@/components/BackToTop';
+import ScrollAnimationProvider from '@/components/ScrollAnimationProvider';
 import type { SiteSettings } from '@/lib/siteSettingsShared';
 
 export default function LayoutWrapper({
@@ -29,6 +30,7 @@ export default function LayoutWrapper({
       <main className="flex-grow">{children}</main>
       <Footer settings={settings} hasGallery={hasGallery} />
       <BackToTop />
+      <ScrollAnimationProvider />
     </>
   );
 }
