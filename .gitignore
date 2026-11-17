@@ -47,3 +47,6 @@ next-env.d.ts
 
 # local Claude Code config
 /.claude/
+
+# generated database export (contains site content)
+/supabase-import.sql

@@ -54,7 +54,7 @@ export async function GET() {
           solution_steps: [
             '1. In Supabase: Project Settings > Database > Connection string > "Transaction pooler" (port 6543). Copy it and insert your database password.',
             '2. In Vercel: Settings > Environment Variables, set DATABASE_URL to that connection string, then Redeploy.',
-            '3. While signed in as Super Admin (or with INIT_DB_TOKEN), send a POST to /api/admin/init-db once to create the tables.',
+            '3. Sign in at /admin/login with ADMIN_EMAIL and ADMIN_PASSWORD: on an empty database this creates the tables and your admin account automatically. To load your saved content, run supabase-import.sql in the Supabase SQL Editor (see SUPABASE_SETUP.md).',
           ],
         },
   });

@@ -5,6 +5,24 @@ import { logAuditAction } from '@/lib/audit';
 import { hashPassword, isHashed, KNOWN_DEFAULT_PASSWORDS, verifyPassword } from '@/lib/password';
 import { createSessionToken, SESSION_COOKIE_NAME, SESSION_MAX_AGE_SECONDS } from '@/lib/session';
 import type { AdminSessionUser } from '@/lib/authTypes';
+import { initializeDatabase } from '@/lib/dbInit';
+
+// One setup at a time per server instance; skipped once a user exists
+let setupInFlight: Promise<unknown> | null = null;
+let databaseReady = false;
+
+async function ensureDatabaseReady(): Promise<void> {
+  if (databaseReady) return;
+  const users = await query('SELECT id FROM users LIMIT 1').catch(() => null);
+  if (users && users.length > 0) {
+    databaseReady = true;
+    return;
+  }
+  setupInFlight ??= initializeDatabase().finally(() => {
+    setupInFlight = null;
+  });
+  await setupInFlight;
+}
 
 export const dynamic = 'force-dynamic';
 
@@ -50,6 +68,11 @@ export async function POST(request: Request) {
         { status: 429 }
       );
     }
+
+    // First login on a brand-new database (e.g. a fresh Supabase project): create the
+    // tables and the first Super Admin from ADMIN_EMAIL / ADMIN_PASSWORD automatically,
+    // so no terminal command is needed. Does nothing once any user exists.
+    await ensureDatabaseReady();
 
     const dbUsers = await query(
       'SELECT id, full_name, email, password, role FROM users WHERE LOWER(email) = ? LIMIT 1',
