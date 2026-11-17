@@ -5,6 +5,7 @@ import HeroSlider from '@/components/HeroSlider';
 import OpportunitiesSection from '@/components/OpportunitiesSection';
 import InnovationsSection from '@/components/InnovationsSection';
 import UnionCtaBanner from '@/components/UnionCtaBanner';
+import FaqSection from '@/components/FaqSection';
 import NewsSection from '@/components/NewsSection';
 import ScrollAnimationProvider from '@/components/ScrollAnimationProvider';
 import { resolveImgUrl } from '@/lib/imageUtils';
@@ -311,6 +312,9 @@ export default async function HomePage() {
       )}
 
       {/* 8. Join the Movement CTA Banner */}
+      {/* 8. "What is GNUTS?" questions (also structured data for Google) */}
+      <FaqSection />
+
       <UnionCtaBanner />
     </div>
     </ScrollAnimationProvider>
