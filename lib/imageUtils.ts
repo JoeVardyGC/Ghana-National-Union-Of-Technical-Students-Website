@@ -51,3 +51,15 @@ export const resolveDocumentUrl = (docUrl?: string): string => {
   return `/${stripped}`;
 };
 
+
+/**
+ * Innovation project image, or null when there is none (cards then show an icon).
+ * Handles full URLs, inline data URLs, "/uploads/…" and "uploads/…" paths, and bare
+ * file names from the old site (stored in /uploads/innovations/).
+ */
+export const resolveInnovationImage = (img?: string | null): string | null => {
+  const clean = (img || '').trim();
+  if (!clean) return null;
+  if (/^(https?:|data:)/i.test(clean) || clean.includes('/')) return resolveImgUrl(clean);
+  return `/uploads/innovations/${clean}`;
+};

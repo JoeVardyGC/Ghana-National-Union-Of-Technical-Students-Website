@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
+import { resolveInnovationImage } from '@/lib/imageUtils';
 import { 
   Building2, 
   User, 
@@ -186,12 +187,8 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
   };
 
   // Resolve Image Path
-  const getImagePath = (img?: string) => {
-    if (!img) return null;
-    if (img.startsWith('http')) return img;
-    if (img.startsWith('uploads/')) return `/${img}`;
-    return `/uploads/innovations/${img}`;
-  };
+  // Shared helper: handles /uploads/… paths, inline images and full URLs
+  const getImagePath = resolveInnovationImage;
 
   return (
     <div className="py-4 sm:py-8 lg:py-10 space-y-6 sm:space-y-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-sans">

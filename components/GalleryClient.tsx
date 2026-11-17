@@ -6,7 +6,6 @@ import {
   SlidersHorizontal, 
   Sparkles, 
   ShieldCheck, 
-  Calendar, 
   Maximize2,
   X
 } from 'lucide-react';
@@ -106,8 +105,6 @@ export default function GalleryClient({ initialItems }: { initialItems?: Gallery
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredItems.map((item) => {
-            const role = item.role_or_badge || item.roleOrBadge || 'Union Archive';
-            const tenure = item.tenure_or_date || item.tenureOrDate || 'Archive Record';
             const resolvedImg = resolveImgUrl(item.image);
 
             return (
@@ -129,17 +126,6 @@ export default function GalleryClient({ initialItems }: { initialItems?: Gallery
 
                     {/* Dark Gradient Overlay for Contrast */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-80 group-hover/img:opacity-60 transition-opacity" />
-
-                    {/* Badge Pill Header */}
-                    <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
-                      <span className="px-3 py-1 rounded-full bg-[#014900]/90 backdrop-blur-xs text-white text-xs font-extrabold uppercase tracking-wider border border-white/20 shadow-sm">
-                        {role}
-                      </span>
-                      <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-xs text-gray-200 text-xs font-bold flex items-center gap-1 border border-white/10">
-                        <Calendar className="w-3 h-3 text-[#D9A000]" />
-                        {tenure}
-                      </span>
-                    </div>
 
                     {/* Zoom Icon Hint on Hover */}
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 pointer-events-none">
@@ -225,16 +211,6 @@ export default function GalleryClient({ initialItems }: { initialItems?: Gallery
 
             {/* Photo Details Footer */}
             <div className="p-6 space-y-3 bg-white">
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-gray-100 pb-3">
-                <span className="px-3 py-1 bg-[#D9A000] text-[#014900] text-xs font-extrabold uppercase tracking-wider rounded-full">
-                  {activeLightboxItem.role_or_badge || activeLightboxItem.roleOrBadge || 'Union Archive'}
-                </span>
-                <span className="text-xs font-bold text-gray-500 flex items-center gap-1">
-                  <Calendar className="w-3.5 h-3.5 text-[#014900]" />
-                  {activeLightboxItem.tenure_or_date || activeLightboxItem.tenureOrDate || 'Archive Record'}
-                </span>
-              </div>
-
               <h3 className="text-lg font-extrabold text-gray-900">
                 {activeLightboxItem.title}
               </h3>

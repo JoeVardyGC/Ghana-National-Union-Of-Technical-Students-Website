@@ -94,7 +94,7 @@ export default async function HomePage() {
               </h2>
               <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-4" />
               <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-8 font-medium">
-                Protecting the interests of all technical students in Ghana since 1962. We are the national representative body of students in Technical Universities and Technical and Vocational Education and Training (TVET) institutions across Ghana.
+                Representing technical students in Ghana since 1987, first as GNUPS and, since 2016, as GNUTS. We are the national representative body of students in Technical Universities and Technical and Vocational Education and Training (TVET) institutions across Ghana.
               </p>
               <Link
                 href="/about"
@@ -242,8 +242,7 @@ export default async function HomePage() {
       {/* 6. News & Events Section */}
       <NewsSection dbNews={news} />
 
-      {/* 7. Executive Leadership Section — Only display when executives exist in the system */}
-      {executives && executives.length > 0 && (
+      {/* 7. Executive Leadership Section (always shown; the menu's "Our Leadership" links here) */}
         <section id="executives-section" className="py-16 sm:py-24 bg-white border-b border-gray-200 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 pb-4 border-b border-gray-100 gap-3">
@@ -262,7 +261,15 @@ export default async function HomePage() {
               </a>
             </div>
 
-            {/* Responsive Grid: 1 per row on Mobile, 2 on Tablet, 4 on Desktop with smooth rounded-3xl corners */}
+            {!executives || executives.length === 0 ? (
+              <div className="text-center py-12 px-6 bg-[#f8f9fa] rounded-2xl sm:rounded-3xl border border-gray-200 shadow-sm max-w-xl mx-auto">
+                <div className="text-4xl mb-3">👥</div>
+                <p className="text-gray-600 text-sm">
+                  Profiles of the National Executive Committee are coming soon.
+                </p>
+              </div>
+            ) : (
+            /* Responsive Grid: 1 per row on Mobile, 2 on Tablet, 4 on Desktop with smooth rounded-3xl corners */
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-6 lg:gap-8 reveal-on-scroll">
               {executives.map((exec: any, index: number) => {
                 const bgCol = cardBgColors[index % cardBgColors.length];
@@ -312,9 +319,9 @@ export default async function HomePage() {
                 );
               })}
             </div>
+            )}
           </div>
         </section>
-      )}
 
       {/* 8. Join the Movement CTA Banner */}
       <UnionCtaBanner />

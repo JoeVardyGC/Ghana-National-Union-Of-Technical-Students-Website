@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { query } from '@/lib/db';
+import { resolveInnovationImage } from '@/lib/imageUtils';
 import { InnovationItem } from '@/components/InnovationsClient';
 import { 
   Building2, 
@@ -159,12 +160,8 @@ function extractYouTubeID(url?: string) {
   return (match && match[2].length === 11) ? match[2] : null;
 }
 
-function getImagePath(img?: string) {
-  if (!img) return null;
-  if (img.startsWith('http')) return img;
-  if (img.startsWith('uploads/')) return `/${img}`;
-  return `/uploads/innovations/${img}`;
-}
+// Shared helper: handles /uploads/… paths, inline images and full URLs
+const getImagePath = resolveInnovationImage;
 
 function getReadTime(text: string) {
   return Math.max(1, Math.ceil(text.split(/\s+/).length / 200));

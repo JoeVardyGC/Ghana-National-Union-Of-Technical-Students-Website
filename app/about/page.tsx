@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { query } from '@/lib/db';
 import ResourcesSection from '@/components/ResourcesSection';
+import ConstitutionGlance from '@/components/ConstitutionGlance';
 import { resolveImgUrl } from '@/lib/imageUtils';
 import { 
   Target, 
@@ -195,7 +196,7 @@ export default async function AboutPage() {
 
                 <div className="prose text-gray-700 text-base sm:text-lg leading-relaxed space-y-4">
                   <p className="font-semibold text-[#014900]">
-                    The Ghana National Union of Technical Students (GNUTS) is the sole democratic, non-partisan representative council for all technical and vocational education students across Ghana.
+                    The Ghana National Union of Technical Students (GNUTS) is a democratic, non-partisan, independent and progressive mass movement of students in Technical Universities, Polytechnics and Technical and Vocational institutions in Ghana, and the official mouthpiece and sole representative of its members.
                   </p>
                   <p className="whitespace-pre-line">
                     {aboutData.who_we_are_content || `From advocating for industrial training allowances and modern laboratory equipment to participating in national education policy reform, GNUTS empowers technical students to become skilled engineers, tech pioneers, and industrial leaders.`}
@@ -409,6 +410,9 @@ export default async function AboutPage() {
             </div>
           </div>
         </section>
+
+        {/* 5b. Constitution at a Glance — facts from the GNUTS Constitution */}
+        <ConstitutionGlance />
 
         {/* 6. Executive Leadership — Only display when executives exist in the system */}
         {executives && executives.length > 0 && (

@@ -288,7 +288,7 @@ export default function HeroSlider({
               </div>
               <div>
                 <h4 className="text-xl sm:text-2xl font-extrabold text-[#014900] leading-none">
-                  <AnimatedCounter value={200000 + (new Date().getFullYear() - 2026) * 40000} suffix="+" />
+                  <AnimatedCounter value={200000} suffix="+" />
                 </h4>
                 <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mt-1">Students Represented</p>
               </div>
@@ -314,9 +314,10 @@ export default function HeroSlider({
               </div>
               <div>
                 <h4 className="text-xl sm:text-2xl font-extrabold text-[#014900] leading-none">
-                  <AnimatedCounter value={new Date().getFullYear() - 1992} suffix="+ Yrs" />
+                  {/* Founded in 1987 as GNUPS (renamed GNUTS in 2016) */}
+                  <AnimatedCounter value={new Date().getFullYear() - 1987} suffix="+ Yrs" />
                 </h4>
-                <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mt-1">National Advocacy</p>
+                <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mt-1">Years of Advocacy</p>
               </div>
             </div>
           </div>
