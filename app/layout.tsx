@@ -11,6 +11,14 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
+// Share preview (WhatsApp, Facebook, X, LinkedIn): the union's logo on a white card
+const OG_LOGO = {
+  url: '/images/og-logo.png',
+  width: 1200,
+  height: 630,
+  alt: 'Ghana National Union of Technical Students (GNUTS) logo',
+};
+
 const SITE_DESCRIPTION =
   'Official portal of the Ghana National Union of Technical Students (GNUTS). Serving technical university and TVET students across Ghana.';
 
@@ -28,13 +36,13 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
     url: '/',
     locale: 'en_GH',
-    images: [{ url: '/images/carousel_1.jpg', width: 1170, height: 782, alt: 'GNUTS student leaders' }],
+    images: [OG_LOGO],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'GNUTS | Ghana National Union of Technical Students',
     description: SITE_DESCRIPTION,
-    images: ['/images/carousel_1.jpg'],
+    images: [OG_LOGO.url],
   },
   // Icons come from app/favicon.ico, app/icon.png and app/apple-icon.png
 };

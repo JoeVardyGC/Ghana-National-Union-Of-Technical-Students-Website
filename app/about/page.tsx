@@ -96,7 +96,7 @@ export const metadata: Metadata = {
     title: 'About GNUTS | History, Mission & Leadership',
     description: 'History, mission and advocacy of the Ghana National Union of Technical Students.',
     url: '/about',
-    images: ['/images/carousel_1.jpg'],
+    images: ['/images/og-logo.png'],
   },
 };
 

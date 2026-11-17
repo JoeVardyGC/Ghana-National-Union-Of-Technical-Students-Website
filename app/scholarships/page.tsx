@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     title: 'Scholarships & Bursaries for Technical Students | GNUTS Ghana',
     description: 'Active scholarships and funding opportunities for technical and TVET students in Ghana.',
     url: '/scholarships',
-    images: ['/images/carousel_1.jpg'],
+    images: ['/images/og-logo.png'],
   },
 };
 

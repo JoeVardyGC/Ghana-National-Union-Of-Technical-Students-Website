@@ -18,6 +18,21 @@ export const metadata: Metadata = {
   description:
     'Official website of GNUTS, the Ghana National Union of Technical Students: scholarships, student innovations, news, executives and advocacy for technical university and TVET students across Ghana.',
   alternates: { canonical: '/' },
+  // When gnuts.org itself is shared, the preview shows the union's logo
+  openGraph: {
+    type: 'website',
+    url: '/',
+    siteName: 'GNUTS - Ghana National Union of Technical Students',
+    title: 'GNUTS | Ghana National Union of Technical Students',
+    description: 'Official website of the Ghana National Union of Technical Students (GNUTS).',
+    images: [{ url: '/images/og-logo.png', width: 1200, height: 630, alt: 'GNUTS logo' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'GNUTS | Ghana National Union of Technical Students',
+    description: 'Official website of the Ghana National Union of Technical Students (GNUTS).',
+    images: ['/images/og-logo.png'],
+  },
 };
 
 /** "2026-12-31T00:00:00.000Z" -> "31 Dec 2026" (falls back to the raw date text) */
