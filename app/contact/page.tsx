@@ -48,7 +48,7 @@ export default async function ContactPage() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight drop-shadow-md uppercase">
             {heroTitle}
           </h1>
-          <p className="text-gray-100 text-xs sm:text-sm md:text-base max-w-xl mx-auto font-medium drop-shadow-sm">
+          <p className="text-gray-100 text-sm sm:text-base max-w-xl mx-auto font-medium drop-shadow-sm">
             {heroSubtitle}
           </p>
         </div>
