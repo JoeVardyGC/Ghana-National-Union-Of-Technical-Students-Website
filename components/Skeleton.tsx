@@ -17,7 +17,7 @@ export default function Skeleton({ className = '', variant = 'rectangular' }: Sk
 
 export function NewsCardSkeleton() {
   return (
-    <div className="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden flex flex-col h-full animate-pulse">
+    <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden flex flex-col h-full">
       {/* Image Skeleton */}
       <div className="w-full h-64 sm:h-[380px] lg:h-[400px] bg-gray-200" />
       {/* Content Skeleton */}
@@ -39,7 +39,7 @@ export function NewsCardSkeleton() {
 
 export function ExecutiveCardSkeleton() {
   return (
-    <div className="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden flex flex-col animate-pulse">
+    <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden flex flex-col">
       <div className="w-full aspect-[4/5] bg-gray-200" />
       <div className="p-4 text-center space-y-2">
         <div className="h-5 bg-gray-200 rounded w-3/4 mx-auto" />

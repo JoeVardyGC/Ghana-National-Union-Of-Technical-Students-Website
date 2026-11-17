@@ -160,7 +160,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#f8f9fa]">
+    <div className="flex flex-col min-h-screen bg-[#FAF9F6]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(newsJsonLd).replace(/</g, '\\u003c') }}
@@ -175,8 +175,8 @@ export default async function NewsDetailPage({ params }: PageProps) {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url('${safeBgUrl}')` }}
         />
-        {/* Semi-transparent Green Overlay (55% Green Opacity) */}
-        <div className="absolute inset-0 bg-[#014900]/55 backdrop-brightness-90" />
+        {/* Dark scrim so the title stays readable on any photo */}
+        <div className="absolute inset-0 bg-[#0c1a10]/60" />
 
         <div className="max-w-5xl mx-auto relative z-10">
           {/* Breadcrumb Navigation */}
@@ -197,19 +197,19 @@ export default async function NewsDetailPage({ params }: PageProps) {
           </Link>
 
           <div>
-            <span className="px-3.5 py-1 text-xs font-extrabold rounded-full uppercase tracking-wider bg-[#D9A000] text-[#014900] inline-block mb-4 shadow-sm">
+            <span className="px-3.5 py-1 text-xs font-semibold rounded-full uppercase tracking-wider bg-[#D9A000] text-[#014900] inline-block mb-4 shadow-sm">
               {article.category || 'PRESS RELEASE'}
             </span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-tight tracking-tight mb-4 drop-shadow-md uppercase">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight tracking-tight mb-4 drop-shadow-md">
             {article.title}
           </h1>
 
           {/* Author & Publication Metadata Bar */}
           <div className="flex flex-wrap items-center gap-4 sm:gap-8 text-xs sm:text-sm text-gray-200 pt-5 border-t border-white/20">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-full bg-[#D9A000] text-[#014900] flex items-center justify-center font-extrabold text-sm shadow-md">
+              <div className="w-9 h-9 rounded-full bg-[#D9A000] text-[#014900] flex items-center justify-center font-semibold text-sm shadow-md">
                 {article.author.charAt(0)}
               </div>
               <div>
@@ -236,25 +236,24 @@ export default async function NewsDetailPage({ params }: PageProps) {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
             {/* Article Main Body Column (8 Cols) */}
-            <div className="lg:col-span-8 bg-white p-6 sm:p-10 rounded-3xl shadow-sm border border-gray-200 space-y-8">
+            <div className="lg:col-span-8 bg-white p-6 sm:p-10 rounded-xl shadow-sm border border-gray-200 space-y-8">
               
               {/* 1. TOP: Block Image / Multi-Image Gallery */}
               {allImages.length > 0 && (
                 <div className="mb-8 space-y-4">
                   {/* Primary Featured Image Poster */}
-                  <div id="article-main-image" className="rounded-2xl overflow-hidden border border-gray-200 bg-gray-900 max-h-[550px] flex items-center justify-center relative shadow-sm">
+                  <div id="article-main-image" className="rounded-lg overflow-hidden border border-gray-200 bg-gray-900 max-h-[550px] flex items-center justify-center relative shadow-sm">
                     <img
                       src={allImages[0]}
                       alt={article.title}
                       className="w-full h-auto max-h-[550px] object-contain"
                     />
-                    <div className="absolute bottom-0 inset-x-0 h-1.5 bg-[#D9A000] z-10" />
                   </div>
 
                   {/* Multi-Image Gallery (If 2 or more images exist) */}
                   {allImages.length > 1 && (
                     <div>
-                      <div className="flex items-center gap-2 mb-3 text-xs font-bold text-gray-500 uppercase tracking-wider">
+                      <div className="flex items-center gap-2 mb-3 text-xs font-bold text-gray-500">
                         <Images className="w-4 h-4 text-[#014900]" />
                         <span>EVENT GALLERY ({allImages.length} PHOTOS)</span>
                       </div>
@@ -262,12 +261,12 @@ export default async function NewsDetailPage({ params }: PageProps) {
                         {allImages.map((img, idx) => (
                           <div
                             key={idx}
-                            className="h-32 sm:h-36 bg-gray-900 rounded-2xl overflow-hidden border border-gray-200 group relative shadow-xs"
+                            className="h-32 sm:h-36 bg-gray-900 rounded-lg overflow-hidden border border-gray-200 group relative shadow-xs"
                           >
                             <img
                               src={img}
                               alt={`${article.title} - Photo ${idx + 1}`}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
                             />
                             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
                           </div>
@@ -294,15 +293,15 @@ export default async function NewsDetailPage({ params }: PageProps) {
               {/* 3. UNDER CONTENT: Tags / Hashtags */}
               <div className="mt-8 pt-6 border-t border-gray-100 flex items-center gap-2">
                 <Tag className="w-4 h-4 text-[#014900]" />
-                <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">TAGS:</span>
+                <span className="text-xs font-bold text-gray-500">TAGS:</span>
                 <div className="flex flex-wrap gap-2">
-                  <span className="text-xs font-bold text-[#014900] bg-[#f8f9fa] px-3 py-1 rounded-full border border-gray-200">
+                  <span className="text-xs font-bold text-[#014900] bg-[#FAF9F6] px-3 py-1 rounded-full border border-gray-200">
                     #GNUTS
                   </span>
-                  <span className="text-xs font-bold text-[#014900] bg-[#f8f9fa] px-3 py-1 rounded-full border border-gray-200">
+                  <span className="text-xs font-bold text-[#014900] bg-[#FAF9F6] px-3 py-1 rounded-full border border-gray-200">
                     #ChooseTVETFirst
                   </span>
-                  <span className="text-xs font-bold text-[#014900] bg-[#f8f9fa] px-3 py-1 rounded-full border border-gray-200">
+                  <span className="text-xs font-bold text-[#014900] bg-[#FAF9F6] px-3 py-1 rounded-full border border-gray-200">
                     #BeTheDifference
                   </span>
                 </div>
@@ -318,8 +317,8 @@ export default async function NewsDetailPage({ params }: PageProps) {
             {/* Sidebar (4 Cols) */}
             <div className="lg:col-span-4 space-y-8">
               {/* Recent News & Events Widget */}
-              <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-200">
-                <h3 className="text-lg font-extrabold text-[#014900] pb-3 mb-5 border-b-2 border-[#D9A000] uppercase">
+              <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <h3 className="text-lg font-semibold text-[#014900] pb-3 mb-5 border-b-2 border-[#D9A000]">
                   Recent News & Events
                 </h3>
 
@@ -330,15 +329,15 @@ export default async function NewsDetailPage({ params }: PageProps) {
                       href={`/blog/${item.id}`}
                       className="group flex items-start gap-3.5 pb-4 border-b border-gray-100 last:border-0 last:pb-0"
                     >
-                      <div className="w-20 h-20 rounded-2xl overflow-hidden bg-gray-900 shrink-0 border border-gray-200">
+                      <div className="w-20 h-20 rounded-lg overflow-hidden bg-gray-900 shrink-0 border border-gray-200">
                         <img
                           src={resolveImgUrl(item.image)}
                           alt={item.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
                         />
                       </div>
                       <div>
-                        <h4 className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-[#014900] transition-colors line-clamp-2 leading-snug uppercase">
+                        <h4 className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-[#014900] transition-colors line-clamp-2 leading-snug">
                           {item.title}
                         </h4>
                         <span className="text-xs text-gray-400 font-medium mt-1.5 block">
@@ -351,9 +350,9 @@ export default async function NewsDetailPage({ params }: PageProps) {
               </div>
 
               {/* Secretariat Press Office Box */}
-              <div className="bg-[#014900] text-white p-6 sm:p-7 rounded-3xl shadow-md space-y-4 border border-[#014900]">
+              <div className="bg-[#014900] text-white p-6 sm:p-7 rounded-xl shadow-md space-y-4 border border-[#014900]">
                 <div>
-                  <h4 className="font-extrabold text-base text-[#D9A000] uppercase">GNUTS Press Office</h4>
+                  <h4 className="font-semibold text-base text-[#D9A000]">GNUTS Press Office</h4>
                 </div>
                 <p className="text-xs text-gray-200 leading-relaxed font-medium">
                   For official press statements, media accreditation, or summit partnership inquiries, reach out to the National Secretariat.
@@ -374,9 +373,9 @@ export default async function NewsDetailPage({ params }: PageProps) {
                 </div>
                 <Link
                   href="/contact"
-                  className="inline-block w-full text-center py-3 bg-[#D9A000] text-[#014900] text-xs font-extrabold rounded-2xl hover:bg-white transition-colors uppercase tracking-wider shadow-sm"
+                  className="inline-block w-full text-center py-3 bg-[#D9A000] text-[#014900] text-xs font-semibold rounded-lg hover:bg-white transition-colors shadow-sm"
                 >
-                  Contact Secretariat →
+                  Contact the secretariat
                 </Link>
               </div>
             </div>

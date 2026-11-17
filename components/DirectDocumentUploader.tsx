@@ -104,7 +104,7 @@ export default function DirectDocumentUploader({
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <label className="text-xs font-black uppercase tracking-wider text-gray-700">
+        <label className="text-xs font-semibold text-gray-700">
           {label} *
         </label>
         <button
@@ -124,12 +124,12 @@ export default function DirectDocumentUploader({
             value={urlDraft}
             onChange={(e) => setUrlDraft(e.target.value)}
             placeholder="https://example.com/docs/constitution.pdf"
-            className="flex-1 px-3.5 py-2.5 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-medium outline-none focus:border-[#014900] focus:bg-white"
+            className="flex-1 px-3.5 py-2.5 bg-gray-50 rounded-lg border border-gray-200 text-xs font-medium outline-none focus:border-[#014900] focus:bg-white"
           />
           <button
             type="button"
             onClick={handleUrlSubmit}
-            className="px-4 py-2.5 bg-[#014900] hover:bg-[#D9A000] text-white hover:text-[#014900] rounded-2xl text-xs font-black uppercase tracking-wider transition-all cursor-pointer"
+            className="px-4 py-2.5 bg-[#014900] hover:bg-[#D9A000] text-white hover:text-[#014900] rounded-lg text-xs font-semibold transition-all cursor-pointer"
           >
             Attach
           </button>
@@ -150,7 +150,7 @@ export default function DirectDocumentUploader({
 
           {filePath ? (
             /* Document Attached Preview Card */
-            <div className="p-3.5 bg-emerald-50/60 rounded-2xl border border-emerald-200 flex items-center justify-between gap-3">
+            <div className="p-3.5 bg-emerald-50/60 rounded-lg border border-emerald-200 flex items-center justify-between gap-3">
               <div className="flex items-center gap-3 min-w-0">
                 <div className="w-10 h-10 rounded-xl bg-emerald-100 text-[#014900] flex items-center justify-center shrink-0 border border-emerald-200">
                   <FileCheck className="w-5 h-5" />
@@ -189,7 +189,7 @@ export default function DirectDocumentUploader({
               onClick={() => fileInputRef.current?.click()}
               onDragOver={handleDragOver}
               onDrop={handleDrop}
-              className={`p-6 border-2 border-dashed rounded-2xl text-center cursor-pointer transition-all flex flex-col items-center justify-center gap-2 ${
+              className={`p-6 border-2 border-dashed rounded-lg text-center cursor-pointer transition-all flex flex-col items-center justify-center gap-2 ${
                 isUploading
                   ? 'bg-emerald-50/50 border-[#014900]'
                   : 'bg-gray-50/70 hover:bg-emerald-50/30 border-gray-300 hover:border-[#014900]'
@@ -202,7 +202,7 @@ export default function DirectDocumentUploader({
                 </>
               ) : (
                 <>
-                  <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#014900] flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-lg bg-emerald-50 text-[#014900] flex items-center justify-center">
                     <FileText className="w-5 h-5" />
                   </div>
                   <div>

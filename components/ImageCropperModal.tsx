@@ -241,8 +241,8 @@ export default function ImageCropperModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden my-6 flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 overflow-y-auto">
+      <div className="relative w-full max-w-4xl bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden my-6 flex flex-col max-h-[92vh]">
         
         {/* Modal Header */}
         <div className="px-6 py-4.5 bg-[#014900] text-white flex items-center justify-between border-b border-emerald-800 shrink-0">
@@ -251,7 +251,7 @@ export default function ImageCropperModal({
               <Crop className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-extrabold text-base sm:text-lg text-white leading-tight">
+              <h3 className="font-semibold text-base sm:text-lg text-white leading-tight">
                 {title}
               </h3>
               <p className="text-xs text-emerald-200">
@@ -273,7 +273,7 @@ export default function ImageCropperModal({
           
           {/* Aspect Ratio Selector Chips */}
           <div className="space-y-2">
-            <label className="text-xs font-black uppercase text-gray-700 tracking-wider block">
+            <label className="text-xs font-bold text-gray-700 block">
               Frame Aspect Ratio
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
@@ -287,13 +287,13 @@ export default function ImageCropperModal({
                       setAspectRatio(preset.value);
                       setOffset({ x: 0, y: 0 });
                     }}
-                    className={`p-2.5 rounded-2xl border text-left transition-all ${
+                    className={`p-2.5 rounded-lg border text-left transition-all ${
                       isSelected
                         ? 'bg-[#014900] text-white border-[#014900] shadow-md shadow-[#014900]/20'
                         : 'bg-gray-50 hover:bg-gray-100 text-gray-700 border-gray-200'
                     }`}
                   >
-                    <div className="font-extrabold text-xs leading-tight">
+                    <div className="font-semibold text-xs leading-tight">
                       {preset.label}
                     </div>
                     <div className={`text-[10px] mt-0.5 leading-snug ${isSelected ? 'text-emerald-200' : 'text-gray-400'}`}>
@@ -309,7 +309,7 @@ export default function ImageCropperModal({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             
             {/* Left: Interactive Canvas Pan & Zoom Viewport (8 Cols) */}
-            <div className="lg:col-span-7 bg-gray-900 rounded-3xl p-4 flex flex-col items-center justify-center min-h-[380px] sm:min-h-[420px] relative overflow-hidden select-none shadow-inner border border-gray-800">
+            <div className="lg:col-span-7 bg-gray-900 rounded-xl p-4 flex flex-col items-center justify-center min-h-[380px] sm:min-h-[420px] relative overflow-hidden select-none shadow-inner border border-gray-800">
               
               {/* Crop Frame Box */}
               <div
@@ -321,7 +321,7 @@ export default function ImageCropperModal({
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
-                className="relative overflow-hidden bg-black/60 rounded-2xl border-2 border-[#D9A000] cursor-grab active:cursor-grabbing shadow-2xl flex items-center justify-center"
+                className="relative overflow-hidden bg-black/60 rounded-lg border-2 border-[#D9A000] cursor-grab active:cursor-grabbing shadow-lg flex items-center justify-center"
                 style={{
                   width: '100%',
                   maxWidth: '360px',
@@ -359,7 +359,7 @@ export default function ImageCropperModal({
                 </div>
 
                 {/* Drag Hint Badge */}
-                <div className="absolute bottom-2.5 left-2.5 bg-black/70 backdrop-blur-sm text-white text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 pointer-events-none shadow-xs">
+                <div className="absolute bottom-2.5 left-2.5 bg-black/70 text-white text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 pointer-events-none shadow-xs">
                   <Move className="w-3 h-3 text-[#D9A000]" />
                   <span>Click & Drag to reposition</span>
                 </div>
@@ -367,12 +367,12 @@ export default function ImageCropperModal({
             </div>
 
             {/* Right: Live Executive Card Preview & Zoom Controls (5 Cols) */}
-            <div className="lg:col-span-5 space-y-5 bg-gray-50/80 p-5 rounded-3xl border border-gray-200">
+            <div className="lg:col-span-5 space-y-5 bg-gray-50/80 p-5 rounded-xl border border-gray-200">
               
               {/* Zoom & Reset Toolbar */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-black uppercase text-gray-700 tracking-wider flex items-center gap-1.5">
+                  <label className="text-xs font-bold text-gray-700 flex items-center gap-1.5">
                     <Maximize2 className="w-3.5 h-3.5 text-[#014900]" />
                     <span>Zoom Level: {Math.round(zoom * 100)}%</span>
                   </label>
@@ -418,18 +418,18 @@ export default function ImageCropperModal({
               {/* Live Preview on Website Card */}
               <div className="pt-3 border-t border-gray-200">
                 <div className="flex items-center justify-between mb-2.5">
-                  <span className="text-xs font-black uppercase text-gray-700 tracking-wider flex items-center gap-1.5">
+                  <span className="text-xs font-bold text-gray-700 flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5 text-[#D9A000]" />
                     <span>Live Public Card Preview</span>
                   </span>
-                  <span className="text-[10px] font-bold text-gray-400 uppercase">
+                  <span className="text-[10px] font-bold text-gray-400">
                     Website Frame
                   </span>
                 </div>
 
                 {/* Simulated Executive Card Preview */}
-                <div className="w-48 mx-auto bg-white rounded-3xl border border-gray-200 shadow-md overflow-hidden">
-                  <div className="aspect-[4/5] w-full bg-[#014900] rounded-t-3xl overflow-hidden relative">
+                <div className="w-48 mx-auto bg-white rounded-xl border border-gray-200 shadow-md overflow-hidden">
+                  <div className="aspect-[4/5] w-full bg-[#014900] rounded-t-xl overflow-hidden relative">
                     {previewDataUrl ? (
                       <img
                         src={previewDataUrl}
@@ -441,13 +441,12 @@ export default function ImageCropperModal({
                         Rendering...
                       </div>
                     )}
-                    <div className="absolute bottom-0 inset-x-0 h-1 bg-[#D9A000]" />
                   </div>
-                  <div className="p-3 text-center bg-white rounded-b-3xl">
-                    <div className="text-xs font-black text-[#014900] truncate">
+                  <div className="p-3 text-center bg-white rounded-b-xl">
+                    <div className="text-xs font-bold text-[#014900] truncate">
                       Executive Officer
                     </div>
-                    <div className="text-[10px] font-bold text-[#D9A000] uppercase truncate mt-0.5">
+                    <div className="text-[10px] font-bold text-[#D9A000] truncate mt-0.5">
                       National Portfolio
                     </div>
                   </div>
@@ -469,7 +468,7 @@ export default function ImageCropperModal({
               type="button"
               onClick={onClose}
               disabled={isProcessing}
-              className="flex-1 sm:flex-none px-5 py-2.5 rounded-2xl border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 font-bold text-xs uppercase tracking-wider transition-all disabled:opacity-50"
+              className="flex-1 sm:flex-none px-5 py-2.5 rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 font-bold text-xs transition-all disabled:opacity-50"
             >
               Cancel
             </button>
@@ -477,7 +476,7 @@ export default function ImageCropperModal({
               type="button"
               onClick={handleSaveCrop}
               disabled={isProcessing || !imgLoaded}
-              className="flex-1 sm:flex-none px-6 py-2.5 rounded-2xl bg-[#014900] text-white hover:bg-[#D9A000] hover:text-[#014900] font-black text-xs uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 disabled:opacity-50"
+              className="flex-1 sm:flex-none px-6 py-2.5 rounded-lg bg-[#014900] text-white hover:bg-[#D9A000] hover:text-[#014900] font-bold text-xs transition-all shadow-md flex items-center justify-center gap-2 disabled:opacity-50"
             >
               {isProcessing ? (
                 <>

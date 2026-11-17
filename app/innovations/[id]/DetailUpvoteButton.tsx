@@ -103,7 +103,7 @@ export default function DetailUpvoteButton({
           aria-pressed={isLiked}
           aria-label={`${isLiked ? 'Unlike' : 'Like'} this project (${count} ${count === 1 ? 'like' : 'likes'})`}
           title={isLiked ? 'Unlike Project' : 'Like Project'}
-          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-extrabold shadow-md backdrop-blur-sm transition-all duration-300 active:scale-95 cursor-pointer disabled:cursor-wait ${
+          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold shadow-md transition-all duration-300 cursor-pointer disabled:cursor-wait ${
             isLiked
               ? 'bg-[#D9A000] text-[#014900]'
               : 'bg-white/95 text-gray-800 hover:bg-[#D9A000] hover:text-[#014900]'
@@ -128,7 +128,7 @@ export default function DetailUpvoteButton({
         onClick={handleToggleLike}
         disabled={isSaving}
         aria-pressed={isLiked}
-        className={`inline-flex items-center gap-2 text-xs sm:text-sm font-extrabold transition-all duration-300 active:scale-95 bg-transparent border-0 p-0 shadow-none outline-none cursor-pointer disabled:cursor-wait ${
+        className={`inline-flex items-center gap-2 text-xs sm:text-sm font-semibold transition-all duration-300 bg-transparent border-0 p-0 shadow-none outline-none cursor-pointer disabled:cursor-wait ${
           isLiked
             ? 'text-[#D9A000]'
             : 'text-gray-200 hover:text-[#D9A000]'

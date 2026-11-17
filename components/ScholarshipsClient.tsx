@@ -159,7 +159,7 @@ export default function ScholarshipsClient({
     <div className="py-6 sm:py-10 lg:py-16 space-y-8 sm:space-y-12 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 font-sans w-full max-w-full overflow-x-hidden min-w-0">
 
       {/* 2. LIVE SEARCH & MULTI-TAG FILTER BAR */}
-      <section className="bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl shadow-xs border border-gray-200 space-y-4 w-full min-w-0">
+      <section className="bg-white p-4 sm:p-6 rounded-lg sm:rounded-xl shadow-xs border border-gray-200 space-y-4 w-full min-w-0">
         <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3.5 sm:gap-4">
           {/* Live Search Input */}
           <div className="relative w-full lg:w-96 min-w-0">
@@ -169,7 +169,7 @@ export default function ScholarshipsClient({
               placeholder="Search GETFund, SLTF, STEM, Accra..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl sm:rounded-2xl text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#014900] focus:bg-white transition-all font-medium"
+              className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl sm:rounded-lg text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#014900] focus:bg-white transition-all font-medium"
             />
           </div>
 
@@ -178,7 +178,7 @@ export default function ScholarshipsClient({
             <button
               type="button"
               onClick={() => setSelectedCategory('ALL')}
-              className={`px-3.5 sm:px-4 py-2 text-xs sm:text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all border cursor-pointer ${
+              className={`px-3.5 sm:px-4 py-2 text-xs sm:text-xs font-semibold rounded-xl sm:rounded-lg transition-all border cursor-pointer ${
                 selectedCategory === 'ALL'
                   ? 'bg-[#014900] text-white border-[#014900] shadow-xs'
                   : 'bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200'
@@ -189,7 +189,7 @@ export default function ScholarshipsClient({
             <button
               type="button"
               onClick={() => setSelectedCategory('SCHOLARSHIPS')}
-              className={`px-3.5 sm:px-4 py-2 text-xs sm:text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all border cursor-pointer ${
+              className={`px-3.5 sm:px-4 py-2 text-xs sm:text-xs font-semibold rounded-xl sm:rounded-lg transition-all border cursor-pointer ${
                 selectedCategory === 'SCHOLARSHIPS'
                   ? 'bg-[#014900] text-white border-[#014900] shadow-xs'
                   : 'bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200'
@@ -200,7 +200,7 @@ export default function ScholarshipsClient({
             <button
               type="button"
               onClick={() => setSelectedCategory('INTERNSHIPS')}
-              className={`px-3.5 sm:px-4 py-2 text-xs sm:text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all border cursor-pointer ${
+              className={`px-3.5 sm:px-4 py-2 text-xs sm:text-xs font-semibold rounded-xl sm:rounded-lg transition-all border cursor-pointer ${
                 selectedCategory === 'INTERNSHIPS'
                   ? 'bg-[#014900] text-white border-[#014900] shadow-xs'
                   : 'bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200'
@@ -211,7 +211,7 @@ export default function ScholarshipsClient({
             <button
               type="button"
               onClick={() => setSelectedCategory('SKILL_CAMPS')}
-              className={`px-3.5 sm:px-4 py-2 text-xs sm:text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all border cursor-pointer ${
+              className={`px-3.5 sm:px-4 py-2 text-xs sm:text-xs font-semibold rounded-xl sm:rounded-lg transition-all border cursor-pointer ${
                 selectedCategory === 'SKILL_CAMPS'
                   ? 'bg-[#014900] text-white border-[#014900] shadow-xs'
                   : 'bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200'
@@ -227,7 +227,7 @@ export default function ScholarshipsClient({
       {(selectedCategory === 'ALL' || selectedCategory === 'SCHOLARSHIPS') && (
         <section className="space-y-6 sm:space-y-8">
           <div className="text-center">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight relative inline-block pb-3">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#16201A] relative inline-block pb-3">
               Available Scholarships
               <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 h-1 bg-[#D9A000]" />
             </h2>
@@ -237,8 +237,7 @@ export default function ScholarshipsClient({
           </div>
 
           {filteredScholarships.length === 0 ? (
-            <div className="text-center py-12 px-6 bg-white rounded-2xl sm:rounded-3xl border border-gray-200 shadow-sm max-w-xl mx-auto">
-              <div className="text-4xl mb-3">🎓</div>
+            <div className="text-center py-12 px-6 bg-white rounded-lg sm:rounded-xl border border-gray-200 shadow-sm max-w-xl mx-auto">
               <p className="text-gray-500 font-medium text-xs sm:text-sm">
                 {searchQuery ? `No matching scholarships found for "${searchQuery}". Try clearing your search term.` : 'No active scholarships currently available. Check back soon for new bursary announcements.'}
               </p>
@@ -247,13 +246,13 @@ export default function ScholarshipsClient({
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
               {filteredScholarships.map((item, idx) => {
                 const urgency = getUrgencyInfo(item.deadline);
-                const isGold = idx % 2 === 1;
+                const isGold = false;
 
                 return (
                   <div
                     key={item.id}
                     id={`scholarship-${item.id}`}
-                    className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-7 shadow-sm hover:shadow-xl border border-gray-200 flex flex-col justify-between transition-all duration-300 group min-w-0 w-full scroll-mt-28"
+                    className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 lg:p-7 shadow-sm hover:shadow-md border border-gray-200 flex flex-col justify-between transition-all duration-300 group min-w-0 w-full scroll-mt-28"
                   >
                     <div className="space-y-3 sm:space-y-4 min-w-0">
                       {/* Badge Header: Active Badge + Urgency Pill */}
@@ -265,8 +264,8 @@ export default function ScholarshipsClient({
                         </span>
 
                         {urgency && (
-                          <span className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-extrabold uppercase tracking-wider rounded-full text-white ${
-                            urgency.isUrgent ? 'bg-[#D9A000] animate-pulse' : 'bg-amber-600'
+                          <span className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-full text-white ${
+                            urgency.isUrgent ? 'bg-[#D9A000]' : 'bg-amber-600'
                           }`}>
                             <AlertCircle className="w-3 h-3 shrink-0" />
                             <span>{urgency.text}</span>
@@ -275,7 +274,7 @@ export default function ScholarshipsClient({
                       </div>
 
                       {/* Title */}
-                      <h3 className={`text-base sm:text-lg lg:text-xl font-extrabold text-gray-900 leading-snug break-words transition-colors ${
+                      <h3 className={`text-base sm:text-lg lg:text-xl font-semibold text-gray-900 leading-snug break-words transition-colors ${
                         isGold ? 'group-hover:text-gold-ink' : 'group-hover:text-[#014900]'
                       }`}>
                         {item.title}
@@ -296,7 +295,7 @@ export default function ScholarshipsClient({
                           >
                             <div className="flex items-center gap-2 min-w-0">
                               <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#014900] shrink-0" />
-                              <span className="text-xs sm:text-xs font-extrabold text-[#014900] uppercase tracking-wider truncate">
+                              <span className="text-xs sm:text-xs font-semibold text-[#014900] truncate">
                                 {expandedRequirements[item.id] ? 'Hide Requirements' : 'View Requirements'}
                               </span>
                             </div>
@@ -306,7 +305,7 @@ export default function ScholarshipsClient({
                           </button>
 
                           {expandedRequirements[item.id] && (
-                            <div className="mt-2 p-3 sm:p-4 bg-amber-50/40 border border-amber-200/70 rounded-xl sm:rounded-2xl space-y-2.5 animate-fadeIn">
+                            <div className="mt-2 p-3 sm:p-4 bg-amber-50/40 border border-amber-200/70 rounded-xl sm:rounded-lg space-y-2.5 animate-fadeIn">
                               {(() => {
                                 const reqLines = item.requirements
                                   ? item.requirements.split(/\r?\n/).map(l => l.trim()).filter(Boolean)
@@ -317,11 +316,11 @@ export default function ScholarshipsClient({
                                 return (
                                   <>
                                     <div className="flex items-center justify-between gap-2 border-b border-amber-200/50 pb-2">
-                                      <h4 className="text-xs sm:text-xs font-extrabold text-[#014900] uppercase tracking-wider flex items-center gap-1.5 truncate">
+                                      <h4 className="text-xs sm:text-xs font-semibold text-[#014900] flex items-center gap-1.5 truncate">
                                         <FileText className="w-3.5 h-3.5 text-[#D9A000] shrink-0" />
                                         <span className="truncate">Application Checklist</span>
                                       </h4>
-                                      <span className={`text-xs sm:text-xs font-extrabold uppercase px-2 py-0.5 rounded-full shrink-0 ${
+                                      <span className={`text-xs sm:text-xs font-semibold uppercase px-2 py-0.5 rounded-full shrink-0 ${
                                         completedCount === totalReqs && totalReqs > 0
                                           ? 'bg-emerald-600 text-white'
                                           : 'bg-[#D9A000] text-[#014900]'
@@ -390,7 +389,7 @@ export default function ScholarshipsClient({
                           href={item.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className={`inline-flex items-center justify-center gap-2 w-full px-4 sm:px-6 py-2.5 sm:py-3 text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all duration-300 shadow-xs hover:shadow ${
+                          className={`inline-flex items-center justify-center gap-2 w-full px-4 sm:px-6 py-2.5 sm:py-3 text-xs font-semibold rounded-xl sm:rounded-lg transition-all duration-300 shadow-xs hover:shadow ${
                             isGold ? 'bg-[#D9A000] hover:bg-[#b88800] text-[#014900]' : 'bg-[#014900] hover:bg-[#013300] text-white'
                           }`}
                         >
@@ -409,7 +408,7 @@ export default function ScholarshipsClient({
 
       {/* 4. POPUP MODAL FOR DIRECT STUDENT BROADCAST ALERTS */}
       {popupModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 bg-black/65 backdrop-blur-sm animate-fadeIn font-sans">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 bg-black/65 animate-fadeIn font-sans">
           {/* Modal Background Dismiss Overlay */}
           <div 
             className="fixed inset-0" 
@@ -417,12 +416,12 @@ export default function ScholarshipsClient({
           />
 
           {/* Modal Content Window */}
-          <div className="bg-white border border-[#014900] p-5 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl shadow-2xl relative max-w-4xl w-full z-10 animate-fadeInUp">
+          <div className="bg-white border border-[#014900] p-5 sm:p-8 lg:p-10 rounded-lg sm:rounded-xl shadow-lg relative max-w-4xl w-full z-10 animate-fadeInUp">
             {/* Close Button (✕) */}
             <button
               type="button"
               onClick={() => setPopupModalOpen(false)}
-              className="absolute top-3.5 right-3.5 text-gray-400 hover:text-gray-900 font-extrabold text-xl sm:text-2xl p-1 transition-colors leading-none cursor-pointer"
+              className="absolute top-3.5 right-3.5 text-gray-400 hover:text-gray-900 font-semibold text-xl sm:text-2xl p-1 transition-colors leading-none cursor-pointer"
               aria-label="Close Popup"
             >
               ✕
@@ -430,11 +429,11 @@ export default function ScholarshipsClient({
 
             <div className="flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8">
               <div className="space-y-2.5 text-center lg:text-left max-w-2xl">
-                <div className="inline-flex items-center gap-2 text-xs font-extrabold text-[#014900] uppercase tracking-wider">
+                <div className="inline-flex items-center gap-2 text-xs font-semibold text-[#014900]">
                   <Bell className="w-4 h-4 text-[#D9A000]" />
                   <span>DIRECT STUDENT BROADCAST ALERTS</span>
                 </div>
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-gray-900 tracking-tight">
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-gray-900 tracking-tight">
                   Never Miss a Scholarship Deadline
                 </h3>
                 <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-medium">
@@ -449,11 +448,11 @@ export default function ScholarshipsClient({
                   placeholder="Enter Phone Number or Email..."
                   value={alertPhoneOrEmail}
                   onChange={(e) => setAlertPhoneOrEmail(e.target.value)}
-                  className="px-3.5 sm:px-4 py-2.5 sm:py-3 bg-gray-50 border border-gray-300 rounded-xl sm:rounded-2xl text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#014900] focus:bg-white w-full sm:w-72 font-medium"
+                  className="px-3.5 sm:px-4 py-2.5 sm:py-3 bg-gray-50 border border-gray-300 rounded-xl sm:rounded-lg text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#014900] focus:bg-white w-full sm:w-72 font-medium"
                 />
                 <button
                   type="submit"
-                  className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#014900] hover:bg-[#013300] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all shadow-md shrink-0 cursor-pointer"
+                  className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#014900] hover:bg-[#013300] text-white font-semibold text-xs rounded-xl sm:rounded-lg transition-all shadow-md shrink-0 cursor-pointer"
                 >
                   GET FREE ALERTS
                 </button>
@@ -461,7 +460,7 @@ export default function ScholarshipsClient({
             </div>
 
             {alertSuccess && (
-              <div className="mt-4 sm:mt-5 p-3 sm:p-3.5 bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-bold rounded-xl sm:rounded-2xl flex items-center gap-2">
+              <div className="mt-4 sm:mt-5 p-3 sm:p-3.5 bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-bold rounded-xl sm:rounded-lg flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                 <span>Success! You have been subscribed to GNUTS Scholarship Broadcast Alerts.</span>
               </div>
@@ -474,7 +473,7 @@ export default function ScholarshipsClient({
       {(selectedCategory === 'ALL' || selectedCategory === 'INTERNSHIPS' || selectedCategory === 'SKILL_CAMPS') && (
         <section className="space-y-6 sm:space-y-8">
           <div className="text-center">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight relative inline-block pb-3">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#16201A] relative inline-block pb-3">
               Available Opportunities
               <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 h-1 bg-[#D9A000]" />
             </h2>
@@ -484,8 +483,7 @@ export default function ScholarshipsClient({
           </div>
 
           {filteredOpportunities.length === 0 ? (
-            <div className="text-center py-12 px-6 bg-white rounded-2xl sm:rounded-3xl border border-gray-200 shadow-sm max-w-xl mx-auto">
-              <div className="text-4xl mb-3">💼</div>
+            <div className="text-center py-12 px-6 bg-white rounded-lg sm:rounded-xl border border-gray-200 shadow-sm max-w-xl mx-auto">
               <p className="text-gray-500 font-medium text-xs sm:text-sm">
                 No matching opportunities found for "{searchQuery}".
               </p>
@@ -495,12 +493,12 @@ export default function ScholarshipsClient({
               {filteredOpportunities.map((item, idx) => {
                 const typeDisplay = item.type.replace('_', ' ').toUpperCase();
                 const urgency = getUrgencyInfo(item.deadline);
-                const isGold = idx % 2 === 1;
+                const isGold = false;
 
                 return (
                   <div
                     key={item.id}
-                    className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-7 shadow-sm hover:shadow-xl border border-gray-200 flex flex-col justify-between transition-all duration-300 group min-w-0 w-full"
+                    className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 lg:p-7 shadow-sm hover:shadow-md border border-gray-200 flex flex-col justify-between transition-all duration-300 group min-w-0 w-full"
                   >
                     <div className="space-y-3 sm:space-y-4 min-w-0">
                       {/* Header Badges */}
@@ -512,8 +510,8 @@ export default function ScholarshipsClient({
                         </span>
                         
                         {urgency ? (
-                          <span className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-extrabold uppercase tracking-wider rounded-full text-white ${
-                            urgency.isUrgent ? 'bg-[#D9A000] animate-pulse' : 'bg-amber-600'
+                          <span className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-full text-white ${
+                            urgency.isUrgent ? 'bg-[#D9A000]' : 'bg-amber-600'
                           }`}>
                             <AlertCircle className="w-3 h-3 shrink-0" />
                             <span>{urgency.text}</span>
@@ -530,7 +528,7 @@ export default function ScholarshipsClient({
                       </div>
 
                       {/* Title */}
-                      <h3 className={`text-base sm:text-lg lg:text-xl font-extrabold text-gray-900 transition-colors leading-snug break-words ${
+                      <h3 className={`text-base sm:text-lg lg:text-xl font-semibold text-gray-900 transition-colors leading-snug break-words ${
                         isGold ? 'group-hover:text-gold-ink' : 'group-hover:text-[#014900]'
                       }`}>
                         {item.title}
@@ -573,7 +571,7 @@ export default function ScholarshipsClient({
                           href={item.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className={`inline-flex items-center justify-center gap-2 w-full px-4 sm:px-6 py-2.5 sm:py-3 text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all duration-300 shadow-xs hover:shadow ${
+                          className={`inline-flex items-center justify-center gap-2 w-full px-4 sm:px-6 py-2.5 sm:py-3 text-xs font-semibold rounded-xl sm:rounded-lg transition-all duration-300 shadow-xs hover:shadow ${
                             isGold ? 'bg-[#D9A000] hover:bg-[#b88800] text-[#014900]' : 'bg-[#014900] hover:bg-[#013300] text-white'
                           }`}
                         >
@@ -592,10 +590,10 @@ export default function ScholarshipsClient({
 
       {/* 6. RECENTLY CLOSED SCHOLARSHIPS SECTION */}
       {closedScholarships.length > 0 && (
-        <section className="bg-gray-100/80 py-8 sm:py-12 border border-gray-200 w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-xs">
+        <section className="bg-gray-100/80 py-8 sm:py-12 border border-gray-200 w-full rounded-lg sm:rounded-xl overflow-hidden shadow-xs">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
             <div className="text-center">
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-gray-800 tracking-tight relative inline-block pb-3">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 tracking-tight relative inline-block pb-3">
                 Recently Closed Scholarships
                 <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-1 bg-gray-400" />
               </h2>
@@ -608,7 +606,7 @@ export default function ScholarshipsClient({
               {closedScholarships.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-sm border border-gray-200 opacity-75 hover:opacity-100 transition-opacity min-w-0 w-full"
+                  className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border border-gray-200 opacity-75 hover:opacity-100 transition-opacity min-w-0 w-full"
                 >
                   <div className="flex items-center justify-between mb-2.5 sm:mb-3">
                     <span className="px-2.5 py-0.5 bg-red-600 text-white text-xs sm:text-xs font-bold uppercase tracking-wider rounded-full">
@@ -616,7 +614,7 @@ export default function ScholarshipsClient({
                     </span>
                   </div>
 
-                  <h3 className="text-base sm:text-lg font-extrabold text-gray-800 mb-1.5 sm:mb-2 break-words">{item.title}</h3>
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-1.5 sm:mb-2 break-words">{item.title}</h3>
                   <p className="text-xs text-gray-600 line-clamp-3 leading-relaxed mb-3 sm:mb-4 break-words">
                     {item.description}
                   </p>
@@ -634,10 +632,10 @@ export default function ScholarshipsClient({
 
       {/* 7. RECENTLY CLOSED OPPORTUNITIES SECTION */}
       {closedOpportunities.length > 0 && (
-        <section className="bg-gray-100/80 py-8 sm:py-12 border border-gray-200 w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-xs">
+        <section className="bg-gray-100/80 py-8 sm:py-12 border border-gray-200 w-full rounded-lg sm:rounded-xl overflow-hidden shadow-xs">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
             <div className="text-center">
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-gray-800 tracking-tight relative inline-block pb-3">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800 tracking-tight relative inline-block pb-3">
                 Recently Closed Opportunities
                 <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-1 bg-gray-400" />
               </h2>
@@ -650,7 +648,7 @@ export default function ScholarshipsClient({
               {closedOpportunities.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-sm border border-gray-200 opacity-75 hover:opacity-100 transition-opacity min-w-0 w-full"
+                  className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border border-gray-200 opacity-75 hover:opacity-100 transition-opacity min-w-0 w-full"
                 >
                   <div className="flex items-center justify-between mb-2.5 sm:mb-3">
                     <span className="px-2.5 py-0.5 bg-gray-100 text-gray-700 text-xs sm:text-xs font-bold uppercase tracking-wider rounded-full">
@@ -661,7 +659,7 @@ export default function ScholarshipsClient({
                     </span>
                   </div>
 
-                  <h3 className="text-base sm:text-lg font-extrabold text-gray-800 mb-1.5 sm:mb-2 break-words">{item.title}</h3>
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-1.5 sm:mb-2 break-words">{item.title}</h3>
                   <p className="text-xs text-gray-600 line-clamp-3 leading-relaxed mb-3 sm:mb-4 break-words">
                     {item.description}
                   </p>

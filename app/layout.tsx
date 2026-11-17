@@ -77,7 +77,7 @@ export default async function RootLayout({
         {/* Preload High Priority Hero Image for Instant LCP Rendering */}
         <link rel="preload" as="image" href="/images/carousel_1.jpg" />
       </head>
-      <body className="font-sans antialiased bg-[#f8f9fa] text-gray-900 flex flex-col min-h-screen">
+      <body className="font-sans antialiased bg-[#FAF9F6] text-gray-900 flex flex-col min-h-screen">
         <StructuredData settings={settings} />
         <LayoutWrapper settings={settings}>{children}</LayoutWrapper>
       </body>

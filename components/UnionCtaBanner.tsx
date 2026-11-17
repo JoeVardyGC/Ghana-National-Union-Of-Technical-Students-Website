@@ -1,70 +1,52 @@
-'use me';
-'use client';
-
 import Link from 'next/link';
-import { ArrowRight, CheckCircle2, ShieldCheck, GraduationCap, Lightbulb } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+
+const SERVICES = [
+  { label: 'Scholarships and bursaries', href: '/scholarships' },
+  { label: 'Internships and attachments', href: '/opportunities' },
+  { label: 'Showcase your project', href: '/innovations' },
+  { label: 'Constitution and documents', href: '/resources' },
+];
 
 export default function UnionCtaBanner() {
   return (
-    <section className="relative py-20 bg-gradient-to-r from-[#002700] via-[#014900] to-[#002b00] text-white overflow-hidden border-t border-gray-200">
-      {/* Background Graphic Accents */}
-      <div className="absolute inset-0 bg-[radial-gradient(#D9A000_1px,transparent_1px)] [background-size:24px_24px] opacity-15 pointer-events-none" />
-      <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-[#D9A000]/15 blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-white/5 blur-3xl pointer-events-none" />
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-          {/* Left Column: Headline & Value Props */}
-          <div className="lg:col-span-8 space-y-6">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
-              Are You a Technical Student in Ghana?
+    <section className="bg-[#014900] text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          <div className="lg:col-span-6">
+            <span className="text-xs font-semibold tracking-[0.08em] uppercase text-[#D9A000]">For students</span>
+            <h2 className="mt-3 text-3xl sm:text-4xl font-bold text-white leading-tight">
+              Studying at a technical university or TVET institution?
             </h2>
-
-            <p className="text-gray-200 text-sm sm:text-lg leading-relaxed max-w-2xl font-normal">
-              GNUTS is your national representative voice. Access active scholarships, submit your technical innovations, check CTVET results, and stay connected with student affairs across all technical universities.
+            <p className="mt-4 text-base text-white/80 leading-relaxed max-w-xl">
+              GNUTS represents you nationally. Use the union to find funding, get your work seen and know your rights
+              as a student.
             </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-              <div className="flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-gray-100">
-                <CheckCircle2 className="w-4 h-4 text-[#D9A000] shrink-0" />
-                <span>Scholarship Access</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-gray-100">
-                <CheckCircle2 className="w-4 h-4 text-[#D9A000] shrink-0" />
-                <span>TVET Innovation Support</span>
-              </div>
-              <div className="flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-gray-100">
-                <CheckCircle2 className="w-4 h-4 text-[#D9A000] shrink-0" />
-                <span>National Advocacy</span>
-              </div>
-            </div>
+            <Link
+              href="/contact"
+              className="mt-8 inline-flex items-center gap-2 rounded-md bg-[#D9A000] px-5 py-3 text-sm font-semibold text-[#013300] hover:bg-white transition-colors"
+            >
+              Contact the secretariat
+              <ArrowRight className="w-4 h-4" aria-hidden="true" />
+            </Link>
           </div>
 
-          {/* Right Column: CTA Action Card */}
-          <div className="lg:col-span-4 bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 shadow-2xl space-y-5">
-            <h3 className="text-xl font-extrabold text-white">Get Started Today</h3>
-            <p className="text-xs text-gray-300 leading-relaxed">
-              Explore available tertiary funding or submit your engineering/tech project for national recognition.
-            </p>
-
-            <div className="space-y-3 pt-2">
-              <Link
-                href="/scholarships"
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#D9A000] text-[#014900] font-extrabold text-sm hover:bg-white transition-colors shadow-md text-center"
-              >
-                <GraduationCap className="w-4 h-4" />
-                <span>Explore Scholarships</span>
-              </Link>
-
-              <Link
-                href="/innovations"
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/30 font-bold text-sm transition-colors text-center"
-              >
-                <Lightbulb className="w-4 h-4 text-[#D9A000]" />
-                <span>Submit Innovation</span>
-              </Link>
-            </div>
-          </div>
+          <ul className="lg:col-span-6 divide-y divide-white/15 border-y border-white/15">
+            {SERVICES.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="group flex items-center justify-between gap-4 py-4 text-base font-medium text-white hover:text-[#D9A000] transition-colors"
+                >
+                  <span>{item.label}</span>
+                  <ArrowRight
+                    className="w-4 h-4 shrink-0 text-white/50 group-hover:text-[#D9A000] group-hover:translate-x-0.5 transition"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

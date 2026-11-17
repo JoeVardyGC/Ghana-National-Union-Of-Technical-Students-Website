@@ -54,12 +54,12 @@ const AIMS = [
 
 function Card({ icon, title, note, children }: { icon: React.ReactNode; title: string; note: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-2xl sm:rounded-3xl border border-gray-200/90 shadow-md p-6 sm:p-7 flex flex-col">
+    <div className="bg-white rounded-lg sm:rounded-xl border border-gray-200/90 shadow-md p-6 sm:p-7 flex flex-col">
       <div className="flex items-center gap-3 mb-4">
         <div className="w-11 h-11 rounded-xl bg-[#014900]/10 text-[#014900] flex items-center justify-center shrink-0">{icon}</div>
         <div>
-          <h3 className="text-lg font-extrabold text-[#014900] leading-tight">{title}</h3>
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{note}</p>
+          <h3 className="text-lg font-semibold text-[#014900] leading-tight">{title}</h3>
+          <p className="text-xs font-semibold text-gray-500">{note}</p>
         </div>
       </div>
       <div className="text-sm text-gray-700 leading-relaxed flex-1">{children}</div>
@@ -84,13 +84,12 @@ function NumberedList({ items }: { items: string[] }) {
 
 export default function ConstitutionGlance() {
   return (
-    <section id="constitution" className="py-20 sm:py-28 bg-[#f8f9fa] border-b border-gray-200">
+    <section id="constitution" className="py-20 sm:py-28 bg-[#FAF9F6] border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight uppercase">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#16201A]">
             Our Constitution at a Glance
           </h2>
-          <div className="w-16 h-1.5 bg-[#D9A000] rounded-full mt-4 mx-auto" />
           <p className="text-gray-600 text-sm sm:text-base mt-5 leading-relaxed">
             The Constitution is the supreme law of GNUTS. It sets out who we are, how the Union is organised and how its
             leaders are chosen and held accountable.
@@ -98,11 +97,11 @@ export default function ConstitutionGlance() {
         </div>
 
         {/* Motto (Articles 4 and 9) */}
-        <div className="bg-[#014900] text-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 mb-8 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 shadow-md">
+        <div className="bg-[#014900] text-white rounded-lg sm:rounded-xl p-6 sm:p-8 mb-8 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 shadow-md">
           <Quote className="w-10 h-10 text-[#D9A000] shrink-0" aria-hidden="true" />
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider text-[#D9A000]">Slogan &amp; Motto</p>
-            <p className="font-display text-xl sm:text-2xl font-extrabold">GNUTS: Professionals with Integrity</p>
+            <p className="text-xs font-semibold text-[#D9A000]">Slogan &amp; Motto</p>
+            <p className="font-display text-xl sm:text-2xl font-semibold">GNUTS: Professionals with Integrity</p>
             <p className="text-sm text-gray-100 mt-1">
               Headquartered in Ghana&rsquo;s capital, GNUTS is autonomous and not subject to any other student union in Ghana.
             </p>
@@ -144,9 +143,9 @@ export default function ConstitutionGlance() {
             <NumberedList items={AIMS} />
           </Card>
 
-          <div className="bg-white rounded-2xl sm:rounded-3xl border border-gray-200/90 shadow-md p-6 sm:p-7 flex flex-col justify-between">
+          <div className="bg-white rounded-lg sm:rounded-xl border border-gray-200/90 shadow-md p-6 sm:p-7 flex flex-col justify-between">
             <div>
-              <h3 className="text-lg font-extrabold text-[#014900] leading-tight">From GNUPS to GNUTS</h3>
+              <h3 className="text-lg font-semibold text-[#014900] leading-tight">From GNUPS to GNUTS</h3>
               <p className="text-sm text-gray-700 leading-relaxed mt-3">
                 The Constitution&rsquo;s conversion clause records that the name GNUTS replaced GNUPS when Ghana&rsquo;s
                 polytechnics became technical universities by Act of Parliament. All rights of GNUPS passed to GNUTS, and
@@ -155,7 +154,7 @@ export default function ConstitutionGlance() {
             </div>
             <Link
               href="/resources"
-              className="mt-6 inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#014900] hover:bg-[#D9A000] text-white hover:text-[#014900] text-sm font-extrabold uppercase tracking-wider rounded-2xl transition-all"
+              className="mt-6 inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#014900] hover:bg-[#D9A000] text-white hover:text-[#014900] text-sm font-semibold rounded-lg transition-all"
             >
               Read the full Constitution <ArrowRight className="w-4 h-4" />
             </Link>

@@ -15,7 +15,7 @@ export default function UnionPillarsSection() {
       link: '/about#policy',
     },
     {
-      title: 'TVET & Industrial Innovation Hub',
+      title: 'TVET and industry',
       subtitle: 'Skill-Building & Industry Attachments',
       description: 'Connecting technical students directly with industry partners, engineering grants, internship placements, and research showcases across Ghana.',
       icon: Cpu,
@@ -24,7 +24,7 @@ export default function UnionPillarsSection() {
     },
     {
       title: 'Leadership & Continental Networks',
-      subtitle: 'Empowering Future Technical Leaders',
+      subtitle: 'Leadership training for student officers',
       description: 'Collaborating with AASU and national student unions to build ethical, skilled, and industry-ready technical graduates for Africa’s industrialization.',
       icon: Award,
       badge: 'LEADERSHIP',
@@ -38,11 +38,10 @@ export default function UnionPillarsSection() {
         {/* Header — Inspired by Unite the Union & AASU */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#014900]/10 text-[#014900] text-xs font-bold uppercase tracking-wider">
-            <Sparkles className="w-3.5 h-3.5 text-[#D9A000]" />
             <span>OUR CORE PILLARS OF ACTION</span>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight uppercase">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#16201A]">
             Championing Technical Excellence
           </h2>
 
@@ -58,20 +57,20 @@ export default function UnionPillarsSection() {
             return (
               <div
                 key={idx}
-                className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-xl hover:border-[#D9A000]/60 transition-all duration-300 group"
+                className="bg-white rounded-lg p-8 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md hover:border-[#D9A000]/60 transition-all duration-300 group"
               >
                 <div className="space-y-5">
                   <div className="flex justify-between items-center">
-                    <div className="w-14 h-14 rounded-2xl bg-[#014900] text-[#D9A000] flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                    <div className="w-14 h-14 rounded-lg bg-[#014900] text-[#D9A000] flex items-center justify-center shadow-md group-hover:scale-[1.03] transition-transform">
                       <Icon className="w-7 h-7" />
                     </div>
-                    <span className="px-3 py-1 rounded-md bg-[#D9A000] text-[#014900] text-xs font-bold uppercase tracking-wider">
+                    <span className="px-3 py-1 rounded-md bg-[#D9A000] text-[#014900] text-xs font-bold">
                       {item.badge}
                     </span>
                   </div>
 
                   <div>
-                    <h3 className="text-xl sm:text-2xl font-extrabold text-gray-900 leading-snug group-hover:text-[#014900] transition-colors">
+                    <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 leading-snug group-hover:text-[#014900] transition-colors">
                       {item.title}
                     </h3>
                     <p className="text-xs font-bold text-[#014900] tracking-wide mt-1">

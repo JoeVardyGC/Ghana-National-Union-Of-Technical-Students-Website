@@ -70,7 +70,7 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
     <div id="news-grid-start" className="space-y-10">
       
       {/* 1. Responsive Search & Category Filter Toolbar */}
-      <div className="bg-white p-4 sm:p-6 rounded-3xl border border-gray-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="bg-white p-4 sm:p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
         {/* Search Box */}
         <div className="relative w-full md:w-80">
           <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -82,7 +82,7 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
               setSearchQuery(e.target.value);
               setCurrentPage(1);
             }}
-            className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-xs sm:text-sm font-medium outline-none focus:border-[#014900] focus:bg-white transition-all"
+            className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-xs sm:text-sm font-medium outline-none focus:border-[#014900] focus:bg-white transition-all"
           />
           {searchQuery && (
             <button
@@ -110,7 +110,7 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
                 }}
                 className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer shrink-0 ${
                   isActive
-                    ? 'bg-[#014900] text-white shadow-md font-extrabold'
+                    ? 'bg-[#014900] text-white shadow-md font-semibold'
                     : 'bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200'
                 }`}
               >
@@ -122,9 +122,8 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
       </div>
 
       {filteredNews.length === 0 ? (
-        <div className="text-center py-16 px-6 bg-white rounded-3xl border border-gray-200 shadow-sm max-w-lg mx-auto space-y-3">
-          <div className="text-4xl">📰</div>
-          <h3 className="text-lg font-extrabold text-gray-900 uppercase">No Articles Found</h3>
+        <div className="text-center py-16 px-6 bg-white rounded-xl border border-gray-200 shadow-sm max-w-lg mx-auto space-y-3">
+          <h3 className="text-lg font-semibold text-gray-900">No Articles Found</h3>
           <p className="text-xs text-gray-500 font-medium">
             {searchQuery || selectedCategory !== 'ALL'
               ? `No releases found matching "${searchQuery || selectedCategory}". Try clearing your filters.`
@@ -142,10 +141,10 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
             <Link
               key={item.id || idx}
               href={`/blog/${item.id}`}
-              className="bg-white rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col overflow-hidden group cursor-pointer h-full"
+              className="bg-white rounded-xl border border-[#E4E2DA] hover:border-[#C9C6BA] transition-all duration-300 flex flex-col overflow-hidden group cursor-pointer h-full"
             >
               {/* Poster Flyer Container — Tall generous height matching Home page */}
-              <div className="w-full h-80 sm:h-[400px] lg:h-[440px] relative overflow-hidden bg-gray-900 shrink-0 rounded-t-3xl">
+              <div className="w-full h-80 sm:h-[400px] lg:h-[440px] relative overflow-hidden bg-gray-900 shrink-0 rounded-t-xl">
                 <img
                   src={imgUrl}
                   alt={`${item.title} | GNUTS`}
@@ -154,24 +153,22 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
                   onError={(e: any) => {
                     e.currentTarget.src = 'https://res.cloudinary.com/dslngzls6/image/upload/v1787056250/gnuts_cc_tech-GUEST_jt8cge.png';
                   }}
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700"
                 />
-                {/* Gold Accent Bar */}
-                <div className="absolute bottom-0 inset-x-0 h-1.5 bg-[#D9A000] z-20" />
               </div>
 
               {/* Content Section */}
-              <div className="p-6 sm:p-7 flex flex-col justify-between flex-grow rounded-b-3xl">
+              <div className="p-6 sm:p-7 flex flex-col justify-between flex-grow rounded-b-xl">
                 <div className="space-y-3.5">
-                  <h3 className="font-extrabold text-lg sm:text-xl text-gray-900 leading-snug group-hover:text-[#014900] transition-colors line-clamp-2">
+                  <h3 className="font-semibold text-lg sm:text-xl text-gray-900 leading-snug group-hover:text-[#014900] transition-colors line-clamp-2">
                     {item.title}
                   </h3>
                   <p className="text-gray-600 text-xs sm:text-sm leading-relaxed font-medium line-clamp-4 sm:line-clamp-5">
                     {cleanContent}
                   </p>
                   <div className="pt-2">
-                    <span className="text-gold-ink font-extrabold text-xs uppercase tracking-wider group-hover:underline group-hover:text-[#014900] transition-colors inline-block">
-                      READ MORE »
+                    <span className="text-gold-ink font-semibold text-xs group-hover:underline group-hover:text-[#014900] transition-colors inline-block">
+                      Read more
                     </span>
                   </div>
                 </div>
@@ -201,7 +198,7 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className="inline-flex items-center gap-1 px-4 py-2 text-xs font-extrabold uppercase rounded-xl border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-xs"
+              className="inline-flex items-center gap-1 px-4 py-2 text-xs font-semibold rounded-xl border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-xs"
             >
               <ChevronLeft className="w-4 h-4" />
               <span className="hidden sm:inline">Prev</span>
@@ -214,7 +211,7 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
                 <button
                   key={pageNum}
                   onClick={() => handlePageChange(pageNum)}
-                  className={`w-10 h-10 flex items-center justify-center text-xs font-extrabold rounded-xl border transition-all ${
+                  className={`w-10 h-10 flex items-center justify-center text-xs font-semibold rounded-xl border transition-all ${
                     isActive
                       ? 'bg-[#014900] text-white border-[#014900] shadow-md scale-105'
                       : 'bg-white text-gray-700 border-gray-300 hover:border-[#014900] hover:text-[#014900]'
@@ -229,7 +226,7 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
             <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className="inline-flex items-center gap-1 px-4 py-2 text-xs font-extrabold uppercase rounded-xl border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-xs"
+              className="inline-flex items-center gap-1 px-4 py-2 text-xs font-semibold rounded-xl border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-xs"
             >
               <span className="hidden sm:inline">Next</span>
               <ChevronRight className="w-4 h-4" />

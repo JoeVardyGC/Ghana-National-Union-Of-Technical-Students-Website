@@ -67,13 +67,13 @@ export default function ImageDropzone({
   };
 
   return (
-    <div className="space-y-3 bg-gray-50/80 p-4 rounded-2xl border border-gray-200">
+    <div className="space-y-3 bg-gray-50/80 p-4 rounded-lg border border-gray-200">
       <div className="flex items-center justify-between">
-        <label className="text-xs font-black uppercase text-[#014900] tracking-wider flex items-center gap-1.5">
+        <label className="text-xs font-bold text-[#014900] flex items-center gap-1.5">
           <ImageIcon className="w-4 h-4 text-[#D9A000]" />
           <span>{label}</span>
         </label>
-        <span className="text-[10px] font-black uppercase text-gray-500 bg-white px-2 py-0.5 rounded-full border border-gray-200">
+        <span className="text-[10px] font-bold uppercase text-gray-500 bg-white px-2 py-0.5 rounded-full border border-gray-200">
           {images.length} / {maxImages} Uploaded
         </span>
       </div>
@@ -90,12 +90,12 @@ export default function ImageDropzone({
               <button
                 type="button"
                 onClick={() => handleRemove(idx)}
-                className="absolute top-1 right-1 p-1 bg-red-600 text-white rounded-full opacity-80 hover:opacity-100 hover:scale-110 transition-all shadow-md"
+                className="absolute top-1 right-1 p-1 bg-red-600 text-white rounded-full opacity-80 hover:opacity-100 transition-all shadow-md"
                 title="Remove image"
               >
                 <X className="w-3 h-3" />
               </button>
-              <span className="absolute bottom-1 left-1 px-1.5 py-0.5 bg-black/70 text-white text-[8px] font-black rounded-md">
+              <span className="absolute bottom-1 left-1 px-1.5 py-0.5 bg-black/70 text-white text-[8px] font-bold rounded-md">
                 {idx === 0 ? 'Cover' : `#${idx + 1}`}
               </span>
             </div>
@@ -111,7 +111,7 @@ export default function ImageDropzone({
             e.preventDefault();
             handleFiles(e.dataTransfer.files);
           }}
-          className="border-2 border-dashed border-emerald-300 hover:border-[#014900] bg-white rounded-2xl p-4 text-center cursor-pointer transition-colors group"
+          className="border-2 border-dashed border-emerald-300 hover:border-[#014900] bg-white rounded-lg p-4 text-center cursor-pointer transition-colors group"
           onClick={() => fileInputRef.current?.click()}
         >
           <input
@@ -127,7 +127,7 @@ export default function ImageDropzone({
               <Upload className="w-4 h-4" />
             </div>
             <p className="text-xs font-bold text-gray-700">
-              Drag & drop pictures here, or <span className="text-[#014900] underline font-black">browse files</span>
+              Drag & drop pictures here, or <span className="text-[#014900] underline font-bold">browse files</span>
             </p>
             <p className="text-[10px] text-gray-400 font-medium">
               Supports PNG, JPG, WebP up to 5MB each
@@ -160,7 +160,7 @@ export default function ImageDropzone({
               <button
                 type="button"
                 onClick={handleAddUrl}
-                className="px-3.5 py-2 bg-[#014900] text-white text-xs font-black uppercase rounded-xl hover:bg-[#D9A000] hover:text-[#014900] transition-colors"
+                className="px-3.5 py-2 bg-[#014900] text-white text-xs font-bold rounded-xl hover:bg-[#D9A000] hover:text-[#014900] transition-colors"
               >
                 Add
               </button>

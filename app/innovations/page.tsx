@@ -5,7 +5,7 @@ import { resolveImgUrl } from '@/lib/imageUtils';
 
 export const metadata: Metadata = {
   title: 'Innovative Projects | GNUTS',
-  description: 'Showcasing groundbreaking technical innovations and engineering solutions developed by TVET and Technical University students across Ghana.',
+  description: 'Projects designed and built by students at Technical Universities and TVET institutions across Ghana.',
 };
 
 export const revalidate = 15; // Fast ISR caching
@@ -26,8 +26,8 @@ function formatDate(dateVal: any): string {
 export default async function InnovationsPage() {
   let innovationsList: InnovationItem[] = [];
   let heroImage = '/images/header_for_pages.jpg';
-  let heroTitle = 'Innovative Projects';
-  let heroSubtitle = 'Showcasing groundbreaking technical innovations and engineering solutions from students across Ghana';
+  let heroTitle = 'Student projects';
+  let heroSubtitle = 'Projects designed and built by technical students across Ghana';
 
   try {
     const [rawInnovations, bannerRows] = await Promise.all([
@@ -66,7 +66,7 @@ export default async function InnovationsPage() {
   const safeBgUrl = encodeURI(heroImage);
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#f8f9fa]">
+    <div className="flex flex-col min-h-screen bg-[#FAF9F6]">
       {/* Page Hero Header - 50% opacity green overlay & border-b-4 border-[#D9A000] */}
       <section className="relative text-white py-14 sm:py-20 px-4 sm:px-6 lg:px-8 border-b-4 border-[#D9A000] overflow-hidden bg-gray-900">
         {/* Background Image */}
@@ -74,11 +74,11 @@ export default async function InnovationsPage() {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url('${safeBgUrl}')` }}
         />
-        {/* Semi-transparent Green Overlay (55% Green Opacity) */}
-        <div className="absolute inset-0 bg-[#014900]/55 backdrop-brightness-90" />
+        {/* Dark scrim so the title stays readable on any photo */}
+        <div className="absolute inset-0 bg-[#0c1a10]/60" />
 
         <div className="max-w-7xl mx-auto text-center relative z-10">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-3 drop-shadow-md uppercase">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight mb-3 drop-shadow-md">
             {heroTitle}
           </h1>
           <p className="text-gray-100 text-xs sm:text-sm md:text-base max-w-2xl mx-auto font-medium drop-shadow-sm">

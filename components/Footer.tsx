@@ -75,7 +75,7 @@ export default function Footer({ settings, hasGallery = true }: { settings: Site
 
           {/* Column 2: Quick Links */}
           <div className="space-y-4">
-            <h4 className="text-base font-extrabold text-[#D9A000] uppercase tracking-wider">
+            <h4 className="text-base font-semibold text-[#D9A000]">
               Quick Links
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm text-gray-300">
@@ -121,7 +121,7 @@ export default function Footer({ settings, hasGallery = true }: { settings: Site
 
           {/* Column 3: Resources */}
           <div className="space-y-4">
-            <h4 className="text-base font-extrabold text-[#D9A000] uppercase tracking-wider">
+            <h4 className="text-base font-semibold text-[#D9A000]">
               Resources
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm text-gray-300">
@@ -155,7 +155,7 @@ export default function Footer({ settings, hasGallery = true }: { settings: Site
 
           {/* Column 4: Contact Info */}
           <div className="space-y-4">
-            <h4 className="text-base font-extrabold text-[#D9A000] uppercase tracking-wider">
+            <h4 className="text-base font-semibold text-[#D9A000]">
               National Secretariat
             </h4>
             <div className="space-y-3 text-xs sm:text-sm text-gray-300">

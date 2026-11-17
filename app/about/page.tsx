@@ -156,7 +156,7 @@ export default async function AboutPage() {
 
   return (
     <>
-      <div className="w-full min-h-screen bg-[#f8f9fa] font-sans text-gray-900 overflow-x-hidden">
+      <div className="w-full min-h-screen bg-[#FAF9F6] font-sans text-gray-900 overflow-x-hidden">
         
         {/* Page Hero Header — Connected to live DB hero image, title and subtitle */}
         <section className="relative text-white py-16 sm:py-20 px-4 sm:px-6 lg:px-8 border-b-4 border-[#D9A000] overflow-hidden bg-gray-900">
@@ -167,15 +167,15 @@ export default async function AboutPage() {
               backgroundImage: `url('${safeBgUrl}')`,
             }}
           />
-          {/* Semi-transparent Green Overlay (55% Green Opacity) */}
-          <div className="absolute inset-0 bg-[#014900]/55 backdrop-brightness-90" />
+          {/* Dark scrim so the title stays readable on any photo */}
+          <div className="absolute inset-0 bg-[#0c1a10]/60" />
 
           <div className="max-w-7xl mx-auto text-center relative z-10">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-3 drop-shadow-md">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight mb-3 drop-shadow-md">
               {heroTitle}
             </h1>
             <p className="text-gray-100 text-sm sm:text-base max-w-2xl mx-auto font-medium drop-shadow-sm">
-              {aboutData.hero_subtitle || 'Empowering Technical & TVET Students Across Ghana'}
+              {aboutData.hero_subtitle || 'Representing Technical University and TVET students since 1987'}
             </p>
           </div>
         </section>
@@ -188,10 +188,9 @@ export default async function AboutPage() {
               {/* Left Column: Narrative Content */}
               <div className="lg:col-span-7 space-y-6">
                 <div>
-                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight uppercase">
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#16201A]">
                     {aboutData.who_we_are_title || 'Who We Are'}
                   </h2>
-                  <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-3" />
                 </div>
 
                 <div className="prose text-gray-700 text-base sm:text-lg leading-relaxed space-y-4">
@@ -199,24 +198,24 @@ export default async function AboutPage() {
                     The Ghana National Union of Technical Students (GNUTS) is a democratic, non-partisan, independent and progressive mass movement of students in Technical Universities, Polytechnics and Technical and Vocational institutions in Ghana, and the official mouthpiece and sole representative of its members.
                   </p>
                   <p className="whitespace-pre-line">
-                    {aboutData.who_we_are_content || `From advocating for industrial training allowances and modern laboratory equipment to participating in national education policy reform, GNUTS empowers technical students to become skilled engineers, tech pioneers, and industrial leaders.`}
+                    {aboutData.who_we_are_content || `From advocating for industrial training allowances and modern laboratory equipment to participating in national education policy reform, GNUTS works so that technical students graduate as skilled, employable professionals.`}
                   </p>
                 </div>
 
                 {/* Key Pillars Checklist */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-                  <div className="p-4 rounded-xl bg-[#f8f9fa] border border-gray-200 flex items-start gap-3">
+                  <div className="p-4 rounded-xl bg-[#FAF9F6] border border-gray-200 flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-[#D9A000] shrink-0 mt-0.5" />
                     <div>
-                      <h4 className="font-extrabold text-sm text-[#014900]">Policy Advocacy</h4>
+                      <h4 className="font-semibold text-sm text-[#014900]">Policy Advocacy</h4>
                       <p className="text-xs text-gray-600 font-medium mt-0.5">Defending technical student rights in Parliament and Ministry of Education.</p>
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-[#f8f9fa] border border-gray-200 flex items-start gap-3">
+                  <div className="p-4 rounded-xl bg-[#FAF9F6] border border-gray-200 flex items-start gap-3">
                     <CheckCircle2 className="w-5 h-5 text-[#014900] shrink-0 mt-0.5" />
                     <div>
-                      <h4 className="font-extrabold text-sm text-[#014900]">Unity & Solidarity</h4>
+                      <h4 className="font-semibold text-sm text-[#014900]">Unity & Solidarity</h4>
                       <p className="text-xs text-gray-600 font-medium mt-0.5">Uniting students of all member Technical Universities and TVET institutions under one national voice.</p>
                     </div>
                   </div>
@@ -225,15 +224,15 @@ export default async function AboutPage() {
 
               {/* Right Column: Hero Visual Graphic */}
               <div className="lg:col-span-5 relative">
-                <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-gray-900 group">
+                <div className="relative rounded-lg overflow-hidden shadow-lg border-4 border-white bg-gray-900 group">
                   <img
                     src={aboutData.who_we_are_image || aboutData.about_image || "https://res.cloudinary.com/dslngzls6/image/upload/v1786991593/photo_2026-08-17_18-24-49_bg2c1g.jpg"}
                     alt="GNUTS Delegation"
-                    className="w-full h-[450px] object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="w-full h-[450px] object-cover group-hover:scale-[1.03] transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
                   <div className="absolute bottom-6 left-6 right-6 text-white space-y-2">
-                    <h3 className="font-extrabold text-xl text-white leading-snug">
+                    <h3 className="font-semibold text-xl text-white leading-snug">
                       Uniting Ghana's Technical Universities Under One Flag
                     </h3>
                   </div>
@@ -245,25 +244,24 @@ export default async function AboutPage() {
         </section>
 
         {/* 4. Mission, Vision & Core Values — Sleek Bento Grid */}
-        <section id="mission" className="py-20 sm:py-28 bg-[#f8f9fa] border-b border-gray-200">
+        <section id="mission" className="py-20 sm:py-28 bg-[#FAF9F6] border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
             <div className="text-center max-w-2xl mx-auto">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight uppercase">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#16201A]">
                 Mission, Vision & Core Values
               </h2>
-              <div className="w-16 h-1.5 bg-[#D9A000] rounded-full mx-auto my-3" />
             </div>
 
             {/* Mission & Vision 2-Card Bento */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Mission */}
-              <div className="bg-white p-8 sm:p-10 rounded-3xl border border-gray-200 shadow-xl flex flex-col justify-between relative overflow-hidden group hover:border-[#014900] transition-all">
+              <div className="bg-white p-8 sm:p-10 rounded-xl border border-gray-200 shadow-md flex flex-col justify-between relative overflow-hidden group hover:border-[#014900] transition-all">
                 <div className="absolute top-0 left-0 w-2 h-full bg-[#014900]" />
                 <div className="space-y-4">
-                  <div className="w-14 h-14 rounded-2xl bg-[#014900]/10 text-[#014900] flex items-center justify-center font-bold">
+                  <div className="w-14 h-14 rounded-lg bg-[#014900]/10 text-[#014900] flex items-center justify-center font-bold">
                     <Target className="w-7 h-7" />
                   </div>
-                  <h3 className="text-2xl font-extrabold text-[#014900]">
+                  <h3 className="text-2xl font-semibold text-[#014900]">
                     {aboutData.mission_title || 'Our Mission'}
                   </h3>
                   <p className="text-gray-700 text-base leading-relaxed whitespace-pre-line">
@@ -273,13 +271,13 @@ export default async function AboutPage() {
               </div>
 
               {/* Vision */}
-              <div className="bg-white p-8 sm:p-10 rounded-3xl border border-gray-200 shadow-xl flex flex-col justify-between relative overflow-hidden group hover:border-[#D9A000] transition-all">
+              <div className="bg-white p-8 sm:p-10 rounded-xl border border-gray-200 shadow-md flex flex-col justify-between relative overflow-hidden group hover:border-[#D9A000] transition-all">
                 <div className="absolute top-0 left-0 w-2 h-full bg-[#D9A000]" />
                 <div className="space-y-4">
-                  <div className="w-14 h-14 rounded-2xl bg-[#D9A000]/15 text-[#014900] flex items-center justify-center font-bold">
+                  <div className="w-14 h-14 rounded-lg bg-[#D9A000]/15 text-[#014900] flex items-center justify-center font-bold">
                     <Eye className="w-7 h-7" />
                   </div>
-                  <h3 className="text-2xl font-extrabold text-[#014900]">
+                  <h3 className="text-2xl font-semibold text-[#014900]">
                     {aboutData.vision_title || 'Our Vision'}
                   </h3>
                   <p className="text-gray-700 text-base leading-relaxed whitespace-pre-line">
@@ -292,10 +290,9 @@ export default async function AboutPage() {
             {/* Core Values Section — Modern Institutional UI */}
             <div className="pt-10 space-y-10">
               <div className="text-center max-w-2xl mx-auto">
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[#014900] tracking-tight uppercase">
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-[#014900] tracking-tight">
                   {aboutData.values_title || 'Our Core Values'}
                 </h3>
-                <div className="w-12 h-1 bg-[#D9A000] rounded-full mx-auto my-2.5" />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -305,7 +302,7 @@ export default async function AboutPage() {
                   return (
                     <div
                       key={val.id || idx}
-                      className="bg-white p-7 rounded-3xl border border-gray-200/80 shadow-md hover:shadow-2xl transition-all duration-300 relative group flex flex-col justify-between"
+                      className="bg-white p-7 rounded-xl border border-[#E4E2DA] hover:border-[#C9C6BA] transition-all duration-300 relative group flex flex-col justify-between"
                     >
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
@@ -314,14 +311,14 @@ export default async function AboutPage() {
                           }`}>
                             {icon}
                           </div>
-                          <div className={`w-9 h-9 rounded-md text-white flex items-center justify-center font-extrabold text-xs shadow-md ${
+                          <div className={`w-9 h-9 rounded-md text-white flex items-center justify-center font-semibold text-xs shadow-md ${
                             isGreen ? 'bg-[#014900]' : 'bg-[#D9A000]'
                           }`}>
                             {val.num || `0${idx + 1}`}
                           </div>
                         </div>
 
-                        <h4 className="font-extrabold text-xl text-[#014900] group-hover:text-gold-ink transition-colors pt-1">
+                        <h4 className="font-semibold text-xl text-[#014900] group-hover:text-gold-ink transition-colors pt-1">
                           {val.title}
                         </h4>
 
@@ -342,10 +339,9 @@ export default async function AboutPage() {
         <section id="history" className="py-20 sm:py-28 bg-white border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-16">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight uppercase">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#16201A]">
                 Union History Timeline
               </h2>
-              <div className="w-16 h-1.5 bg-[#D9A000] rounded-full mx-auto my-3" />
               <p className="text-gray-600 text-sm sm:text-base font-medium">
                 Three decades of national policy breakthroughs, student activism, and technical education reform.
               </p>
@@ -354,7 +350,7 @@ export default async function AboutPage() {
             {/* Alternating Centered Vertical Timeline */}
             <div className="relative max-w-5xl mx-auto py-8">
               {/* Central Glowing Line */}
-              <div className="absolute left-4 sm:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-[#014900] via-[#D9A000] to-[#014900] sm:-translate-x-1/2" />
+              <div className="absolute left-4 sm:left-1/2 top-0 bottom-0 w-1 bg-[#014900] sm:-translate-x-1/2" />
 
               <div className="space-y-16">
                 {milestones.map((item: any, idx: number) => {
@@ -367,19 +363,19 @@ export default async function AboutPage() {
                       }`}
                     >
                       {/* Year Badge Pill Center */}
-                      <div className="absolute left-4 sm:left-1/2 -translate-x-1/2 z-20 bg-[#D9A000] text-[#014900] px-5 py-2 rounded-full font-extrabold text-base shadow-2xl border-4 border-white hover:scale-110 transition-transform">
+                      <div className="absolute left-4 sm:left-1/2 -translate-x-1/2 z-20 bg-[#D9A000] text-[#014900] px-5 py-2 rounded-full font-semibold text-base shadow-lg border-4 border-white transition-transform">
                         {item.year}
                       </div>
 
                       {/* Content Card */}
                       <div className="w-full sm:w-1/2 pl-12 sm:pl-0 sm:pr-8 sm:odd:pl-8 sm:odd:pr-0">
-                        <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-xl border border-gray-100 hover:border-[#014900] transition-all space-y-4 group">
+                        <div className="bg-white p-6 sm:p-8 rounded-lg shadow-md border border-gray-100 hover:border-[#014900] transition-all space-y-4 group">
                           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-100 pb-3">
-                            <h3 className="text-xl font-extrabold text-[#014900]">
+                            <h3 className="text-xl font-semibold text-[#014900]">
                               {item.title}
                             </h3>
                             {item.tag && (
-                              <span className="text-xs font-extrabold uppercase tracking-wider text-gold-ink bg-[#f8f9fa] px-2.5 py-1 rounded border border-gray-200 inline-block shrink-0">
+                              <span className="text-xs font-semibold text-gold-ink bg-[#FAF9F6] px-2.5 py-1 rounded border border-gray-200 inline-block shrink-0">
                                 {item.tag}
                               </span>
                             )}
@@ -394,7 +390,7 @@ export default async function AboutPage() {
                               <img
                                 src={item.image.startsWith('http') ? item.image : `/${item.image}`}
                                 alt={item.title}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
                               />
                             </div>
                           )}
@@ -416,14 +412,13 @@ export default async function AboutPage() {
 
         {/* 6. Executive Leadership — Only display when executives exist in the system */}
         {executives && executives.length > 0 && (
-          <section id="leadership" className="py-20 sm:py-28 bg-[#f8f9fa] border-b border-gray-200">
+          <section id="leadership" className="py-20 sm:py-28 bg-[#FAF9F6] border-b border-gray-200">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-gray-200 pb-6 mb-12 gap-4">
                 <div>
-                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight uppercase">
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#16201A]">
                     National Leadership
                   </h2>
-                  <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-3" />
                 </div>
                 <p className="text-gray-600 text-sm font-medium">The 34th National Executive Council</p>
               </div>
@@ -438,26 +433,26 @@ export default async function AboutPage() {
                   return (
                     <div 
                       key={exec.id || idx}
-                      className="group flex flex-col bg-white rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden max-w-[290px] mx-auto sm:max-w-none w-full"
+                      className="group flex flex-col bg-white rounded-xl border border-[#E4E2DA] hover:border-[#C9C6BA] transition-all duration-300 overflow-hidden max-w-[290px] mx-auto sm:max-w-none w-full"
                     >
                       {/* Photo container with balanced square aspect ratio */}
-                      <div className="relative aspect-[1/1] w-full overflow-hidden bg-gray-900 rounded-t-3xl" style={{ backgroundColor: bgCol }}>
+                      <div className="relative aspect-[1/1] w-full overflow-hidden bg-gray-900 rounded-t-xl" style={{ backgroundColor: bgCol }}>
                         <img
                           src={photoUrl}
                           alt={`${exec.full_name || exec.name}, ${exec.position || 'National Executive'}, GNUTS`}
                           loading="lazy"
                           decoding="async"
-                          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500"
                         />
                       </div>
 
                       {/* Name / Position Card Block */}
-                      <div className="p-5 sm:p-5 text-center flex flex-col justify-between flex-grow bg-white border-t border-gray-100 rounded-b-3xl">
+                      <div className="p-5 sm:p-5 text-center flex flex-col justify-between flex-grow bg-white border-t border-gray-100 rounded-b-xl">
                         <div>
-                          <h4 className="text-base sm:text-sm lg:text-base font-extrabold text-[#014900] group-hover:text-gold-ink transition-colors leading-snug">
+                          <h4 className="text-base sm:text-sm lg:text-base font-semibold text-[#014900] group-hover:text-gold-ink transition-colors leading-snug">
                             {exec.full_name || exec.name}
                           </h4>
-                          <p className="text-xs sm:text-xs lg:text-xs font-extrabold text-gold-ink uppercase tracking-wider mt-1">
+                          <p className="text-xs sm:text-xs lg:text-xs font-semibold text-gold-ink mt-1">
                             {exec.position}
                           </p>
                         </div>

@@ -9,6 +9,17 @@
   /* Darker gold for TEXT on white/light backgrounds (5.3:1 contrast).
      Keep the bright #D9A000 for backgrounds, bars, icons and text on green. */
   --color-gold-ink: #8A6500;
+
+  /* Brand palette. Green carries the identity; gold is a small accent only
+     (rules, focus, one highlight per view), never alternated card by card. */
+  --color-brand: #014900;
+  --color-brand-dark: #013300;
+  --color-brand-soft: #EEF4EC;
+  --color-gold: #D9A000;
+  --color-ink: #16201A;
+  --color-muted: #5B6560;
+  --color-line: #E4E2DA;
+  --color-paper: #FAF9F6;
 }
 
 @layer base {
@@ -30,8 +41,8 @@
 
   body {
     font-family: var(--font-sans);
-    background-color: #f8f9fa;
-    color: #1a1a1a;
+    background-color: var(--color-paper);
+    color: var(--color-ink);
     line-height: 1.65;
     font-size: 16px;
     overflow-x: hidden;
@@ -47,10 +58,35 @@
     font-family: var(--font-display);
   }
 
-  h1 { font-size: 2.75rem; font-weight: 800; line-height: 1.2; }
-  h2 { font-size: 2.25rem; font-weight: 800; line-height: 1.25; }
-  h3 { font-size: 1.5rem; font-weight: 800; line-height: 1.3; }
-  h4 { font-size: 1.25rem; font-weight: 700; line-height: 1.35; }
+  /* Sentence-case headings with tight tracking read as editorial, not template.
+     Weights stay at 700/600: heavy 800-900 everywhere is a generated-site tell. */
+  h1, h2, h3, h4 { letter-spacing: -0.015em; text-wrap: balance; }
+  h1 { font-size: 2.75rem; font-weight: 700; line-height: 1.15; }
+  h2 { font-size: 2.25rem; font-weight: 700; line-height: 1.2; }
+  h3 { font-size: 1.5rem; font-weight: 600; line-height: 1.3; }
+  h4 { font-size: 1.25rem; font-weight: 600; line-height: 1.35; }
+
+  p { text-wrap: pretty; }
+
+  /* A description straight under a section heading needs breathing room */
+  h2 + p { margin-top: 0.75rem; }
+
+  ::selection { background: var(--color-brand); color: #fff; }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+}
+
+/* Small label above a section heading ("Scholarships", "Latest news") */
+.eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-gold-ink);
 }
 
 /* Custom Utilities & Responsive Enhancements */
@@ -72,23 +108,6 @@
 
 .border-gnuts-gold {
   border-color: #D9A000;
-}
-
-/* Hover Glow & Aura Effects */
-.hover-gold-glow {
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.hover-gold-glow:hover {
-  box-shadow: 0 12px 35px -5px rgba(217, 160, 0, 0.35), 0 4px 12px -2px rgba(217, 160, 0, 0.15);
-  transform: translateY(-4px);
-}
-
-.hover-green-glow {
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.hover-green-glow:hover {
-  box-shadow: 0 12px 35px -5px rgba(1, 73, 0, 0.35), 0 4px 12px -2px rgba(1, 73, 0, 0.15);
-  transform: translateY(-4px);
 }
 
 /* Shimmer Skeleton Loading Animation */
@@ -199,24 +218,16 @@ html.dark .animate-shimmer {
   clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
 }
 
-/* Card Hover Effects */
-.card-hover {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.card-hover:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-}
-
 /* Scroll-triggered Animation Helper (Smooth & Lightweight)
    Content is visible by default. It is only hidden for the fade-in once
    ScrollAnimationProvider has run and added `reveal-ready` to <html>, so
    visitors without JavaScript (and search engines) always see everything. */
 /* 1. Sections fade up as they scroll into view */
+/* Kept short and small: a big rise on every block is a generated-site tell */
 html.reveal-ready .reveal-on-scroll {
   opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(12px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html.reveal-ready .reveal-on-scroll.visible {
@@ -227,8 +238,8 @@ html.reveal-ready .reveal-on-scroll.visible {
 /* 2. Card grids: cards rise in one after another.
    Uses a keyframe animation (not transitions) so each card keeps its own hover effects. */
 @keyframes revealCard {
-  from { opacity: 0; transform: translateY(28px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 html.reveal-ready .reveal-stagger:not(.visible) > * {
@@ -236,40 +247,40 @@ html.reveal-ready .reveal-stagger:not(.visible) > * {
 }
 
 html.reveal-ready .reveal-stagger.visible > * {
-  animation: revealCard 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: revealCard 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-html.reveal-ready .reveal-stagger.visible > *:nth-child(2) { animation-delay: 90ms; }
-html.reveal-ready .reveal-stagger.visible > *:nth-child(3) { animation-delay: 180ms; }
-html.reveal-ready .reveal-stagger.visible > *:nth-child(4) { animation-delay: 270ms; }
-html.reveal-ready .reveal-stagger.visible > *:nth-child(5) { animation-delay: 360ms; }
-html.reveal-ready .reveal-stagger.visible > *:nth-child(6) { animation-delay: 450ms; }
-html.reveal-ready .reveal-stagger.visible > *:nth-child(n + 7) { animation-delay: 520ms; }
+html.reveal-ready .reveal-stagger.visible > *:nth-child(2) { animation-delay: 50ms; }
+html.reveal-ready .reveal-stagger.visible > *:nth-child(3) { animation-delay: 100ms; }
+html.reveal-ready .reveal-stagger.visible > *:nth-child(4) { animation-delay: 150ms; }
+html.reveal-ready .reveal-stagger.visible > *:nth-child(5) { animation-delay: 200ms; }
+html.reveal-ready .reveal-stagger.visible > *:nth-child(6) { animation-delay: 250ms; }
+html.reveal-ready .reveal-stagger.visible > *:nth-child(n + 7) { animation-delay: 280ms; }
 
 /* 3. Inner page headers (the green photo banner at the top of each page):
    the photo settles from a gentle zoom while the title and subtitle glide in.
    Pure CSS, so it plays from the first paint, even before JavaScript loads. */
 @keyframes heroPhotoSettle {
-  from { transform: scale(1.12); }
+  from { transform: scale(1.04); }
   to   { transform: scale(1); }
 }
 
 @keyframes heroTextIn {
-  from { opacity: 0; transform: translateY(24px); }
+  from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 main section[class*="border-b-4"][class*="text-white"] > div:first-child {
-  animation: heroPhotoSettle 1.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: heroPhotoSettle 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 main section[class*="border-b-4"][class*="text-white"] h1 {
-  animation: heroTextIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+  animation: heroTextIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
 }
 
 main section[class*="border-b-4"][class*="text-white"] h1 ~ p,
 main section[class*="border-b-4"][class*="text-white"] h1 + div {
-  animation: heroTextIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.28s both;
+  animation: heroTextIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
 }
 
 /* Visitors who turn on "reduce motion" get no zooms, slides or fades anywhere */
