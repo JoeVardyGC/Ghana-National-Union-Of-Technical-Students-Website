@@ -64,7 +64,7 @@ export default function NewsSection({ dbNews = [] }: { dbNews?: NewsItem[] }) {
                 <div className="w-full h-64 sm:h-80 md:h-[380px] lg:h-[420px] relative overflow-hidden bg-gray-900 shrink-0 rounded-t-2xl sm:rounded-t-3xl">
                   <img
                     src={imgUrl}
-                    alt={item.title}
+                    alt={`${item.title} | GNUTS`}
                     loading="lazy"
                     decoding="async"
                     className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"

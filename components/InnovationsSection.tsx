@@ -72,7 +72,7 @@ export default function InnovationsSection({ dbInnovations = [] }: { dbInnovatio
                       {imgUrl ? (
                         <img
                           src={imgUrl}
-                          alt={item.title}
+                          alt={`${item.title} | GNUTS`}
                           loading="lazy"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                         />

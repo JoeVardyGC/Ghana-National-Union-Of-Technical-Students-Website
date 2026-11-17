@@ -148,7 +148,7 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
               <div className="w-full h-80 sm:h-[400px] lg:h-[440px] relative overflow-hidden bg-gray-900 shrink-0 rounded-t-3xl">
                 <img
                   src={imgUrl}
-                  alt={item.title}
+                  alt={`${item.title} | GNUTS`}
                   loading="lazy"
                   decoding="async"
                   onError={(e: any) => {

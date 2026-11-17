@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import ExecutivesClient from './ExecutivesClient';
 import { query } from '@/lib/db';
+import { absoluteUrl, SITE_URL } from '@/lib/siteUrl';
 import { resolveImgUrl } from '@/lib/imageUtils';
 
 export const metadata: Metadata = {
@@ -62,12 +63,43 @@ export default async function ExecutivesPage() {
     // Fallback data
   }
 
+  // Structured data: each executive as a Person working for GNUTS, with their photo,
+  // so searches like "GNUTS executives" or an officer's name can show these profiles
+  const toAbsolute = (url: string) =>
+    !url || url.startsWith('data:') ? undefined : /^https?:\/\//i.test(url) ? url : absoluteUrl(`/${url.replace(/^\/+/, '')}`);
+  const executivesJsonLd = executives.length
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        name: 'GNUTS National Executive Officers',
+        itemListElement: executives.map((officer, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          item: {
+            '@type': 'Person',
+            name: officer.name,
+            jobTitle: `${officer.position}, GNUTS`,
+            image: toAbsolute(officer.image_url),
+            worksFor: { '@id': `${SITE_URL}/#organization`, '@type': 'Organization', name: 'Ghana National Union of Technical Students (GNUTS)' },
+          },
+        })),
+      }
+    : null;
+
   return (
-    <ExecutivesClient 
-      initialExecutives={executives} 
-      heroImage={heroImage}
-      heroTitle={heroTitle}
-      heroSubtitle={heroSubtitle}
-    />
+    <>
+      {executivesJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(executivesJsonLd).replace(/</g, '\\u003c') }}
+        />
+      )}
+      <ExecutivesClient
+        initialExecutives={executives}
+        heroImage={heroImage}
+        heroTitle={heroTitle}
+        heroSubtitle={heroSubtitle}
+      />
+    </>
   );
 }

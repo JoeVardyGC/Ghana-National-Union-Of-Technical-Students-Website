@@ -120,7 +120,7 @@ export default function GalleryClient({ initialItems }: { initialItems?: Gallery
                   >
                     <img
                       src={resolvedImg}
-                      alt={item.title}
+                      alt={`${item.title} | GNUTS`}
                       className="w-full h-full object-cover object-top group-hover/img:scale-105 transition-transform duration-700 ease-out"
                     />
 

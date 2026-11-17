@@ -444,7 +444,7 @@ export default async function AboutPage() {
                       <div className="relative aspect-[1/1] w-full overflow-hidden bg-gray-900 rounded-t-3xl" style={{ backgroundColor: bgCol }}>
                         <img
                           src={photoUrl}
-                          alt={exec.full_name || exec.name}
+                          alt={`${exec.full_name || exec.name}, ${exec.position || 'National Executive'}, GNUTS`}
                           loading="lazy"
                           decoding="async"
                           className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"

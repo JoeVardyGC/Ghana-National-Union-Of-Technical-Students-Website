@@ -7,6 +7,7 @@ import { NewsItem } from '@/lib/newsData';
 import { ReadingProgressBar, ShareToolbar, NextPrevNavigation } from '@/components/ArticleDetailClient';
 import { resolveImgUrl, formatDate, stripHtml } from '@/lib/imageUtils';
 import { getSiteSettings } from '@/lib/siteSettings';
+import { absoluteUrl, SITE_URL } from '@/lib/siteUrl';
 import { telHref } from '@/lib/siteSettingsShared';
 
 export const revalidate = 15;
@@ -135,8 +136,35 @@ export default async function NewsDetailPage({ params }: PageProps) {
     });
   }
 
+  // NewsArticle structured data: lets Google show this post (and its photos) in
+  // news and image results, credited to GNUTS
+  const toAbsoluteImage = (img?: string) => {
+    const clean = (img || '').trim();
+    if (!clean || clean.startsWith('data:')) return null;
+    return /^https?:\/\//i.test(clean) ? clean : absoluteUrl(`/${clean.replace(/^\/+/, '')}`);
+  };
+  const articleImages = [...new Set([article.image, ...(article.images || [])].map(toAbsoluteImage).filter(Boolean))];
+  const publishedIso = !isNaN(new Date(article.published_at).getTime()) ? new Date(article.published_at).toISOString() : undefined;
+  const newsJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    headline: article.title.slice(0, 110),
+    description: stripHtml(article.content).replace(/\s+/g, ' ').trim().slice(0, 200),
+    image: articleImages.length ? articleImages : [absoluteUrl('/images/og-logo.png')],
+    datePublished: publishedIso,
+    dateModified: publishedIso,
+    author: [{ '@type': 'Organization', name: article.author || 'GNUTS Secretariat', url: absoluteUrl('/') }],
+    publisher: { '@id': `${SITE_URL}/#organization`, '@type': 'Organization', name: 'Ghana National Union of Technical Students (GNUTS)', logo: { '@type': 'ImageObject', url: absoluteUrl('/images/gnuts_logo.png') } },
+    mainEntityOfPage: absoluteUrl(`/blog/${article.id}`),
+    inLanguage: 'en-GH',
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-[#f8f9fa]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(newsJsonLd).replace(/</g, '\\u003c') }}
+      />
       {/* Sticky Reading Progress Indicator Bar */}
       <ReadingProgressBar />
 
