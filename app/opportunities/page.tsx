@@ -29,7 +29,7 @@ export default async function OpportunitiesPage() {
   let opportunities: OpportunityItem[] = [];
   let heroImage = '/images/header_for_pages.jpg';
   let heroTitle = 'Student Opportunities & TVET Placements';
-  let heroSubtitle = 'Industrial attachments, internships, grants and competitions for technical students.';
+  let heroSubtitle = 'Empowering Ghanaian Technical University students with direct access to attachments, grants, and championships.';
 
   try {
     const [dbRows, bannerRows] = await Promise.all([

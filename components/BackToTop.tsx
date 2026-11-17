@@ -45,10 +45,10 @@ export default function BackToTop() {
       type="button"
       onClick={scrollToTop}
       aria-label="Back to top"
-      className={`fixed ${atBottom ? 'bottom-24 sm:bottom-20' : 'bottom-6'} right-6 z-40 w-12 h-12 rounded-full bg-[#014900] text-white hover:shadow-sm border border-[#D9A000]/60 hover:border-[#D9A000] hover:bg-[#013300] transition-all duration-300 animate-fadeIn flex items-center justify-center group`}
+      className={`fixed ${atBottom ? 'bottom-24 sm:bottom-20' : 'bottom-6'} right-6 z-40 w-12 h-12 rounded-full bg-[#014900] text-white shadow-xl hover:shadow-2xl border border-[#D9A000]/60 hover:border-[#D9A000] hover:bg-[#013300] hover:scale-110 active:scale-95 transition-all duration-300 animate-fadeIn flex items-center justify-center group`}
       title="Back to top"
     >
-      <ArrowUp className="w-5 h-5 text-[#D9A000] transition-transform duration-300" />
+      <ArrowUp className="w-5 h-5 text-[#D9A000] group-hover:-translate-y-1 transition-transform duration-300" />
     </button>
   );
 }

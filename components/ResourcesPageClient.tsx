@@ -67,7 +67,7 @@ export default function ResourcesPageClient({
   return (
     <div className="space-y-10">
       {/* Search & Category Filter Toolbar */}
-      <div className="bg-white p-4 sm:p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="bg-white p-4 sm:p-6 rounded-3xl border border-gray-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
         {/* Search Box */}
         <div className="relative w-full md:w-96">
           <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -76,7 +76,7 @@ export default function ResourcesPageClient({
             placeholder="Search constitution, communiqués, policies..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-xs sm:text-sm font-medium outline-none focus:border-[#014900] focus:bg-white transition-all"
+            className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-xs sm:text-sm font-medium outline-none focus:border-[#014900] focus:bg-white transition-all"
           />
           {searchQuery && (
             <button
@@ -113,16 +113,17 @@ export default function ResourcesPageClient({
       <div className="flex items-center justify-between text-xs text-gray-500 font-bold px-2">
         <span>SHOWING {filteredResources.length} OFFICIAL {filteredResources.length === 1 ? 'RECORD' : 'RECORDS'}</span>
         {selectedCategory !== 'ALL' && (
-          <span className="text-[#014900]">Category: {selectedCategory}</span>
+          <span className="text-[#014900] uppercase">Category: {selectedCategory}</span>
         )}
       </div>
 
       {/* Resource Cards Grid */}
       {filteredResources.length === 0 ? (
-        <div className="text-center py-16 px-6 bg-white rounded-xl border border-gray-200 shadow-sm max-w-xl mx-auto space-y-3">
-          <div className="w-14 h-14 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center mx-auto text-2xl">
-                      </div>
-          <h4 className="text-lg font-semibold text-gray-900">No Documents Found</h4>
+        <div className="text-center py-16 px-6 bg-white rounded-3xl border border-gray-200 shadow-sm max-w-xl mx-auto space-y-3">
+          <div className="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mx-auto text-2xl">
+            📜
+          </div>
+          <h4 className="text-lg font-extrabold text-gray-900">No Documents Found</h4>
           <p className="text-xs text-gray-500 font-medium">
             {searchQuery
               ? `No resources matching "${searchQuery}". Try a different search term.`
@@ -138,7 +139,7 @@ export default function ResourcesPageClient({
             return (
               <div
                 key={res.id || idx}
-                className="bg-white p-6 sm:p-7 rounded-xl border border-[#E4E2DA] hover:border-[#C9C6BA] transition-all duration-300 flex flex-col justify-between group"
+                className="bg-white p-6 sm:p-7 rounded-3xl border border-gray-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
               >
                 <div className="space-y-4">
                   {/* Category Badge & Icon */}
@@ -153,7 +154,7 @@ export default function ResourcesPageClient({
                       <FileText className="w-5 h-5" />
                     </div>
                     <span
-                      className={`px-3 py-1 text-xs font-semibold rounded-full ${
+                      className={`px-3 py-1 text-xs font-extrabold uppercase tracking-wider rounded-full ${
                         isGoldAccent ? 'bg-[#D9A000] text-[#014900]' : 'bg-[#014900] text-white'
                       }`}
                     >
@@ -162,7 +163,7 @@ export default function ResourcesPageClient({
                   </div>
 
                   <h3
-                    className={`text-base sm:text-lg font-semibold leading-snug transition-colors ${
+                    className={`text-base sm:text-lg font-extrabold leading-snug transition-colors ${
                       isGoldAccent ? 'text-gray-900 group-hover:text-gold-ink' : 'text-gray-900 group-hover:text-[#014900]'
                     }`}
                   >
@@ -175,16 +176,16 @@ export default function ResourcesPageClient({
                 </div>
 
                 <div className="pt-6 mt-6 border-t border-gray-100 space-y-3">
-                  <div className="flex items-center justify-between text-xs text-gray-500 font-bold">
-                    <span>{fileExt} FORMAT</span>
-                    <span>{formatBytes(res.file_size)}</span>
+                  <div className="flex items-center justify-between text-xs text-gray-500 font-bold uppercase tracking-wider">
+                    <span>📄 {fileExt} FORMAT</span>
+                    <span>💾 {formatBytes(res.file_size)}</span>
                   </div>
 
                   <a
                     href={resolveDocumentUrl(res.file_path)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`w-full py-3 px-4 text-xs font-semibold rounded-lg transition-all shadow-sm flex items-center justify-center gap-2 uppercase tracking-wider cursor-pointer ${
+                    className={`w-full py-3 px-4 text-xs font-extrabold rounded-2xl transition-all shadow-sm flex items-center justify-center gap-2 uppercase tracking-wider cursor-pointer ${
                       isGoldAccent
                         ? 'bg-[#D9A000] text-[#014900] hover:bg-[#014900] hover:text-white'
                         : 'bg-[#014900] hover:bg-[#D9A000] text-white hover:text-[#014900]'

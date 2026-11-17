@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Users, GraduationCap, Building2 } from 'lucide-react';
 import { resolveImgUrl } from '@/lib/imageUtils';
 
 interface Slide {
@@ -18,29 +18,29 @@ interface Slide {
 const PHP_HERO_SLIDES: Slide[] = [
   {
     title: 'Ghana National Union of Technical Students (GNUTS)',
-    subtitle: 'The national voice of students in Technical Universities and TVET institutions across Ghana.',
+    subtitle: 'The unified voice of Technical and TVET students in Ghana.',
     image: 'https://ik.imagekit.io/joevardy/carousel%201.jpg?updatedAt=1790249603163',
-    btn1_text: 'About the union',
+    btn1_text: 'Who We Are →',
     btn1_link: '/about',
-    btn2_text: 'Latest news',
+    btn2_text: 'Our Events',
     btn2_link: '/blog',
   },
   {
-    title: 'Technical students, building Ghana',
-    subtitle: 'Professionals with integrity.',
+    title: 'Empowering Technical Students for National Development',
+    subtitle: 'Professionals with Integrity.',
     image: 'https://ik.imagekit.io/joevardy/carousel%202.jpg?updatedAt=1790249603210',
-    btn1_text: 'About the union',
+    btn1_text: 'Who We Are →',
     btn1_link: '/about',
-    btn2_text: 'Latest news',
+    btn2_text: 'Our Events',
     btn2_link: '/blog',
   },
   {
-    title: 'Opportunities beyond the classroom',
-    subtitle: 'Scholarships, attachments, leadership and a platform for your projects.',
+    title: 'Creating Opportunities Beyond the Classroom',
+    subtitle: 'Scholarships, skills, leadership, and innovation.',
     image: 'https://ik.imagekit.io/joevardy/carousel%203.jpg?updatedAt=1790249603799',
-    btn1_text: 'Find scholarships',
-    btn1_link: '/scholarships',
-    btn2_text: 'Latest news',
+    btn1_text: 'Who We Are →',
+    btn1_link: '/about',
+    btn2_text: 'Our Events',
     btn2_link: '/blog',
   },
 ];
@@ -166,7 +166,9 @@ export default function HeroSlider({
                   src={localFallback}
                   alt=""
                   aria-hidden="true"
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className={`absolute inset-0 w-full h-full object-cover transition-transform duration-[10000ms] ease-out ${
+                    isActive ? 'scale-110' : 'scale-100'
+                  }`}
                   loading={index === 0 ? 'eager' : 'lazy'}
                   // @ts-ignore
                   fetchPriority={index === 0 ? 'high' : 'low'}
@@ -178,7 +180,9 @@ export default function HeroSlider({
                   <img
                     src={slide.image}
                     alt={slide.title}
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className={`absolute inset-0 w-full h-full object-cover transition-transform duration-[10000ms] ease-out ${
+                      isActive ? 'scale-110' : 'scale-100'
+                    }`}
                     loading={index === 0 ? 'eager' : 'lazy'}
                     // @ts-ignore
                     fetchPriority={index === 0 ? 'high' : 'low'}
@@ -191,34 +195,30 @@ export default function HeroSlider({
                 )}
               </div>
               
-              {/* Darker on the left where the text sits, so the faces on the right stay clear */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/10" />
-              <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 to-transparent" />
+              {/* Better gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent" />
 
-              <div className="relative h-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 flex flex-col justify-center items-start pb-10 pointer-events-none">
-                <div className={`max-w-2xl pointer-events-auto transition-opacity duration-700 ${isActive ? 'opacity-100' : 'opacity-0'}`}>
-                  <p className="text-xs sm:text-sm font-semibold tracking-[0.08em] uppercase text-[#D9A000] mb-4">
-                    GNUTS &middot; Since 1987
-                  </p>
-                  <TitleTag className="text-3xl sm:text-4xl lg:text-[3.25rem] font-bold text-white leading-[1.1] mb-4">
+              {/* Content Container with Animated Text Entrance */}
+              <div className="relative h-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 flex flex-col justify-center items-start pb-16 sm:pb-12 pointer-events-none">
+                <div className="max-w-3xl pointer-events-auto">
+                  <TitleTag className={`text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight drop-shadow-lg mb-3 sm:mb-4 transition-all duration-1000 transform ${isActive ? 'translate-y-0 opacity-100 delay-300' : 'translate-y-8 opacity-0'}`}>
                     {slide.title}
                   </TitleTag>
 
-                  <p className="text-base sm:text-lg text-white/85 leading-relaxed max-w-xl mb-8">
+                  <p className={`text-sm sm:text-lg lg:text-xl text-gray-200 font-medium leading-relaxed max-w-2xl drop-shadow-md mb-5 sm:mb-6 transition-all duration-1000 transform ${isActive ? 'translate-y-0 opacity-100 delay-500' : 'translate-y-8 opacity-0'}`}>
                     {slide.subtitle}
                   </p>
 
-                  <div className="flex flex-wrap gap-3">
+                  <div className={`flex flex-wrap gap-4 transition-all duration-1000 transform ${isActive ? 'translate-y-0 opacity-100 delay-700' : 'translate-y-8 opacity-0'}`}>
                     <Link
                       href={slide.btn1_link}
-                      className="inline-flex items-center gap-2 px-5 py-3 bg-[#D9A000] text-[#013300] hover:bg-white transition-colors rounded-md font-semibold text-sm"
+                      className="px-6 py-3 bg-[#014900] text-white hover:bg-[#D9A000] hover:text-[#014900] transition-all rounded-2xl font-bold text-sm shadow-md hover:shadow-xl hover:-translate-y-0.5"
                     >
                       {slide.btn1_text}
-                      <ArrowRight className="w-4 h-4" aria-hidden="true" />
                     </Link>
                     <Link
                       href={slide.btn2_link}
-                      className="inline-flex items-center px-5 py-3 text-white border border-white/50 hover:bg-white hover:text-[#013300] transition-colors rounded-md font-semibold text-sm"
+                      className="px-6 py-3 bg-white text-gray-900 hover:bg-gray-100 transition-all rounded-2xl font-bold text-sm shadow-md hover:shadow-xl hover:-translate-y-0.5"
                     >
                       {slide.btn2_text}
                     </Link>
@@ -246,7 +246,7 @@ export default function HeroSlider({
         </button>
 
         {/* Slide Indicators with Progress Bar */}
-        <div className="absolute bottom-6 left-5 sm:left-8 lg:left-[max(2.5rem,calc((100vw-80rem)/2+2.5rem))] flex items-center gap-2 z-20">
+        <div className="absolute bottom-16 sm:bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
           {activeSlides.map((_, index) => {
             const isActive = index === currentIndex;
             return (
@@ -257,8 +257,8 @@ export default function HeroSlider({
                 aria-label={`Go to slide ${index + 1}`}
               >
                 <div
-                  className={`h-0.5 transition-all duration-300 overflow-hidden bg-white/35 ${
-                    isActive ? 'w-12' : 'w-6 group-hover:bg-white/60'
+                  className={`h-1.5 rounded-full transition-all duration-300 overflow-hidden bg-white/40 ${
+                    isActive ? 'w-10 sm:w-14' : 'w-2.5 sm:w-3 group-hover:bg-white/60'
                   }`}
                 >
                   {isActive && (
@@ -277,27 +277,51 @@ export default function HeroSlider({
         </div>
       </section>
 
-      {/* Key figures: a plain band under the hero, not a floating glass card */}
-      <div className="bg-white border-b border-[#E4E2DA]">
-        <dl className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-[#E4E2DA]">
-          <div className="py-6 sm:pr-8">
-            <dt className="text-sm text-[#5B6560]">Students represented</dt>
-            <dd className="mt-1 text-3xl font-bold text-[#014900] font-display tabular-nums">
-              <AnimatedCounter value={200000} suffix="+" />
-            </dd>
+      {/* Floating Modern Compact Stats Bar — Curved Edges */}
+      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 -mt-8 z-30 mb-8">
+        <div className="bg-white/95 backdrop-blur-md rounded-3xl shadow-xl border border-gray-200/80 py-5 px-6 sm:px-8 relative overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 divide-y md:divide-y-0 md:divide-x divide-gray-100">
+            {/* Stat 1: Students Represented */}
+            <div className="flex items-center gap-3.5 md:justify-center pt-2 md:pt-0">
+              <div className="w-9 h-9 rounded-lg bg-[#014900]/10 text-[#014900] flex items-center justify-center shrink-0 border border-[#014900]/15">
+                <Users className="w-4.5 h-4.5" />
+              </div>
+              <div>
+                <h4 className="text-xl sm:text-2xl font-extrabold text-[#014900] leading-none">
+                  <AnimatedCounter value={200000} suffix="+" />
+                </h4>
+                <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mt-1">Students Represented</p>
+              </div>
+            </div>
+
+            {/* Stat 2: Member Institutions */}
+            <div className="flex items-center gap-3.5 md:justify-center pt-3 md:pt-0">
+              <div className="w-9 h-9 rounded-lg bg-[#D9A000]/15 text-[#014900] flex items-center justify-center shrink-0 border border-[#D9A000]/25">
+                <Building2 className="w-4.5 h-4.5" />
+              </div>
+              <div>
+                <h4 className="text-xl sm:text-2xl font-extrabold text-[#014900] leading-none">
+                  <AnimatedCounter value={10} suffix="+" />
+                </h4>
+                <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mt-1">Member Institutions</p>
+              </div>
+            </div>
+
+            {/* Stat 3: National Advocacy */}
+            <div className="flex items-center gap-3.5 md:justify-center pt-3 md:pt-0">
+              <div className="w-9 h-9 rounded-lg bg-[#014900]/10 text-[#014900] flex items-center justify-center shrink-0 border border-[#014900]/15">
+                <GraduationCap className="w-4.5 h-4.5" />
+              </div>
+              <div>
+                <h4 className="text-xl sm:text-2xl font-extrabold text-[#014900] leading-none">
+                  {/* Founded in 1987 as GNUPS (renamed GNUTS in 2016) */}
+                  <AnimatedCounter value={new Date().getFullYear() - 1987} suffix="+ Yrs" />
+                </h4>
+                <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mt-1">Years of Advocacy</p>
+              </div>
+            </div>
           </div>
-          <div className="py-6 sm:px-8">
-            <dt className="text-sm text-[#5B6560]">Member institutions</dt>
-            <dd className="mt-1 text-3xl font-bold text-[#014900] font-display tabular-nums">
-              <AnimatedCounter value={10} suffix="+" />
-            </dd>
-          </div>
-          <div className="py-6 sm:pl-8">
-            {/* Founded in 1987 as GNUPS (renamed GNUTS in 2016) */}
-            <dt className="text-sm text-[#5B6560]">Representing students since</dt>
-            <dd className="mt-1 text-3xl font-bold text-[#014900] font-display tabular-nums">1987</dd>
-          </div>
-        </dl>
+        </div>
       </div>
     </div>
   );

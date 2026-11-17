@@ -54,7 +54,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
       const data = await response.json();
 
       if (response.ok && data.success) {
-        setSuccessMessage('Thanks, your message has reached the GNUTS secretariat. We will reply by email, usually within a few working days.');
+        setSuccessMessage('Thank you for contacting GNUTS. Your message has been received and logged into our executive registry. Our secretariat desk will reach out promptly.');
         setFormData({
           name: '',
           email: '',
@@ -86,7 +86,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
         <div className="lg:col-span-5 space-y-6">
           
           <div className="space-y-2">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#16201A]">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] uppercase tracking-tight">
               Get in Touch
             </h2>
             <p className="text-sm sm:text-base text-gray-600 font-medium leading-relaxed">
@@ -98,13 +98,13 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
           <div className="space-y-3.5">
             
             {/* Phone Card */}
-            <div className="group p-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
+            <div className="group p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
               <div className="flex items-center gap-3.5">
                 <div className="w-10 h-10 rounded-xl bg-[#014900] group-hover:bg-[#D9A000] text-white group-hover:text-[#014900] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
                   <Phone className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-xs font-semibold text-gray-500">Phone Lines</h3>
+                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Phone Lines</h3>
                   <div className="text-sm sm:text-base font-semibold text-gray-900 flex flex-col pt-0.5">
                     <a href={telHref(settings.hotlinePhone)} className="hover:text-[#014900] transition-colors">{settings.hotlinePhone} <span className="text-sm text-gray-600 font-normal">(Secretariat Desk)</span></a>
                     {settings.mobilePhone && (
@@ -116,13 +116,13 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
             </div>
 
             {/* Email Card */}
-            <div className="group p-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
+            <div className="group p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
               <div className="flex items-center gap-3.5">
                 <div className="w-10 h-10 rounded-xl bg-[#014900] group-hover:bg-[#D9A000] text-white group-hover:text-[#014900] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
                   <Mail className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-xs font-semibold text-gray-500">Email Address</h3>
+                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Email Address</h3>
                   <div className="text-sm sm:text-base font-semibold text-gray-900 flex flex-col pt-0.5">
                     <a href={`mailto:${settings.secretariatEmail}`} className="hover:text-[#014900] transition-colors">{settings.secretariatEmail}</a>
                   </div>
@@ -131,13 +131,13 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
             </div>
 
             {/* Location Card */}
-            <div className="group p-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
+            <div className="group p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
               <div className="flex items-center gap-3.5">
                 <div className="w-10 h-10 rounded-xl bg-[#014900] group-hover:bg-[#D9A000] text-white group-hover:text-[#014900] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
                   <MapPin className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-xs font-semibold text-gray-500">National Secretariat Location</h3>
+                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">National Secretariat Location</h3>
                   <p className="text-sm sm:text-base font-semibold text-gray-900 leading-snug pt-0.5">
                     {settings.headquartersAddress}
                   </p>
@@ -149,13 +149,13 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
             </div>
 
             {/* Office Hours Card */}
-            <div className="group p-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-300">
+            <div className="group p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
               <div className="flex items-center gap-3.5">
                 <div className="w-10 h-10 rounded-xl bg-[#014900] group-hover:bg-[#D9A000] text-white group-hover:text-[#014900] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
                   <Clock className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-xs font-semibold text-gray-500">Working Hours</h3>
+                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Working Hours</h3>
                   <p className="text-sm sm:text-base font-semibold text-gray-900 pt-0.5">
                     Monday – Friday: 8:00 AM – 5:00 PM
                   </p>
@@ -167,8 +167,8 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
           </div>
 
           {/* OFFICIAL SOCIAL CHANNELS STRIP */}
-          <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm space-y-3">
-            <div className="flex items-center gap-2 text-xs font-semibold text-gray-600">
+          <div className="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm space-y-3">
+            <div className="flex items-center gap-2 text-xs font-semibold text-gray-600 uppercase tracking-wider">
               <Share2 className="w-3.5 h-3.5 text-[#014900]" />
               <span>Connect On Social Platforms</span>
             </div>
@@ -179,7 +179,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
                 hidden={!settings.mobilePhone}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#25D366]/10 hover:bg-[#25D366] text-[#25D366] hover:text-white transition-all duration-300 text-sm font-semibold border border-[#25D366]/20 shadow-2xs hover:shadow-md"
+                className="group inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#25D366]/10 hover:bg-[#25D366] text-[#25D366] hover:text-white transition-all duration-300 text-sm font-semibold border border-[#25D366]/20 shadow-2xs hover:shadow-md hover:scale-105"
                 title="Connect on WhatsApp"
               >
                 <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
@@ -194,7 +194,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
                 hidden={!settings.twitterUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gray-100 hover:bg-black text-gray-800 hover:text-white transition-all duration-300 text-sm font-semibold border border-gray-200 shadow-2xs hover:shadow-md"
+                className="group inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gray-100 hover:bg-black text-gray-800 hover:text-white transition-all duration-300 text-sm font-semibold border border-gray-200 shadow-2xs hover:shadow-md hover:scale-105"
                 title="Follow on X (Twitter)"
               >
                 <svg className="w-3.5 h-3.5 fill-current shrink-0" viewBox="0 0 24 24">
@@ -209,7 +209,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
                 hidden={!settings.facebookUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#1877F2]/10 hover:bg-[#1877F2] text-[#1877F2] hover:text-white transition-all duration-300 text-sm font-semibold border border-[#1877F2]/20 shadow-2xs hover:shadow-md"
+                className="group inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#1877F2]/10 hover:bg-[#1877F2] text-[#1877F2] hover:text-white transition-all duration-300 text-sm font-semibold border border-[#1877F2]/20 shadow-2xs hover:shadow-md hover:scale-105"
                 title="Follow on Facebook"
               >
                 <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
@@ -224,7 +224,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
                 hidden={!settings.tiktokUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-black/5 hover:bg-black text-gray-900 hover:text-white transition-all duration-300 text-sm font-semibold border border-gray-200 shadow-2xs hover:shadow-md"
+                className="group inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-black/5 hover:bg-black text-gray-900 hover:text-white transition-all duration-300 text-sm font-semibold border border-gray-200 shadow-2xs hover:shadow-md hover:scale-105"
                 title="Follow on TikTok"
               >
                 <svg className="w-3.5 h-3.5 fill-current shrink-0" viewBox="0 0 24 24">
@@ -238,7 +238,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
         </div>
 
         {/* Right Column: Contact Form (7 Cols) */}
-        <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-xl border border-gray-200 shadow-md space-y-5">
+        <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-gray-200 shadow-md space-y-5">
           
           <div className="space-y-1 pb-3 border-b border-gray-100">
             <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
@@ -251,7 +251,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
 
           {/* Success Banner */}
           {successMessage && (
-            <div className="p-4 bg-emerald-50 border border-emerald-300 text-emerald-900 text-sm font-medium flex items-start gap-2.5 rounded-lg animate-fadeIn">
+            <div className="p-4 bg-emerald-50 border border-emerald-300 text-emerald-900 text-sm font-medium flex items-start gap-2.5 rounded-2xl animate-fadeIn">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
               <div>
                 <strong className="block font-semibold text-emerald-950">Message Sent Successfully!</strong>
@@ -262,7 +262,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
 
           {/* Error Banner */}
           {errorMessage && (
-            <div className="p-4 bg-rose-50 border border-rose-300 text-rose-900 text-sm font-medium flex items-start gap-2.5 rounded-lg animate-fadeIn">
+            <div className="p-4 bg-rose-50 border border-rose-300 text-rose-900 text-sm font-medium flex items-start gap-2.5 rounded-2xl animate-fadeIn">
               <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
               <div>
                 <strong className="block font-semibold text-rose-950">Submission Failed</strong>
@@ -300,7 +300,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="e.g. Kwame Mensah"
-                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-base sm:text-sm font-normal text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-lg"
+                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-base sm:text-sm font-normal text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-2xl"
                 />
               </div>
 
@@ -316,7 +316,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="e.g. kwame@example.com"
-                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-base sm:text-sm font-normal text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-lg"
+                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-base sm:text-sm font-normal text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-2xl"
                 />
               </div>
 
@@ -331,7 +331,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="e.g. +233 24 123 4567"
-                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-base sm:text-sm font-normal text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-lg"
+                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-base sm:text-sm font-normal text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-2xl"
                 />
               </div>
 
@@ -346,7 +346,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
                   value={formData.institution}
                   onChange={handleChange}
                   placeholder="e.g. Accra Technical University"
-                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-base sm:text-sm font-normal text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-lg"
+                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-base sm:text-sm font-normal text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-2xl"
                 />
               </div>
 
@@ -364,7 +364,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
                 value={formData.subject}
                 onChange={handleChange}
                 placeholder="What is your message regarding?"
-                className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-base sm:text-sm font-normal text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-lg"
+                className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-base sm:text-sm font-normal text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-2xl"
               />
             </div>
 
@@ -380,7 +380,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
                 value={formData.message}
                 onChange={handleChange}
                 placeholder="Provide detailed description of your inquiry, proposal, or feedback..."
-                className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-base sm:text-sm font-normal text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-lg resize-none"
+                className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 text-base sm:text-sm font-normal text-gray-900 focus:bg-white focus:border-[#014900] focus:ring-1 focus:ring-[#014900] outline-none transition-all rounded-2xl resize-none"
               />
             </div>
 
@@ -389,10 +389,10 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#014900] hover:bg-[#D9A000] text-white hover:text-[#014900] text-sm font-semibold transition-all duration-300 hover:shadow-sm rounded-lg cursor-pointer disabled:opacity-60"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#014900] hover:bg-[#D9A000] text-white hover:text-[#014900] text-sm font-extrabold uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-xl rounded-2xl cursor-pointer disabled:opacity-60"
               >
                 <Send className="w-4 h-4" />
-                <span>{isSubmitting ? 'Sending…' : 'Send message'}</span>
+                <span>{isSubmitting ? 'Transmitting Message...' : 'Submit Inquiries to Secretariat'}</span>
               </button>
             </div>
 
@@ -403,7 +403,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
       </div>
 
       {/* 2. INTERACTIVE GOOGLE MAP EMBED SECTION */}
-      <div className="bg-white p-6 sm:p-7 rounded-xl border border-gray-200 shadow-md space-y-4">
+      <div className="bg-white p-6 sm:p-7 rounded-3xl border border-gray-200 shadow-md space-y-4">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-gray-100 pb-3">
           <div>
             <h3 className="text-lg font-bold text-gray-900">
@@ -424,7 +424,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
           </a>
         </div>
 
-        <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full rounded-lg overflow-hidden bg-gray-100 border border-gray-200 shadow-inner">
+        <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 shadow-inner">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.3672285627476!2d-0.051864526355732944!3d5.659911732598822!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf81002f0e4dc5%3A0xda91f42bccf2908a!2sGNUTS%20RESIDENT!5e0!3m2!1sen!2sgh!4v1766881325375!5m2!1sen!2sgh"
             className="absolute inset-0 w-full h-full border-0"
@@ -437,10 +437,10 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
       </div>
 
       {/* 3. QUICK ASSISTANCE BANNER */}
-      <div className="relative overflow-hidden bg-[#014900] text-white p-6 sm:p-10 rounded-xl shadow-md">
+      <div className="relative overflow-hidden bg-gradient-to-r from-[#014900] via-[#026b00] to-[#013300] text-white p-6 sm:p-10 rounded-3xl shadow-xl border border-emerald-800/40">
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="space-y-1.5 max-w-xl">
-            <h3 className="text-lg sm:text-xl font-semibold text-white">
+            <h3 className="text-lg sm:text-xl font-extrabold text-white">
               Need Immediate Assistance?
             </h3>
             <p className="text-sm text-gray-100">
@@ -451,7 +451,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
           <div className="flex flex-wrap items-center gap-3">
             <a
               href={telHref(settings.hotlinePhone)}
-              className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#D9A000] hover:bg-[#b88800] text-[#014900] text-sm font-semibold rounded-lg transition-all hover:shadow-sm"
+              className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#D9A000] hover:bg-[#b88800] text-[#014900] text-sm font-extrabold uppercase tracking-wider rounded-2xl transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
             >
               <Phone className="w-3.5 h-3.5 text-[#014900]" />
               <span>Call Us Now</span>
@@ -459,7 +459,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
 
             <a
               href={`mailto:${settings.secretariatEmail}`}
-              className="inline-flex items-center gap-2 px-6 py-3.5 bg-white hover:bg-gray-100 text-[#014900] text-sm font-semibold rounded-lg transition-all hover:shadow-sm"
+              className="inline-flex items-center gap-2 px-6 py-3.5 bg-white hover:bg-gray-100 text-[#014900] text-sm font-extrabold uppercase tracking-wider rounded-2xl transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
             >
               <Mail className="w-3.5 h-3.5 text-[#014900]" />
               <span>Email Secretariat</span>

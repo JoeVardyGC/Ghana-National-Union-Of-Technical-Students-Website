@@ -55,17 +55,18 @@ const ALUMNI: Alumnus[] = [
 
 export default function AlumniSection() {
   return (
-    <section className="py-20 sm:py-28 bg-[#FAF9F6] border-b border-gray-200" id="alumni-section">
+    <section className="py-20 sm:py-28 bg-[#f8f9fa] border-b border-gray-200" id="alumni-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
           <div>
-            <span className="px-3.5 py-1 text-xs font-semibold rounded-md bg-[#014900] text-white inline-block mb-3 shadow-sm">
+            <span className="px-3.5 py-1 text-xs font-extrabold rounded-md uppercase tracking-wider bg-[#014900] text-white inline-block mb-3 shadow-sm">
               TVET EXCELLENCE
             </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#16201A]">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight uppercase">
               Alumni Success Stories
             </h2>
+            <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-3" />
             <p className="text-gray-600 text-sm sm:text-base max-w-2xl font-medium">
               From technical university lecture halls to directing multinational corporations and founding industry-defining enterprises across Africa.
             </p>
@@ -74,7 +75,7 @@ export default function AlumniSection() {
             href="/about#alumni"
             className="inline-flex items-center gap-1.5 text-sm sm:text-base font-bold text-[#014900] hover:text-gold-ink transition-colors"
           >
-            Alumni network
+            Explore Alumni Network →
           </Link>
         </div>
 
@@ -82,20 +83,21 @@ export default function AlumniSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 reveal-on-scroll">
           {/* Featured Alumni (7 Cols) */}
           {ALUMNI[0] && (
-            <div className="lg:col-span-7 bg-white rounded-lg border border-gray-200 shadow-lg overflow-hidden flex flex-col justify-between group hover:shadow-md transition-all duration-300">
+            <div className="lg:col-span-7 bg-white rounded-2xl border border-gray-200 shadow-lg overflow-hidden flex flex-col justify-between group hover:shadow-2xl transition-all duration-300">
               <div className="grid grid-cols-1 md:grid-cols-12 h-full">
                 {/* Image Section */}
                 <div className="md:col-span-5 relative h-72 md:h-full bg-gray-900 overflow-hidden shrink-0">
                   <img
                     src={ALUMNI[0].image}
                     alt={ALUMNI[0].name}
-                    className="w-full h-full object-cover object-center group-hover:scale-[1.03] transition-transform duration-500"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-4 left-4 z-10">
-                    <span className="px-3 py-1 text-xs font-semibold rounded-full uppercase tracking-wider bg-[#D9A000] text-[#014900] shadow-sm">
+                    <span className="px-3 py-1 text-xs font-extrabold rounded-full uppercase tracking-wider bg-[#D9A000] text-[#014900] shadow-sm">
                       {ALUMNI[0].badge}
                     </span>
                   </div>
+                  <div className="absolute bottom-0 inset-x-0 h-1.5 bg-[#D9A000]" />
                 </div>
 
                 {/* Content Section */}
@@ -108,7 +110,7 @@ export default function AlumniSection() {
                   </div>
 
                   <div className="pt-6 border-t border-gray-100">
-                    <h3 className="text-xl font-semibold text-[#014900] leading-snug">
+                    <h3 className="text-xl font-extrabold text-[#014900] leading-snug">
                       {ALUMNI[0].name}
                     </h3>
                     <p className="text-xs sm:text-sm font-bold text-gray-900 mt-0.5">
@@ -119,7 +121,7 @@ export default function AlumniSection() {
                       {ALUMNI[0].institution} ({ALUMNI[0].gradYear})
                     </p>
 
-                    <div className="mt-4 p-3 rounded-lg bg-[#FAF9F6] border border-gray-200/80 flex items-center gap-2 text-xs font-bold text-[#014900]">
+                    <div className="mt-4 p-3 rounded-lg bg-[#f8f9fa] border border-gray-200/80 flex items-center gap-2 text-xs font-bold text-[#014900]">
                       <CheckCircle2 className="w-4 h-4 text-[#D9A000] shrink-0" />
                       <span>{ALUMNI[0].achievement}</span>
                     </div>
@@ -134,16 +136,16 @@ export default function AlumniSection() {
             {ALUMNI.slice(1).map((item) => (
               <div
                 key={item.id}
-                className="bg-white p-6 rounded-lg border border-[#E4E2DA] hover:border-[#C9C6BA] transition-all duration-300 flex flex-col sm:flex-row gap-5 group"
+                className="bg-white p-6 rounded-2xl border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col sm:flex-row gap-5 group"
               >
                 <div className="w-full sm:w-32 h-36 rounded-xl overflow-hidden bg-gray-900 shrink-0 relative">
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-2 left-2">
-                    <span className="px-2 py-0.5 text-xs font-semibold rounded-full uppercase tracking-wider bg-[#014900] text-white">
+                    <span className="px-2 py-0.5 text-xs font-extrabold rounded-full uppercase tracking-wider bg-[#014900] text-white">
                       ALUMNI
                     </span>
                   </div>
@@ -154,7 +156,7 @@ export default function AlumniSection() {
                     <p className="text-xs text-gray-700 italic line-clamp-3 font-medium mb-3">
                       "{item.quote}"
                     </p>
-                    <h4 className="font-semibold text-base text-[#014900] group-hover:text-gold-ink transition-colors leading-snug">
+                    <h4 className="font-extrabold text-base text-[#014900] group-hover:text-gold-ink transition-colors leading-snug">
                       {item.name}
                     </h4>
                     <p className="text-xs font-bold text-gray-900 mt-0.5">

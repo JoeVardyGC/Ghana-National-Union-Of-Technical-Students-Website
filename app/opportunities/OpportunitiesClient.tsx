@@ -34,7 +34,7 @@ export default function OpportunitiesClient({
   initialOpportunities,
   heroImage = '/images/header_for_pages.jpg',
   heroTitle = 'Student Opportunities & TVET Placements',
-  heroSubtitle = 'Industrial attachments, internships, grants and competitions for technical students.'
+  heroSubtitle = 'Empowering Ghanaian Technical University students with direct access to attachments, grants, and championships.'
 }: OpportunitiesClientProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
@@ -104,15 +104,16 @@ export default function OpportunitiesClient({
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url('${safeBgUrl}')` }}
         />
-        {/* Dark scrim so the title stays readable on any photo */}
-        <div className="absolute inset-0 bg-[#0c1a10]/60" />
+        {/* Semi-transparent Green Overlay (55% Green Opacity) */}
+        <div className="absolute inset-0 bg-[#014900]/55 backdrop-brightness-90" />
 
         <div className="max-w-5xl mx-auto text-center relative z-10 space-y-3">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 rounded-full border border-white/20 text-xs font-semibold text-[#D9A000]">
-            <span>Careers and attachments</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-xs font-extrabold uppercase tracking-widest text-[#D9A000]">
+            <Sparkles className="w-4 h-4" />
+            <span>National TVET Career & Growth Hub</span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight text-white drop-shadow-md">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase tracking-tight leading-tight text-white drop-shadow-md">
             {heroTitle}
           </h1>
 
@@ -122,15 +123,15 @@ export default function OpportunitiesClient({
 
           {/* Quick Stats Pills */}
           <div className="flex flex-wrap items-center justify-center gap-3 pt-3 text-xs font-bold text-emerald-200">
-            <div className="flex items-center gap-2 bg-white/10 px-3.5 py-1.5 rounded-lg border border-white/15">
+            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-2xl border border-white/15">
               <Briefcase className="w-4 h-4 text-[#D9A000]" />
               <span>15+ Partner Industries</span>
             </div>
-            <div className="flex items-center gap-2 bg-white/10 px-3.5 py-1.5 rounded-lg border border-white/15">
+            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-2xl border border-white/15">
               <Award className="w-4 h-4 text-[#D9A000]" />
               <span>GH₵ 500K+ Seed Funding</span>
             </div>
-            <div className="flex items-center gap-2 bg-white/10 px-3.5 py-1.5 rounded-lg border border-white/15">
+            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3.5 py-1.5 rounded-2xl border border-white/15">
               <GraduationCap className="w-4 h-4 text-[#D9A000]" />
               <span>10 Technical Universities Covered</span>
             </div>
@@ -142,7 +143,7 @@ export default function OpportunitiesClient({
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         
         {/* Search & Status Filter Row */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-gray-50 p-4 rounded-xl border border-gray-200/80 shadow-xs">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-gray-50 p-4 rounded-3xl border border-gray-200/80 shadow-xs">
           
           {/* Keyword Search Input */}
           <div className="relative w-full md:w-96">
@@ -152,7 +153,7 @@ export default function OpportunitiesClient({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by title, industry partner, or location..."
-              className="w-full pl-11 pr-4 py-2.5 bg-white rounded-lg border border-gray-200 text-xs font-medium text-gray-900 outline-none focus:border-[#014900] focus:ring-2 focus:ring-[#014900]/20 transition-all placeholder-gray-400"
+              className="w-full pl-11 pr-4 py-2.5 bg-white rounded-2xl border border-gray-200 text-xs font-medium text-gray-900 outline-none focus:border-[#014900] focus:ring-2 focus:ring-[#014900]/20 transition-all placeholder-gray-400"
             />
             {searchQuery && (
               <button
@@ -166,12 +167,12 @@ export default function OpportunitiesClient({
 
           {/* Status Pills */}
           <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0 no-scrollbar scrollbar-none">
-            <span className="text-xs font-semibold text-gray-500 shrink-0 mr-1">Status:</span>
+            <span className="text-xs font-extrabold text-gray-500 uppercase tracking-wider shrink-0 mr-1">Status:</span>
             {['All', 'open', 'closing_soon'].map((statusKey) => (
               <button
                 key={statusKey}
                 onClick={() => setSelectedStatus(statusKey)}
-                className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer shrink-0 ${
+                className={`px-4 py-2 rounded-2xl text-xs font-extrabold uppercase tracking-wider transition-all cursor-pointer shrink-0 ${
                   selectedStatus === statusKey
                     ? 'bg-[#014900] text-white shadow-md'
                     : 'bg-white text-gray-600 hover:bg-gray-200/70 border border-gray-200'
@@ -192,9 +193,9 @@ export default function OpportunitiesClient({
               <button
                 key={cat.name}
                 onClick={() => setSelectedCategory(cat.name)}
-                className={`inline-flex items-center gap-2 px-5 py-3 rounded-lg text-xs font-semibold transition-all cursor-pointer shrink-0 ${
+                className={`inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-xs font-extrabold uppercase tracking-wider transition-all cursor-pointer shrink-0 ${
                   isSelected
-                    ? 'bg-[#014900] text-white shadow-lg scale-102 font-semibold'
+                    ? 'bg-[#014900] text-white shadow-lg scale-102 font-extrabold'
                     : 'bg-gray-100/80 text-gray-700 hover:bg-gray-200 border border-gray-200/60'
                 }`}
               >
@@ -210,13 +211,14 @@ export default function OpportunitiesClient({
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         
         <div className="flex items-center justify-between pb-6">
-          <p className="text-xs font-semibold text-gray-500">
-            Showing <span className="text-[#014900] font-semibold">{filteredOpportunities.length}</span> Active Opportunities
+          <p className="text-xs font-extrabold text-gray-500 uppercase tracking-wider">
+            Showing <span className="text-[#014900] font-extrabold">{filteredOpportunities.length}</span> Active Opportunities
           </p>
         </div>
 
         {filteredOpportunities.length === 0 ? (
-          <div className="text-center py-12 px-6 bg-white rounded-xl border border-gray-200 shadow-sm max-w-xl mx-auto">
+          <div className="text-center py-12 px-6 bg-white rounded-3xl border border-gray-200 shadow-sm max-w-xl mx-auto">
+            <div className="text-4xl mb-3">💼</div>
             <p className="text-gray-500 font-medium text-sm">
               {searchQuery ? `No matching opportunities found for "${searchQuery}". Try clearing your search term.` : 'No active student opportunities or attachments available at the moment. Check back soon.'}
             </p>
@@ -226,24 +228,24 @@ export default function OpportunitiesClient({
             {filteredOpportunities.map((item) => (
               <div
                 key={item.id}
-                className="bg-white rounded-xl border border-[#E4E2DA] hover:border-[#C9C6BA] transition-all duration-300 flex flex-col justify-between overflow-hidden group"
+                className="bg-white rounded-3xl border border-gray-200/80 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden group"
               >
                 <div>
                   {/* Card Header Stamp */}
                   <div className="p-6 pb-4 border-b border-gray-100 flex items-start justify-between gap-3 bg-gradient-to-b from-gray-50/80 to-white">
                     
                     <div className="flex items-center gap-3">
-                      <div className="w-11 h-11 rounded-lg bg-emerald-50 border border-emerald-200/80 text-[#014900] flex items-center justify-center font-semibold shrink-0 shadow-2xs">
+                      <div className="w-11 h-11 rounded-2xl bg-emerald-50 border border-emerald-200/80 text-[#014900] flex items-center justify-center font-extrabold shrink-0 shadow-2xs">
                         {item.category === 'Industrial Attachment' && <Briefcase className="w-5 h-5" />}
                         {item.category === 'TVET Grant' && <Award className="w-5 h-5 text-amber-600" />}
                         {item.category === 'Skill Competition' && <Trophy className="w-5 h-5 text-amber-500" />}
                         {item.category === 'Fellowship' && <GraduationCap className="w-5 h-5 text-purple-600" />}
                       </div>
                       <div>
-                        <span className="text-xs font-semibold text-[#014900] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                        <span className="text-xs font-extrabold uppercase tracking-wider text-[#014900] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
                           {item.category}
                         </span>
-                        <p className="text-xs font-semibold text-gray-900 mt-1 flex items-center gap-1">
+                        <p className="text-xs font-extrabold text-gray-900 mt-1 flex items-center gap-1">
                           <Building2 className="w-3.5 h-3.5 text-gray-400" />
                           <span>{item.partner}</span>
                         </p>
@@ -252,17 +254,17 @@ export default function OpportunitiesClient({
 
                     {/* Status Badge */}
                     {item.status === 'closing_soon' ? (
-                      <span className="px-2.5 py-1 bg-amber-100 text-amber-900 border border-amber-300 text-xs font-semibold rounded-full shrink-0 flex items-center gap-1">
+                      <span className="px-2.5 py-1 bg-amber-100 text-amber-900 border border-amber-300 text-xs font-extrabold uppercase tracking-wider rounded-full shrink-0 flex items-center gap-1 animate-pulse">
                         <Clock className="w-3 h-3" />
                         <span>Closing Soon</span>
                       </span>
                     ) : item.status === 'open' ? (
-                      <span className="px-2.5 py-1 bg-emerald-100 text-[#014900] border border-emerald-300 text-xs font-semibold rounded-full shrink-0 flex items-center gap-1">
+                      <span className="px-2.5 py-1 bg-emerald-100 text-[#014900] border border-emerald-300 text-xs font-extrabold uppercase tracking-wider rounded-full shrink-0 flex items-center gap-1">
                         <CheckCircle2 className="w-3 h-3" />
                         <span>Open</span>
                       </span>
                     ) : (
-                      <span className="px-2.5 py-1 bg-gray-100 text-gray-500 text-xs font-semibold rounded-full shrink-0">
+                      <span className="px-2.5 py-1 bg-gray-100 text-gray-500 text-xs font-extrabold uppercase tracking-wider rounded-full shrink-0">
                         Closed
                       </span>
                     )}
@@ -271,7 +273,7 @@ export default function OpportunitiesClient({
 
                   {/* Card Content Body */}
                   <div className="p-6 space-y-4">
-                    <h3 className="font-display font-semibold text-lg text-gray-900 leading-snug group-hover:text-[#014900] transition-colors">
+                    <h3 className="font-display font-extrabold text-lg text-gray-900 leading-snug group-hover:text-[#014900] transition-colors">
                       {item.title}
                     </h3>
 
@@ -289,7 +291,7 @@ export default function OpportunitiesClient({
 
                       <div className="flex items-center gap-2 text-gray-700">
                         <DollarSign className="w-3.5 h-3.5 text-[#D9A000] shrink-0" />
-                        <span className="font-semibold text-emerald-950">{item.stipend_reward}</span>
+                        <span className="font-extrabold text-emerald-950">{item.stipend_reward}</span>
                       </div>
 
                       <div className="flex items-center gap-2 text-gray-700">
@@ -305,10 +307,10 @@ export default function OpportunitiesClient({
                 <div className="p-6 pt-0">
                   <button
                     onClick={() => handleOpenApplyModal(item)}
-                    className="w-full py-3 px-4 bg-[#014900] hover:bg-[#003800] text-white font-semibold text-xs rounded-lg shadow-md flex items-center justify-center gap-2 group-hover:shadow-md transition-all cursor-pointer"
+                    className="w-full py-3 px-4 bg-[#014900] hover:bg-[#003800] text-white font-extrabold text-xs uppercase tracking-wider rounded-2xl shadow-md flex items-center justify-center gap-2 group-hover:shadow-lg transition-all cursor-pointer"
                   >
                     <span>View Details & Apply</span>
-                    <ArrowUpRight className="w-4 h-4 text-[#D9A000] group-hover:translate-x-0.5 transition-transform" />
+                    <ArrowUpRight className="w-4 h-4 text-[#D9A000] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </button>
                 </div>
 
@@ -321,16 +323,16 @@ export default function OpportunitiesClient({
 
       {/* 4. INTERACTIVE APPLICATION MODAL */}
       {isApplyModalOpen && selectedOpportunity && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 overflow-y-auto">
-          <div className="bg-white rounded-xl border border-gray-200 shadow-lg w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden my-8 animate-in fade-in zoom-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs overflow-y-auto">
+          <div className="bg-white rounded-3xl border border-gray-200 shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden my-8 animate-in fade-in zoom-in duration-200">
             
             {/* Modal Header */}
-            <div className="p-6 bg-[#014900] text-white flex items-center justify-between">
+            <div className="p-6 bg-gradient-to-r from-[#014900] to-[#013500] text-white flex items-center justify-between">
               <div>
-                <span className="text-xs font-semibold text-[#D9A000] bg-white/10 px-2.5 py-0.5 rounded-full border border-white/20">
+                <span className="text-xs font-extrabold uppercase tracking-widest text-[#D9A000] bg-white/10 px-2.5 py-0.5 rounded-full border border-white/20">
                   {selectedOpportunity.category}
                 </span>
-                <h2 className="font-display font-bold text-lg sm:text-xl text-white mt-1">
+                <h2 className="font-display font-extrabold text-lg sm:text-xl text-white mt-1">
                   {selectedOpportunity.title}
                 </h2>
                 <p className="text-xs text-emerald-200 font-bold">{selectedOpportunity.partner}</p>
@@ -351,7 +353,7 @@ export default function OpportunitiesClient({
                   <div className="w-16 h-16 bg-emerald-100 text-[#014900] rounded-full mx-auto flex items-center justify-center">
                     <FileCheck className="w-10 h-10" />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900">Application Submitted!</h3>
+                  <h3 className="text-xl font-extrabold text-gray-900 uppercase">Application Submitted!</h3>
                   <p className="text-xs text-gray-600 max-w-md mx-auto">
                     Your application for <span className="font-bold text-[#014900]">{selectedOpportunity.title}</span> has been received by the GNUTS Secretariat. Our opportunities directorate will review your details shortly.
                   </p>
@@ -359,25 +361,25 @@ export default function OpportunitiesClient({
               ) : (
                 <>
                   {/* Opportunity Details Summary */}
-                  <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 space-y-2">
-                    <h4 className="font-semibold text-[#014900] text-xs">Eligibility & Requirements</h4>
+                  <div className="bg-gray-50 p-4 rounded-2xl border border-gray-200 space-y-2">
+                    <h4 className="font-extrabold uppercase tracking-wider text-[#014900] text-xs">Eligibility & Requirements</h4>
                     <p className="text-gray-700 leading-relaxed">{selectedOpportunity.eligibility}</p>
                     <div className="pt-2 flex flex-wrap gap-4 text-xs font-bold text-gray-600">
-                      <span>Location: {selectedOpportunity.location}</span>
-                      <span>Stipend/Reward: {selectedOpportunity.stipend_reward}</span>
+                      <span>📍 Location: {selectedOpportunity.location}</span>
+                      <span>💰 Stipend/Reward: {selectedOpportunity.stipend_reward}</span>
                       <span>⏰ Deadline: {selectedOpportunity.deadline}</span>
                     </div>
                   </div>
 
                   {/* Student Application Form */}
                   <form onSubmit={handleSubmitApplication} className="space-y-4">
-                    <h4 className="font-semibold text-gray-900 text-xs border-b border-gray-100 pb-2">
+                    <h4 className="font-extrabold uppercase tracking-wider text-gray-900 text-xs border-b border-gray-100 pb-2">
                       Submit Your Application
                     </h4>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-semibold text-gray-700 mb-1">Full Student Name *</label>
+                        <label className="block text-xs font-extrabold uppercase text-gray-700 mb-1">Full Student Name *</label>
                         <input
                           type="text"
                           required
@@ -389,7 +391,7 @@ export default function OpportunitiesClient({
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold text-gray-700 mb-1">Student Index / Reg Number *</label>
+                        <label className="block text-xs font-extrabold uppercase text-gray-700 mb-1">Student Index / Reg Number *</label>
                         <input
                           type="text"
                           required
@@ -403,7 +405,7 @@ export default function OpportunitiesClient({
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-semibold text-gray-700 mb-1">Technical University *</label>
+                        <label className="block text-xs font-extrabold uppercase text-gray-700 mb-1">Technical University *</label>
                         <select
                           value={institution}
                           onChange={(e) => setInstitution(e.target.value)}
@@ -423,7 +425,7 @@ export default function OpportunitiesClient({
                       </div>
 
                       <div>
-                        <label className="block text-xs font-semibold text-gray-700 mb-1">Email Address *</label>
+                        <label className="block text-xs font-extrabold uppercase text-gray-700 mb-1">Email Address *</label>
                         <input
                           type="email"
                           required
@@ -436,7 +438,7 @@ export default function OpportunitiesClient({
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-gray-700 mb-1">Phone Number (WhatsApp) *</label>
+                      <label className="block text-xs font-extrabold uppercase text-gray-700 mb-1">Phone Number (WhatsApp) *</label>
                       <input
                         type="tel"
                         required
@@ -448,7 +450,7 @@ export default function OpportunitiesClient({
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-gray-700 mb-1">Brief Statement of Interest *</label>
+                      <label className="block text-xs font-extrabold uppercase text-gray-700 mb-1">Brief Statement of Interest *</label>
                       <textarea
                         rows={3}
                         required
@@ -463,13 +465,13 @@ export default function OpportunitiesClient({
                       <button
                         type="button"
                         onClick={() => setIsApplyModalOpen(false)}
-                        className="px-4 py-2.5 bg-gray-100 text-gray-700 font-semibold rounded-xl hover:bg-gray-200 transition-colors"
+                        className="px-4 py-2.5 bg-gray-100 text-gray-700 font-extrabold uppercase tracking-wider rounded-xl hover:bg-gray-200 transition-colors"
                       >
                         Cancel
                       </button>
                       <button
                         type="submit"
-                        className="px-6 py-2.5 bg-[#014900] text-white font-semibold rounded-xl hover:bg-[#003800] transition-colors shadow-md flex items-center gap-2"
+                        className="px-6 py-2.5 bg-[#014900] text-white font-extrabold uppercase tracking-wider rounded-xl hover:bg-[#003800] transition-colors shadow-md flex items-center gap-2"
                       >
                         <Send className="w-3.5 h-3.5 text-[#D9A000]" />
                         <span>Submit Application</span>

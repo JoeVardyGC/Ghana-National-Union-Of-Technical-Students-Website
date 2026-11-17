@@ -152,7 +152,7 @@ export default function DirectImageUploader({
   const isImageKit = value && (value.includes('ik.imagekit.io') || value.includes('imagekit'));
 
   return (
-    <div className="space-y-2 bg-gray-50/80 p-3.5 rounded-lg border border-gray-200/90">
+    <div className="space-y-2 bg-gray-50/80 p-3.5 rounded-2xl border border-gray-200/90">
       {/* Hidden input to enforce native required validation if needed */}
       {required && (
         <input
@@ -167,7 +167,7 @@ export default function DirectImageUploader({
 
       {/* Label and Header */}
       <div className="flex items-center justify-between">
-        <label className="text-xs font-bold text-gray-700 flex items-center gap-1.5">
+        <label className="text-xs font-black uppercase text-gray-700 tracking-wider flex items-center gap-1.5">
           <ImageIcon className="w-3.5 h-3.5 text-[#014900]" />
           <span>{label}</span>
           {required && <span className="text-[10px] text-red-500 font-bold">*</span>}
@@ -261,7 +261,7 @@ export default function DirectImageUploader({
             <button
               type="button"
               onClick={handleCopyLink}
-              className={`shrink-0 flex items-center gap-1 px-3 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer ${
+              className={`shrink-0 flex items-center gap-1 px-3 py-1 rounded-lg text-[11px] font-black transition-all cursor-pointer ${
                 copied
                   ? 'bg-emerald-600 text-white'
                   : 'bg-emerald-50 text-[#014900] hover:bg-[#014900] hover:text-white border border-emerald-300'
@@ -294,7 +294,7 @@ export default function DirectImageUploader({
           <button
             type="button"
             onClick={handleUrlSubmit}
-            className="px-4 py-2 bg-[#014900] text-white text-xs font-semibold rounded-xl hover:bg-[#D9A000] hover:text-[#014900] transition-colors cursor-pointer"
+            className="px-4 py-2 bg-[#014900] text-white text-xs font-black uppercase tracking-wider rounded-xl hover:bg-[#D9A000] hover:text-[#014900] transition-colors cursor-pointer"
           >
             Attach
           </button>
@@ -305,7 +305,7 @@ export default function DirectImageUploader({
           onDragOver={(e) => e.preventDefault()}
           onDrop={handleDrop}
           onClick={() => fileInputRef.current?.click()}
-          className="border-2 border-dashed border-emerald-400/80 hover:border-[#014900] bg-white rounded-lg p-4 text-center cursor-pointer transition-all hover:bg-emerald-50/40 group flex items-center justify-center gap-3.5"
+          className="border-2 border-dashed border-emerald-400/80 hover:border-[#014900] bg-white rounded-2xl p-4 text-center cursor-pointer transition-all hover:bg-emerald-50/40 group flex items-center justify-center gap-3.5"
         >
           <input
             ref={fileInputRef}
@@ -319,7 +319,7 @@ export default function DirectImageUploader({
             }}
           />
 
-          <div className="w-10 h-10 rounded-lg bg-emerald-50 text-[#014900] group-hover:bg-[#014900] group-hover:text-white transition-colors flex items-center justify-center shrink-0 shadow-xs">
+          <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-[#014900] group-hover:bg-[#014900] group-hover:text-white transition-colors flex items-center justify-center shrink-0 shadow-xs">
             {isUploading ? (
               <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
@@ -333,7 +333,7 @@ export default function DirectImageUploader({
                 'Uploading to ImageKit CDN...'
               ) : (
                 <>
-                  Click to <span className="text-[#014900] font-bold underline">browse picture</span> or drag & drop
+                  Click to <span className="text-[#014900] font-black underline">browse picture</span> or drag & drop
                 </>
               )}
             </p>

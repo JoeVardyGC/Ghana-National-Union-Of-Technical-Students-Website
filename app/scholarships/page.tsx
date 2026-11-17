@@ -53,7 +53,7 @@ export default async function ScholarshipsPage() {
     query<any>("SELECT * FROM hero_banners WHERE page_key = 'scholarships_hero'").catch(() => []),
   ]);
 
-  let heroTitle = 'Scholarships and opportunities';
+  let heroTitle = 'GNUTS Opportunities Hub';
   let heroSubtitle = 'Training and funding opportunities to support your technical and vocational education journey';
 
   if (bannerRows && bannerRows.length > 0) {
@@ -131,18 +131,18 @@ export default async function ScholarshipsPage() {
   const safeBgUrl = encodeURI(heroImage);
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#FAF9F6] w-full max-w-full overflow-x-hidden">
+    <div className="flex flex-col min-h-screen bg-[#f8f9fa] w-full max-w-full overflow-x-hidden">
       {/* 1. Hero Section - 50% opacity green overlay & border-b-4 border-[#D9A000] */}
       <section className="relative text-white py-14 sm:py-20 px-3 sm:px-6 lg:px-8 border-b-4 border-[#D9A000] overflow-hidden bg-gray-900 w-full">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url('${safeBgUrl}')` }}
         />
-        {/* Dark scrim so the title stays readable on any photo */}
-        <div className="absolute inset-0 bg-[#0c1a10]/60" />
+        {/* Semi-transparent Green Overlay (55% Green Opacity) */}
+        <div className="absolute inset-0 bg-[#014900]/55 backdrop-brightness-90" />
 
         <div className="max-w-7xl mx-auto text-center relative z-10 px-2 sm:px-0">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight mb-2.5 sm:mb-3 drop-shadow-md break-words">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-2.5 sm:mb-3 drop-shadow-md break-words uppercase">
             {heroTitle}
           </h1>
           <p className="text-gray-100 text-xs sm:text-sm md:text-base max-w-2xl mx-auto font-medium drop-shadow-sm break-words">

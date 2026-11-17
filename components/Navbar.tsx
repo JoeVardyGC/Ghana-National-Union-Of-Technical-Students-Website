@@ -139,21 +139,21 @@ export default function Navbar({ settings, hasGallery = true }: { settings: Site
       <header
         className={`sticky top-0 z-50 transition-all duration-300 relative font-display ${
           isScrolled
-            ? 'bg-[#014900] shadow-md py-3 border-b-2 border-[#D9A000]/40'
+            ? 'bg-[#014900] shadow-xl py-3 border-b-2 border-[#D9A000]/40'
             : 'bg-[#014900] py-3.5 border-b border-white/10'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo & Branding */}
           <Link href="/" className="flex items-center gap-3.5 group py-1">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center shrink-0 group-hover:scale-[1.03] transition-transform duration-300 overflow-hidden">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform duration-300 overflow-hidden">
               <img
                 src="/images/gnuts_logo1_main.png"
                 alt="GNUTS Emblem"
                 className="w-full h-full object-cover scale-110"
               />
             </div>
-            <span className="font-display font-semibold text-white text-2xl sm:text-3xl tracking-wider">
+            <span className="font-display font-extrabold text-white text-2xl sm:text-3xl tracking-wider">
               GNUTS
             </span>
           </Link>
@@ -227,11 +227,11 @@ export default function Navbar({ settings, hasGallery = true }: { settings: Site
       {desktopDrawerOpen && (
         <div className="fixed inset-0 z-50 hidden lg:block animate-fadeIn font-display">
           <div
-            className="fixed inset-0 bg-black/60 transition-opacity duration-300"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300"
             onClick={() => setDesktopDrawerOpen(false)}
           />
           
-          <div className="fixed inset-y-0 right-0 w-96 bg-[#014900] text-white p-7 shadow-lg border-l border-emerald-800/60 z-50 flex flex-col justify-between animate-slideInRight">
+          <div className="fixed inset-y-0 right-0 w-96 bg-[#014900] text-white p-7 shadow-2xl border-l border-emerald-800/60 z-50 flex flex-col justify-between animate-slideInRight">
             
             <div className="space-y-6">
               <div className="flex items-center justify-end pb-4 border-b border-white/15">
@@ -253,11 +253,11 @@ export default function Navbar({ settings, hasGallery = true }: { settings: Site
                     target={link.external ? '_blank' : '_self'}
                     rel={link.external ? 'noopener noreferrer' : undefined}
                     onClick={(e) => handleDrawerLinkClick(e, link.href)}
-                    className="group flex items-center justify-between p-3.5 bg-emerald-950/60 hover:bg-[#D9A000] border border-emerald-800/60 hover:border-[#D9A000] rounded-lg text-xs sm:text-sm font-semibold text-white hover:text-[#014900] transition-all duration-300 shadow-sm hover:translate-x-1 cursor-pointer"
+                    className="group flex items-center justify-between p-3.5 bg-emerald-950/60 hover:bg-[#D9A000] border border-emerald-800/60 hover:border-[#D9A000] rounded-2xl text-xs sm:text-sm font-semibold text-white hover:text-[#014900] transition-all duration-300 shadow-sm hover:translate-x-1 cursor-pointer"
                   >
                     <span className="group-hover:text-[#014900] transition-colors">{link.name}</span>
                     {link.external ? (
-                      <ExternalLink className="w-4 h-4 text-[#D9A000] group-hover:text-[#014900] group-hover:scale-[1.03] transition-transform" />
+                      <ExternalLink className="w-4 h-4 text-[#D9A000] group-hover:text-[#014900] group-hover:scale-110 transition-transform" />
                     ) : (
                       <ChevronRight className="w-4 h-4 text-[#D9A000] group-hover:text-[#014900] group-hover:translate-x-1 transition-transform" />
                     )}
@@ -275,7 +275,7 @@ export default function Navbar({ settings, hasGallery = true }: { settings: Site
                   className="w-6 h-6 object-contain"
                 />
                 <div>
-                  <p className="text-white font-bold">GNUTS Secretariat</p>
+                  <p className="text-white font-bold uppercase tracking-wide">GNUTS Secretariat</p>
                   <p className="text-xs text-gray-300 font-medium">Ghana National Union of Technical Students</p>
                 </div>
               </div>
@@ -296,7 +296,7 @@ export default function Navbar({ settings, hasGallery = true }: { settings: Site
           onClick={() => setMobileMenuOpen(false)}
         />
         <div
-          className={`fixed inset-y-0 right-0 w-4/5 max-w-sm bg-[#014900] text-white p-6 flex flex-col justify-between shadow-lg transition-transform duration-400 ease-in-out border-l border-emerald-800/60 ${
+          className={`fixed inset-y-0 right-0 w-4/5 max-w-sm bg-[#014900] text-white p-6 flex flex-col justify-between shadow-2xl transition-transform duration-400 ease-in-out border-l border-emerald-800/60 ${
             mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
@@ -331,7 +331,7 @@ export default function Navbar({ settings, hasGallery = true }: { settings: Site
                     href={link.href}
                     prefetch={true}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center justify-between p-3 rounded-lg text-xs uppercase tracking-wider transition-all ${
+                    className={`flex items-center justify-between p-3 rounded-2xl text-xs uppercase tracking-wider transition-all ${
                       isActive
                         ? 'font-bold text-white bg-white/15 border-l-4 border-[#D9A000]'
                         : 'font-normal text-gray-100 hover:bg-white/10'
@@ -354,7 +354,7 @@ export default function Navbar({ settings, hasGallery = true }: { settings: Site
                     target={link.external ? '_blank' : '_self'}
                     rel={link.external ? 'noopener noreferrer' : undefined}
                     onClick={(e) => handleDrawerLinkClick(e, link.href)}
-                    className="group flex items-center justify-between p-3 bg-emerald-950/60 hover:bg-[#D9A000] border border-emerald-800/60 rounded-lg text-xs font-semibold text-white hover:text-[#014900] transition-all cursor-pointer"
+                    className="group flex items-center justify-between p-3 bg-emerald-950/60 hover:bg-[#D9A000] border border-emerald-800/60 rounded-2xl text-xs font-semibold text-white hover:text-[#014900] transition-all cursor-pointer"
                   >
                     <span className="group-hover:text-[#014900] transition-colors">{link.name}</span>
                     {link.external ? (
@@ -369,7 +369,7 @@ export default function Navbar({ settings, hasGallery = true }: { settings: Site
           </div>
 
           <div className="pt-4 border-t border-white/15 text-xs text-gray-300 space-y-0.5">
-            <p className="text-white font-bold">GNUTS Secretariat</p>
+            <p className="text-white font-bold uppercase">GNUTS Secretariat</p>
             <p>Ghana National Union of Technical Students</p>
           </div>
         </div>

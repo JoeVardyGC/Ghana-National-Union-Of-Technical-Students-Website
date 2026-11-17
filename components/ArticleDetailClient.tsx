@@ -90,7 +90,7 @@ export function SocialShareBar({ article }: { article: NewsItem }) {
 
   return (
     <div className="pt-6 border-t border-gray-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-      <div className="flex items-center gap-2 text-xs font-semibold text-gray-700">
+      <div className="flex items-center gap-2 text-xs font-extrabold text-gray-700 uppercase tracking-wider">
         <Share2 className="w-4 h-4 text-[#014900]" />
         <span>Share Communiqué:</span>
       </div>
@@ -99,7 +99,7 @@ export function SocialShareBar({ article }: { article: NewsItem }) {
         {/* Copy Link Button */}
         <button
           onClick={handleCopyLink}
-          className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-all shadow-sm border cursor-pointer ${
+          className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-2xl text-xs font-bold transition-all shadow-sm border cursor-pointer ${
             copied
               ? 'bg-emerald-600 text-white border-emerald-600'
               : 'bg-white text-gray-800 border-gray-200 hover:border-[#014900] hover:text-[#014900]'
@@ -121,7 +121,7 @@ export function SocialShareBar({ article }: { article: NewsItem }) {
         {/* WhatsApp Button */}
         <button
           onClick={handleShareWhatsApp}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold bg-[#25D366] text-white hover:bg-[#1DA851] transition-colors border border-[#25D366] shadow-sm cursor-pointer"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl text-xs font-bold bg-[#25D366] text-white hover:bg-[#1DA851] transition-colors border border-[#25D366] shadow-sm cursor-pointer"
           title="Share on WhatsApp"
         >
           <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
@@ -133,7 +133,7 @@ export function SocialShareBar({ article }: { article: NewsItem }) {
         {/* 𝕏 Button */}
         <button
           onClick={handleShareTwitter}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold bg-black text-white hover:bg-gray-800 transition-colors border border-black shadow-sm cursor-pointer"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl text-xs font-bold bg-black text-white hover:bg-gray-800 transition-colors border border-black shadow-sm cursor-pointer"
           title="Share on X"
         >
           <svg className="w-3.5 h-3.5 fill-current shrink-0" viewBox="0 0 24 24">
@@ -145,7 +145,7 @@ export function SocialShareBar({ article }: { article: NewsItem }) {
         {/* Facebook Button */}
         <button
           onClick={handleShareFacebook}
-          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold bg-[#1877F2] text-white hover:bg-[#0d65d9] transition-colors border border-[#1877F2] shadow-sm cursor-pointer"
+          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-2xl text-xs font-bold bg-[#1877F2] text-white hover:bg-[#0d65d9] transition-colors border border-[#1877F2] shadow-sm cursor-pointer"
           title="Share on Facebook"
         >
           <svg className="w-3.5 h-3.5 fill-current shrink-0" viewBox="0 0 24 24">
@@ -157,7 +157,7 @@ export function SocialShareBar({ article }: { article: NewsItem }) {
         {/* LinkedIn Button */}
         <button
           onClick={handleShareLinkedIn}
-          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold bg-[#0A66C2] text-white hover:bg-[#084e96] transition-colors border border-[#0A66C2] shadow-sm cursor-pointer"
+          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-2xl text-xs font-bold bg-[#0A66C2] text-white hover:bg-[#084e96] transition-colors border border-[#0A66C2] shadow-sm cursor-pointer"
           title="Share on LinkedIn"
         >
           <svg className="w-3.5 h-3.5 fill-current shrink-0" viewBox="0 0 24 24">
@@ -169,7 +169,7 @@ export function SocialShareBar({ article }: { article: NewsItem }) {
         {/* Print Button */}
         <button
           onClick={handlePrint}
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors border border-gray-200 shadow-sm cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-2xl text-xs font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors border border-gray-200 shadow-sm cursor-pointer"
           title="Print Press Release"
         >
           <Printer className="w-3.5 h-3.5 shrink-0" />
@@ -191,13 +191,13 @@ export function NextPrevNavigation({ prevArticle, nextArticle }: { prevArticle?:
       {prevArticle ? (
         <Link
           href={`/blog/${prevArticle.id}`}
-          className="group p-5 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-[#014900] hover:shadow-md transition-all flex flex-col justify-between"
+          className="group p-5 bg-white border border-gray-200 rounded-3xl shadow-sm hover:border-[#014900] hover:shadow-md transition-all flex flex-col justify-between"
         >
-          <div className="flex items-center gap-2 text-xs font-bold text-gray-400 group-hover:text-[#014900] transition-colors mb-2">
+          <div className="flex items-center gap-2 text-xs font-bold text-gray-400 group-hover:text-[#014900] transition-colors mb-2 uppercase tracking-wider">
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>PREVIOUS PRESS RELEASE</span>
           </div>
-          <h4 className="text-sm font-semibold text-gray-900 group-hover:text-[#014900] transition-colors line-clamp-2 leading-snug">
+          <h4 className="text-sm font-extrabold text-gray-900 group-hover:text-[#014900] transition-colors line-clamp-2 leading-snug">
             {prevArticle.title}
           </h4>
         </Link>
@@ -208,13 +208,13 @@ export function NextPrevNavigation({ prevArticle, nextArticle }: { prevArticle?:
       {nextArticle && (
         <Link
           href={`/blog/${nextArticle.id}`}
-          className="group p-5 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-[#014900] hover:shadow-md transition-all flex flex-col justify-between sm:text-right"
+          className="group p-5 bg-white border border-gray-200 rounded-3xl shadow-sm hover:border-[#014900] hover:shadow-md transition-all flex flex-col justify-between sm:text-right"
         >
-          <div className="flex items-center justify-end gap-2 text-xs font-bold text-gray-400 group-hover:text-[#014900] transition-colors mb-2">
+          <div className="flex items-center justify-end gap-2 text-xs font-bold text-gray-400 group-hover:text-[#014900] transition-colors mb-2 uppercase tracking-wider">
             <span>NEXT PRESS RELEASE</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </div>
-          <h4 className="text-sm font-semibold text-gray-900 group-hover:text-[#014900] transition-colors line-clamp-2 leading-snug">
+          <h4 className="text-sm font-extrabold text-gray-900 group-hover:text-[#014900] transition-colors line-clamp-2 leading-snug">
             {nextArticle.title}
           </h4>
         </Link>

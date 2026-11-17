@@ -299,7 +299,7 @@ export default async function InnovationDetailPage({ params }: { params: Promise
   const categoryTag = project.category || 'Renewable Energy';
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#FAF9F6] font-sans">
+    <div className="flex flex-col min-h-screen bg-[#f8f9fa] font-sans">
       {/* Sticky Reading Progress Bar */}
       <ReadingProgressBar />
 
@@ -309,7 +309,7 @@ export default async function InnovationDetailPage({ params }: { params: Promise
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url('${safeBgUrl}')` }}
         />
-        <div className="absolute inset-0 bg-[#0c1a10]/60" />
+        <div className="absolute inset-0 bg-[#014900]/55 backdrop-brightness-90" />
 
         <div className="max-w-5xl mx-auto relative z-10">
           {/* Breadcrumbs */}
@@ -331,19 +331,19 @@ export default async function InnovationDetailPage({ params }: { params: Promise
 
           {/* Discipline Badge Tag */}
           <div className="flex items-center gap-3 mb-4">
-            <span className="px-3.5 py-1 text-xs font-semibold rounded-full uppercase tracking-wider bg-[#D9A000] text-[#014900] inline-block shadow-sm">
+            <span className="px-3.5 py-1 text-xs font-extrabold rounded-full uppercase tracking-wider bg-[#D9A000] text-[#014900] inline-block shadow-sm">
               {categoryTag}
             </span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight tracking-tight mb-4 drop-shadow-md">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-tight tracking-tight mb-4 drop-shadow-md">
             {project.title}
           </h1>
 
           {/* Author / Metadata Bar */}
           <div className="flex flex-wrap items-center gap-4 sm:gap-8 text-xs sm:text-sm text-gray-200 pt-5 border-t border-white/20">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-full bg-[#D9A000] text-[#014900] flex items-center justify-center font-semibold text-sm shadow-md">
+              <div className="w-9 h-9 rounded-full bg-[#D9A000] text-[#014900] flex items-center justify-center font-extrabold text-sm shadow-md">
                 {(project.student_name || project.institution || 'G').charAt(0)}
               </div>
               <div>
@@ -377,13 +377,13 @@ export default async function InnovationDetailPage({ params }: { params: Promise
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-10">
             
             {/* Main Project Column (8 Cols) */}
-            <div className="lg:col-span-8 bg-white p-4 sm:p-8 lg:p-10 rounded-lg sm:rounded-xl shadow-sm border border-gray-200 space-y-6 sm:space-y-8 min-w-0">
+            <div className="lg:col-span-8 bg-white p-4 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl shadow-sm border border-gray-200 space-y-6 sm:space-y-8 min-w-0">
               
               {/* Primary Poster Image & Multi-Picture Gallery Container */}
               {projectImages.length > 0 && (
                 <div className="space-y-4">
                   {/* Primary Image Poster */}
-                  <div id="article-main-image" className="rounded-lg overflow-hidden border border-gray-200 bg-gray-900 max-h-[550px] flex items-center justify-center relative shadow-sm">
+                  <div id="article-main-image" className="rounded-2xl overflow-hidden border border-gray-200 bg-gray-900 max-h-[550px] flex items-center justify-center relative shadow-sm">
                     <img
                       src={primaryImg!}
                       alt={project.title}
@@ -394,7 +394,7 @@ export default async function InnovationDetailPage({ params }: { params: Promise
                   {/* Multi-Picture Gallery Grid (If 2 or more pictures exist!) */}
                   {projectImages.length > 1 && (
                     <div className="pt-2 space-y-3">
-                      <div className="flex items-center gap-2 text-xs font-bold text-gray-500">
+                      <div className="flex items-center gap-2 text-xs font-bold text-gray-500 uppercase tracking-wider">
                         <Images className="w-4 h-4 text-[#014900]" />
                         <span>PROJECT GALLERY ({projectImages.length} PHOTOS)</span>
                       </div>
@@ -402,12 +402,12 @@ export default async function InnovationDetailPage({ params }: { params: Promise
                         {projectImages.map((img, idx) => (
                           <div
                             key={idx}
-                            className="h-32 sm:h-36 bg-gray-900 rounded-lg overflow-hidden border border-gray-200 group relative shadow-xs"
+                            className="h-32 sm:h-36 bg-gray-900 rounded-2xl overflow-hidden border border-gray-200 group relative shadow-xs"
                           >
                             <img
                               src={img}
                               alt={`${project.title} - Photo ${idx + 1}`}
-                              className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                             />
                             <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
                           </div>
@@ -441,12 +441,12 @@ export default async function InnovationDetailPage({ params }: { params: Promise
 
                     {/* YouTube Video Demonstration in Upper Part */}
                     {youtubeId && (
-                      <div className="space-y-2.5 my-6 p-4 sm:p-5 bg-gray-50 rounded-lg border border-gray-200">
-                        <div className="flex items-center gap-2 text-xs font-semibold text-[#014900]">
+                      <div className="space-y-2.5 my-6 p-4 sm:p-5 bg-gray-50 rounded-2xl border border-gray-200">
+                        <div className="flex items-center gap-2 text-xs font-extrabold text-[#014900] uppercase tracking-wider">
                           <Play className="w-4 h-4 text-[#D9A000]" />
                           <span>Demonstration & Prototype Video</span>
                         </div>
-                        <div className="relative aspect-video w-full rounded-lg overflow-hidden bg-black shadow-md border border-gray-200">
+                        <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-black shadow-md border border-gray-200">
                           <iframe
                             src={`https://www.youtube.com/embed/${youtubeId}`}
                             title={project.title}
@@ -460,12 +460,12 @@ export default async function InnovationDetailPage({ params }: { params: Promise
 
                     {/* External Non-YouTube Project Link */}
                     {project.video_url && !youtubeId && (
-                      <div className="p-4 bg-emerald-50/80 rounded-lg border border-emerald-200">
+                      <div className="p-4 bg-emerald-50/80 rounded-2xl border border-emerald-200">
                         <a
                           href={project.video_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#014900] hover:text-gold-ink transition-colors"
+                          className="inline-flex items-center gap-2 text-xs sm:text-sm font-extrabold text-[#014900] hover:text-gold-ink transition-colors"
                         >
                           <span>Visit Demonstration Resource</span>
                           <ExternalLink className="w-4 h-4" />
@@ -490,15 +490,15 @@ export default async function InnovationDetailPage({ params }: { params: Promise
               {/* Hashtags Bar */}
               <div className="pt-6 border-t border-gray-100 flex items-center gap-2 flex-wrap">
                 <Tag className="w-4 h-4 text-[#014900]" />
-                <span className="text-xs font-bold text-gray-500">TAGS:</span>
+                <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">TAGS:</span>
                 <div className="flex flex-wrap gap-2">
-                  <span className="text-xs font-bold text-[#014900] bg-[#FAF9F6] px-3 py-1 rounded-full border border-gray-200">
+                  <span className="text-xs font-bold text-[#014900] bg-[#f8f9fa] px-3 py-1 rounded-full border border-gray-200">
                     #GNUTS
                   </span>
-                  <span className="text-xs font-bold text-[#014900] bg-[#FAF9F6] px-3 py-1 rounded-full border border-gray-200">
+                  <span className="text-xs font-bold text-[#014900] bg-[#f8f9fa] px-3 py-1 rounded-full border border-gray-200">
                     #ChooseTVETFirst
                   </span>
-                  <span className="text-xs font-bold text-[#014900] bg-[#FAF9F6] px-3 py-1 rounded-full border border-gray-200">
+                  <span className="text-xs font-bold text-[#014900] bg-[#f8f9fa] px-3 py-1 rounded-full border border-gray-200">
                     #{categoryTag.replace(/\s+/g, '')}
                   </span>
                 </div>
@@ -512,13 +512,13 @@ export default async function InnovationDetailPage({ params }: { params: Promise
                 {prevProject ? (
                   <Link
                     href={`/innovations/${prevProject.id}`}
-                    className="p-4 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg transition-all group space-y-1 block shadow-xs"
+                    className="p-4 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-2xl transition-all group space-y-1 block shadow-xs"
                   >
-                    <div className="text-xs font-bold text-gray-500 flex items-center gap-1">
+                    <div className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center gap-1">
                       <ChevronLeft className="w-3.5 h-3.5 text-[#014900]" />
                       <span>Previous Project</span>
                     </div>
-                    <div className="text-xs sm:text-sm font-semibold text-gray-900 group-hover:text-[#014900] line-clamp-1 transition-colors">
+                    <div className="text-xs sm:text-sm font-extrabold text-gray-900 group-hover:text-[#014900] line-clamp-1 transition-colors">
                       {prevProject.title}
                     </div>
                   </Link>
@@ -527,13 +527,13 @@ export default async function InnovationDetailPage({ params }: { params: Promise
                 {nextProject ? (
                   <Link
                     href={`/innovations/${nextProject.id}`}
-                    className="p-4 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg transition-all group space-y-1 text-right block ml-auto w-full shadow-xs"
+                    className="p-4 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-2xl transition-all group space-y-1 text-right block ml-auto w-full shadow-xs"
                   >
-                    <div className="text-xs font-bold text-gray-500 flex items-center justify-end gap-1">
+                    <div className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center justify-end gap-1">
                       <span>Next Project</span>
                       <ChevronRight className="w-3.5 h-3.5 text-[#014900]" />
                     </div>
-                    <div className="text-xs sm:text-sm font-semibold text-gray-900 group-hover:text-[#014900] line-clamp-1 transition-colors">
+                    <div className="text-xs sm:text-sm font-extrabold text-gray-900 group-hover:text-[#014900] line-clamp-1 transition-colors">
                       {nextProject.title}
                     </div>
                   </Link>
@@ -546,8 +546,8 @@ export default async function InnovationDetailPage({ params }: { params: Promise
             <div className="lg:col-span-4 space-y-6 sm:space-y-8">
               
               {/* Recent Innovative Projects Widget */}
-              <div className="bg-white p-4 sm:p-6 rounded-lg sm:rounded-xl shadow-sm border border-gray-200">
-                <h3 className="text-base sm:text-lg font-semibold text-[#014900] pb-3 mb-5 border-b-2 border-[#D9A000]">
+              <div className="bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl shadow-sm border border-gray-200">
+                <h3 className="text-base sm:text-lg font-extrabold text-[#014900] pb-3 mb-5 border-b-2 border-[#D9A000]">
                   More Projects
                 </h3>
 
@@ -560,19 +560,19 @@ export default async function InnovationDetailPage({ params }: { params: Promise
                         href={`/innovations/${item.id}`}
                         className="group flex items-start gap-3.5 pb-4 border-b border-gray-100 last:border-0 last:pb-0"
                       >
-                        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl sm:rounded-lg overflow-hidden bg-gray-900 shrink-0 border border-gray-200 flex items-center justify-center">
+                        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl overflow-hidden bg-gray-900 shrink-0 border border-gray-200 flex items-center justify-center">
                           {itemImg ? (
                             <img
                               src={itemImg}
                               alt={item.title}
-                              className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300"
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                             />
                           ) : (
                             <Zap className="w-6 h-6 text-white/40" />
                           )}
                         </div>
                         <div className="space-y-1 min-w-0 flex-1">
-                          <h4 className="text-xs sm:text-sm font-semibold text-gray-900 group-hover:text-[#014900] transition-colors line-clamp-2 leading-snug break-words">
+                          <h4 className="text-xs sm:text-sm font-extrabold text-gray-900 group-hover:text-[#014900] transition-colors line-clamp-2 leading-snug break-words">
                             {item.title}
                           </h4>
                           {item.institution && (
@@ -589,11 +589,11 @@ export default async function InnovationDetailPage({ params }: { params: Promise
               </div>
 
               {/* Quick Union Advocacy Box */}
-              <div className="bg-[#014900] text-white p-5 sm:p-7 rounded-lg sm:rounded-xl shadow-sm border border-[#014900] space-y-3">
-                <div className="text-xs font-semibold text-[#D9A000]">
+              <div className="bg-[#014900] text-white p-5 sm:p-7 rounded-2xl sm:rounded-3xl shadow-sm border border-[#014900] space-y-3">
+                <div className="text-xs font-extrabold uppercase tracking-wider text-[#D9A000]">
                   GNUTS INNOVATION LAB
                 </div>
-                <h4 className="text-lg font-semibold leading-snug">
+                <h4 className="text-lg font-extrabold leading-snug">
                   Have a Technical Project to Submit?
                 </h4>
                 <p className="text-xs text-gray-100 leading-relaxed">
@@ -602,9 +602,9 @@ export default async function InnovationDetailPage({ params }: { params: Promise
                 <div className="pt-2">
                   <Link
                     href="/innovations"
-                    className="inline-block px-5 py-2.5 bg-[#D9A000] hover:bg-[#b88800] text-[#014900] text-xs font-semibold rounded-lg transition-all shadow-sm"
+                    className="inline-block px-5 py-2.5 bg-[#D9A000] hover:bg-[#b88800] text-[#014900] text-xs font-extrabold uppercase tracking-wider rounded-2xl transition-all shadow-sm"
                   >
-                    Submit a project
+                    Submit Project →
                   </Link>
                 </div>
               </div>

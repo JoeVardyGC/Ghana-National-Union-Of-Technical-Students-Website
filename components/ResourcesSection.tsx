@@ -37,9 +37,10 @@ export default function ResourcesSection({ initialResources, dbResources }: Reso
     <section id="resources" className="py-20 sm:py-28 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         <div className="text-center max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#16201A]">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight uppercase">
             Resources & Supreme Constitution
           </h2>
+          <div className="w-16 h-1.5 bg-[#D9A000] rounded-full mx-auto my-3" />
           <p className="text-gray-600 text-sm sm:text-base font-medium">
             Official union constitution, central committee resolutions, and policy frameworks.
           </p>
@@ -51,10 +52,10 @@ export default function ResourcesSection({ initialResources, dbResources }: Reso
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-5 py-2 rounded-xl text-xs font-semibold transition-all duration-300 cursor-pointer ${
+                className={`px-5 py-2 rounded-xl text-xs font-extrabold transition-all duration-300 cursor-pointer ${
                   selectedCategory === cat
                     ? 'bg-[#014900] text-white shadow-lg scale-105'
-                    : 'bg-[#FAF9F6] text-gray-600 border border-gray-200 hover:bg-gray-100'
+                    : 'bg-[#f8f9fa] text-gray-600 border border-gray-200 hover:bg-gray-100'
                 }`}
               >
                 {cat}
@@ -65,7 +66,8 @@ export default function ResourcesSection({ initialResources, dbResources }: Reso
 
         {/* Empty State Card */}
         {filteredResources.length === 0 ? (
-          <div className="text-center py-12 px-6 bg-white rounded-xl border border-gray-200 shadow-sm max-w-xl mx-auto">
+          <div className="text-center py-12 px-6 bg-white rounded-3xl border border-gray-200 shadow-sm max-w-xl mx-auto">
+            <div className="text-4xl mb-3">📜</div>
             <p className="text-gray-500 font-medium text-sm">
               {selectedCategory !== 'ALL'
                 ? `No documents found under category "${selectedCategory}".`
@@ -83,7 +85,7 @@ export default function ResourcesSection({ initialResources, dbResources }: Reso
               return (
                 <div
                   key={res.id || idx}
-                  className="bg-white p-7 sm:p-8 rounded-xl border border-[#E4E2DA] hover:border-[#C9C6BA] transition-all duration-300 flex flex-col justify-between group"
+                  className="bg-white p-7 sm:p-8 rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group"
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
@@ -94,7 +96,7 @@ export default function ResourcesSection({ initialResources, dbResources }: Reso
                       }`}>
                         <FileText className="w-5 h-5" />
                       </div>
-                      <span className={`px-3 py-1 text-xs font-semibold rounded-full transition-colors duration-300 ${
+                      <span className={`px-3 py-1 text-xs font-extrabold uppercase tracking-wider rounded-full transition-colors duration-300 ${
                         isGoldAccent
                           ? 'bg-[#D9A000] text-[#014900] group-hover:bg-[#014900] group-hover:text-white'
                           : 'bg-[#014900] text-white group-hover:bg-[#D9A000] group-hover:text-[#014900]'
@@ -103,7 +105,7 @@ export default function ResourcesSection({ initialResources, dbResources }: Reso
                       </span>
                     </div>
 
-                    <h4 className={`text-lg sm:text-xl font-semibold leading-snug transition-colors duration-300 pt-1 ${
+                    <h4 className={`text-lg sm:text-xl font-extrabold leading-snug transition-colors duration-300 pt-1 ${
                       isGoldAccent
                         ? 'text-gold-ink group-hover:text-[#014900]'
                         : 'text-[#014900] group-hover:text-gold-ink'
@@ -117,16 +119,16 @@ export default function ResourcesSection({ initialResources, dbResources }: Reso
                   </div>
 
                   <div className="pt-6 mt-6 border-t border-gray-100 space-y-4">
-                    <div className="flex items-center justify-between text-xs text-gray-500 font-bold">
-                      <span>{fileExt} FORMAT</span>
-                      <span>{fileSizeMb} MB</span>
+                    <div className="flex items-center justify-between text-xs text-gray-500 font-bold uppercase tracking-wider">
+                      <span>📄 {fileExt} FORMAT</span>
+                      <span>💾 {fileSizeMb} MB</span>
                     </div>
 
                     <a
                       href={resolveDocumentUrl(res.file_path)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`w-full py-3 px-4 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-300 shadow-md flex items-center justify-center gap-2 tracking-wider uppercase group-hover:shadow-md cursor-pointer ${
+                      className={`w-full py-3 px-4 text-xs sm:text-sm font-extrabold rounded-2xl transition-all duration-300 shadow-md flex items-center justify-center gap-2 tracking-wider uppercase group-hover:shadow-lg cursor-pointer ${
                         isGoldAccent
                           ? 'bg-[#D9A000] text-[#014900] hover:bg-[#014900] hover:text-white group-hover:bg-[#014900] group-hover:text-white'
                           : 'bg-[#014900] text-white hover:bg-[#D9A000] hover:text-[#014900] group-hover:bg-[#D9A000] group-hover:text-[#014900]'

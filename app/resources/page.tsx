@@ -111,14 +111,14 @@ export default async function ResourcesPage() {
   const safeBgUrl = encodeURI(heroImage);
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#FAF9F6]">
+    <div className="flex flex-col min-h-screen bg-[#f8f9fa]">
       {/* Editorial Page Hero Header - 50% opacity green overlay & border-b-4 border-[#D9A000] */}
       <section className="relative text-white py-14 sm:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden border-b-4 border-[#D9A000] bg-gray-900">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url('${safeBgUrl}')` }}
         />
-        <div className="absolute inset-0 bg-[#0c1a10]/60" />
+        <div className="absolute inset-0 bg-[#014900]/55 backdrop-brightness-90" />
 
         <div className="max-w-5xl mx-auto relative z-10 text-center space-y-3">
           {/* Breadcrumbs */}
@@ -130,7 +130,7 @@ export default async function ResourcesPage() {
             <span className="text-[#D9A000] font-bold">Resources & Constitution</span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight tracking-tight drop-shadow-md">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white leading-tight tracking-tight drop-shadow-md uppercase">
             {heroTitle}
           </h1>
 

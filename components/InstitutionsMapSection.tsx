@@ -121,17 +121,20 @@ export default function InstitutionsMapSection() {
   return (
     <section className="py-20 sm:py-28 bg-[#0b140c] text-white relative overflow-hidden border-b border-white/10" id="institutions-section">
       {/* Decorative Background Accents */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[#014900]/40 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#D9A000]/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
           <div>
-            <span className="px-3.5 py-1 text-xs font-semibold rounded-md bg-[#D9A000] text-[#014900] inline-block mb-3 shadow-sm">
+            <span className="px-3.5 py-1 text-xs font-extrabold rounded-md uppercase tracking-wider bg-[#D9A000] text-[#014900] inline-block mb-3 shadow-sm">
               NATIONWIDE FOOTPRINT
             </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight uppercase">
               Member Technical Universities
             </h2>
+            <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-3" />
             <p className="text-gray-300 text-sm sm:text-base max-w-2xl font-medium">
               GNUTS represents over 100,000+ technical and vocational students across all 10 public Technical Universities in Ghana.
             </p>
@@ -155,17 +158,17 @@ export default function InstitutionsMapSection() {
                   onClick={() => setSelectedUni(uni)}
                   className={`text-left p-5 rounded-xl border transition-all duration-300 flex flex-col justify-between group ${
                     isSelected
-                      ? 'bg-white/10 border-[#D9A000] shadow-md ring-2 ring-[#D9A000]/40 -translate-y-1'
+                      ? 'bg-white/10 border-[#D9A000] shadow-xl ring-2 ring-[#D9A000]/40 -translate-y-1'
                       : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3 w-full mb-3">
                     <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 rounded-lg ${uni.badgeColor} text-white flex items-center justify-center font-semibold text-sm shadow-md shrink-0`}>
+                      <div className={`w-10 h-10 rounded-lg ${uni.badgeColor} text-white flex items-center justify-center font-extrabold text-sm shadow-md shrink-0`}>
                         {uni.shortName}
                       </div>
                       <div>
-                        <h4 className="font-semibold text-sm sm:text-base text-white leading-snug group-hover:text-[#D9A000] transition-colors">
+                        <h4 className="font-extrabold text-sm sm:text-base text-white leading-snug group-hover:text-[#D9A000] transition-colors">
                           {uni.name}
                         </h4>
                         <span className="text-xs text-gray-400 flex items-center gap-1 mt-0.5 font-medium">
@@ -179,7 +182,7 @@ export default function InstitutionsMapSection() {
                   <div className="flex items-center justify-between pt-3 border-t border-white/10 text-xs text-gray-300 font-medium">
                     <span>{uni.students}</span>
                     <span className={`font-bold transition-colors ${isSelected ? 'text-[#D9A000]' : 'text-gray-400 group-hover:text-white'}`}>
-                      {isSelected ? 'Active Selection ✓' : 'View campus'}
+                      {isSelected ? 'Active Selection ✓' : 'View Campus →'}
                     </span>
                   </div>
                 </button>
@@ -188,17 +191,18 @@ export default function InstitutionsMapSection() {
           </div>
 
           {/* Right Column: Featured Selected Campus Card (5 Cols) */}
-          <div className="lg:col-span-5 bg-[#014900] p-8 rounded-lg border border-white/15 shadow-lg flex flex-col justify-between relative overflow-hidden">
+          <div className="lg:col-span-5 bg-gradient-to-b from-[#014900] to-[#002b00] p-8 rounded-2xl border border-white/15 shadow-2xl flex flex-col justify-between relative overflow-hidden">
+            <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-[#D9A000]/10 rounded-full blur-2xl pointer-events-none" />
 
             <div>
               <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/15">
-                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#D9A000] text-[#014900]">
+                <span className="px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-[#D9A000] text-[#014900]">
                   {selectedUni.shortName} SECRETARIAT
                 </span>
                 <span className="text-xs text-gray-300 font-medium">Est. {selectedUni.established}</span>
               </div>
 
-              <h3 className="text-2xl sm:text-3xl font-semibold text-white leading-tight mb-2">
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight mb-2">
                 {selectedUni.name}
               </h3>
               <p className="text-sm text-gray-300 flex items-center gap-1.5 mb-6 font-medium">
@@ -207,23 +211,23 @@ export default function InstitutionsMapSection() {
               </p>
 
               <div className="space-y-4 mb-8">
-                <div className="bg-white/10 p-4 rounded-xl border border-white/10 flex items-center gap-4">
+                <div className="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/10 flex items-center gap-4">
                   <div className="w-10 h-10 rounded-lg bg-[#D9A000] text-[#014900] flex items-center justify-center font-bold shrink-0">
                     <Users className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-xs text-gray-400 font-bold block">Student Body</span>
-                    <span className="text-base font-semibold text-white">{selectedUni.students}</span>
+                    <span className="text-xs text-gray-400 uppercase font-bold tracking-wider block">Student Body</span>
+                    <span className="text-base font-extrabold text-white">{selectedUni.students}</span>
                   </div>
                 </div>
 
-                <div className="bg-white/10 p-4 rounded-xl border border-white/10 flex items-center gap-4">
+                <div className="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/10 flex items-center gap-4">
                   <div className="w-10 h-10 rounded-lg bg-white text-[#014900] flex items-center justify-center font-bold shrink-0">
                     <GraduationCap className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-xs text-gray-400 font-bold block">SRC President</span>
-                    <span className="text-base font-semibold text-white">{selectedUni.srcPresident}</span>
+                    <span className="text-xs text-gray-400 uppercase font-bold tracking-wider block">SRC President</span>
+                    <span className="text-base font-extrabold text-white">{selectedUni.srcPresident}</span>
                   </div>
                 </div>
               </div>
@@ -232,7 +236,7 @@ export default function InstitutionsMapSection() {
             <div className="pt-6 border-t border-white/15">
               <a
                 href="/about#leadership"
-                className="w-full py-3.5 px-6 bg-[#D9A000] text-[#014900] font-semibold text-sm rounded-xl hover:bg-white transition-all shadow-lg flex items-center justify-center gap-2"
+                className="w-full py-3.5 px-6 bg-[#D9A000] text-[#014900] font-extrabold text-sm rounded-xl hover:bg-white transition-all shadow-lg flex items-center justify-center gap-2"
               >
                 <span>View Campus Representatives</span>
                 <ChevronRight className="w-4 h-4" />
