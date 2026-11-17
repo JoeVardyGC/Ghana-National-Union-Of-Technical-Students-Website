@@ -55,10 +55,35 @@ export default function AdminLayoutClient({ children, sessionUser }: AdminLayout
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
 
+  // Database connection problem shown on every admin page, so nobody thinks a change
+  // was saved when the live database isn't actually connected
+  const [dbProblem, setDbProblem] = useState<string | null>(null);
+
   // Turn off navigation indicator whenever pathname updates
   useEffect(() => {
     setIsNavigating(false);
   }, [pathname]);
+
+  useEffect(() => {
+    if (!sessionUser || pathname === '/admin/login') return;
+    let cancelled = false;
+    fetch('/api/admin/db-status', { cache: 'no-store' })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((status) => {
+        if (cancelled || !status) return;
+        // Local data file on your own computer (no error) is fine; anything else unconnected is a problem
+        const localFileOk = status.dialect === 'local' && !status.error;
+        setDbProblem(
+          status.connected || localFileOk
+            ? null
+            : status.error || 'The live database is not connected, so changes made here will not be saved.'
+        );
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [sessionUser, pathname]);
 
   // If unauthenticated on any other admin route, redirect to login
   useEffect(() => {
@@ -257,6 +282,12 @@ export default function AdminLayoutClient({ children, sessionUser }: AdminLayout
 
         {/* Dynamic Page Content */}
         <main className="p-4 sm:p-6 lg:p-8 flex-1 max-w-7xl w-full mx-auto space-y-8">
+          {dbProblem && (
+            <div role="alert" className="p-4 rounded-2xl border border-red-300 bg-red-50 text-red-900 text-sm">
+              <strong className="block font-bold mb-1">Database not connected: changes will not be saved</strong>
+              <span>{dbProblem}</span>
+            </div>
+          )}
           {children}
         </main>
       </div>

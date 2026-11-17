@@ -22,8 +22,19 @@ types.setTypeParser(1184, (value: string) => new Date(value).toISOString());
 types.setTypeParser(20, (value: string) => Number.parseInt(value, 10));
 types.setTypeParser(1700, (value: string) => Number.parseFloat(value));
 
+/**
+ * Tidies a connection string copied into a host's settings: trims spaces and line
+ * breaks, removes wrapping quotes, and drops an accidental "DATABASE_URL=" prefix.
+ */
+export function cleanDatabaseUrl(raw: string | undefined | null): string {
+  let url = (raw || '').trim();
+  url = url.replace(/^DATABASE_URL\s*=\s*/i, '').trim();
+  url = url.replace(/^['"`]+|['"`]+$/g, '').trim();
+  return url;
+}
+
 export function isPostgresUrl(url: string | undefined | null): boolean {
-  return !!url && /^postgres(ql)?:\/\//i.test(url.trim());
+  return /^postgres(ql)?:\/\//i.test(cleanDatabaseUrl(url));
 }
 
 export function getPostgresUrl(): string | null {
@@ -34,7 +45,36 @@ export function getPostgresUrl(): string | null {
     process.env.DATABASE_PUBLIC_URL,
   ];
   const found = candidates.find((url) => isPostgresUrl(url));
-  return found ? found.trim() : null;
+  return found ? cleanDatabaseUrl(found) : null;
+}
+
+/**
+ * Plain-English problem with DATABASE_URL, or null if it looks usable (or isn't set).
+ * Shown in the admin panel and returned as the error when saving fails.
+ */
+export function getDatabaseUrlProblem(): string | null {
+  const url = cleanDatabaseUrl(process.env.DATABASE_URL);
+  if (!url) return null;
+
+  if (/^https?:\/\/[a-z0-9]+\.supabase\.co/i.test(url)) {
+    return 'DATABASE_URL is set to your Supabase project URL (https://…supabase.co). That is the wrong value: in Supabase click Connect > Direct > Method "Transaction pooler", copy the postgresql://… connection string, put in your database password, save it in Vercel and redeploy.';
+  }
+  if (/\[YOUR-PASSWORD\]|YOUR_PASSWORD|YOUR-PASSWORD/i.test(url)) {
+    return 'DATABASE_URL still contains the [YOUR-PASSWORD] placeholder. Replace it with your Supabase database password, save it in Vercel and redeploy.';
+  }
+  if (!/^(postgres(ql)?|mysql):\/\//i.test(url)) {
+    return 'DATABASE_URL is not a database connection string. It must start with postgresql:// (Supabase: Connect > Direct > Transaction pooler). Fix it in Vercel and redeploy.';
+  }
+  return null;
+}
+
+/** Non-blocking advice about DATABASE_URL (shown in the admin panel), or null. */
+export function getDatabaseUrlWarning(): string | null {
+  const url = cleanDatabaseUrl(process.env.DATABASE_URL);
+  if (/^postgres/i.test(url) && /\.supabase\.co:5432/i.test(url)) {
+    return 'DATABASE_URL uses Supabase\'s direct connection (db.….supabase.co:5432), which often fails on Vercel. Use the "Transaction pooler" connection string (…pooler.supabase.com:6543) instead.';
+  }
+  return null;
 }
 
 let pool: Pool | null = null;

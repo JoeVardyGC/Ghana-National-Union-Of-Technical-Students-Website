@@ -51,7 +51,7 @@ export async function PUT(
         (status || 'active').toLowerCase(),
         scholarshipId,
       ]
-    ).catch(() => null);
+    );
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Financial Secretary';
@@ -85,7 +85,7 @@ export async function DELETE(
     const resolvedParams = await params;
     const scholarshipId = Number(resolvedParams.id);
 
-    await query('DELETE FROM scholarships WHERE id = ?', [scholarshipId]).catch(() => null);
+    await query('DELETE FROM scholarships WHERE id = ?', [scholarshipId]);
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Financial Secretary';

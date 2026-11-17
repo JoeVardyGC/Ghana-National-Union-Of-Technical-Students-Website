@@ -54,7 +54,10 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ innovations: fallback });
   } catch (error: any) {
-    return NextResponse.json({ innovations: DEFAULT_INNOVATIONS });
+    return NextResponse.json(
+      { innovations: [], error: error?.message || 'Could not load from the database' },
+      { status: 500 }
+    );
   }
 }
 
@@ -71,7 +74,7 @@ export async function POST(request: Request) {
     // Check if it's a quick status update: { id, status }
     if (body.id && body.status && !body.title) {
       const { id, status } = body;
-      await query('UPDATE innovations SET status = ? WHERE id = ?', [status.toLowerCase(), id]).catch(() => null);
+      await query('UPDATE innovations SET status = ? WHERE id = ?', [status.toLowerCase(), id]);
 
       const userName = session.name || session.username || 'Executive Officer';
       const userRole = session.role || 'Innovation Director';
@@ -118,7 +121,7 @@ export async function POST(request: Request) {
         category,
         status.toLowerCase(),
       ]
-    ).catch(() => null);
+    );
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Innovation Director';
@@ -174,7 +177,7 @@ export async function DELETE(request: Request) {
     }
 
     const placeholders = numericIds.map(() => '?').join(',');
-    await query(`DELETE FROM innovations WHERE id IN (${placeholders})`, numericIds).catch(() => null);
+    await query(`DELETE FROM innovations WHERE id IN (${placeholders})`, numericIds);
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Innovation Director';

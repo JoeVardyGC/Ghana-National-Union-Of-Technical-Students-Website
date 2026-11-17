@@ -54,7 +54,7 @@ export async function PUT(
         display_order || 1,
         resourceId,
       ]
-    ).catch(() => null);
+    );
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Super Admin';
@@ -88,7 +88,7 @@ export async function DELETE(
     const resolvedParams = await params;
     const resourceId = Number(resolvedParams.id);
 
-    await query('DELETE FROM resources WHERE id = ?', [resourceId]).catch(() => null);
+    await query('DELETE FROM resources WHERE id = ?', [resourceId]);
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Super Admin';

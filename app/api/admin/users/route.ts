@@ -162,7 +162,7 @@ export async function DELETE(request: Request) {
     }
 
     const placeholders = numericIds.map(() => '?').join(',');
-    await query(`DELETE FROM users WHERE id IN (${placeholders})`, numericIds).catch(() => null);
+    await query(`DELETE FROM users WHERE id IN (${placeholders})`, numericIds);
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Super Admin';

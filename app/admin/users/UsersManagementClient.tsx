@@ -323,6 +323,7 @@ export default function UsersManagementClient({
           <div className="flex items-center gap-2.5 px-4 py-2.5 bg-emerald-50 border border-emerald-200 rounded-2xl text-xs font-bold text-emerald-800 shadow-xs">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
             <span>Live {dbStatus.database_type || 'database'} connected • {dbStatus.configured_host}</span>
+            {dbStatus.warning && <span className="block text-amber-800 font-medium">⚠ {dbStatus.warning}</span>}
           </div>
         ) : (
           <div className="p-4 bg-amber-50 border border-amber-300 rounded-2xl text-xs text-amber-900 space-y-1.5 shadow-sm">

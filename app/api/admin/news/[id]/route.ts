@@ -60,7 +60,7 @@ export async function PUT(
         image3 || '', 
         newsId
       ]
-    ).catch(() => null);
+    );
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Press & Media';
@@ -94,7 +94,7 @@ export async function DELETE(
     const resolvedParams = await params;
     const newsId = Number(resolvedParams.id);
 
-    await query('DELETE FROM news WHERE id = ?', [newsId]).catch(() => null);
+    await query('DELETE FROM news WHERE id = ?', [newsId]);
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Press & Media';

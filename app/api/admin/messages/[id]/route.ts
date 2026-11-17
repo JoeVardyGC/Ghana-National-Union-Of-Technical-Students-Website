@@ -25,7 +25,7 @@ export async function PATCH(
       return NextResponse.json({ error: 'Invalid status value' }, { status: 400 });
     }
 
-    await query('UPDATE contact_messages SET status = ? WHERE id = ?', [status.toLowerCase(), messageId]).catch(() => null);
+    await query('UPDATE contact_messages SET status = ? WHERE id = ?', [status.toLowerCase(), messageId]);
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Super Admin';
@@ -59,7 +59,7 @@ export async function DELETE(
     const resolvedParams = await params;
     const messageId = Number(resolvedParams.id);
 
-    await query('DELETE FROM contact_messages WHERE id = ?', [messageId]).catch(() => null);
+    await query('DELETE FROM contact_messages WHERE id = ?', [messageId]);
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Super Admin';

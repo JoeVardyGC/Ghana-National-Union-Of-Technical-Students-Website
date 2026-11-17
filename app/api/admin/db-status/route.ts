@@ -16,7 +16,8 @@ function maskUrl(url: string): string {
 
 export async function GET() {
   const session = await getAdminSession();
-  if (!session || session.role !== 'Super Admin') {
+  // Any signed-in admin may see the connection status (connection details are masked)
+  if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -47,6 +48,7 @@ export async function GET() {
     total_users_in_active_db: status.userCount,
     tables_found: status.tables,
     error: status.error,
+    warning: status.warning,
     guide: live
       ? { message: `Your live ${label} database is connected.` }
       : {

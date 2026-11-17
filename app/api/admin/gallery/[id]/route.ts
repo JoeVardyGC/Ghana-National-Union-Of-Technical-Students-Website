@@ -54,7 +54,7 @@ export async function PUT(
         Number(display_order) || 1,
         itemId,
       ]
-    ).catch(() => null);
+    );
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Super Admin';
@@ -88,7 +88,7 @@ export async function DELETE(
     const resolvedParams = await params;
     const itemId = Number(resolvedParams.id);
 
-    await query('DELETE FROM gallery WHERE id = ?', [itemId]).catch(() => null);
+    await query('DELETE FROM gallery WHERE id = ?', [itemId]);
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Super Admin';

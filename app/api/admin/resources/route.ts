@@ -51,7 +51,10 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ resources: fallback });
   } catch (error: any) {
-    return NextResponse.json({ resources: DEFAULT_RESOURCES });
+    return NextResponse.json(
+      { resources: [], error: error?.message || 'Could not load from the database' },
+      { status: 500 }
+    );
   }
 }
 
@@ -91,7 +94,7 @@ export async function POST(request: Request) {
         Number(file_size) || 2048000,
         Number(display_order) || 1,
       ]
-    ).catch(() => null);
+    );
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Super Admin';
@@ -147,7 +150,7 @@ export async function DELETE(request: Request) {
     }
 
     const placeholders = numericIds.map(() => '?').join(',');
-    await query(`DELETE FROM resources WHERE id IN (${placeholders})`, numericIds).catch(() => null);
+    await query(`DELETE FROM resources WHERE id IN (${placeholders})`, numericIds);
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Super Admin';

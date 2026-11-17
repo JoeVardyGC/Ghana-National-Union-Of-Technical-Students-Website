@@ -41,7 +41,10 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ executives: fallback });
   } catch (error: any) {
-    return NextResponse.json({ executives: DEFAULT_EXECUTIVES });
+    return NextResponse.json(
+      { executives: [], error: error?.message || 'Could not load from the database' },
+      { status: 500 }
+    );
   }
 }
 
@@ -74,8 +77,8 @@ export async function POST(request: Request) {
     const insertResult = await query(
       `INSERT INTO executives (full_name, position, email, phone, bio, photo, display_order) 
        VALUES (?, ?, ?, ?, ?, ?, ?)`,
-      [full_name, position, email || 'infos@gnuts.org.gh', phone || '+233 24 000 0000', bio, officerPhoto, orderNum]
-    ).catch(() => null);
+      [full_name, position, (email || '').trim(), (phone || '').trim(), bio, officerPhoto, orderNum]
+    );
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Super Admin';
@@ -95,8 +98,8 @@ export async function POST(request: Request) {
         id: (insertResult as any)?.insertId || Date.now(),
         full_name,
         position,
-        email: email || 'infos@gnuts.org.gh',
-        phone: phone || '+233 24 000 0000',
+        email: (email || '').trim(),
+        phone: (phone || '').trim(),
         bio,
         photo: officerPhoto,
         display_order: orderNum,
@@ -129,7 +132,7 @@ export async function DELETE(request: Request) {
     }
 
     const placeholders = numericIds.map(() => '?').join(',');
-    await query(`DELETE FROM executives WHERE id IN (${placeholders})`, numericIds).catch(() => null);
+    await query(`DELETE FROM executives WHERE id IN (${placeholders})`, numericIds);
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Super Admin';

@@ -47,14 +47,14 @@ export async function PUT(
       [
         full_name,
         position,
-        email || 'infos@gnuts.org.gh',
-        phone || '+233 24 000 0000',
+        (email || '').trim(),
+        (phone || '').trim(),
         bio || '',
         photo || '',
         Number(display_order) || 1,
         officerId,
       ]
-    ).catch(() => null);
+    );
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Super Admin';
@@ -88,7 +88,7 @@ export async function DELETE(
     const resolvedParams = await params;
     const officerId = Number(resolvedParams.id);
 
-    await query('DELETE FROM executives WHERE id = ?', [officerId]).catch(() => null);
+    await query('DELETE FROM executives WHERE id = ?', [officerId]);
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Super Admin';

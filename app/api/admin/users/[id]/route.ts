@@ -107,7 +107,7 @@ export async function DELETE(
       return NextResponse.json({ error: 'Cannot delete primary Super Admin or currently logged-in account' }, { status: 403 });
     }
 
-    await query('DELETE FROM users WHERE id = ?', [userId]).catch(() => null);
+    await query('DELETE FROM users WHERE id = ?', [userId]);
 
     const userName = session.name || session.username || 'Comrade Joe Vardy';
     const userRole = session.role || 'Super Admin';

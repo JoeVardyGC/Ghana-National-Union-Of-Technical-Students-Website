@@ -54,7 +54,7 @@ export async function PUT(
         (status || 'active').toLowerCase(),
         oppId,
       ]
-    ).catch(() => null);
+    );
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Super Admin';
@@ -88,7 +88,7 @@ export async function DELETE(
     const resolvedParams = await params;
     const oppId = Number(resolvedParams.id);
 
-    await query('DELETE FROM opportunities WHERE id = ?', [oppId]).catch(() => null);
+    await query('DELETE FROM opportunities WHERE id = ?', [oppId]);
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Super Admin';

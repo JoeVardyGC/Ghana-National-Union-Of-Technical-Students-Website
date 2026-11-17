@@ -57,7 +57,7 @@ export async function PUT(
         (status || 'approved').toLowerCase(),
         projectId,
       ]
-    ).catch(() => null);
+    );
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Innovation Director';
@@ -91,7 +91,7 @@ export async function DELETE(
     const resolvedParams = await params;
     const projectId = Number(resolvedParams.id);
 
-    await query('DELETE FROM innovations WHERE id = ?', [projectId]).catch(() => null);
+    await query('DELETE FROM innovations WHERE id = ?', [projectId]);
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Innovation Director';

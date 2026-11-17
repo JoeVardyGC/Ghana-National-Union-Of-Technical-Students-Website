@@ -1,7 +1,8 @@
 import mysql from 'mysql2/promise';
 import fs from 'fs';
 import path from 'path';
-import { getPostgresPool, getPostgresUrl, isConnectionError, runPostgres } from './postgres';
+import { revalidatePath } from 'next/cache';
+import { getDatabaseUrlProblem, getDatabaseUrlWarning, getPostgresPool, getPostgresUrl, isConnectionError, runPostgres } from './postgres';
 
 export type DatabaseDialect = 'postgres' | 'mysql' | 'local';
 
@@ -528,11 +529,18 @@ export interface DatabaseStatus {
   tables: string[];
   userCount: number;
   error: string | null;
+  /** Non-blocking advice, e.g. a direct (non-pooler) Supabase connection */
+  warning: string | null;
 }
 
 /** Connection check for the admin database-status page. Never throws. */
 export async function getDatabaseStatus(): Promise<DatabaseStatus> {
-  const status: DatabaseStatus = { dialect: getDialect(), connected: false, version: null, tables: [], userCount: 0, error: null };
+  const status: DatabaseStatus = { dialect: getDialect(), connected: false, version: null, tables: [], userCount: 0, error: null, warning: getDatabaseUrlWarning() };
+  const problem = isLiveSite() ? getLiveDatabaseProblem() : getDatabaseUrlProblem();
+  if (problem) {
+    status.error = problem;
+    return status;
+  }
   try {
     if (status.dialect === 'postgres') {
       const pg = getPostgresPool()!;
@@ -567,41 +575,95 @@ export async function getDatabaseStatus(): Promise<DatabaseStatus> {
 }
 
 /**
- * Universal query runner: executes against MySQL if available,
- * or against high-speed local in-memory store in <0.1ms with zero data loss.
+ * True on the running live site (production server), false during `next build`
+ * and in development. Only the live site must never fake a save.
+ */
+function isLiveSite(): boolean {
+  return process.env.NODE_ENV === 'production' && process.env.NEXT_PHASE !== 'phase-production-build';
+}
+
+/** Problem that stops the live site from using its database, or null. */
+export function getLiveDatabaseProblem(): string | null {
+  const urlProblem = getDatabaseUrlProblem();
+  if (urlProblem) return urlProblem;
+  if (getPostgresUrl() || getDatabasePool()) return null;
+  // No database configured: only acceptable when a real data file exists on this
+  // server's disk (e.g. running on your own computer). On Vercel there is none.
+  if (!fs.existsSync(DB_FILE_PATH)) {
+    return 'No database is configured. Set DATABASE_URL in Vercel to your Supabase "Transaction pooler" connection string (postgresql://…) and redeploy.';
+  }
+  return null;
+}
+
+/**
+ * Universal query runner: PostgreSQL (Supabase) or MySQL when configured; the local
+ * JSON store otherwise. On the live site a missing or broken database is reported as
+ * an error, never hidden by writing to temporary memory.
  */
 export async function query<T = any>(sql: string, params: any[] = []): Promise<T[]> {
   const trimmed = sql.trim();
+  const live = isLiveSite();
+
+  if (live) {
+    const problem = getLiveDatabaseProblem();
+    if (problem) throw new Error(problem);
+  } else if (getDatabaseUrlProblem()) {
+    console.warn(`[DB Engine] ${getDatabaseUrlProblem()} Using the local JSON store (development only).`);
+    return executeLocalSql(trimmed, params) as Promise<T[]>;
+  }
 
   // PostgreSQL / Supabase (DATABASE_URL starting with postgres:// or postgresql://)
   if (getPostgresUrl()) {
     try {
-      return (await runPostgres(trimmed, params)) as T[];
+      const result = (await runPostgres(trimmed, params)) as T[];
+      afterWrite(trimmed);
+      return result;
     } catch (error) {
       // Real query errors are reported to the caller. Only an unreachable database
-      // falls back to the local JSON store, and only outside production, so live
-      // data is never silently written to a throwaway file.
-      if (process.env.NODE_ENV === 'production' || !isConnectionError(error)) throw error;
+      // falls back to the local JSON store, and only outside the live site.
+      if (live || !isConnectionError(error)) throw error;
       console.warn(`[DB Engine] PostgreSQL unreachable (${(error as Error)?.message}). Using local JSON store (development only).`);
       return executeLocalSql(trimmed, params) as Promise<T[]>;
     }
   }
 
-  const available = await isMySQLAvailable();
-
-  if (available && mysqlPool) {
-    try {
-      const [rows] = await mysqlPool.execute(sql, params);
-      return rows as T[];
-    } catch (error: any) {
-      isMySQLHealthy = false;
-      lastMySQLCheck = Date.now();
-      console.warn(`[DB Engine] MySQL query failed (${error?.code || error?.message}). Switched to local in-memory store.`);
+  if (getDatabasePool()) {
+    const available = await isMySQLAvailable();
+    if (available && mysqlPool) {
+      try {
+        const [rows] = await mysqlPool.execute(sql, params);
+        afterWrite(trimmed);
+        return rows as T[];
+      } catch (error: any) {
+        if (live) throw error;
+        isMySQLHealthy = false;
+        lastMySQLCheck = Date.now();
+        console.warn(`[DB Engine] MySQL query failed (${error?.code || error?.message}). Using local JSON store (development only).`);
+      }
+    } else if (live) {
+      throw new Error('The MySQL database configured in DATABASE_URL cannot be reached. Check the connection string and that the database is online.');
     }
   }
 
-  // Instant Fallback: Local In-Memory SQL Engine (<0.1ms response)
-  return executeLocalSql(trimmed, params) as Promise<T[]>;
+  // Local JSON store (development, or a self-hosted server with a real data file)
+  const result = await executeLocalSql(trimmed, params);
+  afterWrite(trimmed);
+  return result as T[];
+}
+
+/**
+ * After content changes, refresh the public pages straight away instead of waiting
+ * for their 15-second cache. Skipped for tables the public pages don't show.
+ */
+function afterWrite(sql: string): void {
+  const match = sql.match(/^\s*(?:INSERT\s+INTO|UPDATE|DELETE\s+FROM)\s+[`"]?(\w+)/i);
+  if (!match) return;
+  if (['audit_logs', 'contact_messages', 'users'].includes(match[1].toLowerCase())) return;
+  try {
+    revalidatePath('/', 'layout');
+  } catch {
+    // Not inside a request (e.g. a page render or the build): the normal cache timer applies
+  }
 }
 
 async function executeLocalSql(sql: string, params: any[]): Promise<any> {

@@ -51,7 +51,10 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ scholarships: fallback });
   } catch (error: any) {
-    return NextResponse.json({ scholarships: DEFAULT_SCHOLARSHIPS });
+    return NextResponse.json(
+      { scholarships: [], error: error?.message || 'Could not load from the database' },
+      { status: 500 }
+    );
   }
 }
 
@@ -88,7 +91,7 @@ export async function POST(request: Request) {
         link || 'https://scholarships.getfund.gov.gh/',
         (status || 'active').toLowerCase(),
       ]
-    ).catch(() => null);
+    );
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Financial Secretary';
@@ -141,7 +144,7 @@ export async function DELETE(request: Request) {
     }
 
     const placeholders = numericIds.map(() => '?').join(',');
-    await query(`DELETE FROM scholarships WHERE id IN (${placeholders})`, numericIds).catch(() => null);
+    await query(`DELETE FROM scholarships WHERE id IN (${placeholders})`, numericIds);
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Financial Secretary';

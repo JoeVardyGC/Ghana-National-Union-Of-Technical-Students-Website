@@ -59,7 +59,10 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ messages: fallback });
   } catch (error: any) {
-    return NextResponse.json({ messages: DEFAULT_MESSAGES });
+    return NextResponse.json(
+      { messages: [], error: error?.message || 'Could not load from the database' },
+      { status: 500 }
+    );
   }
 }
 
@@ -78,7 +81,7 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
     }
 
-    await query('UPDATE contact_messages SET status = ? WHERE id = ?', [status.toLowerCase(), id]).catch(() => null);
+    await query('UPDATE contact_messages SET status = ? WHERE id = ?', [status.toLowerCase(), id]);
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Super Admin';
@@ -119,7 +122,7 @@ export async function DELETE(request: Request) {
     }
 
     const placeholders = numericIds.map(() => '?').join(',');
-    await query(`DELETE FROM contact_messages WHERE id IN (${placeholders})`, numericIds).catch(() => null);
+    await query(`DELETE FROM contact_messages WHERE id IN (${placeholders})`, numericIds);
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Super Admin';

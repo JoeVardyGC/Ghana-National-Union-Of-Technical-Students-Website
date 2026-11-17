@@ -53,7 +53,10 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ news: fallback });
   } catch (error: any) {
-    return NextResponse.json({ news: DEFAULT_NEWS });
+    return NextResponse.json(
+      { news: [], error: error?.message || 'Could not load from the database' },
+      { status: 500 }
+    );
   }
 }
 
@@ -89,7 +92,7 @@ export async function POST(request: Request) {
       `INSERT INTO news (title, content, image, author, published_at, status, allow_sharing, image2, image3, view_count) 
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0)`,
       [title, content, articleImg, author, formattedDate, status.toLowerCase(), allow_sharing ? 1 : 0, image2, image3]
-    ).catch(() => null);
+    );
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Press & Media';
@@ -146,7 +149,7 @@ export async function DELETE(request: Request) {
     }
 
     const placeholders = numericIds.map(() => '?').join(',');
-    await query(`DELETE FROM news WHERE id IN (${placeholders})`, numericIds).catch(() => null);
+    await query(`DELETE FROM news WHERE id IN (${placeholders})`, numericIds);
 
     const userName = session.name || session.username || 'Executive Officer';
     const userRole = session.role || 'Press & Media';

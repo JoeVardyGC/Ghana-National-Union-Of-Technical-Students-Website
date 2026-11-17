@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { query } from '@/lib/db';
+import { getLiveDatabaseProblem, query } from '@/lib/db';
 import { logAuditAction } from '@/lib/audit';
 import { hashPassword, isHashed, KNOWN_DEFAULT_PASSWORDS, verifyPassword } from '@/lib/password';
 import { createSessionToken, SESSION_COOKIE_NAME, SESSION_MAX_AGE_SECONDS } from '@/lib/session';
@@ -67,6 +67,13 @@ export async function POST(request: Request) {
         { error: 'Too many failed login attempts. Please wait 15 minutes and try again.' },
         { status: 429 }
       );
+    }
+
+    // On the live site, explain a missing or misconfigured database here instead of
+    // failing with a vague error (otherwise nobody could reach the admin panel to see why)
+    if (process.env.NODE_ENV === 'production') {
+      const problem = getLiveDatabaseProblem();
+      if (problem) return NextResponse.json({ error: `Cannot sign in: ${problem}` }, { status: 503 });
     }
 
     // First login on a brand-new database (e.g. a fresh Supabase project): create the
