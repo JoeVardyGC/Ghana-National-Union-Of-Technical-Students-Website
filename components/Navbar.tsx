@@ -75,8 +75,9 @@ export default function Navbar({ settings }: { settings: SiteSettings }) {
 
   return (
     <>
-      {/* 1. White Top Bar Before Navbar */}
-      <div className="bg-white text-[#014900] text-xs py-2 px-4 border-b border-gray-200 font-medium font-['Montserrat',sans-serif]">
+      {/* 1. White Top Bar Before Navbar — tablets and desktop only.
+             On phones it took ~85px above the logo; the same details are in the menu and footer. */}
+      <div className="hidden md:block bg-white text-[#014900] text-xs py-2 px-4 border-b border-gray-200 font-medium font-['Montserrat',sans-serif]">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-4">
           {/* Left Side: P.O. Box, Phone, Email */}
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 sm:gap-6 text-[11px] sm:text-xs">
