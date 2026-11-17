@@ -1,7 +1,12 @@
 import type { Metadata, Viewport } from 'next';
+// Self-hosted fonts (bundled with the site, no request to Google): Inter for body
+// text, Montserrat for headings, logo and navigation (see globals.css).
+import '@fontsource-variable/inter';
+import '@fontsource-variable/montserrat';
 import './globals.css';
 import LayoutWrapper from '@/components/LayoutWrapper';
 import { getSiteSettings } from '@/lib/siteSettings';
+import { query } from '@/lib/db';
 import { SITE_URL } from '@/lib/siteUrl';
 import StructuredData from '@/components/StructuredData';
 
@@ -54,18 +59,18 @@ export default async function RootLayout({
 }>) {
   // Secretariat contacts and social links, managed in Admin > Settings
   const settings = await getSiteSettings();
+  // Hide the Gallery link in the menu and footer until at least one photo exists
+  const galleryCount = await query<{ count: number | string }>('SELECT COUNT(*) as count FROM gallery')
+    .then((rows) => Number(rows[0]?.count) || 0)
+    .catch(() => 1);
 
   return (
-    <html lang="en" data-scroll-behavior="smooth" className="scroll-smooth font-['Montserrat',sans-serif]">
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className="scroll-smooth"
+    >
       <head>
-        {/* Google Fonts Preconnect & Stylesheet — Exclusively Montserrat */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..900;1,300..900&display=swap"
-        />
-
         {/* Resource Hints for High-Speed CDN Asset Loading */}
         <link rel="preconnect" href="https://ik.imagekit.io" />
         <link rel="dns-prefetch" href="https://ik.imagekit.io" />
@@ -77,9 +82,9 @@ export default async function RootLayout({
         {/* Preload High Priority Hero Image for Instant LCP Rendering */}
         <link rel="preload" as="image" href="/images/carousel_1.jpg" />
       </head>
-      <body className="font-['Montserrat',sans-serif] antialiased bg-[#f8f9fa] text-gray-900 flex flex-col min-h-screen">
+      <body className="font-sans antialiased bg-[#f8f9fa] text-gray-900 flex flex-col min-h-screen">
         <StructuredData settings={settings} />
-        <LayoutWrapper settings={settings}>{children}</LayoutWrapper>
+        <LayoutWrapper settings={settings} hasGallery={galleryCount > 0}>{children}</LayoutWrapper>
       </body>
     </html>
   );

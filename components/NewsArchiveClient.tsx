@@ -67,7 +67,7 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
   };
 
   return (
-    <div id="news-grid-start" className="space-y-10 font-['Montserrat',sans-serif]">
+    <div id="news-grid-start" className="space-y-10">
       
       {/* 1. Responsive Search & Category Filter Toolbar */}
       <div className="bg-white p-4 sm:p-6 rounded-3xl border border-gray-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
@@ -110,7 +110,7 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
                 }}
                 className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer shrink-0 ${
                   isActive
-                    ? 'bg-[#014900] text-white shadow-md font-black'
+                    ? 'bg-[#014900] text-white shadow-md font-extrabold'
                     : 'bg-gray-50 text-gray-600 hover:bg-gray-100 border border-gray-200'
                 }`}
               >
@@ -124,7 +124,7 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
       {filteredNews.length === 0 ? (
         <div className="text-center py-16 px-6 bg-white rounded-3xl border border-gray-200 shadow-sm max-w-lg mx-auto space-y-3">
           <div className="text-4xl">📰</div>
-          <h3 className="text-lg font-black text-gray-900 uppercase">No Articles Found</h3>
+          <h3 className="text-lg font-extrabold text-gray-900 uppercase">No Articles Found</h3>
           <p className="text-xs text-gray-500 font-medium">
             {searchQuery || selectedCategory !== 'ALL'
               ? `No releases found matching "${searchQuery || selectedCategory}". Try clearing your filters.`
@@ -142,7 +142,7 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
             <Link
               key={item.id || idx}
               href={`/blog/${item.id}`}
-              className="bg-white rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col overflow-hidden group cursor-pointer h-full"
+              className="bg-white rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col overflow-hidden group cursor-pointer h-full"
             >
               {/* Poster Flyer Container — Tall generous height matching Home page */}
               <div className="w-full h-80 sm:h-[400px] lg:h-[440px] relative overflow-hidden bg-gray-900 shrink-0 rounded-t-3xl">
@@ -163,14 +163,14 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
               {/* Content Section */}
               <div className="p-6 sm:p-7 flex flex-col justify-between flex-grow rounded-b-3xl">
                 <div className="space-y-3.5">
-                  <h3 className="font-black text-lg sm:text-xl text-gray-900 leading-snug uppercase group-hover:text-[#014900] transition-colors line-clamp-2">
+                  <h3 className="font-extrabold text-lg sm:text-xl text-gray-900 leading-snug group-hover:text-[#014900] transition-colors line-clamp-2">
                     {item.title}
                   </h3>
                   <p className="text-gray-600 text-xs sm:text-sm leading-relaxed font-medium line-clamp-4 sm:line-clamp-5">
                     {cleanContent}
                   </p>
                   <div className="pt-2">
-                    <span className="text-[#D9A000] font-black text-xs uppercase tracking-wider group-hover:underline group-hover:text-[#014900] transition-colors inline-block">
+                    <span className="text-gold-ink font-extrabold text-xs uppercase tracking-wider group-hover:underline group-hover:text-[#014900] transition-colors inline-block">
                       READ MORE »
                     </span>
                   </div>

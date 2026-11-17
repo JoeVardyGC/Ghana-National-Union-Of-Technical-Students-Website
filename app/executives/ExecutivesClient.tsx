@@ -38,7 +38,7 @@ export default function ExecutivesClient({
   const safeBgUrl = encodeURI(heroImage);
 
   return (
-    <div className="bg-white min-h-screen font-['Montserrat',sans-serif] pb-24 text-gray-900">
+    <div className="bg-white min-h-screen pb-24 text-gray-900">
       
       {/* HERO BANNER - 50% opacity green overlay & border-b-4 border-[#D9A000] */}
       <section className="relative text-white py-14 sm:py-20 px-4 sm:px-6 lg:px-8 border-b-4 border-[#D9A000] overflow-hidden bg-gray-900 mb-8">
@@ -51,12 +51,12 @@ export default function ExecutivesClient({
         <div className="absolute inset-0 bg-[#014900]/55 backdrop-brightness-90" />
 
         <div className="max-w-7xl mx-auto text-center relative z-10 space-y-3">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-xs font-black uppercase tracking-widest text-[#D9A000]">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-xs font-extrabold uppercase tracking-widest text-[#D9A000]">
             <Users className="w-4 h-4" />
             <span>National Executive Committee (NEC)</span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight leading-tight text-white drop-shadow-md">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase tracking-tight leading-tight text-white drop-shadow-md">
             {heroTitle}
           </h1>
 
@@ -81,7 +81,7 @@ export default function ExecutivesClient({
               />
             </div>
             <p className="text-xs font-extrabold text-gray-500 uppercase tracking-wider hidden sm:block">
-              National Leadership: <span className="text-[#014900] font-black">{filteredExecutives.length} {filteredExecutives.length === 1 ? 'Officer' : 'Officers'}</span>
+              National Leadership: <span className="text-[#014900] font-extrabold">{filteredExecutives.length} {filteredExecutives.length === 1 ? 'Officer' : 'Officers'}</span>
             </p>
           </div>
         </section>
@@ -94,7 +94,7 @@ export default function ExecutivesClient({
             <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-emerald-100">
               <Users className="w-8 h-8 text-[#014900]" />
             </div>
-            <h3 className="text-base font-black text-gray-900 uppercase">
+            <h3 className="text-base font-extrabold text-gray-900 uppercase">
               {searchQuery ? 'No Officers Found' : 'Directory Updating'}
             </h3>
             <p className="text-gray-500 font-medium text-xs sm:text-sm mt-2 max-w-md mx-auto leading-relaxed">
@@ -108,7 +108,7 @@ export default function ExecutivesClient({
             {filteredExecutives.map((officer) => (
             <div
               key={officer.id}
-              className="bg-white rounded-3xl border border-gray-200/80 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden group hover:-translate-y-1 max-w-[290px] mx-auto md:max-w-none w-full"
+              className="bg-white rounded-3xl border border-gray-200/80 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden group max-w-[290px] mx-auto md:max-w-none w-full"
             >
               <div>
                 {/* Officer Portrait - Compact, refined height with object-top */}
@@ -120,15 +120,15 @@ export default function ExecutivesClient({
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
 
-                  <span className="absolute top-3.5 left-3.5 px-2.5 py-0.5 bg-[#014900] text-white font-black text-[9px] uppercase tracking-wider rounded-full shadow-md border border-white/20">
+                  <span className="absolute top-3.5 left-3.5 px-2.5 py-0.5 bg-[#014900] text-white font-extrabold text-xs uppercase tracking-wider rounded-full shadow-md border border-white/20">
                     {officer.tenure || '2025/2026 Admin'}
                   </span>
 
                   <div className="absolute bottom-3 left-3.5 right-3.5 text-white">
-                    <span className="text-[9px] font-black text-[#D9A000] uppercase tracking-widest bg-black/50 px-2 py-0.5 rounded-full border border-white/10">
+                    <span className="text-xs font-extrabold text-[#D9A000] uppercase tracking-widest bg-black/50 px-2 py-0.5 rounded-full border border-white/10">
                       {officer.position}
                     </span>
-                    <h3 className="font-['Montserrat'] font-black text-base sm:text-lg text-white mt-1 leading-snug">
+                    <h3 className="font-display font-extrabold text-base sm:text-lg text-white mt-1 leading-snug">
                       {officer.name}
                     </h3>
                   </div>
@@ -158,10 +158,10 @@ export default function ExecutivesClient({
                     <span>{officer.email}</span>
                   </a>
                 ) : (
-                  <span className="text-gray-400 text-[11px]">Secretariat Secretariat</span>
+                  <span className="text-gray-400 text-xs">Secretariat Secretariat</span>
                 )}
 
-                <span className="p-2 bg-gray-50 text-[#014900] rounded-xl font-bold text-[10px] uppercase tracking-wider">
+                <span className="p-2 bg-gray-50 text-[#014900] rounded-xl font-bold text-xs uppercase tracking-wider">
                   Verified Executive
                 </span>
               </div>

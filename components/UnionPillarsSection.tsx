@@ -42,7 +42,7 @@ export default function UnionPillarsSection() {
             <span>OUR CORE PILLARS OF ACTION</span>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#014900] tracking-tight uppercase">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight uppercase">
             Championing Technical Excellence
           </h2>
 
@@ -58,14 +58,14 @@ export default function UnionPillarsSection() {
             return (
               <div
                 key={idx}
-                className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-xl hover:-translate-y-1.5 hover:border-[#D9A000]/60 transition-all duration-300 group"
+                className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-xl hover:border-[#D9A000]/60 transition-all duration-300 group"
               >
                 <div className="space-y-5">
                   <div className="flex justify-between items-center">
                     <div className="w-14 h-14 rounded-2xl bg-[#014900] text-[#D9A000] flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
                       <Icon className="w-7 h-7" />
                     </div>
-                    <span className="px-3 py-1 rounded-md bg-[#D9A000] text-white text-[11px] font-bold uppercase tracking-wider">
+                    <span className="px-3 py-1 rounded-md bg-[#D9A000] text-[#014900] text-xs font-bold uppercase tracking-wider">
                       {item.badge}
                     </span>
                   </div>
@@ -87,7 +87,7 @@ export default function UnionPillarsSection() {
                 <div className="pt-6 mt-6 border-t border-gray-100">
                   <Link
                     href={item.link}
-                    className="inline-flex items-center gap-2 text-sm font-bold text-[#014900] group-hover:text-[#D9A000] transition-colors"
+                    className="inline-flex items-center gap-2 text-sm font-bold text-[#014900] group-hover:text-gold-ink transition-colors"
                   >
                     <span>Explore Pillar</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

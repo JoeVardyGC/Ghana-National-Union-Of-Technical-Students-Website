@@ -80,7 +80,7 @@ export default async function HomePage() {
 
   return (
     <ScrollAnimationProvider>
-      <div className="flex flex-col min-h-screen bg-[#f8f9fa] font-['Montserrat',sans-serif] overflow-x-hidden">
+      <div className="flex flex-col min-h-screen bg-[#f8f9fa] overflow-x-hidden">
         {/* 1. Hero Section + Floating Stats Overlay */}
         <HeroSlider stats={{ projectsCount, scholarshipsCount }} carouselSlides={carouselSlides} />
 
@@ -90,7 +90,7 @@ export default async function HomePage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center reveal-on-scroll">
             {/* Left side */}
             <div>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#014900] tracking-tight leading-tight uppercase">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight leading-tight uppercase">
                 About GNUTS
               </h2>
               <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-4" />
@@ -99,7 +99,7 @@ export default async function HomePage() {
               </p>
               <Link
                 href="/about"
-                className="inline-flex items-center justify-center px-7 py-3.5 border border-transparent text-sm font-black uppercase tracking-wider rounded-2xl text-white bg-[#014900] hover:bg-[#D9A000] hover:text-[#014900] transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
+                className="inline-flex items-center justify-center px-7 py-3.5 border border-transparent text-sm font-extrabold uppercase tracking-wider rounded-2xl text-white bg-[#014900] hover:bg-[#D9A000] hover:text-[#014900] transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
               >
                 Discover Our Story →
               </Link>
@@ -108,7 +108,7 @@ export default async function HomePage() {
             {/* Right side: 3 stacked curved cards (rounded-2xl) */}
             <div className="flex flex-col gap-5">
               {/* Card 1 */}
-              <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl border border-gray-200/90 flex gap-5 hover:border-[#014900]/30 hover:-translate-y-1 transition-all group">
+              <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl border border-gray-200/90 flex gap-5 hover:border-[#014900]/30 transition-all group">
                 <div className="w-12 h-12 rounded-xl bg-[#f8f9fa] group-hover:bg-[#014900] group-hover:text-white text-[#014900] flex items-center justify-center shrink-0 transition-colors border border-gray-200/60 shadow-xs">
                   <Layers className="w-6 h-6" />
                 </div>
@@ -121,12 +121,12 @@ export default async function HomePage() {
               </div>
 
               {/* Card 2 */}
-              <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl border border-gray-200/90 flex gap-5 hover:border-[#D9A000]/40 hover:-translate-y-1 transition-all group">
+              <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl border border-gray-200/90 flex gap-5 hover:border-[#D9A000]/40 transition-all group">
                 <div className="w-12 h-12 rounded-xl bg-[#f8f9fa] group-hover:bg-[#D9A000] group-hover:text-[#014900] text-[#014900] flex items-center justify-center shrink-0 transition-colors border border-gray-200/60 shadow-xs">
                   <Clock className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-extrabold text-gray-900 mb-1.5 group-hover:text-[#D9A000] transition-colors">Our History</h3>
+                  <h3 className="text-lg font-extrabold text-gray-900 mb-1.5 group-hover:text-gold-ink transition-colors">Our History</h3>
                   <p className="text-sm text-gray-600 leading-relaxed font-medium">
                     Emerging in 1987 to address the marginalization of polytechnic students, fully operationalized with the Tamale Declaration in 2000.
                   </p>
@@ -134,7 +134,7 @@ export default async function HomePage() {
               </div>
 
               {/* Card 3 */}
-              <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl border border-gray-200/90 flex gap-5 hover:border-[#014900]/30 hover:-translate-y-1 transition-all group">
+              <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl border border-gray-200/90 flex gap-5 hover:border-[#014900]/30 transition-all group">
                 <div className="w-12 h-12 rounded-xl bg-[#f8f9fa] group-hover:bg-[#014900] group-hover:text-white text-[#014900] flex items-center justify-center shrink-0 transition-colors border border-gray-200/60 shadow-xs">
                   <MessageSquare className="w-6 h-6" />
                 </div>
@@ -156,7 +156,7 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-3">
             <div>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#014900] tracking-tight uppercase">Available Scholarships</h2>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight uppercase">Available Scholarships</h2>
               <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-2.5 sm:my-3" />
               <p className="text-gray-500 text-xs sm:text-sm lg:text-base font-medium">
                 Funding opportunities for technical and vocational students
@@ -164,7 +164,7 @@ export default async function HomePage() {
             </div>
             <Link
               href="/scholarships"
-              className="inline-flex items-center gap-1 text-xs sm:text-sm lg:text-base font-black uppercase text-[#014900] hover:text-[#D9A000] transition-colors mt-1 md:mt-0"
+              className="inline-flex items-center gap-1 text-xs sm:text-sm lg:text-base font-extrabold uppercase text-[#014900] hover:text-gold-ink transition-colors mt-1 md:mt-0"
             >
               View All →
             </Link>
@@ -184,8 +184,8 @@ export default async function HomePage() {
                     <div className="space-y-3 sm:space-y-4 relative z-10 min-w-0">
                       <div className="flex justify-between items-start gap-2 flex-wrap min-w-0">
                         <span
-                          className={`px-2.5 sm:px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider shrink-0 shadow-xs text-white ${
-                            isGold ? 'bg-[#D9A000]' : 'bg-[#014900]'
+                          className={`px-2.5 sm:px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider shrink-0 shadow-xs ${
+                            isGold ? 'bg-[#D9A000] text-[#014900]' : 'bg-[#014900] text-white'
                           }`}
                         >
                           {item.status ? item.status.toUpperCase() : 'ACTIVE'}
@@ -193,8 +193,8 @@ export default async function HomePage() {
                       </div>
 
                       <h3
-                        className={`font-black text-base sm:text-lg lg:text-xl text-gray-900 leading-snug transition-colors break-words ${
-                          isGold ? 'group-hover:text-[#D9A000]' : 'group-hover:text-[#014900]'
+                        className={`font-extrabold text-base sm:text-lg lg:text-xl text-gray-900 leading-snug transition-colors break-words ${
+                          isGold ? 'group-hover:text-gold-ink' : 'group-hover:text-[#014900]'
                         }`}
                       >
                         {item.title}
@@ -212,8 +212,8 @@ export default async function HomePage() {
                         </span>
                       )}
                       <span
-                        className={`text-xs font-black uppercase tracking-wider transition-colors inline-flex items-center gap-1 ${
-                          isGold ? 'text-[#D9A000] group-hover:text-[#014900]' : 'text-[#014900] group-hover:text-[#D9A000]'
+                        className={`text-xs font-extrabold uppercase tracking-wider transition-colors inline-flex items-center gap-1 ${
+                          isGold ? 'text-gold-ink group-hover:text-[#014900]' : 'text-[#014900] group-hover:text-gold-ink'
                         }`}
                       >
                         <span>View Requirements & Apply →</span>
@@ -243,14 +243,14 @@ export default async function HomePage() {
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 pb-4 border-b border-gray-100 gap-3">
               <div>
                 <div className="relative inline-block pb-2">
-                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#014900] tracking-tight uppercase">GNUTS Executives</h2>
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight uppercase">GNUTS Executives</h2>
                   <div className="absolute left-0 bottom-0 w-16 h-1.5 bg-[#D9A000] rounded-full" />
                 </div>
                 <p className="text-gray-500 text-sm sm:text-base mt-2 font-medium">The National Executive Committee</p>
               </div>
               <a
                 href="/executives"
-                className="inline-flex items-center gap-1.5 text-sm sm:text-base font-black uppercase text-[#014900] hover:text-[#D9A000] transition-colors mt-2 md:mt-0"
+                className="inline-flex items-center gap-1.5 text-sm sm:text-base font-extrabold uppercase text-[#014900] hover:text-gold-ink transition-colors mt-2 md:mt-0"
               >
                 Our Leadership →
               </a>
@@ -263,7 +263,7 @@ export default async function HomePage() {
                 const photoUrl = resolveImgUrl(exec.photo || exec.image_url || exec.image || '/images/gnuts_fav.png');
 
                 return (
-                  <div key={exec.id || index} className="group flex flex-col bg-white rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden max-w-[290px] mx-auto sm:max-w-none w-full">
+                  <div key={exec.id || index} className="group flex flex-col bg-white rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden max-w-[290px] mx-auto sm:max-w-none w-full">
                     {/* Photo container with balanced square aspect ratio */}
                     <div className="relative aspect-[1/1] w-full overflow-hidden bg-gray-900 rounded-t-3xl" style={{ backgroundColor: bgCol }}>
                       <img
@@ -278,10 +278,10 @@ export default async function HomePage() {
                     {/* Name / Position Card Block */}
                     <div className="p-5 sm:p-5 text-center flex flex-col justify-between flex-grow bg-white border-t border-gray-100 rounded-b-3xl">
                       <div>
-                        <h3 className="text-base sm:text-sm lg:text-base font-black text-[#014900] group-hover:text-[#D9A000] transition-colors leading-snug">
+                        <h3 className="text-base sm:text-sm lg:text-base font-extrabold text-[#014900] group-hover:text-gold-ink transition-colors leading-snug">
                           {exec.full_name || exec.name}
                         </h3>
-                        <p className="text-xs sm:text-[11px] lg:text-xs font-black text-[#D9A000] uppercase tracking-wider mt-1">
+                        <p className="text-xs sm:text-xs lg:text-xs font-extrabold text-gold-ink uppercase tracking-wider mt-1">
                           {exec.position}
                         </p>
                       </div>

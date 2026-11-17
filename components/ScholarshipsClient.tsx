@@ -178,7 +178,7 @@ export default function ScholarshipsClient({
             <button
               type="button"
               onClick={() => setSelectedCategory('ALL')}
-              className={`px-3.5 sm:px-4 py-2 text-[11px] sm:text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all border cursor-pointer ${
+              className={`px-3.5 sm:px-4 py-2 text-xs sm:text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all border cursor-pointer ${
                 selectedCategory === 'ALL'
                   ? 'bg-[#014900] text-white border-[#014900] shadow-xs'
                   : 'bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200'
@@ -189,7 +189,7 @@ export default function ScholarshipsClient({
             <button
               type="button"
               onClick={() => setSelectedCategory('SCHOLARSHIPS')}
-              className={`px-3.5 sm:px-4 py-2 text-[11px] sm:text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all border cursor-pointer ${
+              className={`px-3.5 sm:px-4 py-2 text-xs sm:text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all border cursor-pointer ${
                 selectedCategory === 'SCHOLARSHIPS'
                   ? 'bg-[#014900] text-white border-[#014900] shadow-xs'
                   : 'bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200'
@@ -200,7 +200,7 @@ export default function ScholarshipsClient({
             <button
               type="button"
               onClick={() => setSelectedCategory('INTERNSHIPS')}
-              className={`px-3.5 sm:px-4 py-2 text-[11px] sm:text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all border cursor-pointer ${
+              className={`px-3.5 sm:px-4 py-2 text-xs sm:text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all border cursor-pointer ${
                 selectedCategory === 'INTERNSHIPS'
                   ? 'bg-[#014900] text-white border-[#014900] shadow-xs'
                   : 'bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200'
@@ -211,7 +211,7 @@ export default function ScholarshipsClient({
             <button
               type="button"
               onClick={() => setSelectedCategory('SKILL_CAMPS')}
-              className={`px-3.5 sm:px-4 py-2 text-[11px] sm:text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all border cursor-pointer ${
+              className={`px-3.5 sm:px-4 py-2 text-xs sm:text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all border cursor-pointer ${
                 selectedCategory === 'SKILL_CAMPS'
                   ? 'bg-[#014900] text-white border-[#014900] shadow-xs'
                   : 'bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200'
@@ -253,19 +253,19 @@ export default function ScholarshipsClient({
                   <div
                     key={item.id}
                     id={`scholarship-${item.id}`}
-                    className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-7 shadow-sm hover:shadow-xl border border-gray-200 flex flex-col justify-between transition-all duration-300 group min-w-0 w-full hover:-translate-y-1 scroll-mt-28"
+                    className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-7 shadow-sm hover:shadow-xl border border-gray-200 flex flex-col justify-between transition-all duration-300 group min-w-0 w-full scroll-mt-28"
                   >
                     <div className="space-y-3 sm:space-y-4 min-w-0">
                       {/* Badge Header: Active Badge + Urgency Pill */}
                       <div className="flex items-center justify-between gap-2 flex-wrap min-w-0">
-                        <span className={`inline-block px-2.5 sm:px-3 py-1 text-white text-[10px] sm:text-[11px] font-bold uppercase tracking-wider rounded-full shadow-xs ${
-                          isGold ? 'bg-[#D9A000]' : 'bg-[#014900]'
+                        <span className={`inline-block px-2.5 sm:px-3 py-1 text-xs sm:text-xs font-bold uppercase tracking-wider rounded-full shadow-xs ${
+                          isGold ? 'bg-[#D9A000] text-[#014900]' : 'bg-[#014900] text-white'
                         }`}>
                           Active
                         </span>
 
                         {urgency && (
-                          <span className={`inline-flex items-center gap-1 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full text-white ${
+                          <span className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-extrabold uppercase tracking-wider rounded-full text-white ${
                             urgency.isUrgent ? 'bg-[#D9A000] animate-pulse' : 'bg-amber-600'
                           }`}>
                             <AlertCircle className="w-3 h-3 shrink-0" />
@@ -275,8 +275,8 @@ export default function ScholarshipsClient({
                       </div>
 
                       {/* Title */}
-                      <h3 className={`text-base sm:text-lg lg:text-xl font-black text-gray-900 leading-snug break-words transition-colors ${
-                        isGold ? 'group-hover:text-[#D9A000]' : 'group-hover:text-[#014900]'
+                      <h3 className={`text-base sm:text-lg lg:text-xl font-extrabold text-gray-900 leading-snug break-words transition-colors ${
+                        isGold ? 'group-hover:text-gold-ink' : 'group-hover:text-[#014900]'
                       }`}>
                         {item.title}
                       </h3>
@@ -296,7 +296,7 @@ export default function ScholarshipsClient({
                           >
                             <div className="flex items-center gap-2 min-w-0">
                               <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#014900] shrink-0" />
-                              <span className="text-[11px] sm:text-xs font-extrabold text-[#014900] uppercase tracking-wider truncate">
+                              <span className="text-xs sm:text-xs font-extrabold text-[#014900] uppercase tracking-wider truncate">
                                 {expandedRequirements[item.id] ? 'Hide Requirements' : 'View Requirements'}
                               </span>
                             </div>
@@ -317,14 +317,14 @@ export default function ScholarshipsClient({
                                 return (
                                   <>
                                     <div className="flex items-center justify-between gap-2 border-b border-amber-200/50 pb-2">
-                                      <h4 className="text-[11px] sm:text-xs font-extrabold text-[#014900] uppercase tracking-wider flex items-center gap-1.5 truncate">
+                                      <h4 className="text-xs sm:text-xs font-extrabold text-[#014900] uppercase tracking-wider flex items-center gap-1.5 truncate">
                                         <FileText className="w-3.5 h-3.5 text-[#D9A000] shrink-0" />
                                         <span className="truncate">Application Checklist</span>
                                       </h4>
-                                      <span className={`text-[9px] sm:text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full shrink-0 ${
+                                      <span className={`text-xs sm:text-xs font-extrabold uppercase px-2 py-0.5 rounded-full shrink-0 ${
                                         completedCount === totalReqs && totalReqs > 0
                                           ? 'bg-emerald-600 text-white'
-                                          : 'bg-[#D9A000] text-white'
+                                          : 'bg-[#D9A000] text-[#014900]'
                                       }`}>
                                         {completedCount}/{totalReqs} READY
                                       </span>
@@ -367,7 +367,7 @@ export default function ScholarshipsClient({
                       )}
 
                       {/* Meta Details: Deadline & Posted Date */}
-                      <div className="pt-3 sm:pt-4 border-t border-gray-100 flex flex-wrap items-center gap-2 sm:gap-4 text-[11px] sm:text-xs font-medium text-gray-500">
+                      <div className="pt-3 sm:pt-4 border-t border-gray-100 flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-xs font-medium text-gray-500">
                         {item.deadline && (
                           <span className="flex items-center gap-1 text-gray-700 font-semibold">
                             <Calendar className="w-3.5 h-3.5 text-[#D9A000] shrink-0" />
@@ -390,8 +390,8 @@ export default function ScholarshipsClient({
                           href={item.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className={`inline-flex items-center justify-center gap-2 w-full px-4 sm:px-6 py-2.5 sm:py-3 text-white text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all duration-300 shadow-xs hover:shadow ${
-                            isGold ? 'bg-[#D9A000] hover:bg-yellow-600' : 'bg-[#014900] hover:bg-[#013300]'
+                          className={`inline-flex items-center justify-center gap-2 w-full px-4 sm:px-6 py-2.5 sm:py-3 text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all duration-300 shadow-xs hover:shadow ${
+                            isGold ? 'bg-[#D9A000] hover:bg-[#b88800] text-[#014900]' : 'bg-[#014900] hover:bg-[#013300] text-white'
                           }`}
                         >
                           <span>Apply Now</span>
@@ -500,28 +500,28 @@ export default function ScholarshipsClient({
                 return (
                   <div
                     key={item.id}
-                    className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-7 shadow-sm hover:shadow-xl border border-gray-200 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 group min-w-0 w-full"
+                    className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-7 shadow-sm hover:shadow-xl border border-gray-200 flex flex-col justify-between transition-all duration-300 group min-w-0 w-full"
                   >
                     <div className="space-y-3 sm:space-y-4 min-w-0">
                       {/* Header Badges */}
                       <div className="flex items-center justify-between gap-2 flex-wrap min-w-0">
-                        <span className={`px-2.5 sm:px-3 py-1 text-white text-[10px] sm:text-[11px] font-bold uppercase tracking-wider rounded-full ${
-                          isGold ? 'bg-[#D9A000]' : 'bg-[#014900]'
+                        <span className={`px-2.5 sm:px-3 py-1 text-xs sm:text-xs font-bold uppercase tracking-wider rounded-full ${
+                          isGold ? 'bg-[#D9A000] text-[#014900]' : 'bg-[#014900] text-white'
                         }`}>
                           {typeDisplay}
                         </span>
                         
                         {urgency ? (
-                          <span className={`inline-flex items-center gap-1 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-full text-white ${
+                          <span className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-extrabold uppercase tracking-wider rounded-full text-white ${
                             urgency.isUrgent ? 'bg-[#D9A000] animate-pulse' : 'bg-amber-600'
                           }`}>
                             <AlertCircle className="w-3 h-3 shrink-0" />
                             <span>{urgency.text}</span>
                           </span>
                         ) : (
-                          <span className={`px-2.5 sm:px-3 py-1 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider rounded-full border ${
+                          <span className={`px-2.5 sm:px-3 py-1 text-xs sm:text-xs font-bold uppercase tracking-wider rounded-full border ${
                             isGold 
-                              ? 'bg-amber-50 text-[#D9A000] border-amber-200' 
+                              ? 'bg-amber-50 text-gold-ink border-amber-200' 
                               : 'bg-emerald-50 text-[#014900] border-emerald-200'
                           }`}>
                             Active
@@ -530,8 +530,8 @@ export default function ScholarshipsClient({
                       </div>
 
                       {/* Title */}
-                      <h3 className={`text-base sm:text-lg lg:text-xl font-black text-gray-900 transition-colors leading-snug break-words ${
-                        isGold ? 'group-hover:text-[#D9A000]' : 'group-hover:text-[#014900]'
+                      <h3 className={`text-base sm:text-lg lg:text-xl font-extrabold text-gray-900 transition-colors leading-snug break-words ${
+                        isGold ? 'group-hover:text-gold-ink' : 'group-hover:text-[#014900]'
                       }`}>
                         {item.title}
                       </h3>
@@ -542,7 +542,7 @@ export default function ScholarshipsClient({
                       </p>
 
                       {/* Meta Details: Location, Deadline, Posted */}
-                      <div className="pt-3 sm:pt-4 border-t border-gray-100 space-y-1.5 sm:space-y-2 text-[11px] sm:text-xs text-gray-500 font-medium">
+                      <div className="pt-3 sm:pt-4 border-t border-gray-100 space-y-1.5 sm:space-y-2 text-xs sm:text-xs text-gray-500 font-medium">
                         {item.location && (
                           <div className="flex items-center gap-1.5 text-gray-700 min-w-0">
                             <MapPin className={`w-3.5 h-3.5 shrink-0 ${isGold ? 'text-[#014900]' : 'text-[#D9A000]'}`} />
@@ -573,8 +573,8 @@ export default function ScholarshipsClient({
                           href={item.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className={`inline-flex items-center justify-center gap-2 w-full px-4 sm:px-6 py-2.5 sm:py-3 text-white text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all duration-300 shadow-xs hover:shadow ${
-                            isGold ? 'bg-[#D9A000] hover:bg-yellow-600' : 'bg-[#014900] hover:bg-[#013300]'
+                          className={`inline-flex items-center justify-center gap-2 w-full px-4 sm:px-6 py-2.5 sm:py-3 text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all duration-300 shadow-xs hover:shadow ${
+                            isGold ? 'bg-[#D9A000] hover:bg-[#b88800] text-[#014900]' : 'bg-[#014900] hover:bg-[#013300] text-white'
                           }`}
                         >
                           <span>Apply Now</span>
@@ -611,7 +611,7 @@ export default function ScholarshipsClient({
                   className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-sm border border-gray-200 opacity-75 hover:opacity-100 transition-opacity min-w-0 w-full"
                 >
                   <div className="flex items-center justify-between mb-2.5 sm:mb-3">
-                    <span className="px-2.5 py-0.5 bg-red-600 text-white text-[10px] sm:text-[11px] font-bold uppercase tracking-wider rounded-full">
+                    <span className="px-2.5 py-0.5 bg-red-600 text-white text-xs sm:text-xs font-bold uppercase tracking-wider rounded-full">
                       Closed
                     </span>
                   </div>
@@ -621,7 +621,7 @@ export default function ScholarshipsClient({
                     {item.description}
                   </p>
 
-                  <div className="pt-2.5 sm:pt-3 border-t border-gray-100 text-[11px] sm:text-xs text-gray-500 flex items-center gap-1.5">
+                  <div className="pt-2.5 sm:pt-3 border-t border-gray-100 text-xs sm:text-xs text-gray-500 flex items-center gap-1.5">
                     <Calendar className="w-3.5 h-3.5 text-gray-400 shrink-0" />
                     <span>Closed: {item.deadline}</span>
                   </div>
@@ -653,10 +653,10 @@ export default function ScholarshipsClient({
                   className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-sm border border-gray-200 opacity-75 hover:opacity-100 transition-opacity min-w-0 w-full"
                 >
                   <div className="flex items-center justify-between mb-2.5 sm:mb-3">
-                    <span className="px-2.5 py-0.5 bg-gray-100 text-gray-700 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider rounded-full">
+                    <span className="px-2.5 py-0.5 bg-gray-100 text-gray-700 text-xs sm:text-xs font-bold uppercase tracking-wider rounded-full">
                       {item.type.replace('_', ' ').toUpperCase()}
                     </span>
-                    <span className="px-2.5 py-0.5 bg-red-600 text-white text-[10px] sm:text-[11px] font-bold uppercase tracking-wider rounded-full">
+                    <span className="px-2.5 py-0.5 bg-red-600 text-white text-xs sm:text-xs font-bold uppercase tracking-wider rounded-full">
                       Closed
                     </span>
                   </div>
@@ -666,7 +666,7 @@ export default function ScholarshipsClient({
                     {item.description}
                   </p>
 
-                  <div className="pt-2.5 sm:pt-3 border-t border-gray-100 text-[11px] sm:text-xs text-gray-500 flex items-center gap-1.5">
+                  <div className="pt-2.5 sm:pt-3 border-t border-gray-100 text-xs sm:text-xs text-gray-500 flex items-center gap-1.5">
                     <Calendar className="w-3.5 h-3.5 text-gray-400 shrink-0" />
                     <span>Closed: {item.deadline}</span>
                   </div>

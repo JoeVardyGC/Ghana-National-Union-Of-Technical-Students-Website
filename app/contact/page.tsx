@@ -33,7 +33,7 @@ export default async function ContactPage() {
   const safeBgUrl = encodeURI(heroImage);
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#f8f9fa] font-['Montserrat',sans-serif]">
+    <div className="flex flex-col min-h-screen bg-[#f8f9fa]">
       {/* Page Hero Header - 50% opacity green overlay & border-b-4 border-[#D9A000] */}
       <section className="relative text-white py-14 sm:py-20 px-4 sm:px-6 lg:px-8 border-b-4 border-[#D9A000] overflow-hidden bg-gray-900">
         {/* Background Image */}
@@ -45,7 +45,7 @@ export default async function ContactPage() {
         <div className="absolute inset-0 bg-[#014900]/55 backdrop-brightness-90" />
 
         <div className="max-w-7xl mx-auto text-center relative z-10 space-y-2">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight drop-shadow-md uppercase">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight drop-shadow-md uppercase">
             {heroTitle}
           </h1>
           <p className="text-gray-100 text-xs sm:text-sm md:text-base max-w-xl mx-auto font-medium drop-shadow-sm">

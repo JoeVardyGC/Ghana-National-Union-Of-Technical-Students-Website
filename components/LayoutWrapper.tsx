@@ -9,9 +9,12 @@ import type { SiteSettings } from '@/lib/siteSettingsShared';
 export default function LayoutWrapper({
   children,
   settings,
+  hasGallery = true,
 }: {
   children: React.ReactNode;
   settings: SiteSettings;
+  /** False hides the Gallery link until photos have been uploaded */
+  hasGallery?: boolean;
 }) {
   const pathname = usePathname();
   const isAdminRoute = pathname?.startsWith('/admin');
@@ -22,9 +25,9 @@ export default function LayoutWrapper({
 
   return (
     <>
-      <Navbar settings={settings} />
+      <Navbar settings={settings} hasGallery={hasGallery} />
       <main className="flex-grow">{children}</main>
-      <Footer settings={settings} />
+      <Footer settings={settings} hasGallery={hasGallery} />
       <BackToTop />
     </>
   );

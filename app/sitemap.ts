@@ -30,10 +30,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   // If the database is unreachable, still serve the static pages
-  const [news, innovations] = await Promise.all([
+  const [news, innovations, galleryCount] = await Promise.all([
     query<Row>("SELECT id, published_at, created_at, updated_at FROM news WHERE status = 'published'").catch(() => [] as Row[]),
     query<Row>("SELECT id, created_at, updated_at FROM innovations WHERE status = 'approved'").catch(() => [] as Row[]),
+    query<{ count: number | string }>('SELECT COUNT(*) as count FROM gallery')
+      .then((rows) => Number(rows[0]?.count) || 0)
+      .catch(() => 1),
   ]);
+
+  // Leave the gallery out until it has photos, so Google doesn't index an empty page
+  const pages = galleryCount > 0 ? staticPages : staticPages.filter((p) => !p.url.endsWith('/gallery'));
 
   const newsPages: MetadataRoute.Sitemap = news.map((row) => ({
     url: absoluteUrl(`/blog/${row.id}`),
@@ -49,5 +55,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...newsPages, ...innovationPages];
+  return [...pages, ...newsPages, ...innovationPages];
 }

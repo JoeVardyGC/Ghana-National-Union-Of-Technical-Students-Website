@@ -334,7 +334,7 @@ export default async function InnovationDetailPage({ params }: { params: Promise
 
           {/* Discipline Badge Tag */}
           <div className="flex items-center gap-3 mb-4">
-            <span className="px-3.5 py-1 text-xs font-extrabold rounded-full uppercase tracking-wider bg-[#D9A000] text-white inline-block shadow-sm">
+            <span className="px-3.5 py-1 text-xs font-extrabold rounded-full uppercase tracking-wider bg-[#D9A000] text-[#014900] inline-block shadow-sm">
               {categoryTag}
             </span>
           </div>
@@ -351,7 +351,7 @@ export default async function InnovationDetailPage({ params }: { params: Promise
               </div>
               <div>
                 <span className="font-bold block text-white">{project.student_name || 'Student Developer'}</span>
-                <span className="text-[11px] text-gray-300">{project.institution || 'Technical Institution'}</span>
+                <span className="text-xs text-gray-300">{project.institution || 'Technical Institution'}</span>
               </div>
             </div>
 
@@ -445,7 +445,7 @@ export default async function InnovationDetailPage({ params }: { params: Promise
                     {/* YouTube Video Demonstration in Upper Part */}
                     {youtubeId && (
                       <div className="space-y-2.5 my-6 p-4 sm:p-5 bg-gray-50 rounded-2xl border border-gray-200">
-                        <div className="flex items-center gap-2 text-xs font-black text-[#014900] uppercase tracking-wider">
+                        <div className="flex items-center gap-2 text-xs font-extrabold text-[#014900] uppercase tracking-wider">
                           <Play className="w-4 h-4 text-[#D9A000]" />
                           <span>Demonstration & Prototype Video</span>
                         </div>
@@ -468,7 +468,7 @@ export default async function InnovationDetailPage({ params }: { params: Promise
                           href={project.video_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-xs sm:text-sm font-black text-[#014900] hover:text-[#D9A000] transition-colors"
+                          className="inline-flex items-center gap-2 text-xs sm:text-sm font-extrabold text-[#014900] hover:text-gold-ink transition-colors"
                         >
                           <span>Visit Demonstration Resource</span>
                           <ExternalLink className="w-4 h-4" />
@@ -517,7 +517,7 @@ export default async function InnovationDetailPage({ params }: { params: Promise
                     href={`/innovations/${prevProject.id}`}
                     className="p-4 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-2xl transition-all group space-y-1 block shadow-xs"
                   >
-                    <div className="text-[11px] font-bold text-gray-500 uppercase tracking-wider flex items-center gap-1">
+                    <div className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center gap-1">
                       <ChevronLeft className="w-3.5 h-3.5 text-[#014900]" />
                       <span>Previous Project</span>
                     </div>
@@ -532,7 +532,7 @@ export default async function InnovationDetailPage({ params }: { params: Promise
                     href={`/innovations/${nextProject.id}`}
                     className="p-4 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-2xl transition-all group space-y-1 text-right block ml-auto w-full shadow-xs"
                   >
-                    <div className="text-[11px] font-bold text-gray-500 uppercase tracking-wider flex items-center justify-end gap-1">
+                    <div className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center justify-end gap-1">
                       <span>Next Project</span>
                       <ChevronRight className="w-3.5 h-3.5 text-[#014900]" />
                     </div>
@@ -579,7 +579,7 @@ export default async function InnovationDetailPage({ params }: { params: Promise
                             {item.title}
                           </h4>
                           {item.institution && (
-                            <p className="text-[11px] font-semibold text-gray-500 flex items-center gap-1 truncate">
+                            <p className="text-xs font-semibold text-gray-500 flex items-center gap-1 truncate">
                               <Building2 className="w-3 h-3 text-[#014900] shrink-0" />
                               <span className="truncate">{item.institution}</span>
                             </p>
@@ -605,7 +605,7 @@ export default async function InnovationDetailPage({ params }: { params: Promise
                 <div className="pt-2">
                   <Link
                     href="/innovations"
-                    className="inline-block px-5 py-2.5 bg-[#D9A000] hover:bg-yellow-600 text-white text-xs font-black uppercase tracking-wider rounded-2xl transition-all shadow-sm"
+                    className="inline-block px-5 py-2.5 bg-[#D9A000] hover:bg-[#b88800] text-[#014900] text-xs font-extrabold uppercase tracking-wider rounded-2xl transition-all shadow-sm"
                   >
                     Submit Project →
                   </Link>

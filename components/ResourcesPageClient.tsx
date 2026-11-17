@@ -123,7 +123,7 @@ export default function ResourcesPageClient({
           <div className="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mx-auto text-2xl">
             📜
           </div>
-          <h4 className="text-lg font-black text-gray-900">No Documents Found</h4>
+          <h4 className="text-lg font-extrabold text-gray-900">No Documents Found</h4>
           <p className="text-xs text-gray-500 font-medium">
             {searchQuery
               ? `No resources matching "${searchQuery}". Try a different search term.`
@@ -139,7 +139,7 @@ export default function ResourcesPageClient({
             return (
               <div
                 key={res.id || idx}
-                className="bg-white p-6 sm:p-7 rounded-3xl border border-gray-200/90 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
+                className="bg-white p-6 sm:p-7 rounded-3xl border border-gray-200/90 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
               >
                 <div className="space-y-4">
                   {/* Category Badge & Icon */}
@@ -147,15 +147,15 @@ export default function ResourcesPageClient({
                     <div
                       className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold border transition-colors ${
                         isGoldAccent
-                          ? 'bg-[#D9A000]/15 text-[#D9A000] border-[#D9A000]/30 group-hover:bg-[#014900] group-hover:text-white'
-                          : 'bg-[#014900]/10 text-[#014900] border-[#014900]/20 group-hover:bg-[#D9A000] group-hover:text-white'
+                          ? 'bg-[#D9A000]/15 text-gold-ink border-[#D9A000]/30 group-hover:bg-[#014900] group-hover:text-white'
+                          : 'bg-[#014900]/10 text-[#014900] border-[#014900]/20 group-hover:bg-[#D9A000] group-hover:text-[#014900]'
                       }`}
                     >
                       <FileText className="w-5 h-5" />
                     </div>
                     <span
-                      className={`px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-full ${
-                        isGoldAccent ? 'bg-[#D9A000] text-white' : 'bg-[#014900] text-white'
+                      className={`px-3 py-1 text-xs font-extrabold uppercase tracking-wider rounded-full ${
+                        isGoldAccent ? 'bg-[#D9A000] text-[#014900]' : 'bg-[#014900] text-white'
                       }`}
                     >
                       {res.category || 'DOCUMENT'}
@@ -163,8 +163,8 @@ export default function ResourcesPageClient({
                   </div>
 
                   <h3
-                    className={`text-base sm:text-lg font-black leading-snug transition-colors ${
-                      isGoldAccent ? 'text-gray-900 group-hover:text-[#D9A000]' : 'text-gray-900 group-hover:text-[#014900]'
+                    className={`text-base sm:text-lg font-extrabold leading-snug transition-colors ${
+                      isGoldAccent ? 'text-gray-900 group-hover:text-gold-ink' : 'text-gray-900 group-hover:text-[#014900]'
                     }`}
                   >
                     {res.title}
@@ -176,7 +176,7 @@ export default function ResourcesPageClient({
                 </div>
 
                 <div className="pt-6 mt-6 border-t border-gray-100 space-y-3">
-                  <div className="flex items-center justify-between text-[11px] text-gray-500 font-bold uppercase tracking-wider">
+                  <div className="flex items-center justify-between text-xs text-gray-500 font-bold uppercase tracking-wider">
                     <span>📄 {fileExt} FORMAT</span>
                     <span>💾 {formatBytes(res.file_size)}</span>
                   </div>
@@ -185,10 +185,10 @@ export default function ResourcesPageClient({
                     href={resolveDocumentUrl(res.file_path)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`w-full py-3 px-4 text-xs font-black rounded-2xl transition-all shadow-sm flex items-center justify-center gap-2 uppercase tracking-wider cursor-pointer ${
+                    className={`w-full py-3 px-4 text-xs font-extrabold rounded-2xl transition-all shadow-sm flex items-center justify-center gap-2 uppercase tracking-wider cursor-pointer ${
                       isGoldAccent
-                        ? 'bg-[#D9A000] hover:bg-[#014900] text-white'
-                        : 'bg-[#014900] hover:bg-[#D9A000] text-white'
+                        ? 'bg-[#D9A000] text-[#014900] hover:bg-[#014900] hover:text-white'
+                        : 'bg-[#014900] hover:bg-[#D9A000] text-white hover:text-[#014900]'
                     }`}
                   >
                     <Download className="w-4 h-4" />

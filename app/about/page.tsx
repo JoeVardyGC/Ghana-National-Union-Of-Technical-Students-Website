@@ -171,10 +171,10 @@ export default async function AboutPage() {
           <div className="absolute inset-0 bg-[#014900]/55 backdrop-brightness-90" />
 
           <div className="max-w-7xl mx-auto text-center relative z-10">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-3 drop-shadow-md font-montserrat">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-3 drop-shadow-md">
               {heroTitle}
             </h1>
-            <p className="text-gray-100 text-sm sm:text-base max-w-2xl mx-auto font-medium drop-shadow-sm font-montserrat">
+            <p className="text-gray-100 text-sm sm:text-base max-w-2xl mx-auto font-medium drop-shadow-sm">
               {aboutData.hero_subtitle || 'Empowering Technical & TVET Students Across Ghana'}
             </p>
           </div>
@@ -188,13 +188,13 @@ export default async function AboutPage() {
               {/* Left Column: Narrative Content */}
               <div className="lg:col-span-7 space-y-6">
                 <div>
-                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#014900] tracking-tight font-montserrat uppercase">
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight uppercase">
                     {aboutData.who_we_are_title || 'Who We Are'}
                   </h2>
                   <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-3" />
                 </div>
 
-                <div className="prose text-gray-700 text-base sm:text-lg leading-relaxed space-y-4 font-montserrat">
+                <div className="prose text-gray-700 text-base sm:text-lg leading-relaxed space-y-4">
                   <p className="font-semibold text-[#014900]">
                     The Ghana National Union of Technical Students (GNUTS) is the sole democratic, non-partisan representative council for all technical and vocational education students across Ghana.
                   </p>
@@ -248,7 +248,7 @@ export default async function AboutPage() {
         <section id="mission" className="py-20 sm:py-28 bg-[#f8f9fa] border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
             <div className="text-center max-w-2xl mx-auto">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#014900] tracking-tight font-montserrat uppercase">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight uppercase">
                 Mission, Vision & Core Values
               </h2>
               <div className="w-16 h-1.5 bg-[#D9A000] rounded-full mx-auto my-3" />
@@ -263,10 +263,10 @@ export default async function AboutPage() {
                   <div className="w-14 h-14 rounded-2xl bg-[#014900]/10 text-[#014900] flex items-center justify-center font-bold">
                     <Target className="w-7 h-7" />
                   </div>
-                  <h3 className="text-2xl font-extrabold text-[#014900] font-montserrat">
+                  <h3 className="text-2xl font-extrabold text-[#014900]">
                     {aboutData.mission_title || 'Our Mission'}
                   </h3>
-                  <p className="text-gray-700 text-base leading-relaxed font-montserrat whitespace-pre-line">
+                  <p className="text-gray-700 text-base leading-relaxed whitespace-pre-line">
                     {aboutData.mission_content || `To represent, unite, and empower technical students across Ghana by advocating for quality and inclusive technical education, promoting student welfare and leadership development, engaging stakeholders for national progress, and strengthening communication and participation within the union.\n\nGNUTS is committed to ensuring that the concerns, aspirations, and contributions of technical students are reflected in national educational policies and development frameworks.`}
                   </p>
                 </div>
@@ -279,10 +279,10 @@ export default async function AboutPage() {
                   <div className="w-14 h-14 rounded-2xl bg-[#D9A000]/15 text-[#014900] flex items-center justify-center font-bold">
                     <Eye className="w-7 h-7" />
                   </div>
-                  <h3 className="text-2xl font-extrabold text-[#014900] font-montserrat">
+                  <h3 className="text-2xl font-extrabold text-[#014900]">
                     {aboutData.vision_title || 'Our Vision'}
                   </h3>
-                  <p className="text-gray-700 text-base leading-relaxed font-montserrat whitespace-pre-line">
+                  <p className="text-gray-700 text-base leading-relaxed whitespace-pre-line">
                     {aboutData.vision_content || `To build a strong, credible, united, and nationally respected student union that effectively represents the collective interests of students in Technical Universities and Technical and Vocational Education and Training (TVET) institutions across Ghana; a union that champions excellence, innovation, professionalism, accountability, and integrity in technical education, actively influences national educational policies, promotes skills development and employability, and positions technical students as indispensable contributors to Ghana’s industrial growth, socio-economic transformation, and sustainable national development.`}
                   </p>
                 </div>
@@ -292,7 +292,7 @@ export default async function AboutPage() {
             {/* Core Values Section — Modern Institutional UI */}
             <div className="pt-10 space-y-10">
               <div className="text-center max-w-2xl mx-auto">
-                <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-[#014900] tracking-tight font-montserrat uppercase">
+                <h3 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[#014900] tracking-tight uppercase">
                   {aboutData.values_title || 'Our Core Values'}
                 </h3>
                 <div className="w-12 h-1 bg-[#D9A000] rounded-full mx-auto my-2.5" />
@@ -305,7 +305,7 @@ export default async function AboutPage() {
                   return (
                     <div
                       key={val.id || idx}
-                      className="bg-white p-7 rounded-3xl border border-gray-200/80 shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 relative group flex flex-col justify-between"
+                      className="bg-white p-7 rounded-3xl border border-gray-200/80 shadow-md hover:shadow-2xl transition-all duration-300 relative group flex flex-col justify-between"
                     >
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
@@ -314,18 +314,18 @@ export default async function AboutPage() {
                           }`}>
                             {icon}
                           </div>
-                          <div className={`w-9 h-9 rounded-md text-white flex items-center justify-center font-black text-xs shadow-md ${
+                          <div className={`w-9 h-9 rounded-md text-white flex items-center justify-center font-extrabold text-xs shadow-md ${
                             isGreen ? 'bg-[#014900]' : 'bg-[#D9A000]'
                           }`}>
                             {val.num || `0${idx + 1}`}
                           </div>
                         </div>
 
-                        <h4 className="font-extrabold text-xl text-[#014900] font-montserrat group-hover:text-[#D9A000] transition-colors pt-1">
+                        <h4 className="font-extrabold text-xl text-[#014900] group-hover:text-gold-ink transition-colors pt-1">
                           {val.title}
                         </h4>
 
-                        <p className="text-sm text-gray-700 font-medium leading-relaxed font-montserrat">
+                        <p className="text-sm text-gray-700 font-medium leading-relaxed">
                           {val.desc || val.description}
                         </p>
                       </div>
@@ -342,7 +342,7 @@ export default async function AboutPage() {
         <section id="history" className="py-20 sm:py-28 bg-white border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-16">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#014900] tracking-tight font-montserrat uppercase">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight uppercase">
                 Union History Timeline
               </h2>
               <div className="w-16 h-1.5 bg-[#D9A000] rounded-full mx-auto my-3" />
@@ -367,7 +367,7 @@ export default async function AboutPage() {
                       }`}
                     >
                       {/* Year Badge Pill Center */}
-                      <div className="absolute left-4 sm:left-1/2 -translate-x-1/2 z-20 bg-[#D9A000] text-white px-5 py-2 rounded-full font-black text-base shadow-2xl border-4 border-white hover:scale-110 transition-transform">
+                      <div className="absolute left-4 sm:left-1/2 -translate-x-1/2 z-20 bg-[#D9A000] text-[#014900] px-5 py-2 rounded-full font-extrabold text-base shadow-2xl border-4 border-white hover:scale-110 transition-transform">
                         {item.year}
                       </div>
 
@@ -375,17 +375,17 @@ export default async function AboutPage() {
                       <div className="w-full sm:w-1/2 pl-12 sm:pl-0 sm:pr-8 sm:odd:pl-8 sm:odd:pr-0">
                         <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-xl border border-gray-100 hover:border-[#014900] transition-all space-y-4 group">
                           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-100 pb-3">
-                            <h3 className="text-xl font-extrabold text-[#014900] font-montserrat">
+                            <h3 className="text-xl font-extrabold text-[#014900]">
                               {item.title}
                             </h3>
                             {item.tag && (
-                              <span className="text-[10px] font-black uppercase tracking-wider text-[#D9A000] bg-[#f8f9fa] px-2.5 py-1 rounded border border-gray-200 inline-block shrink-0">
+                              <span className="text-xs font-extrabold uppercase tracking-wider text-gold-ink bg-[#f8f9fa] px-2.5 py-1 rounded border border-gray-200 inline-block shrink-0">
                                 {item.tag}
                               </span>
                             )}
                           </div>
 
-                          <p className="text-gray-700 text-sm sm:text-base leading-relaxed font-montserrat">
+                          <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
                             {item.description}
                           </p>
 
@@ -417,7 +417,7 @@ export default async function AboutPage() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-gray-200 pb-6 mb-12 gap-4">
                 <div>
-                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#014900] tracking-tight font-['Montserrat',sans-serif] uppercase">
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight uppercase">
                     National Leadership
                   </h2>
                   <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-3" />
@@ -435,7 +435,7 @@ export default async function AboutPage() {
                   return (
                     <div 
                       key={exec.id || idx}
-                      className="group flex flex-col bg-white rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden max-w-[290px] mx-auto sm:max-w-none w-full"
+                      className="group flex flex-col bg-white rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden max-w-[290px] mx-auto sm:max-w-none w-full"
                     >
                       {/* Photo container with balanced square aspect ratio */}
                       <div className="relative aspect-[1/1] w-full overflow-hidden bg-gray-900 rounded-t-3xl" style={{ backgroundColor: bgCol }}>
@@ -451,10 +451,10 @@ export default async function AboutPage() {
                       {/* Name / Position Card Block */}
                       <div className="p-5 sm:p-5 text-center flex flex-col justify-between flex-grow bg-white border-t border-gray-100 rounded-b-3xl">
                         <div>
-                          <h4 className="text-base sm:text-sm lg:text-base font-black text-[#014900] group-hover:text-[#D9A000] transition-colors leading-snug">
+                          <h4 className="text-base sm:text-sm lg:text-base font-extrabold text-[#014900] group-hover:text-gold-ink transition-colors leading-snug">
                             {exec.full_name || exec.name}
                           </h4>
-                          <p className="text-xs sm:text-[11px] lg:text-xs font-black text-[#D9A000] uppercase tracking-wider mt-1">
+                          <p className="text-xs sm:text-xs lg:text-xs font-extrabold text-gold-ink uppercase tracking-wider mt-1">
                             {exec.position}
                           </p>
                         </div>

@@ -152,7 +152,7 @@ export default function DirectImageUploader({
   const isImageKit = value && (value.includes('ik.imagekit.io') || value.includes('imagekit'));
 
   return (
-    <div className="space-y-2 bg-gray-50/80 p-3.5 rounded-2xl border border-gray-200/90 font-['Montserrat',sans-serif]">
+    <div className="space-y-2 bg-gray-50/80 p-3.5 rounded-2xl border border-gray-200/90">
       {/* Hidden input to enforce native required validation if needed */}
       {required && (
         <input

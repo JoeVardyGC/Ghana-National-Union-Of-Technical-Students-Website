@@ -290,7 +290,7 @@ export default function HeroSlider({
                 <h4 className="text-xl sm:text-2xl font-extrabold text-[#014900] leading-none">
                   <AnimatedCounter value={200000 + (new Date().getFullYear() - 2026) * 40000} suffix="+" />
                 </h4>
-                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mt-1">Students Represented</p>
+                <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mt-1">Students Represented</p>
               </div>
             </div>
 
@@ -303,7 +303,7 @@ export default function HeroSlider({
                 <h4 className="text-xl sm:text-2xl font-extrabold text-[#014900] leading-none">
                   <AnimatedCounter value={10} suffix="+" />
                 </h4>
-                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mt-1">Member Institutions</p>
+                <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mt-1">Member Institutions</p>
               </div>
             </div>
 
@@ -316,7 +316,7 @@ export default function HeroSlider({
                 <h4 className="text-xl sm:text-2xl font-extrabold text-[#014900] leading-none">
                   <AnimatedCounter value={new Date().getFullYear() - 1992} suffix="+ Yrs" />
                 </h4>
-                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mt-1">National Advocacy</p>
+                <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mt-1">National Advocacy</p>
               </div>
             </div>
           </div>

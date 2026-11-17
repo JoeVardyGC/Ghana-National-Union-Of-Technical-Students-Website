@@ -131,7 +131,7 @@ export default async function ScholarshipsPage() {
   const safeBgUrl = encodeURI(heroImage);
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#f8f9fa] font-['Montserrat',sans-serif] w-full max-w-full overflow-x-hidden">
+    <div className="flex flex-col min-h-screen bg-[#f8f9fa] w-full max-w-full overflow-x-hidden">
       {/* 1. Hero Section - 50% opacity green overlay & border-b-4 border-[#D9A000] */}
       <section className="relative text-white py-14 sm:py-20 px-3 sm:px-6 lg:px-8 border-b-4 border-[#D9A000] overflow-hidden bg-gray-900 w-full">
         <div 
@@ -142,7 +142,7 @@ export default async function ScholarshipsPage() {
         <div className="absolute inset-0 bg-[#014900]/55 backdrop-brightness-90" />
 
         <div className="max-w-7xl mx-auto text-center relative z-10 px-2 sm:px-0">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight mb-2.5 sm:mb-3 drop-shadow-md break-words uppercase">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-2.5 sm:mb-3 drop-shadow-md break-words uppercase">
             {heroTitle}
           </h1>
           <p className="text-gray-100 text-xs sm:text-sm md:text-base max-w-2xl mx-auto font-medium drop-shadow-sm break-words">

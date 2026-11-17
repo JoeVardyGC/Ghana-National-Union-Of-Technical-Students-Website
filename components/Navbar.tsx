@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Phone, Smartphone, Mail, MapPin, ChevronRight, ExternalLink, Sparkles, X } from 'lucide-react';
 import { telHref, type SiteSettings } from '@/lib/siteSettingsShared';
 
-export default function Navbar({ settings }: { settings: SiteSettings }) {
+export default function Navbar({ settings, hasGallery = true }: { settings: SiteSettings; hasGallery?: boolean }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [desktopDrawerOpen, setDesktopDrawerOpen] = useState(false);
@@ -49,13 +49,15 @@ export default function Navbar({ settings }: { settings: SiteSettings }) {
     { name: 'Contact Us', href: '/contact' },
   ];
 
-  const drawerLinks = [
+  // The gallery link is hidden until at least one photo has been uploaded
+  const allDrawerLinks = [
     { name: 'Our Leadership', href: '/#executives-section' },
     { name: 'Our History', href: '/about#history' },
     { name: 'Legacy & Leadership Gallery', href: '/gallery' },
     { name: 'Check your CTVET result', href: 'https://ctvet.gov.gh/results/', external: true },
     { name: 'Resources / Constitution', href: '/resources' },
   ];
+  const drawerLinks = allDrawerLinks.filter((link) => hasGallery || link.href !== '/gallery');
 
   const handleDrawerLinkClick = (e: React.MouseEvent, href: string) => {
     setDesktopDrawerOpen(false);
@@ -77,10 +79,10 @@ export default function Navbar({ settings }: { settings: SiteSettings }) {
     <>
       {/* 1. White Top Bar Before Navbar — tablets and desktop only.
              On phones it took ~85px above the logo; the same details are in the menu and footer. */}
-      <div className="hidden md:block bg-white text-[#014900] text-xs py-2 px-4 border-b border-gray-200 font-medium font-['Montserrat',sans-serif]">
+      <div className="hidden md:block bg-white text-[#014900] text-xs py-2 px-4 border-b border-gray-200 font-medium">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-4">
           {/* Left Side: P.O. Box, Phone, Email */}
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 sm:gap-6 text-[11px] sm:text-xs">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 sm:gap-6 text-xs sm:text-xs">
             {settings.postalAddress && (
               <div className="flex items-center gap-1.5 text-gray-700">
                 <MapPin className="w-3.5 h-3.5 text-[#014900] shrink-0" />
@@ -114,7 +116,7 @@ export default function Navbar({ settings }: { settings: SiteSettings }) {
 
           {/* Right Side: Social Media Handles */}
           <div className="flex items-center gap-3.5 text-gray-600">
-            <span className="text-[11px] sm:text-xs font-bold text-[#014900] hidden lg:inline">
+            <span className="text-xs sm:text-xs font-bold text-[#014900] hidden lg:inline">
               Connect With Us:
             </span>
             <a href={settings.facebookUrl} hidden={!settings.facebookUrl} target="_blank" rel="noopener noreferrer" className="text-[#014900] hover:text-[#D9A000] transition-colors" aria-label="Facebook">
@@ -135,7 +137,7 @@ export default function Navbar({ settings }: { settings: SiteSettings }) {
 
       {/* 2. Main Sticky Header */}
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 relative font-['Montserrat',sans-serif] ${
+        className={`sticky top-0 z-50 transition-all duration-300 relative font-display ${
           isScrolled
             ? 'bg-[#014900] shadow-xl py-3 border-b-2 border-[#D9A000]/40'
             : 'bg-[#014900] py-3.5 border-b border-white/10'
@@ -151,7 +153,7 @@ export default function Navbar({ settings }: { settings: SiteSettings }) {
                 className="w-full h-full object-cover scale-110"
               />
             </div>
-            <span className="font-['Montserrat'] font-black text-white text-2xl sm:text-3xl tracking-wider">
+            <span className="font-display font-extrabold text-white text-2xl sm:text-3xl tracking-wider">
               GNUTS
             </span>
           </Link>
@@ -223,7 +225,7 @@ export default function Navbar({ settings }: { settings: SiteSettings }) {
 
       {/* Desktop & Tablet Slide-Out Quick Resources Drawer Panel */}
       {desktopDrawerOpen && (
-        <div className="fixed inset-0 z-50 hidden lg:block animate-fadeIn font-['Montserrat',sans-serif]">
+        <div className="fixed inset-0 z-50 hidden lg:block animate-fadeIn font-display">
           <div
             className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300"
             onClick={() => setDesktopDrawerOpen(false)}
@@ -274,7 +276,7 @@ export default function Navbar({ settings }: { settings: SiteSettings }) {
                 />
                 <div>
                   <p className="text-white font-bold uppercase tracking-wide">GNUTS Secretariat</p>
-                  <p className="text-[11px] text-gray-300 font-medium">Ghana National Union of Technical Students</p>
+                  <p className="text-xs text-gray-300 font-medium">Ghana National Union of Technical Students</p>
                 </div>
               </div>
             </div>
@@ -285,7 +287,7 @@ export default function Navbar({ settings }: { settings: SiteSettings }) {
 
       {/* Mobile Menu Drawer */}
       <div
-        className={`fixed inset-0 z-50 lg:hidden transition-all duration-400 ease-in-out font-['Montserrat',sans-serif] ${
+        className={`fixed inset-0 z-50 lg:hidden transition-all duration-400 ease-in-out font-display ${
           mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       >
@@ -366,7 +368,7 @@ export default function Navbar({ settings }: { settings: SiteSettings }) {
             </div>
           </div>
 
-          <div className="pt-4 border-t border-white/15 text-[11px] text-gray-300 space-y-0.5">
+          <div className="pt-4 border-t border-white/15 text-xs text-gray-300 space-y-0.5">
             <p className="text-white font-bold uppercase">GNUTS Secretariat</p>
             <p>Ghana National Union of Technical Students</p>
           </div>

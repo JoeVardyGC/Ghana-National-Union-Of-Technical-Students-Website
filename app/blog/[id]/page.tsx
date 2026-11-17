@@ -121,7 +121,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#f8f9fa] font-['Montserrat',sans-serif]">
+    <div className="flex flex-col min-h-screen bg-[#f8f9fa]">
       {/* Sticky Reading Progress Indicator Bar */}
       <ReadingProgressBar />
 
@@ -154,12 +154,12 @@ export default async function NewsDetailPage({ params }: PageProps) {
           </Link>
 
           <div>
-            <span className="px-3.5 py-1 text-xs font-extrabold rounded-full uppercase tracking-wider bg-[#D9A000] text-white inline-block mb-4 shadow-sm">
+            <span className="px-3.5 py-1 text-xs font-extrabold rounded-full uppercase tracking-wider bg-[#D9A000] text-[#014900] inline-block mb-4 shadow-sm">
               {article.category || 'PRESS RELEASE'}
             </span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white leading-tight tracking-tight mb-4 drop-shadow-md uppercase">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-tight tracking-tight mb-4 drop-shadow-md uppercase">
             {article.title}
           </h1>
 
@@ -171,7 +171,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
               </div>
               <div>
                 <span className="font-bold block text-white">{article.author}</span>
-                <span className="text-[11px] text-gray-300">Official Communiqué</span>
+                <span className="text-xs text-gray-300">Official Communiqué</span>
               </div>
             </div>
 
@@ -298,7 +298,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
                         <h4 className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-[#014900] transition-colors line-clamp-2 leading-snug uppercase">
                           {item.title}
                         </h4>
-                        <span className="text-[11px] text-gray-400 font-medium mt-1.5 block">
+                        <span className="text-xs text-gray-400 font-medium mt-1.5 block">
                           {formatDate(item.published_at)}
                         </span>
                       </div>
@@ -331,7 +331,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
                 </div>
                 <Link
                   href="/contact"
-                  className="inline-block w-full text-center py-3 bg-[#D9A000] text-[#014900] text-xs font-black rounded-2xl hover:bg-white transition-colors uppercase tracking-wider shadow-sm"
+                  className="inline-block w-full text-center py-3 bg-[#D9A000] text-[#014900] text-xs font-extrabold rounded-2xl hover:bg-white transition-colors uppercase tracking-wider shadow-sm"
                 >
                   Contact Secretariat →
                 </Link>

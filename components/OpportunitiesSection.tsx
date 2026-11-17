@@ -23,12 +23,12 @@ export default function OpportunitiesSection({ dbOpportunities = [] }: { dbOppor
   if (opportunities.length === 0) return null;
 
   return (
-    <section className="py-10 sm:py-16 lg:py-24 bg-[#f8f9fa] border-b border-gray-200 font-['Montserrat',sans-serif]" id="opportunities-section">
+    <section className="py-10 sm:py-16 lg:py-24 bg-[#f8f9fa] border-b border-gray-200" id="opportunities-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-3">
           <div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#014900] tracking-tight uppercase">Opportunities</h2>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight uppercase">Opportunities</h2>
             <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-2.5 sm:my-3" />
             <p className="text-gray-500 text-xs sm:text-sm lg:text-base font-medium">
               Internships, training programs, and competitions
@@ -36,7 +36,7 @@ export default function OpportunitiesSection({ dbOpportunities = [] }: { dbOppor
           </div>
           <Link
             href="/scholarships"
-            className="inline-flex items-center gap-1 text-xs sm:text-sm lg:text-base font-black uppercase text-[#014900] hover:text-[#D9A000] transition-colors mt-1 md:mt-0"
+            className="inline-flex items-center gap-1 text-xs sm:text-sm lg:text-base font-extrabold uppercase text-[#014900] hover:text-gold-ink transition-colors mt-1 md:mt-0"
           >
             View All →
           </Link>
@@ -57,21 +57,21 @@ export default function OpportunitiesSection({ dbOpportunities = [] }: { dbOppor
             return (
               <div
                 key={opp.id || idx}
-                className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-md border border-gray-200/90 flex flex-col justify-between hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 min-w-0 w-full"
+                className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-md border border-gray-200/90 flex flex-col justify-between hover:shadow-2xl transition-all duration-300 min-w-0 w-full"
               >
                 <div className="space-y-3 sm:space-y-4 min-w-0">
                   {/* Type Badge */}
                   <div>
-                    <span className={`inline-block px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider shadow-xs ${
-                      isGold ? 'bg-[#D9A000] text-white' : 'bg-[#014900] text-white'
+                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider shadow-xs ${
+                      isGold ? 'bg-[#D9A000] text-[#014900]' : 'bg-[#014900] text-white'
                     }`}>
                       {(opp.type || 'OPPORTUNITY').replace(' ', '_').toUpperCase()}
                     </span>
                   </div>
 
                   {/* Title */}
-                  <h3 className={`font-['Montserrat'] font-black text-base sm:text-lg text-gray-900 leading-snug transition-colors break-words ${
-                    isGold ? 'group-hover:text-[#D9A000]' : 'group-hover:text-[#014900]'
+                  <h3 className={`font-display font-extrabold text-base sm:text-lg text-gray-900 leading-snug transition-colors break-words ${
+                    isGold ? 'group-hover:text-gold-ink' : 'group-hover:text-[#014900]'
                   }`}>
                     {opp.title}
                   </h3>
@@ -92,8 +92,8 @@ export default function OpportunitiesSection({ dbOpportunities = [] }: { dbOppor
                     <Link
                       href={opp.link || '/scholarships'}
                       target={opp.link ? '_blank' : undefined}
-                      className={`text-xs font-black uppercase tracking-wider transition-colors inline-flex items-center gap-1 ${
-                        isGold ? 'text-[#D9A000] hover:text-[#014900]' : 'text-[#014900] hover:text-[#D9A000]'
+                      className={`text-xs font-extrabold uppercase tracking-wider transition-colors inline-flex items-center gap-1 ${
+                        isGold ? 'text-gold-ink hover:text-[#014900]' : 'text-[#014900] hover:text-gold-ink'
                       }`}
                     >
                       Learn More →

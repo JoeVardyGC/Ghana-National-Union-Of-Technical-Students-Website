@@ -89,8 +89,8 @@ export function SocialShareBar({ article }: { article: NewsItem }) {
   };
 
   return (
-    <div className="pt-6 border-t border-gray-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-['Montserrat',sans-serif]">
-      <div className="flex items-center gap-2 text-xs font-black text-gray-700 uppercase tracking-wider">
+    <div className="pt-6 border-t border-gray-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex items-center gap-2 text-xs font-extrabold text-gray-700 uppercase tracking-wider">
         <Share2 className="w-4 h-4 text-[#014900]" />
         <span>Share Communiqué:</span>
       </div>

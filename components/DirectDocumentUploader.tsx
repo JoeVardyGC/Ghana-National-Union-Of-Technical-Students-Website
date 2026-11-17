@@ -102,7 +102,7 @@ export default function DirectDocumentUploader({
   };
 
   return (
-    <div className="space-y-2 font-['Montserrat',sans-serif]">
+    <div className="space-y-2">
       <div className="flex items-center justify-between">
         <label className="text-xs font-black uppercase tracking-wider text-gray-700">
           {label} *

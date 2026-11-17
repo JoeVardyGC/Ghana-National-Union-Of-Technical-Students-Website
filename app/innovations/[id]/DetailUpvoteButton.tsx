@@ -105,15 +105,15 @@ export default function DetailUpvoteButton({
           title={isLiked ? 'Unlike Project' : 'Like Project'}
           className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-extrabold shadow-md backdrop-blur-sm transition-all duration-300 active:scale-95 cursor-pointer disabled:cursor-wait ${
             isLiked
-              ? 'bg-[#D9A000] text-white'
-              : 'bg-white/95 text-gray-800 hover:bg-[#D9A000] hover:text-white'
+              ? 'bg-[#D9A000] text-[#014900]'
+              : 'bg-white/95 text-gray-800 hover:bg-[#D9A000] hover:text-[#014900]'
           }`}
         >
           <ThumbsUp className={`w-3.5 h-3.5 ${isLiked ? 'fill-current' : ''}`} />
           <span>{count}</span>
         </button>
         {error && (
-          <span role="alert" className="max-w-[12rem] px-2 py-1 rounded-lg bg-red-600 text-white text-[10px] font-semibold text-right shadow-md">
+          <span role="alert" className="max-w-[12rem] px-2 py-1 rounded-lg bg-red-600 text-white text-xs font-semibold text-right shadow-md">
             {error}
           </span>
         )}
@@ -143,7 +143,7 @@ export default function DetailUpvoteButton({
         <span>{isLiked ? `Liked (${count})` : `Like (${count})`}</span>
       </button>
       {error && (
-        <span role="alert" className="text-[11px] font-semibold text-red-200">
+        <span role="alert" className="text-xs font-semibold text-red-200">
           {error}
         </span>
       )}

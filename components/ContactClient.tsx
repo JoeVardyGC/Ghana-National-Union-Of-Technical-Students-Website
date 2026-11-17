@@ -77,7 +77,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-12 font-['Montserrat',sans-serif]">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-12">
       
       {/* 1. MAIN CONTACT GRID: INFO CARDS + SUBMISSION FORM */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -86,7 +86,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
         <div className="lg:col-span-5 space-y-6">
           
           <div className="space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-black text-gray-900 uppercase tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 uppercase tracking-tight">
               Get in Touch
             </h2>
             <p className="text-xs sm:text-sm text-gray-600 font-medium leading-relaxed">
@@ -104,11 +104,11 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
                   <Phone className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Phone Lines</h3>
+                  <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest">Phone Lines</h3>
                   <div className="text-xs sm:text-sm font-extrabold text-gray-900 flex flex-col pt-0.5">
-                    <a href={telHref(settings.hotlinePhone)} className="hover:text-[#014900] transition-colors">{settings.hotlinePhone} <span className="text-[11px] text-gray-500 font-medium">(Secretariat Desk)</span></a>
+                    <a href={telHref(settings.hotlinePhone)} className="hover:text-[#014900] transition-colors">{settings.hotlinePhone} <span className="text-xs text-gray-500 font-medium">(Secretariat Desk)</span></a>
                     {settings.mobilePhone && (
-                      <a href={telHref(settings.mobilePhone)} className="hover:text-[#014900] transition-colors text-[11px] text-gray-500 font-medium">{settings.mobilePhone} (Mobile / WhatsApp)</a>
+                      <a href={telHref(settings.mobilePhone)} className="hover:text-[#014900] transition-colors text-xs text-gray-500 font-medium">{settings.mobilePhone} (Mobile / WhatsApp)</a>
                     )}
                   </div>
                 </div>
@@ -122,7 +122,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
                   <Mail className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Email Address</h3>
+                  <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest">Email Address</h3>
                   <div className="text-xs sm:text-sm font-extrabold text-gray-900 flex flex-col pt-0.5">
                     <a href={`mailto:${settings.secretariatEmail}`} className="hover:text-[#014900] transition-colors">{settings.secretariatEmail}</a>
                   </div>
@@ -137,12 +137,12 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
                   <MapPin className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">National Secretariat Location</h3>
+                  <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest">National Secretariat Location</h3>
                   <p className="text-xs sm:text-sm font-extrabold text-gray-900 leading-snug pt-0.5">
                     {settings.headquartersAddress}
                   </p>
                   {settings.postalAddress && (
-                    <p className="text-[11px] text-gray-500 font-medium">{settings.postalAddress}</p>
+                    <p className="text-xs text-gray-500 font-medium">{settings.postalAddress}</p>
                   )}
                 </div>
               </div>
@@ -155,11 +155,11 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
                   <Clock className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Working Hours</h3>
+                  <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest">Working Hours</h3>
                   <p className="text-xs sm:text-sm font-extrabold text-gray-900 pt-0.5">
                     Monday – Friday: 8:00 AM – 5:00 PM
                   </p>
-                  <p className="text-[11px] text-gray-500 font-medium">Weekends & Holidays: Closed for public inquiries</p>
+                  <p className="text-xs text-gray-500 font-medium">Weekends & Holidays: Closed for public inquiries</p>
                 </div>
               </div>
             </div>
@@ -168,7 +168,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
 
           {/* OFFICIAL SOCIAL CHANNELS STRIP */}
           <div className="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm space-y-3">
-            <div className="flex items-center gap-2 text-[11px] font-extrabold text-gray-700 uppercase tracking-wider">
+            <div className="flex items-center gap-2 text-xs font-extrabold text-gray-700 uppercase tracking-wider">
               <Share2 className="w-3.5 h-3.5 text-[#014900]" />
               <span>Connect On Social Platforms</span>
             </div>
@@ -254,7 +254,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
             <div className="p-4 bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-bold flex items-start gap-2.5 rounded-2xl animate-fadeIn">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
               <div>
-                <strong className="block font-black text-emerald-950 uppercase">Message Sent Successfully!</strong>
+                <strong className="block font-extrabold text-emerald-950 uppercase">Message Sent Successfully!</strong>
                 <span>{successMessage}</span>
               </div>
             </div>
@@ -265,7 +265,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
             <div className="p-4 bg-rose-50 border border-rose-300 text-rose-900 text-xs font-bold flex items-start gap-2.5 rounded-2xl animate-fadeIn">
               <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
               <div>
-                <strong className="block font-black text-rose-950 uppercase">Submission Failed</strong>
+                <strong className="block font-extrabold text-rose-950 uppercase">Submission Failed</strong>
                 <span>{errorMessage}</span>
               </div>
             </div>
@@ -389,7 +389,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#014900] hover:bg-[#D9A000] text-white hover:text-[#014900] text-xs font-black uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-xl rounded-2xl cursor-pointer disabled:opacity-60"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#014900] hover:bg-[#D9A000] text-white hover:text-[#014900] text-xs font-extrabold uppercase tracking-wider transition-all duration-300 shadow-md hover:shadow-xl rounded-2xl cursor-pointer disabled:opacity-60"
               >
                 <Send className="w-4 h-4" />
                 <span>{isSubmitting ? 'Transmitting Message...' : 'Submit Inquiries to Secretariat'}</span>
@@ -417,7 +417,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
             href="https://maps.google.com/?q=Accra+Technical+University+Accra+Ghana"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#014900] hover:text-[#D9A000] underline"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#014900] hover:text-gold-ink underline"
           >
             <span>Open in Google Maps</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -451,7 +451,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
           <div className="flex flex-wrap items-center gap-3">
             <a
               href={telHref(settings.hotlinePhone)}
-              className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#D9A000] hover:bg-yellow-500 text-[#014900] text-xs font-black uppercase tracking-wider rounded-2xl transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#D9A000] hover:bg-[#b88800] text-[#014900] text-xs font-extrabold uppercase tracking-wider rounded-2xl transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
             >
               <Phone className="w-3.5 h-3.5 text-[#014900]" />
               <span>Call Us Now</span>
@@ -459,7 +459,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
 
             <a
               href={`mailto:${settings.secretariatEmail}`}
-              className="inline-flex items-center gap-2 px-6 py-3.5 bg-white hover:bg-gray-100 text-[#014900] text-xs font-black uppercase tracking-wider rounded-2xl transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-6 py-3.5 bg-white hover:bg-gray-100 text-[#014900] text-xs font-extrabold uppercase tracking-wider rounded-2xl transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
             >
               <Mail className="w-3.5 h-3.5 text-[#014900]" />
               <span>Email Secretariat</span>

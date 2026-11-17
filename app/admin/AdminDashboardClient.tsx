@@ -209,7 +209,7 @@ export default function AdminDashboardClient({
   ];
 
   return (
-    <div className="space-y-8 font-['Montserrat',sans-serif]">
+    <div className="space-y-8">
       
       {/* 1. Real-time Status Control Bar & Welcome Banner */}
       <div className="bg-gradient-to-r from-[#014900] via-[#013800] to-[#012200] rounded-3xl p-6 sm:p-8 text-white relative overflow-hidden shadow-2xl border border-emerald-800/40">

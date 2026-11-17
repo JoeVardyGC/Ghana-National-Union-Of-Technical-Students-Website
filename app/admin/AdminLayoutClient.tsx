@@ -74,7 +74,7 @@ export default function AdminLayoutClient({ children, sessionUser }: AdminLayout
 
   if (!sessionUser) {
     return (
-      <div className="min-h-screen bg-[#014900] flex items-center justify-center font-['Montserrat',sans-serif]">
+      <div className="min-h-screen bg-[#014900] flex items-center justify-center">
         <div className="text-center space-y-3 text-white">
           <div className="w-10 h-10 border-3 border-[#D9A000] border-t-transparent rounded-full animate-spin mx-auto" />
           <p className="text-xs uppercase tracking-widest text-[#D9A000] font-bold">Redirecting to Login...</p>
@@ -97,7 +97,7 @@ export default function AdminLayoutClient({ children, sessionUser }: AdminLayout
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] flex font-['Montserrat',sans-serif] text-gray-900 relative">
+    <div className="min-h-screen bg-[#f8f9fa] flex text-gray-900 relative">
       {/* Top Instant Navigation Progress Bar */}
       {isNavigating && (
         <div className="fixed top-0 left-0 right-0 z-50 h-[3px] bg-gradient-to-r from-[#D9A000] via-emerald-400 to-[#D9A000] shadow-sm animate-pulse" />
@@ -263,7 +263,7 @@ export default function AdminLayoutClient({ children, sessionUser }: AdminLayout
 
       {/* 3. Mobile Slide-Over Drawer */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden font-['Montserrat',sans-serif]">
+        <div className="fixed inset-0 z-50 lg:hidden">
           <div
             className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
             onClick={() => setMobileMenuOpen(false)}

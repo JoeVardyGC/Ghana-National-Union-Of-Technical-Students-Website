@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Mail, Phone, Smartphone, MapPin } from 'lucide-react';
 import { telHref, type SiteSettings } from '@/lib/siteSettingsShared';
 
-export default function Footer({ settings }: { settings: SiteSettings }) {
+export default function Footer({ settings, hasGallery = true }: { settings: SiteSettings; hasGallery?: boolean }) {
   return (
     <footer className="bg-[#0e160f] text-gray-300 pt-16 pb-8 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -99,11 +99,13 @@ export default function Footer({ settings }: { settings: SiteSettings }) {
                   Student Innovations
                 </Link>
               </li>
+              {hasGallery && (
               <li>
                 <Link href="/gallery" className="hover:text-[#D9A000] transition-colors">
                   Legacy & Leadership Gallery
                 </Link>
               </li>
+              )}
               <li>
                 <Link href="/blog" className="hover:text-[#D9A000] transition-colors">
                   News & Editorial

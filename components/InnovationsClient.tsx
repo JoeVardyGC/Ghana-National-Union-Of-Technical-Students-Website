@@ -202,7 +202,7 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
         
         <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 sm:gap-8">
           <div className="space-y-2.5 sm:space-y-4 max-w-2xl">
-            <h2 className="text-xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight text-white drop-shadow-md">
+            <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight text-white drop-shadow-md">
               Empowering Student Innovators & Industrial Pioneers
             </h2>
 
@@ -214,7 +214,7 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
           <button
             type="button"
             onClick={() => setIsSubmitModalOpen(true)}
-            className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-3 sm:py-4 bg-[#D9A000] hover:bg-yellow-500 active:scale-95 text-[#014900] text-xs sm:text-sm font-black uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all duration-300 shadow-xl cursor-pointer"
+            className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-3 sm:py-4 bg-[#D9A000] hover:bg-[#b88800] active:scale-95 text-[#014900] text-xs sm:text-sm font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all duration-300 shadow-xl cursor-pointer"
           >
             <PlusCircle className="w-4 h-4 sm:w-5 sm:h-5" />
             <span>Submit Your Innovation</span>
@@ -256,7 +256,7 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
                 key={cat}
                 type="button"
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-3.5 sm:px-4 py-2 text-[11px] sm:text-xs font-extrabold rounded-xl sm:rounded-2xl uppercase tracking-wider whitespace-nowrap transition-all border cursor-pointer shrink-0 ${
+                className={`px-3.5 sm:px-4 py-2 text-xs sm:text-xs font-extrabold rounded-xl sm:rounded-2xl uppercase tracking-wider whitespace-nowrap transition-all border cursor-pointer shrink-0 ${
                   selectedCategory === cat
                     ? 'bg-[#014900] text-white border-[#014900] shadow-xs'
                     : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
@@ -296,7 +296,7 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
                   </div>
                   <Link
                     href={`/innovations/${item.id}`}
-                    className="bg-white rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-xl border border-gray-200 flex flex-col justify-between cursor-pointer transition-all duration-300 group overflow-hidden hover:-translate-y-1 min-w-0 w-full"
+                    className="bg-white rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-xl border border-gray-200 flex flex-col justify-between cursor-pointer transition-all duration-300 group overflow-hidden min-w-0 w-full"
                   >
                     <div className="min-w-0">
                       {/* Project Image Banner */}
@@ -320,20 +320,20 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
                           {item.institution && (
                             <div className="flex items-center gap-1.5 text-gray-800 font-bold min-w-0">
                               <Building2 className={`w-3.5 h-3.5 shrink-0 ${isGold ? 'text-[#D9A000]' : 'text-[#014900]'}`} />
-                              <span className="truncate text-[11px] sm:text-xs">{item.institution}</span>
+                              <span className="truncate text-xs sm:text-xs">{item.institution}</span>
                             </div>
                           )}
                           {item.student_name && (
                             <div className="flex items-center gap-1.5 text-gray-500 min-w-0">
                               <User className="w-3.5 h-3.5 text-gray-400 shrink-0" />
-                              <span className="truncate text-[11px] sm:text-xs">Developer: {item.student_name}</span>
+                              <span className="truncate text-xs sm:text-xs">Developer: {item.student_name}</span>
                             </div>
                           )}
                         </div>
 
                         {/* Title */}
-                        <h3 className={`text-base sm:text-lg font-black text-gray-900 transition-colors leading-snug uppercase break-words line-clamp-2 ${
-                          isGold ? 'group-hover:text-[#D9A000]' : 'group-hover:text-[#014900]'
+                        <h3 className={`text-base sm:text-lg font-extrabold text-gray-900 transition-colors leading-snug break-words line-clamp-2 ${
+                          isGold ? 'group-hover:text-gold-ink' : 'group-hover:text-[#014900]'
                         }`}>
                           {item.title}
                         </h3>
@@ -347,9 +347,9 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
 
                     {/* View Project Button (Gold & Green Alternating) */}
                     <div className="p-4 sm:p-6 pt-0">
-                      <span className={`inline-flex items-center justify-center w-full px-4 sm:px-5 py-2.5 sm:py-3 text-xs font-black uppercase tracking-wider sm:tracking-widest rounded-xl sm:rounded-2xl transition-all duration-300 shadow-xs ${
+                      <span className={`inline-flex items-center justify-center w-full px-4 sm:px-5 py-2.5 sm:py-3 text-xs font-extrabold uppercase tracking-wider sm:tracking-widest rounded-xl sm:rounded-2xl transition-all duration-300 shadow-xs ${
                         isGold
-                          ? 'bg-[#D9A000] group-hover:bg-yellow-600 text-white'
+                          ? 'bg-[#D9A000] group-hover:bg-[#b88800] text-[#014900]'
                           : 'bg-[#014900] group-hover:bg-[#013300] text-white'
                       }`}>
                         <span>Explore Project</span>
@@ -481,7 +481,7 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
                         <Play className="w-3.5 h-3.5 text-[#014900]" />
                         <span>Video Link (Optional)</span>
                       </label>
-                      <span className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">OPTIONAL</span>
+                      <span className="text-xs text-gray-400 font-semibold uppercase tracking-wider">OPTIONAL</span>
                     </div>
                     <input
                       type="url"
@@ -604,7 +604,7 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="px-5 sm:px-6 py-2.5 bg-[#014900] hover:bg-[#013300] text-white text-xs font-black uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all shadow-md flex items-center gap-2 cursor-pointer disabled:opacity-70"
+                      className="px-5 sm:px-6 py-2.5 bg-[#014900] hover:bg-[#013300] text-white text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all shadow-md flex items-center gap-2 cursor-pointer disabled:opacity-70"
                     >
                       {isSubmitting ? (
                         <>

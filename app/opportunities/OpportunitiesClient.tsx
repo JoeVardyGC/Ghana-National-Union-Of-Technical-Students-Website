@@ -95,7 +95,7 @@ export default function OpportunitiesClient({
   const safeBgUrl = encodeURI(heroImage);
 
   return (
-    <div className="bg-white min-h-screen font-['Montserrat',sans-serif] pb-24 text-gray-900">
+    <div className="bg-white min-h-screen pb-24 text-gray-900">
       
       {/* 1. HERO BANNER - 50% opacity green overlay & border-b-4 border-[#D9A000] */}
       <section className="relative text-white py-14 sm:py-20 px-4 sm:px-6 lg:px-8 border-b-4 border-[#D9A000] overflow-hidden bg-gray-900 mb-8">
@@ -108,12 +108,12 @@ export default function OpportunitiesClient({
         <div className="absolute inset-0 bg-[#014900]/55 backdrop-brightness-90" />
 
         <div className="max-w-5xl mx-auto text-center relative z-10 space-y-3">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-xs font-black uppercase tracking-widest text-[#D9A000]">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-xs font-extrabold uppercase tracking-widest text-[#D9A000]">
             <Sparkles className="w-4 h-4" />
             <span>National TVET Career & Growth Hub</span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight leading-tight text-white drop-shadow-md">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase tracking-tight leading-tight text-white drop-shadow-md">
             {heroTitle}
           </h1>
 
@@ -195,7 +195,7 @@ export default function OpportunitiesClient({
                 onClick={() => setSelectedCategory(cat.name)}
                 className={`inline-flex items-center gap-2 px-5 py-3 rounded-2xl text-xs font-extrabold uppercase tracking-wider transition-all cursor-pointer shrink-0 ${
                   isSelected
-                    ? 'bg-[#014900] text-white shadow-lg scale-102 font-black'
+                    ? 'bg-[#014900] text-white shadow-lg scale-102 font-extrabold'
                     : 'bg-gray-100/80 text-gray-700 hover:bg-gray-200 border border-gray-200/60'
                 }`}
               >
@@ -212,7 +212,7 @@ export default function OpportunitiesClient({
         
         <div className="flex items-center justify-between pb-6">
           <p className="text-xs font-extrabold text-gray-500 uppercase tracking-wider">
-            Showing <span className="text-[#014900] font-black">{filteredOpportunities.length}</span> Active Opportunities
+            Showing <span className="text-[#014900] font-extrabold">{filteredOpportunities.length}</span> Active Opportunities
           </p>
         </div>
 
@@ -228,21 +228,21 @@ export default function OpportunitiesClient({
             {filteredOpportunities.map((item) => (
               <div
                 key={item.id}
-                className="bg-white rounded-3xl border border-gray-200/80 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden group hover:-translate-y-1"
+                className="bg-white rounded-3xl border border-gray-200/80 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden group"
               >
                 <div>
                   {/* Card Header Stamp */}
                   <div className="p-6 pb-4 border-b border-gray-100 flex items-start justify-between gap-3 bg-gradient-to-b from-gray-50/80 to-white">
                     
                     <div className="flex items-center gap-3">
-                      <div className="w-11 h-11 rounded-2xl bg-emerald-50 border border-emerald-200/80 text-[#014900] flex items-center justify-center font-black shrink-0 shadow-2xs">
+                      <div className="w-11 h-11 rounded-2xl bg-emerald-50 border border-emerald-200/80 text-[#014900] flex items-center justify-center font-extrabold shrink-0 shadow-2xs">
                         {item.category === 'Industrial Attachment' && <Briefcase className="w-5 h-5" />}
                         {item.category === 'TVET Grant' && <Award className="w-5 h-5 text-amber-600" />}
                         {item.category === 'Skill Competition' && <Trophy className="w-5 h-5 text-amber-500" />}
                         {item.category === 'Fellowship' && <GraduationCap className="w-5 h-5 text-purple-600" />}
                       </div>
                       <div>
-                        <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#014900] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                        <span className="text-xs font-extrabold uppercase tracking-wider text-[#014900] bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
                           {item.category}
                         </span>
                         <p className="text-xs font-extrabold text-gray-900 mt-1 flex items-center gap-1">
@@ -254,17 +254,17 @@ export default function OpportunitiesClient({
 
                     {/* Status Badge */}
                     {item.status === 'closing_soon' ? (
-                      <span className="px-2.5 py-1 bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-black uppercase tracking-wider rounded-full shrink-0 flex items-center gap-1 animate-pulse">
+                      <span className="px-2.5 py-1 bg-amber-100 text-amber-900 border border-amber-300 text-xs font-extrabold uppercase tracking-wider rounded-full shrink-0 flex items-center gap-1 animate-pulse">
                         <Clock className="w-3 h-3" />
                         <span>Closing Soon</span>
                       </span>
                     ) : item.status === 'open' ? (
-                      <span className="px-2.5 py-1 bg-emerald-100 text-[#014900] border border-emerald-300 text-[10px] font-black uppercase tracking-wider rounded-full shrink-0 flex items-center gap-1">
+                      <span className="px-2.5 py-1 bg-emerald-100 text-[#014900] border border-emerald-300 text-xs font-extrabold uppercase tracking-wider rounded-full shrink-0 flex items-center gap-1">
                         <CheckCircle2 className="w-3 h-3" />
                         <span>Open</span>
                       </span>
                     ) : (
-                      <span className="px-2.5 py-1 bg-gray-100 text-gray-500 text-[10px] font-black uppercase tracking-wider rounded-full shrink-0">
+                      <span className="px-2.5 py-1 bg-gray-100 text-gray-500 text-xs font-extrabold uppercase tracking-wider rounded-full shrink-0">
                         Closed
                       </span>
                     )}
@@ -273,7 +273,7 @@ export default function OpportunitiesClient({
 
                   {/* Card Content Body */}
                   <div className="p-6 space-y-4">
-                    <h3 className="font-['Montserrat'] font-black text-lg text-gray-900 leading-snug group-hover:text-[#014900] transition-colors">
+                    <h3 className="font-display font-extrabold text-lg text-gray-900 leading-snug group-hover:text-[#014900] transition-colors">
                       {item.title}
                     </h3>
 
@@ -329,10 +329,10 @@ export default function OpportunitiesClient({
             {/* Modal Header */}
             <div className="p-6 bg-gradient-to-r from-[#014900] to-[#013500] text-white flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-black uppercase tracking-widest text-[#D9A000] bg-white/10 px-2.5 py-0.5 rounded-full border border-white/20">
+                <span className="text-xs font-extrabold uppercase tracking-widest text-[#D9A000] bg-white/10 px-2.5 py-0.5 rounded-full border border-white/20">
                   {selectedOpportunity.category}
                 </span>
-                <h2 className="font-['Montserrat'] font-black text-lg sm:text-xl text-white mt-1">
+                <h2 className="font-display font-extrabold text-lg sm:text-xl text-white mt-1">
                   {selectedOpportunity.title}
                 </h2>
                 <p className="text-xs text-emerald-200 font-bold">{selectedOpportunity.partner}</p>
@@ -353,7 +353,7 @@ export default function OpportunitiesClient({
                   <div className="w-16 h-16 bg-emerald-100 text-[#014900] rounded-full mx-auto flex items-center justify-center">
                     <FileCheck className="w-10 h-10" />
                   </div>
-                  <h3 className="text-xl font-black text-gray-900 uppercase">Application Submitted!</h3>
+                  <h3 className="text-xl font-extrabold text-gray-900 uppercase">Application Submitted!</h3>
                   <p className="text-xs text-gray-600 max-w-md mx-auto">
                     Your application for <span className="font-bold text-[#014900]">{selectedOpportunity.title}</span> has been received by the GNUTS Secretariat. Our opportunities directorate will review your details shortly.
                   </p>
@@ -364,7 +364,7 @@ export default function OpportunitiesClient({
                   <div className="bg-gray-50 p-4 rounded-2xl border border-gray-200 space-y-2">
                     <h4 className="font-extrabold uppercase tracking-wider text-[#014900] text-xs">Eligibility & Requirements</h4>
                     <p className="text-gray-700 leading-relaxed">{selectedOpportunity.eligibility}</p>
-                    <div className="pt-2 flex flex-wrap gap-4 text-[11px] font-bold text-gray-600">
+                    <div className="pt-2 flex flex-wrap gap-4 text-xs font-bold text-gray-600">
                       <span>📍 Location: {selectedOpportunity.location}</span>
                       <span>💰 Stipend/Reward: {selectedOpportunity.stipend_reward}</span>
                       <span>⏰ Deadline: {selectedOpportunity.deadline}</span>
@@ -379,7 +379,7 @@ export default function OpportunitiesClient({
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-[11px] font-extrabold uppercase text-gray-700 mb-1">Full Student Name *</label>
+                        <label className="block text-xs font-extrabold uppercase text-gray-700 mb-1">Full Student Name *</label>
                         <input
                           type="text"
                           required
@@ -391,7 +391,7 @@ export default function OpportunitiesClient({
                       </div>
 
                       <div>
-                        <label className="block text-[11px] font-extrabold uppercase text-gray-700 mb-1">Student Index / Reg Number *</label>
+                        <label className="block text-xs font-extrabold uppercase text-gray-700 mb-1">Student Index / Reg Number *</label>
                         <input
                           type="text"
                           required
@@ -405,7 +405,7 @@ export default function OpportunitiesClient({
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-[11px] font-extrabold uppercase text-gray-700 mb-1">Technical University *</label>
+                        <label className="block text-xs font-extrabold uppercase text-gray-700 mb-1">Technical University *</label>
                         <select
                           value={institution}
                           onChange={(e) => setInstitution(e.target.value)}
@@ -425,7 +425,7 @@ export default function OpportunitiesClient({
                       </div>
 
                       <div>
-                        <label className="block text-[11px] font-extrabold uppercase text-gray-700 mb-1">Email Address *</label>
+                        <label className="block text-xs font-extrabold uppercase text-gray-700 mb-1">Email Address *</label>
                         <input
                           type="email"
                           required
@@ -438,7 +438,7 @@ export default function OpportunitiesClient({
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-extrabold uppercase text-gray-700 mb-1">Phone Number (WhatsApp) *</label>
+                      <label className="block text-xs font-extrabold uppercase text-gray-700 mb-1">Phone Number (WhatsApp) *</label>
                       <input
                         type="tel"
                         required
@@ -450,7 +450,7 @@ export default function OpportunitiesClient({
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-extrabold uppercase text-gray-700 mb-1">Brief Statement of Interest *</label>
+                      <label className="block text-xs font-extrabold uppercase text-gray-700 mb-1">Brief Statement of Interest *</label>
                       <textarea
                         rows={3}
                         required

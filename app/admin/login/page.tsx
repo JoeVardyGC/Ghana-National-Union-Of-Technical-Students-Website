@@ -60,7 +60,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] flex flex-col justify-center items-center p-4 sm:p-6 lg:p-8 font-['Montserrat',sans-serif] relative overflow-hidden">
+    <div className="min-h-screen bg-[#f8f9fa] flex flex-col justify-center items-center p-4 sm:p-6 lg:p-8 relative overflow-hidden">
       {/* Background Architectural Accent Shapes */}
       <div className="absolute top-0 inset-x-0 h-96 bg-gradient-to-b from-[#014900] to-[#013300] -skew-y-3 origin-top-left scale-110 pointer-events-none" />
       <div className="absolute top-12 right-12 w-96 h-96 bg-[#D9A000]/10 rounded-full blur-3xl pointer-events-none" />

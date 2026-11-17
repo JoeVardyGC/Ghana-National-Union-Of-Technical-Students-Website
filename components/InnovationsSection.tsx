@@ -25,13 +25,13 @@ export default function InnovationsSection({ dbInnovations = [] }: { dbInnovatio
   if (innovations.length === 0) return null;
 
   return (
-    <section className="py-10 sm:py-16 lg:py-24 bg-white border-b border-gray-200 font-['Montserrat',sans-serif]" id="innovations-section">
+    <section className="py-10 sm:py-16 lg:py-24 bg-white border-b border-gray-200" id="innovations-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-3">
           <div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#014900] tracking-tight uppercase">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight uppercase">
               Student&apos;s Innovations
             </h2>
             <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-2.5 sm:my-3" />
@@ -42,7 +42,7 @@ export default function InnovationsSection({ dbInnovations = [] }: { dbInnovatio
 
           <Link
             href="/innovations"
-            className="inline-flex items-center gap-1 text-xs sm:text-sm lg:text-base font-black uppercase text-[#014900] hover:text-[#D9A000] transition-colors mt-1 md:mt-0"
+            className="inline-flex items-center gap-1 text-xs sm:text-sm lg:text-base font-extrabold uppercase text-[#014900] hover:text-gold-ink transition-colors mt-1 md:mt-0"
           >
             All Innovations →
           </Link>
@@ -66,7 +66,7 @@ export default function InnovationsSection({ dbInnovations = [] }: { dbInnovatio
                 <Link
                   key={item.id || idx}
                   href={`/innovations/${item.id || idx + 1}`}
-                  className="bg-white rounded-2xl sm:rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between overflow-hidden group cursor-pointer min-w-0 w-full"
+                  className="bg-white rounded-2xl sm:rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden group cursor-pointer min-w-0 w-full"
                 >
                   <div className="min-w-0">
                     {/* Project Image Banner with Top Rounded Corners */}
@@ -87,8 +87,8 @@ export default function InnovationsSection({ dbInnovations = [] }: { dbInnovatio
 
                       {/* Category Badge Floating on Image */}
                       <div className="absolute top-3 left-3 z-20">
-                        <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-white shadow-lg backdrop-blur-md border border-white/20 ${
-                          isGold ? 'bg-[#D9A000]/90' : 'bg-[#014900]/90'
+                        <span className={`px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider shadow-lg backdrop-blur-md border border-white/20 ${
+                          isGold ? 'bg-[#D9A000]/90 text-[#014900]' : 'bg-[#014900]/90 text-white'
                         }`}>
                           {item.category || 'Innovation'}
                         </span>
@@ -102,20 +102,20 @@ export default function InnovationsSection({ dbInnovations = [] }: { dbInnovatio
                         {item.institution && (
                           <div className="flex items-center gap-1.5 text-gray-800 font-bold min-w-0">
                             <Building2 className={`w-3.5 h-3.5 shrink-0 ${isGold ? 'text-[#D9A000]' : 'text-[#014900]'}`} />
-                            <span className="truncate text-[11px] sm:text-xs">{item.institution}</span>
+                            <span className="truncate text-xs sm:text-xs">{item.institution}</span>
                           </div>
                         )}
                         {item.student_name && (
                           <div className="flex items-center gap-1.5 text-gray-500 min-w-0">
                             <User className="w-3.5 h-3.5 text-gray-400 shrink-0" />
-                            <span className="truncate text-[11px] sm:text-xs">Developer: {item.student_name}</span>
+                            <span className="truncate text-xs sm:text-xs">Developer: {item.student_name}</span>
                           </div>
                         )}
                       </div>
 
                       {/* Title */}
-                      <h3 className={`text-base sm:text-lg lg:text-xl font-black text-gray-900 leading-snug transition-colors uppercase break-words line-clamp-2 ${
-                        isGold ? 'group-hover:text-[#D9A000]' : 'group-hover:text-[#014900]'
+                      <h3 className={`text-base sm:text-lg lg:text-xl font-extrabold text-gray-900 leading-snug transition-colors break-words line-clamp-2 ${
+                        isGold ? 'group-hover:text-gold-ink' : 'group-hover:text-[#014900]'
                       }`}>
                         {item.title}
                       </h3>
@@ -129,9 +129,9 @@ export default function InnovationsSection({ dbInnovations = [] }: { dbInnovatio
 
                   {/* Footer Action Button */}
                   <div className="p-4 sm:p-6 pt-0">
-                    <span className={`inline-flex items-center justify-center w-full px-4 sm:px-5 py-2.5 sm:py-3 text-xs font-black uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all duration-300 shadow-xs ${
+                    <span className={`inline-flex items-center justify-center w-full px-4 sm:px-5 py-2.5 sm:py-3 text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all duration-300 shadow-xs ${
                       isGold
-                        ? 'bg-[#D9A000] group-hover:bg-yellow-600 text-white'
+                        ? 'bg-[#D9A000] group-hover:bg-[#b88800] text-[#014900]'
                         : 'bg-[#014900] group-hover:bg-[#003300] text-white'
                     }`}>
                       <span className="inline-flex items-center gap-2">

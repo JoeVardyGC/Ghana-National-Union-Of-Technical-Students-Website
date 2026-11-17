@@ -131,7 +131,7 @@ export default function InstitutionsMapSection() {
             <span className="px-3.5 py-1 text-xs font-extrabold rounded-md uppercase tracking-wider bg-[#D9A000] text-[#014900] inline-block mb-3 shadow-sm">
               NATIONWIDE FOOTPRINT
             </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight uppercase">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight uppercase">
               Member Technical Universities
             </h2>
             <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-3" />
@@ -164,7 +164,7 @@ export default function InstitutionsMapSection() {
                 >
                   <div className="flex items-start justify-between gap-3 w-full mb-3">
                     <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 rounded-lg ${uni.badgeColor} text-white flex items-center justify-center font-black text-sm shadow-md shrink-0`}>
+                      <div className={`w-10 h-10 rounded-lg ${uni.badgeColor} text-white flex items-center justify-center font-extrabold text-sm shadow-md shrink-0`}>
                         {uni.shortName}
                       </div>
                       <div>
@@ -196,7 +196,7 @@ export default function InstitutionsMapSection() {
 
             <div>
               <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/15">
-                <span className="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-[#D9A000] text-[#014900]">
+                <span className="px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-[#D9A000] text-[#014900]">
                   {selectedUni.shortName} SECRETARIAT
                 </span>
                 <span className="text-xs text-gray-300 font-medium">Est. {selectedUni.established}</span>

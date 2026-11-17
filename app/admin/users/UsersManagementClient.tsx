@@ -294,7 +294,7 @@ export default function UsersManagementClient({
   };
 
   return (
-    <div className="space-y-6 font-['Montserrat',sans-serif] pb-20">
+    <div className="space-y-6 pb-20">
       
       {/* 1. Header with Title & Action Button */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -532,7 +532,7 @@ export default function UsersManagementClient({
 
       {/* 5. CREATE / EDIT USER MODAL */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs font-['Montserrat',sans-serif]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
           <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-gray-200 max-h-[90vh] overflow-y-auto space-y-6 animate-fadeIn">
             
             {/* Modal Header */}
@@ -667,7 +667,7 @@ export default function UsersManagementClient({
 
       {/* 6. INDIVIDUAL DELETE CONFIRMATION MODAL */}
       {isDeletingId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs font-['Montserrat',sans-serif]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
           <div className="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-gray-200 text-center space-y-4 animate-scaleUp">
             <div className="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mx-auto">
               <Trash2 className="w-6 h-6" />
@@ -698,7 +698,7 @@ export default function UsersManagementClient({
 
       {/* 7. BULK DELETE USERS CONFIRMATION MODAL */}
       {isBulkDeleteModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs font-['Montserrat',sans-serif]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
           <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-rose-100 space-y-4 animate-scaleUp">
             <div className="flex items-center gap-3 text-rose-600">
               <div className="p-3 bg-rose-100 rounded-2xl">
