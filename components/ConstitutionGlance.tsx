@@ -2,7 +2,9 @@ import Link from 'next/link';
 import { Landmark, Users, GraduationCap, CalendarClock, Target, Quote, ArrowRight } from 'lucide-react';
 
 /**
- * "Our Constitution at a Glance" (About page).
+ * "Our Constitution at a Glance".
+ * - variant "full" (Resources page): the detailed cards, next to the Constitution download.
+ * - variant "summary" (About page): four key facts and a link to the full version.
  * Every fact here comes from the Constitution of the Ghana National Union of Technical
  * Students; article / schedule numbers are noted beside each list.
  */
@@ -82,9 +84,56 @@ function NumberedList({ items }: { items: string[] }) {
   );
 }
 
-export default function ConstitutionGlance() {
+// Short version for the About page
+const KEY_FACTS = [
+  { label: 'Supreme body', value: 'Congress', detail: 'The Annual Residential Congress amends the Constitution and elects national officers (Articles 14 and 17).' },
+  { label: 'National officers', value: 'One-year terms', detail: 'The seven members of the National Executive Committee serve for one academic year (Article 27).' },
+  { label: 'Membership', value: `${MEMBER_UNIVERSITIES.length} Technical Universities`, detail: 'All Technical Universities in Ghana are members, and host Congress in turn.' },
+  { label: 'Name', value: 'GNUTS since 2016', detail: 'GNUTS replaced GNUPS when the polytechnics became technical universities.' },
+];
+
+function ConstitutionSummary() {
   return (
-    <section id="constitution" className="py-20 sm:py-28 bg-[#f8f9fa] border-b border-gray-200">
+    <section id="constitution" className="py-16 sm:py-20 bg-[#f8f9fa] border-b border-gray-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 sm:mb-10">
+          <div className="max-w-2xl">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight uppercase">
+              Our Constitution
+            </h2>
+            <div className="w-16 h-1.5 bg-[#D9A000] rounded-full mt-4" />
+            <p className="text-gray-600 text-sm sm:text-base mt-5 leading-relaxed">
+              The Constitution is the supreme law of GNUTS. It sets out how the Union is organised and how its leaders are
+              chosen and held accountable.
+            </p>
+          </div>
+          <Link
+            href="/resources#constitution"
+            className="inline-flex items-center gap-2 text-sm font-extrabold uppercase tracking-wider text-[#014900] hover:text-gold-ink transition-colors shrink-0"
+          >
+            Read the Constitution in full <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+
+        <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          {KEY_FACTS.map((fact) => (
+            <div key={fact.label} className="bg-white rounded-2xl border border-gray-200/90 p-5 sm:p-6">
+              <dt className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{fact.label}</dt>
+              <dd className="mt-1.5 font-display text-lg font-extrabold text-[#014900] leading-snug">{fact.value}</dd>
+              <dd className="mt-2 text-sm text-gray-600 leading-relaxed">{fact.detail}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+  );
+}
+
+export default function ConstitutionGlance({ variant = 'full' }: { variant?: 'full' | 'summary' }) {
+  if (variant === 'summary') return <ConstitutionSummary />;
+
+  return (
+    <section id="constitution" className="py-20 sm:py-28 bg-[#f8f9fa] border-y border-gray-200 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight uppercase">
@@ -154,10 +203,10 @@ export default function ConstitutionGlance() {
               </p>
             </div>
             <Link
-              href="/resources"
+              href="/resources#documents"
               className="mt-6 inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#014900] hover:bg-[#D9A000] text-white hover:text-[#014900] text-sm font-extrabold uppercase tracking-wider rounded-2xl transition-all"
             >
-              Read the full Constitution <ArrowRight className="w-4 h-4" />
+              Download the Constitution <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>

@@ -412,7 +412,7 @@ export default async function AboutPage() {
         </section>
 
         {/* 5b. Constitution at a Glance — facts from the GNUTS Constitution */}
-        <ConstitutionGlance />
+        <ConstitutionGlance variant="summary" />
 
         {/* 6. Executive Leadership — Only display when executives exist in the system */}
         {executives && executives.length > 0 && (

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { FileText, ArrowLeft, Download, ShieldCheck, Scale, Layers } from 'lucide-react';
 import { query } from '@/lib/db';
 import ResourcesPageClient, { ResourceItem } from '@/components/ResourcesPageClient';
+import ConstitutionGlance from '@/components/ConstitutionGlance';
 import { resolveImgUrl } from '@/lib/imageUtils';
 
 export const revalidate = 15; // Fast ISR caching
@@ -142,10 +143,13 @@ export default async function ResourcesPage() {
 
       {/* Main Content Area */}
       <main className="py-12 sm:py-16 flex-grow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div id="documents" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-20">
           <ResourcesPageClient initialResources={resourcesList} />
         </div>
       </main>
+
+      {/* The detailed constitution summary lives here, next to the download (About shows a short version) */}
+      <ConstitutionGlance />
     </div>
   );
 }
