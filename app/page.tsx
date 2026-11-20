@@ -71,8 +71,9 @@ export default async function HomePage() {
 
   // Listings disappear automatically the day after their closing day (lib/deadlines.ts)
   const openScholarships = withoutExpired(allActiveScholarships);
+  // Home page shows the latest 3 of each: scholarships, opportunities and innovations
   const scholarships = openScholarships.slice(0, 3);
-  const opportunities = withoutExpired(allActiveOpportunities).slice(0, 4);
+  const opportunities = withoutExpired(allActiveOpportunities).slice(0, 3);
 
   const projectsCount = statsResult[0]?.count ?? 0;
   const dbScholarshipsCount = openScholarships.length;
@@ -249,7 +250,7 @@ export default async function HomePage() {
       {/* 5. Opportunities Section */}
       <OpportunitiesSection dbOpportunities={opportunities} />
 
-      {/* 6. Student Innovations Section (Latest 2 Projects) */}
+      {/* 6. Student Innovations Section (latest 3 approved projects) */}
       <InnovationsSection dbInnovations={innovations} />
 
       {/* 7. Executive Leadership Section (always shown; the menu's "Our Leadership" links here) */}

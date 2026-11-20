@@ -49,8 +49,8 @@ export default function OpportunitiesSection({ dbOpportunities = [] }: { dbOppor
           </div>
         ) : (
           /* Cards Grid — 4 opportunity cards with rounded-2xl sm:rounded-3xl and curved badges */
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 reveal-on-scroll">
-          {opportunities.slice(0, 4).map((opp, idx) => {
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 reveal-on-scroll">
+          {opportunities.slice(0, 3).map((opp, idx) => {
             const isGold = idx % 2 === 1;
             return (
               <div
