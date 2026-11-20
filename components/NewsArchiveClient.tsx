@@ -148,9 +148,9 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
               onClick={scrollToTopSmooth}
               className="bg-white rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col overflow-hidden group cursor-pointer h-full"
             >
-              {/* Poster Flyer Container: height is 7/6 of the card width (~400px on a phone),
-                  so the same proportion of each flyer shows on every screen size */}
-              <div className="w-full aspect-[6/7] relative overflow-hidden bg-gray-900 shrink-0 rounded-t-3xl">
+              {/* Poster Flyer Container: height is 6/5 of the card width, which shows the top 90%
+                  of a 3:4 portrait flyer, the same proportion on every screen size (matches the home page) */}
+              <div className="w-full aspect-[5/6] relative overflow-hidden bg-gray-900 shrink-0 rounded-t-3xl">
                 <img
                   src={imgUrl}
                   alt={`${item.title} | GNUTS`}
