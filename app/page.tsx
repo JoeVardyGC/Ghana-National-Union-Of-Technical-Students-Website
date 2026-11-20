@@ -205,7 +205,7 @@ export default async function HomePage() {
                       <div className="flex justify-between items-start gap-2 flex-wrap min-w-0">
                         <span
                           className={`px-2.5 sm:px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider shrink-0 shadow-xs ${
-                            isGold ? 'bg-[#D9A000] text-white' : 'bg-[#014900] text-white'
+                            isGold ? 'bg-[#D9A000] text-[#014900]' : 'bg-[#014900] text-white'
                           }`}
                         >
                           {item.status ? item.status.toUpperCase() : 'ACTIVE'}
@@ -232,8 +232,8 @@ export default async function HomePage() {
                         </span>
                       )}
                       <span
-                        className={`self-start px-3.5 py-2 rounded-xl text-xs font-extrabold uppercase tracking-wider text-white shadow-xs transition-colors inline-flex items-center gap-1 ${
-                          isGold ? 'bg-[#D9A000]' : 'bg-[#014900] group-hover:bg-[#013300]'
+                        className={`self-start px-3.5 py-2 rounded-xl text-xs font-extrabold uppercase tracking-wider shadow-xs transition-colors inline-flex items-center gap-1 ${
+                          isGold ? 'bg-[#D9A000] text-[#014900]' : 'bg-[#014900] group-hover:bg-[#013300] text-white'
                         }`}
                       >
                         <span>View Requirements & Apply →</span>
