@@ -3,7 +3,8 @@ import Link from 'next/link';
 import { query } from '@/lib/db';
 import ResourcesSection from '@/components/ResourcesSection';
 import { resolveImgUrl } from '@/lib/imageUtils';
-import { 
+import { absoluteUrl, SITE_URL } from '@/lib/siteUrl';
+import {
   Target, 
   Eye, 
   ShieldCheck, 
@@ -153,8 +154,39 @@ export default async function AboutPage() {
     <Globe key="6" className="w-6 h-6" />,
   ];
 
+  // Hidden data for search engines (not shown on the page): each executive as a Person
+  // working for GNUTS, so searches like "GNUTS executives" or an officer's name find them.
+  // /executives redirects here, so this is where those profiles live.
+  const toAbsolute = (url: string) =>
+    !url || url.startsWith('data:') ? undefined : /^https?:\/\//i.test(url) ? url : absoluteUrl(`/${url.replace(/^\/+/, '')}`);
+  const executivesJsonLd =
+    executives && executives.length > 0
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'ItemList',
+          name: 'GNUTS National Executive Officers',
+          itemListElement: executives.map((exec: any, index: number) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            item: {
+              '@type': 'Person',
+              name: String(exec.full_name || exec.name || 'Executive Officer'),
+              jobTitle: `${exec.position || 'National Executive'}, GNUTS`,
+              image: toAbsolute(resolveImgUrl(exec.photo || exec.image_url || '')),
+              worksFor: { '@id': `${SITE_URL}/#organization`, '@type': 'Organization', name: 'Ghana National Union of Technical Students (GNUTS)' },
+            },
+          })),
+        }
+      : null;
+
   return (
     <>
+      {executivesJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(executivesJsonLd).replace(/</g, '\\u003c') }}
+        />
+      )}
       <div className="w-full min-h-screen bg-[#f8f9fa] font-sans text-gray-900 overflow-x-hidden">
         
         {/* Page Hero Header — Connected to live DB hero image, title and subtitle */}

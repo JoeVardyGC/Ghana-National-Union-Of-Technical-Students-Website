@@ -3,11 +3,17 @@ import type { NextRequest } from 'next/server';
 import { SESSION_COOKIE_NAME, verifySessionToken } from '@/lib/session';
 
 /**
- * Guards the /admin pages. API routes check the session themselves via getAdminSession().
+ * Guards the /admin pages and redirects /executives to the About page's leadership section. API routes check the session themselves via getAdminSession().
  * (Next.js 16 renamed the `middleware` file convention to `proxy`.)
  */
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // /executives has no page of its own: permanently send it to the About page's
+  // leadership section (a real 308, so search engines move the link there too)
+  if (pathname === '/executives' || pathname === '/executives/') {
+    return NextResponse.redirect(new URL('/about#leadership', request.url), 308);
+  }
 
   if (pathname.startsWith('/admin')) {
     const sessionCookie = request.cookies.get(SESSION_COOKIE_NAME);
@@ -37,5 +43,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin', '/admin/:path*'],
+  matcher: ['/admin', '/admin/:path*', '/executives'],
 };

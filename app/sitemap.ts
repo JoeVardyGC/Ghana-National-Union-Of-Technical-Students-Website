@@ -74,7 +74,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       images: images(...innovations.map((i) => resolveInnovationImage(i.project_image))),
     },
     { url: absoluteUrl('/blog'), changeFrequency: 'daily', priority: 0.8, images: images(...newsCovers) },
-    { url: absoluteUrl('/executives'), changeFrequency: 'monthly', priority: 0.6, images: images(...executivePhotos) },
+    // /executives is left out: it redirects to the About page's leadership section (listed above)
     { url: absoluteUrl('/gallery'), changeFrequency: 'monthly', priority: 0.5, images: images(...gallery.map((g) => g.image)) },
     { url: absoluteUrl('/resources'), changeFrequency: 'monthly', priority: 0.6 },
     { url: absoluteUrl('/contact'), changeFrequency: 'yearly', priority: 0.5 },
