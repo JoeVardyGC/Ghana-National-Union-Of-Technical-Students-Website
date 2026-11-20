@@ -61,7 +61,7 @@ export default function OpportunitiesSection({ dbOpportunities = [] }: { dbOppor
                   {/* Type Badge */}
                   <div>
                     <span className={`inline-block px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider shadow-xs ${
-                      isGold ? 'bg-[#D9A000] text-[#014900]' : 'bg-[#014900] text-white'
+                      isGold ? 'bg-[#D9A000] text-white' : 'bg-[#014900] text-white'
                     }`}>
                       {(opp.type || 'OPPORTUNITY').replace(' ', '_').toUpperCase()}
                     </span>
@@ -90,8 +90,8 @@ export default function OpportunitiesSection({ dbOpportunities = [] }: { dbOppor
                     <Link
                       href={opp.link || '/scholarships'}
                       target={opp.link ? '_blank' : undefined}
-                      className={`text-xs font-extrabold uppercase tracking-wider transition-colors inline-flex items-center gap-1 ${
-                        isGold ? 'text-gold-ink hover:text-[#014900]' : 'text-[#014900] hover:text-gold-ink'
+                      className={`px-3.5 py-2 rounded-xl text-xs font-extrabold uppercase tracking-wider text-white shadow-xs transition-colors inline-flex items-center gap-1 ${
+                        isGold ? 'bg-[#D9A000]' : 'bg-[#014900] hover:bg-[#013300]'
                       }`}
                     >
                       Learn More →

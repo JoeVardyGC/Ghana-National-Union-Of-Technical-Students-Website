@@ -314,15 +314,19 @@ export default function ScholarshipsClient({
                           <button
                             type="button"
                             onClick={() => toggleRequirements(item.id)}
-                            className="w-full flex items-center justify-between p-2.5 sm:p-3 bg-[#D9A000]/10 hover:bg-[#D9A000]/20 border border-[#D9A000]/40 rounded-xl transition-colors text-left group/req cursor-pointer"
+                            className={`w-full flex items-center justify-between p-2.5 sm:p-3 border rounded-xl transition-colors text-left group/req cursor-pointer ${
+                              isGold
+                                ? 'bg-[#D9A000] border-[#D9A000]'
+                                : 'bg-[#D9A000]/10 hover:bg-[#D9A000]/20 border-[#D9A000]/40'
+                            }`}
                           >
                             <div className="flex items-center gap-2 min-w-0">
-                              <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#014900] shrink-0" />
-                              <span className="text-xs sm:text-xs font-extrabold text-[#014900] uppercase tracking-wider truncate">
+                              <FileText className={`w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 ${isGold ? 'text-white' : 'text-[#014900]'}`} />
+                              <span className={`text-xs sm:text-xs font-extrabold uppercase tracking-wider truncate ${isGold ? 'text-white' : 'text-[#014900]'}`}>
                                 {expandedRequirements[item.id] ? 'Hide Requirements' : 'View Requirements'}
                               </span>
                             </div>
-                            <ChevronDown className={`w-4 h-4 text-[#014900] transition-transform duration-300 shrink-0 ${
+                            <ChevronDown className={`w-4 h-4 ${isGold ? 'text-white' : 'text-[#014900]'} transition-transform duration-300 shrink-0 ${
                               expandedRequirements[item.id] ? 'rotate-180' : ''
                             }`} />
                           </button>
@@ -346,7 +350,7 @@ export default function ScholarshipsClient({
                                       <span className={`text-xs sm:text-xs font-extrabold uppercase px-2 py-0.5 rounded-full shrink-0 ${
                                         completedCount === totalReqs && totalReqs > 0
                                           ? 'bg-emerald-600 text-white'
-                                          : 'bg-[#D9A000] text-[#014900]'
+                                          : 'bg-[#D9A000] text-white'
                                       }`}>
                                         {completedCount}/{totalReqs} READY
                                       </span>
@@ -553,7 +557,7 @@ export default function ScholarshipsClient({
                         ) : (
                           <span className={`px-2.5 sm:px-3 py-1 text-xs sm:text-xs font-bold uppercase tracking-wider rounded-full border ${
                             isGold 
-                              ? 'bg-[#D9A000]/10 text-gold-ink border-[#D9A000]/40' 
+                              ? 'bg-[#D9A000] text-white border-[#D9A000]' 
                               : 'bg-emerald-50 text-[#014900] border-emerald-200'
                           }`}>
                             Active
