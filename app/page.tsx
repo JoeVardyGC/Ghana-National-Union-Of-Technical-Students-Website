@@ -14,8 +14,9 @@ export const revalidate = 15; // Incremental Static Regeneration for instant <5m
 export const metadata: Metadata = {
   // Both "GNUTS" and the full name up front, so the result matches either search
   title: { absolute: 'GNUTS | Ghana National Union of Technical Students - Official Website' },
+  // Also uses the everyday words people search with ("technical students union", "TVET students union")
   description:
-    'Official website of GNUTS, the Ghana National Union of Technical Students: scholarships, student innovations, news, executives and advocacy for technical university and TVET students across Ghana.',
+    'Official website of GNUTS, the Ghana National Union of Technical Students: the national technical students union for Technical University and TVET students in Ghana. Scholarships, news, innovations and advocacy.',
   alternates: { canonical: '/' },
   // When gnuts.org itself is shared, the preview shows the union's logo
   openGraph: {

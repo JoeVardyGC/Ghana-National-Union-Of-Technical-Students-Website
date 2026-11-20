@@ -24,7 +24,7 @@ const OG_LOGO = {
 };
 
 const SITE_DESCRIPTION =
-  'Official portal of the Ghana National Union of Technical Students (GNUTS). Serving technical university and TVET students across Ghana.';
+  'Official website of the Ghana National Union of Technical Students (GNUTS), the national technical students union for Technical University and TVET students across Ghana.';
 
 export const metadata: Metadata = {
   // Makes relative image and page URLs in metadata absolute (needed for share previews)
@@ -32,6 +32,18 @@ export const metadata: Metadata = {
   title: 'GNUTS | Ghana National Union of Technical Students',
   description: SITE_DESCRIPTION,
   applicationName: 'GNUTS',
+  // Hidden search terms (not shown on the page). Google gives these little weight; Bing and others still read them.
+  keywords: [
+    'GNUTS',
+    'GNUTS Ghana',
+    'Ghana National Union of Technical Students',
+    'technical students union',
+    'technical students union Ghana',
+    'union of technical students',
+    'TVET students union',
+    'technical university students Ghana',
+    'GNUPS',
+  ],
   // Default preview when a page is shared on WhatsApp, Facebook, X, LinkedIn
   openGraph: {
     type: 'website',

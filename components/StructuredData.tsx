@@ -25,14 +25,34 @@ export default function StructuredData({ settings }: { settings: SiteSettings })
     '@id': `${SITE_URL}/#organization`,
     name: 'Ghana National Union of Technical Students',
     // GNUTS and its spellings, plus the former name GNUPS (before polytechnics became technical universities)
-    alternateName: ['GNUTS', 'G.N.U.T.S.', 'GNUTS Ghana', 'Ghana National Union of Polytechnic Students', 'GNUPS'],
+    // and the descriptive names people search with when they don't know the full name
+    alternateName: [
+      'GNUTS',
+      'G.N.U.T.S.',
+      'GNUTS Ghana',
+      'Ghana National Union of Polytechnic Students',
+      'GNUPS',
+      'Technical Students Union of Ghana',
+      'Ghana Technical Students Union',
+      'National Union of Technical Students, Ghana',
+      'TVET Students Union of Ghana',
+    ],
+    // Tells search engines that "GNUTS" here means the student union, not groundnuts
+    disambiguatingDescription:
+      'GNUTS is the abbreviation of the Ghana National Union of Technical Students, the national student union of Technical Universities and TVET institutions in Ghana.',
+    knowsAbout: [
+      'Technical and Vocational Education and Training (TVET)',
+      'Technical universities in Ghana',
+      'Student representation and welfare',
+      'Scholarships for technical students',
+    ],
     foundingDate: '1987',
     slogan: 'Professionals with Integrity',
     url: absoluteUrl('/'),
     logo: absoluteUrl('/images/gnuts_logo.png'),
     image: absoluteUrl('/images/carousel_1.jpg'),
     description:
-      'The Ghana National Union of Technical Students (GNUTS) is the national representative body of students in Technical Universities and TVET institutions across Ghana.',
+      'The Ghana National Union of Technical Students (GNUTS) is the national technical students union of Ghana, representing students in Technical Universities and TVET institutions across the country.',
     email: settings.secretariatEmail || undefined,
     telephone: settings.hotlinePhone || undefined,
     address: {
