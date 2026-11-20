@@ -154,7 +154,10 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 3. Available Scholarships Section */}
+      {/* 3. News & Events Section (right after About: the most often updated content) */}
+      <NewsSection dbNews={news} />
+
+      {/* 4. Available Scholarships Section */}
       <section className="py-10 sm:py-16 lg:py-24 bg-white border-y border-gray-200" id="scholarships-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-3">
@@ -196,7 +199,7 @@ export default async function HomePage() {
                       <div className="flex justify-between items-start gap-2 flex-wrap min-w-0">
                         <span
                           className={`px-2.5 sm:px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider shrink-0 shadow-xs ${
-                            isGold ? 'bg-[#D9A000] text-[#014900]' : 'bg-[#014900] text-white'
+                            isGold ? 'bg-[#D9A000] text-white' : 'bg-[#014900] text-white'
                           }`}
                         >
                           {item.status ? item.status.toUpperCase() : 'ACTIVE'}
@@ -223,8 +226,8 @@ export default async function HomePage() {
                         </span>
                       )}
                       <span
-                        className={`text-xs font-extrabold uppercase tracking-wider transition-colors inline-flex items-center gap-1 ${
-                          isGold ? 'text-gold-ink group-hover:text-[#014900]' : 'text-[#014900] group-hover:text-gold-ink'
+                        className={`self-start px-3.5 py-2 rounded-xl text-xs font-extrabold uppercase tracking-wider text-white shadow-xs transition-colors inline-flex items-center gap-1 ${
+                          isGold ? 'bg-[#D9A000]' : 'bg-[#014900] group-hover:bg-[#013300]'
                         }`}
                       >
                         <span>View Requirements & Apply →</span>
@@ -238,14 +241,11 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 4. Opportunities Section */}
+      {/* 5. Opportunities Section */}
       <OpportunitiesSection dbOpportunities={opportunities} />
 
-      {/* 5. Student Innovations Section (Latest 2 Projects) */}
+      {/* 6. Student Innovations Section (Latest 2 Projects) */}
       <InnovationsSection dbInnovations={innovations} />
-
-      {/* 6. News & Events Section */}
-      <NewsSection dbNews={news} />
 
       {/* 7. Executive Leadership Section (always shown; the menu's "Our Leadership" links here) */}
         <section id="executives-section" className="py-16 sm:py-24 bg-white border-b border-gray-200 scroll-mt-20">
