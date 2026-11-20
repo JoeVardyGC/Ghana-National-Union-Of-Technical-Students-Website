@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { scrollToTopSmooth } from '@/components/ScrollToTopOnMount';
 import Link from 'next/link';
 
 interface NewsItem {
@@ -26,7 +27,7 @@ export default function NewsSection({ dbNews = [] }: { dbNews?: NewsItem[] }) {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-3">
           <div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#014900] tracking-tight uppercase">News & Events</h2>
-            <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-2.5 sm:my-3" />
+            <div className="w-16 h-1.5 bg-gold-ink rounded-full my-2.5 sm:my-3" />
             <p className="text-gray-500 text-xs sm:text-sm lg:text-base font-medium">
               Latest announcements, statements, and national activities
             </p>
@@ -58,10 +59,12 @@ export default function NewsSection({ dbNews = [] }: { dbNews?: NewsItem[] }) {
               <Link
                 key={item.id || idx}
                 href={`/blog/${item.id || idx + 1}`}
+                onClick={scrollToTopSmooth}
                 className="bg-white rounded-2xl sm:rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col overflow-hidden group cursor-pointer h-full min-w-0 w-full"
               >
-                {/* Poster Flyer Container — Responsive height with top curved corners */}
-                <div className="w-full h-64 sm:h-80 md:h-[380px] lg:h-[420px] relative overflow-hidden bg-gray-900 shrink-0 rounded-t-2xl sm:rounded-t-3xl">
+                {/* Poster Flyer Container: same proportion as the News page cards
+                    (height is 7/6 of the card width, ~400px on a phone) */}
+                <div className="w-full aspect-[6/7] relative overflow-hidden bg-gray-900 shrink-0 rounded-t-2xl sm:rounded-t-3xl">
                   <img
                     src={imgUrl}
                     alt={`${item.title} | GNUTS`}
@@ -70,7 +73,7 @@ export default function NewsSection({ dbNews = [] }: { dbNews?: NewsItem[] }) {
                     className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
                   />
                   {/* Gold Accent Bar */}
-                  <div className="absolute bottom-0 inset-x-0 h-1.5 bg-[#D9A000] z-20" />
+                  <div className="absolute bottom-0 inset-x-0 h-1.5 bg-gold-ink z-20" />
                 </div>
 
                 {/* Content Section */}

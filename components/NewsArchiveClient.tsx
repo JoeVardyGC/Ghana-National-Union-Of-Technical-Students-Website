@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { scrollToTopSmooth } from '@/components/ScrollToTopOnMount';
 import Link from 'next/link';
 import { Calendar, ChevronLeft, ChevronRight, Search, X, SlidersHorizontal, Sparkles } from 'lucide-react';
 import { NewsItem } from '@/lib/newsData';
@@ -30,20 +31,22 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
       const title = (item.title || '').toLowerCase();
       const content = (item.content || '').toLowerCase();
       const author = (item.author || '').toLowerCase();
-      const cat = (item.category || '').toUpperCase();
+      const cat = (item.category || '').toLowerCase();
 
       const matchesSearch = title.includes(q) || content.includes(q) || author.includes(q);
 
+      // title/content/cat are lowercased above, so compare against lowercase keywords
       let matchesCat = true;
       if (selectedCategory !== 'ALL') {
         if (selectedCategory === 'COMMUNIQUE') {
-          matchesCat = cat.includes('COMMUNIQUE') || title.includes('COMMUNIQUÉ') || title.includes('COMMUNIQUE');
+          matchesCat = cat.includes('communique') || title.includes('communiqué') || title.includes('communique');
         } else if (selectedCategory === 'PRESS') {
-          matchesCat = cat.includes('PRESS') || title.includes('PRESS');
+          matchesCat = cat.includes('press') || title.includes('press');
         } else if (selectedCategory === 'POLICY') {
-          matchesCat = cat.includes('POLICY') || title.includes('POLICY') || content.includes('TVET');
+          matchesCat = cat.includes('policy') || title.includes('policy') || content.includes('tvet');
         } else if (selectedCategory === 'CONGRESS') {
-          matchesCat = cat.includes('CONGRESS') || title.includes('CONGRESS');
+          // Also match posts tagged "#Congress" in their content
+          matchesCat = cat.includes('congress') || title.includes('congress') || content.includes('#congress');
         }
       }
 
@@ -142,10 +145,12 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
             <Link
               key={item.id || idx}
               href={`/blog/${item.id}`}
+              onClick={scrollToTopSmooth}
               className="bg-white rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col overflow-hidden group cursor-pointer h-full"
             >
-              {/* Poster Flyer Container — Tall generous height matching Home page */}
-              <div className="w-full h-80 sm:h-[400px] lg:h-[440px] relative overflow-hidden bg-gray-900 shrink-0 rounded-t-3xl">
+              {/* Poster Flyer Container: height is 7/6 of the card width (~400px on a phone),
+                  so the same proportion of each flyer shows on every screen size */}
+              <div className="w-full aspect-[6/7] relative overflow-hidden bg-gray-900 shrink-0 rounded-t-3xl">
                 <img
                   src={imgUrl}
                   alt={`${item.title} | GNUTS`}
@@ -157,7 +162,7 @@ export default function NewsArchiveClient({ newsList }: NewsArchiveClientProps) 
                   className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
                 />
                 {/* Gold Accent Bar */}
-                <div className="absolute bottom-0 inset-x-0 h-1.5 bg-[#D9A000] z-20" />
+                <div className="absolute bottom-0 inset-x-0 h-1.5 bg-gold-ink z-20" />
               </div>
 
               {/* Content Section */}

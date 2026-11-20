@@ -1,8 +1,10 @@
 import Skeleton from '@/components/Skeleton';
+import ScrollToTopOnMount from '@/components/ScrollToTopOnMount';
 
 export default function ArticleLoading() {
   return (
     <div className="w-full min-h-screen bg-gray-50 font-sans pb-24">
+      <ScrollToTopOnMount />
       {/* Header Banner Skeleton */}
       <div className="bg-[#014900] text-white py-16 px-4">
         <div className="max-w-4xl mx-auto space-y-4">

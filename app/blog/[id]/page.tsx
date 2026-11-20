@@ -9,6 +9,7 @@ import { resolveImgUrl, formatDate, stripHtml } from '@/lib/imageUtils';
 import { getSiteSettings } from '@/lib/siteSettings';
 import { absoluteUrl, SITE_URL } from '@/lib/siteUrl';
 import { telHref } from '@/lib/siteSettingsShared';
+import ScrollToTopOnMount from '@/components/ScrollToTopOnMount';
 
 export const revalidate = 15;
 
@@ -161,6 +162,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#f8f9fa]">
+      <ScrollToTopOnMount />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(newsJsonLd).replace(/</g, '\\u003c') }}
