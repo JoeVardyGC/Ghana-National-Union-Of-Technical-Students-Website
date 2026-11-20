@@ -472,8 +472,8 @@ export default async function AboutPage() {
                 </p>
               </div>
 
-              {/* Responsive Grid: 1 per row on Mobile, 2 on Tablet, 4 on Desktop */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-6 lg:gap-8">
+              {/* Same grid and card width as the news cards: 1 per row on phones, 2 on tablets, 3 on desktop. The square photo grows with the card */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
                 {executives.map((exec: any, idx: number) => {
                   const cardBgColors = ['#014900', '#013300', '#025202', '#012800'];
                   const bgCol = cardBgColors[idx % cardBgColors.length];
@@ -482,7 +482,7 @@ export default async function AboutPage() {
                   return (
                     <div 
                       key={exec.id || idx}
-                      className="group flex flex-col bg-white rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden max-w-[290px] mx-auto sm:max-w-none w-full"
+                      className="group flex flex-col bg-white rounded-3xl border border-gray-200/90 shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden w-full"
                     >
                       {/* Photo container with balanced square aspect ratio */}
                       <div className="relative aspect-[1/1] w-full overflow-hidden bg-gray-900 rounded-t-3xl" style={{ backgroundColor: bgCol }}>
