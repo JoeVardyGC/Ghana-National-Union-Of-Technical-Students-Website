@@ -79,7 +79,7 @@ function getCategoryColor(cat?: string) {
     case "Mechanical Engineering":
       return "bg-slate-500/10 text-slate-800 border-slate-500/30";
     case "AgTech & Automation":
-      return "bg-amber-500/10 text-amber-800 border-amber-500/30";
+      return "bg-[#D9A000]/10 text-[#D9A000] border-[#D9A000]/30";
     case "Software & AI":
       return "bg-blue-500/10 text-blue-700 border-blue-500/30";
     default:
@@ -211,7 +211,7 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
           <button
             type="button"
             onClick={() => setIsSubmitModalOpen(true)}
-            className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-3 sm:py-4 bg-[#D9A000] hover:bg-[#b88800] active:scale-95 text-[#014900] text-xs sm:text-sm font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all duration-300 shadow-xl cursor-pointer"
+            className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-3 sm:py-4 bg-[#D9A000] hover:bg-[#D9A000] active:scale-95 text-[#014900] text-xs sm:text-sm font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all duration-300 shadow-xl cursor-pointer"
           >
             <PlusCircle className="w-4 h-4 sm:w-5 sm:h-5" />
             <span>Submit Your Innovation</span>
@@ -346,7 +346,7 @@ export default function InnovationsClient({ dbInnovations = [] }: { dbInnovation
                     <div className="p-4 sm:p-6 pt-0">
                       <span className={`inline-flex items-center justify-center w-full px-4 sm:px-5 py-2.5 sm:py-3 text-xs font-extrabold uppercase tracking-wider sm:tracking-widest rounded-xl sm:rounded-2xl transition-all duration-300 shadow-xs ${
                         isGold
-                          ? 'bg-[#D9A000] group-hover:bg-[#b88800] text-[#014900]'
+                          ? 'bg-[#D9A000] group-hover:bg-[#D9A000] text-[#014900]'
                           : 'bg-[#014900] group-hover:bg-[#013300] text-white'
                       }`}>
                         <span>Explore Project</span>

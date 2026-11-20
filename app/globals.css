@@ -6,9 +6,9 @@
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-display: 'Montserrat Variable', ui-sans-serif, system-ui, sans-serif;
 
-  /* Darker gold for TEXT on white/light backgrounds (5.3:1 contrast).
-     Keep the bright #D9A000 for backgrounds, bars, icons and text on green. */
-  --color-gold-ink: #8A6500;
+  /* Text gold: the same GNUTS gold #D9A000 used for bars and backgrounds (one gold everywhere).
+     Kept as a token so it can be adjusted in one place. */
+  --color-gold-ink: #D9A000;
 }
 
 @layer base {
@@ -16,7 +16,7 @@
     --primary: #014900;
     --primary-dark: #003300;
     --secondary: #D9A000;
-    --secondary-hover: #b88800;
+    --secondary-hover: #D9A000;
     --dark: #1a1a1a;
     --light-bg: #f8f9fa;
   }

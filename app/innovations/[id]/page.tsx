@@ -602,7 +602,7 @@ export default async function InnovationDetailPage({ params }: { params: Promise
                 <div className="pt-2">
                   <Link
                     href="/innovations"
-                    className="inline-block px-5 py-2.5 bg-[#D9A000] hover:bg-[#b88800] text-[#014900] text-xs font-extrabold uppercase tracking-wider rounded-2xl transition-all shadow-sm"
+                    className="inline-block px-5 py-2.5 bg-[#D9A000] hover:bg-[#D9A000] text-[#014900] text-xs font-extrabold uppercase tracking-wider rounded-2xl transition-all shadow-sm"
                   >
                     Submit Project →
                   </Link>

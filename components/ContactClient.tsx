@@ -451,7 +451,7 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
           <div className="flex flex-wrap items-center gap-3">
             <a
               href={telHref(settings.hotlinePhone)}
-              className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#D9A000] hover:bg-[#b88800] text-[#014900] text-sm font-bold rounded-2xl transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#D9A000] hover:bg-[#D9A000] text-[#014900] text-sm font-bold rounded-2xl transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
             >
               <Phone className="w-3.5 h-3.5 text-[#014900]" />
               <span>Call us now</span>

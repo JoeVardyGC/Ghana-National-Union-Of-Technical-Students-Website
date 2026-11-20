@@ -136,10 +136,12 @@ export default function ScholarshipsClient({
         item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
         (item.location && item.location.toLowerCase().includes(searchQuery.toLowerCase()));
       
+      // Types are saved in lowercase ('internship', 'skill_camp'), so compare case-insensitively
+      const type = String(item.type || '').toLowerCase().replace(/[\s-]+/g, '_');
       let matchesCat = true;
       if (selectedCategory === 'SCHOLARSHIPS') matchesCat = false;
-      if (selectedCategory === 'INTERNSHIPS') matchesCat = item.type === 'INTERNSHIP';
-      if (selectedCategory === 'SKILL_CAMPS') matchesCat = item.type === 'SKILL_CAMP';
+      if (selectedCategory === 'INTERNSHIPS') matchesCat = type === 'internship';
+      if (selectedCategory === 'SKILL_CAMPS') matchesCat = type === 'skill_camp';
 
       return matchesSearch && matchesCat;
     });
@@ -279,14 +281,14 @@ export default function ScholarshipsClient({
                       {/* Badge Header: Active Badge + Urgency Pill */}
                       <div className="flex items-center justify-between gap-2 flex-wrap min-w-0">
                         <span className={`inline-block px-2.5 sm:px-3 py-1 text-xs sm:text-xs font-bold uppercase tracking-wider rounded-full shadow-xs ${
-                          isGold ? 'bg-[#D9A000] text-[#014900]' : 'bg-[#014900] text-white'
+                          isGold ? 'bg-[#D9A000] text-white' : 'bg-[#014900] text-white'
                         }`}>
                           Active
                         </span>
 
                         {urgency && (
                           <span className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-extrabold uppercase tracking-wider rounded-full text-white ${
-                            urgency.isUrgent ? 'bg-[#D9A000] animate-pulse' : 'bg-amber-600'
+                            urgency.isUrgent ? 'bg-[#D9A000] animate-pulse' : 'bg-[#D9A000]'
                           }`}>
                             <AlertCircle className="w-3 h-3 shrink-0" />
                             <span>{urgency.text}</span>
@@ -312,7 +314,7 @@ export default function ScholarshipsClient({
                           <button
                             type="button"
                             onClick={() => toggleRequirements(item.id)}
-                            className="w-full flex items-center justify-between p-2.5 sm:p-3 bg-amber-50/60 hover:bg-amber-100/70 border border-amber-200/60 rounded-xl transition-colors text-left group/req cursor-pointer"
+                            className="w-full flex items-center justify-between p-2.5 sm:p-3 bg-[#D9A000]/10 hover:bg-[#D9A000]/20 border border-[#D9A000]/40 rounded-xl transition-colors text-left group/req cursor-pointer"
                           >
                             <div className="flex items-center gap-2 min-w-0">
                               <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#014900] shrink-0" />
@@ -326,7 +328,7 @@ export default function ScholarshipsClient({
                           </button>
 
                           {expandedRequirements[item.id] && (
-                            <div className="mt-2 p-3 sm:p-4 bg-amber-50/40 border border-amber-200/70 rounded-xl sm:rounded-2xl space-y-2.5 animate-fadeIn">
+                            <div className="mt-2 p-3 sm:p-4 bg-[#D9A000]/5 border border-[#D9A000]/40 rounded-xl sm:rounded-2xl space-y-2.5 animate-fadeIn">
                               {(() => {
                                 const reqLines = item.requirements
                                   ? item.requirements.split(/\r?\n/).map(l => l.trim()).filter(Boolean)
@@ -336,7 +338,7 @@ export default function ScholarshipsClient({
 
                                 return (
                                   <>
-                                    <div className="flex items-center justify-between gap-2 border-b border-amber-200/50 pb-2">
+                                    <div className="flex items-center justify-between gap-2 border-b border-[#D9A000]/30 pb-2">
                                       <h4 className="text-xs sm:text-xs font-extrabold text-[#014900] uppercase tracking-wider flex items-center gap-1.5 truncate">
                                         <FileText className="w-3.5 h-3.5 text-[#D9A000] shrink-0" />
                                         <span className="truncate">Application Checklist</span>
@@ -363,7 +365,7 @@ export default function ScholarshipsClient({
                                             className={`w-full flex items-start gap-2 text-left text-xs p-2 sm:p-2.5 rounded-lg sm:rounded-xl transition-all border cursor-pointer ${
                                               isChecked
                                                 ? 'bg-emerald-50/90 border-emerald-300 text-[#014900] shadow-xs'
-                                                : 'bg-white/90 border-amber-200/60 text-gray-700 hover:border-amber-300 hover:bg-amber-50/30'
+                                                : 'bg-white/90 border-[#D9A000]/40 text-gray-700 hover:border-[#D9A000]/60 hover:bg-[#D9A000]/5'
                                             }`}
                                           >
                                             {isChecked ? (
@@ -411,7 +413,7 @@ export default function ScholarshipsClient({
                           target="_blank"
                           rel="noopener noreferrer"
                           className={`inline-flex items-center justify-center gap-2 w-full px-4 sm:px-6 py-2.5 sm:py-3 text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all duration-300 shadow-xs hover:shadow ${
-                            isGold ? 'bg-[#D9A000] hover:bg-[#b88800] text-[#014900]' : 'bg-[#014900] hover:bg-[#013300] text-white'
+                            isGold ? 'bg-[#D9A000] hover:bg-[#D9A000] text-white' : 'bg-[#014900] hover:bg-[#013300] text-white'
                           }`}
                         >
                           <span>Apply Now</span>
@@ -511,7 +513,13 @@ export default function ScholarshipsClient({
             <div className="text-center py-12 px-6 bg-white rounded-2xl sm:rounded-3xl border border-gray-200 shadow-sm max-w-xl mx-auto">
               <div className="text-4xl mb-3">💼</div>
               <p className="text-gray-500 font-medium text-xs sm:text-sm">
-                No matching opportunities found for "{searchQuery}".
+                {searchQuery
+                  ? `No matching opportunities found for "${searchQuery}". Try clearing your search term.`
+                  : selectedCategory === 'INTERNSHIPS'
+                    ? 'No internships are open right now. Check back soon.'
+                    : selectedCategory === 'SKILL_CAMPS'
+                      ? 'No skill camps are open right now. Check back soon.'
+                      : 'No opportunities are open right now. Check back soon.'}
               </p>
             </div>
           ) : (
@@ -530,14 +538,14 @@ export default function ScholarshipsClient({
                       {/* Header Badges */}
                       <div className="flex items-center justify-between gap-2 flex-wrap min-w-0">
                         <span className={`px-2.5 sm:px-3 py-1 text-xs sm:text-xs font-bold uppercase tracking-wider rounded-full ${
-                          isGold ? 'bg-[#D9A000] text-[#014900]' : 'bg-[#014900] text-white'
+                          isGold ? 'bg-[#D9A000] text-white' : 'bg-[#014900] text-white'
                         }`}>
                           {typeDisplay}
                         </span>
                         
                         {urgency ? (
                           <span className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-extrabold uppercase tracking-wider rounded-full text-white ${
-                            urgency.isUrgent ? 'bg-[#D9A000] animate-pulse' : 'bg-amber-600'
+                            urgency.isUrgent ? 'bg-[#D9A000] animate-pulse' : 'bg-[#D9A000]'
                           }`}>
                             <AlertCircle className="w-3 h-3 shrink-0" />
                             <span>{urgency.text}</span>
@@ -545,7 +553,7 @@ export default function ScholarshipsClient({
                         ) : (
                           <span className={`px-2.5 sm:px-3 py-1 text-xs sm:text-xs font-bold uppercase tracking-wider rounded-full border ${
                             isGold 
-                              ? 'bg-amber-50 text-gold-ink border-amber-200' 
+                              ? 'bg-[#D9A000]/10 text-gold-ink border-[#D9A000]/40' 
                               : 'bg-emerald-50 text-[#014900] border-emerald-200'
                           }`}>
                             Active
@@ -598,7 +606,7 @@ export default function ScholarshipsClient({
                           target="_blank"
                           rel="noopener noreferrer"
                           className={`inline-flex items-center justify-center gap-2 w-full px-4 sm:px-6 py-2.5 sm:py-3 text-xs font-extrabold uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all duration-300 shadow-xs hover:shadow ${
-                            isGold ? 'bg-[#D9A000] hover:bg-[#b88800] text-[#014900]' : 'bg-[#014900] hover:bg-[#013300] text-white'
+                            isGold ? 'bg-[#D9A000] hover:bg-[#D9A000] text-white' : 'bg-[#014900] hover:bg-[#013300] text-white'
                           }`}
                         >
                           <span>Apply Now</span>

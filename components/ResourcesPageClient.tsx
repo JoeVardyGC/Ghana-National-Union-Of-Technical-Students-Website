@@ -120,7 +120,7 @@ export default function ResourcesPageClient({
       {/* Resource Cards Grid */}
       {filteredResources.length === 0 ? (
         <div className="text-center py-16 px-6 bg-white rounded-3xl border border-gray-200 shadow-sm max-w-xl mx-auto space-y-3">
-          <div className="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mx-auto text-2xl">
+          <div className="w-14 h-14 rounded-2xl bg-[#D9A000]/10 text-[#D9A000] flex items-center justify-center mx-auto text-2xl">
             📜
           </div>
           <h4 className="text-lg font-extrabold text-gray-900">No Documents Found</h4>

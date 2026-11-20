@@ -38,7 +38,7 @@ const UNIVERSITIES: University[] = [
     students: '16,200+ Students',
     srcPresident: 'H.E. Emmanuel Frempong',
     established: '1954',
-    badgeColor: 'bg-amber-600',
+    badgeColor: 'bg-[#D9A000]',
     bgGradient: 'from-amber-900 to-yellow-950',
   },
   {
@@ -98,7 +98,7 @@ const UNIVERSITIES: University[] = [
     students: '10,500+ Students',
     srcPresident: 'H.E. Abdul-Rahman Yakubu',
     established: '1984',
-    badgeColor: 'bg-yellow-600',
+    badgeColor: 'bg-[#D9A000]',
     bgGradient: 'from-amber-800 to-yellow-950',
   },
   {
