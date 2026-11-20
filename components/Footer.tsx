@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import { Mail, Phone, Smartphone, MapPin } from 'lucide-react';
 import { telHref, type SiteSettings } from '@/lib/siteSettingsShared';
+import { NAV_LINKS } from '@/lib/navLinks';
 
-export default function Footer({ settings, hasGallery = true }: { settings: SiteSettings; hasGallery?: boolean }) {
+// hasGallery is accepted for compatibility; Quick Links now mirror the navbar exactly
+export default function Footer({ settings }: { settings: SiteSettings; hasGallery?: boolean }) {
   return (
     <footer className="bg-[#0e160f] text-gray-300 pt-16 pb-8 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -78,44 +80,15 @@ export default function Footer({ settings, hasGallery = true }: { settings: Site
             <h4 className="text-base font-extrabold text-[#D9A000] uppercase tracking-wider">
               Quick Links
             </h4>
+            {/* Same links, names and order as the navbar (lib/navLinks.ts) */}
             <ul className="space-y-2.5 text-xs sm:text-sm text-gray-300">
-              <li>
-                <Link href="/" className="hover:text-[#D9A000] transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-[#D9A000] transition-colors">
-                  About GNUTS
-                </Link>
-              </li>
-              <li>
-                <Link href="/scholarships" className="hover:text-[#D9A000] transition-colors">
-                  Scholarships & Opportunities
-                </Link>
-              </li>
-              <li>
-                <Link href="/innovations" className="hover:text-[#D9A000] transition-colors">
-                  Student Innovations
-                </Link>
-              </li>
-              {hasGallery && (
-              <li>
-                <Link href="/gallery" className="hover:text-[#D9A000] transition-colors">
-                  Legacy & Leadership Gallery
-                </Link>
-              </li>
-              )}
-              <li>
-                <Link href="/blog" className="hover:text-[#D9A000] transition-colors">
-                  News & Editorial
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:text-[#D9A000] transition-colors">
-                  Contact Us
-                </Link>
-              </li>
+              {NAV_LINKS.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="hover:text-[#D9A000] transition-colors">
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

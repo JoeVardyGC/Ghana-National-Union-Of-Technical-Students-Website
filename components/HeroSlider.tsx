@@ -48,6 +48,8 @@ const PHP_HERO_SLIDES: Slide[] = [
 interface StatsProps {
   projectsCount?: number;
   scholarshipsCount?: number;
+  /** From Admin > Settings; goes up by one every January */
+  advocacyYears?: number;
 }
 
 export interface CarouselSlideProp {
@@ -314,8 +316,8 @@ export default function HeroSlider({
               </div>
               <div>
                 <h4 className="text-xl sm:text-2xl font-extrabold text-[#014900] leading-none">
-                  {/* Founded in 1987 as GNUPS (renamed GNUTS in 2016) */}
-                  <AnimatedCounter value={new Date().getFullYear() - 1987} suffix="+ Yrs" />
+                  {/* Set in Admin > Settings (34 in 2026) and counts up every January */}
+                  <AnimatedCounter value={stats?.advocacyYears ?? 34} suffix="+ Yrs" />
                 </h4>
                 <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mt-1">Years of Advocacy</p>
               </div>

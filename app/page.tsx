@@ -7,6 +7,8 @@ import InnovationsSection from '@/components/InnovationsSection';
 import UnionCtaBanner from '@/components/UnionCtaBanner';
 import NewsSection from '@/components/NewsSection';
 import { resolveImgUrl } from '@/lib/imageUtils';
+import { getSiteSettings } from '@/lib/siteSettings';
+import { currentAdvocacyYears } from '@/lib/siteSettingsShared';
 import { Layers, Clock, MessageSquare, Mail, Phone, Share2 } from 'lucide-react';
 
 export const revalidate = 15; // Incremental Static Regeneration for instant <5ms loads
@@ -53,7 +55,8 @@ export default async function HomePage() {
     news,
     statsResult,
     scholarshipsCountResult,
-    carouselSlidesResult
+    carouselSlidesResult,
+    siteSettings
   ] = await Promise.all([
     query('SELECT * FROM scholarships WHERE status = "active" ORDER BY created_at DESC LIMIT 3').catch(() => []),
     query('SELECT * FROM opportunities WHERE status = "active" ORDER BY created_at DESC LIMIT 4').catch(() => []),
@@ -63,6 +66,7 @@ export default async function HomePage() {
     query('SELECT COUNT(*) as count FROM innovations WHERE status = "approved"').catch(() => [{ count: 0 }]),
     query('SELECT COUNT(*) as count FROM scholarships WHERE status = "active"').catch(() => [{ count: 0 }]),
     query('SELECT * FROM hero_banners WHERE page_key = "home_carousel" ORDER BY display_order ASC, id ASC').catch(() => []),
+    getSiteSettings(),
   ]);
 
   const projectsCount = statsResult[0]?.count ?? 0;
@@ -82,7 +86,7 @@ export default async function HomePage() {
     <>
       <div className="flex flex-col min-h-screen bg-[#f8f9fa] overflow-x-hidden">
         {/* 1. Hero Section + Floating Stats Overlay */}
-        <HeroSlider stats={{ projectsCount, scholarshipsCount }} carouselSlides={carouselSlides} />
+        <HeroSlider stats={{ projectsCount, scholarshipsCount, advocacyYears: currentAdvocacyYears(siteSettings) }} carouselSlides={carouselSlides} />
 
         {/* 2. About GNUTS Section */}
         <section className="relative py-16 sm:py-24 bg-white overflow-hidden" id="about-section">

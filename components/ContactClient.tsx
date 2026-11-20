@@ -98,17 +98,17 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
           <div className="space-y-3.5">
             
             {/* Phone Card */}
-            <div className="group p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
-              <div className="flex items-center gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-[#014900] group-hover:bg-[#D9A000] text-white group-hover:text-[#014900] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
-                  <Phone className="w-4 h-4" />
+            <div className="group p-3 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-[#014900] group-hover:bg-[#D9A000] text-white group-hover:text-[#014900] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
+                  <Phone className="w-3.5 h-3.5" />
                 </div>
                 <div>
                   <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Phone Lines</h3>
-                  <div className="text-sm sm:text-base font-semibold text-gray-900 flex flex-col pt-0.5">
-                    <a href={telHref(settings.hotlinePhone)} className="hover:text-[#014900] transition-colors">{settings.hotlinePhone} <span className="text-sm text-gray-600 font-normal">(Secretariat Desk)</span></a>
+                  <div className="text-sm font-semibold text-gray-900 flex flex-col pt-0.5">
+                    <a href={telHref(settings.hotlinePhone)} className="hover:text-[#014900] transition-colors">{settings.hotlinePhone} <span className="text-xs text-gray-600 font-normal">(Secretariat Desk)</span></a>
                     {settings.mobilePhone && (
-                      <a href={telHref(settings.mobilePhone)} className="hover:text-[#014900] transition-colors text-sm text-gray-600 font-normal">{settings.mobilePhone} (Mobile / WhatsApp)</a>
+                      <a href={telHref(settings.mobilePhone)} className="hover:text-[#014900] transition-colors text-xs text-gray-600 font-normal">{settings.mobilePhone} (Mobile / WhatsApp)</a>
                     )}
                   </div>
                 </div>
@@ -116,14 +116,14 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
             </div>
 
             {/* Email Card */}
-            <div className="group p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
-              <div className="flex items-center gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-[#014900] group-hover:bg-[#D9A000] text-white group-hover:text-[#014900] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
-                  <Mail className="w-4 h-4" />
+            <div className="group p-3 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-[#014900] group-hover:bg-[#D9A000] text-white group-hover:text-[#014900] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
+                  <Mail className="w-3.5 h-3.5" />
                 </div>
                 <div>
                   <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Email Address</h3>
-                  <div className="text-sm sm:text-base font-semibold text-gray-900 flex flex-col pt-0.5">
+                  <div className="text-sm font-semibold text-gray-900 flex flex-col pt-0.5">
                     <a href={`mailto:${settings.secretariatEmail}`} className="hover:text-[#014900] transition-colors">{settings.secretariatEmail}</a>
                   </div>
                 </div>
@@ -131,35 +131,35 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
             </div>
 
             {/* Location Card */}
-            <div className="group p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
-              <div className="flex items-center gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-[#014900] group-hover:bg-[#D9A000] text-white group-hover:text-[#014900] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
-                  <MapPin className="w-4 h-4" />
+            <div className="group p-3 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-[#014900] group-hover:bg-[#D9A000] text-white group-hover:text-[#014900] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
+                  <MapPin className="w-3.5 h-3.5" />
                 </div>
                 <div>
                   <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">National Secretariat Location</h3>
-                  <p className="text-sm sm:text-base font-semibold text-gray-900 leading-snug pt-0.5">
+                  <p className="text-sm font-semibold text-gray-900 leading-snug pt-0.5">
                     {settings.headquartersAddress}
                   </p>
                   {settings.postalAddress && (
-                    <p className="text-sm text-gray-600">{settings.postalAddress}</p>
+                    <p className="text-xs text-gray-600">{settings.postalAddress}</p>
                   )}
                 </div>
               </div>
             </div>
 
             {/* Office Hours Card */}
-            <div className="group p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
-              <div className="flex items-center gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-[#014900] group-hover:bg-[#D9A000] text-white group-hover:text-[#014900] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
-                  <Clock className="w-4 h-4" />
+            <div className="group p-3 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-[#014900] group-hover:bg-[#D9A000] text-white group-hover:text-[#014900] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-sm">
+                  <Clock className="w-3.5 h-3.5" />
                 </div>
                 <div>
                   <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Working Hours</h3>
-                  <p className="text-sm sm:text-base font-semibold text-gray-900 pt-0.5">
+                  <p className="text-sm font-semibold text-gray-900 pt-0.5">
                     Monday – Friday: 8:00 AM – 5:00 PM
                   </p>
-                  <p className="text-sm text-gray-600">Weekends & Holidays: Closed for public inquiries</p>
+                  <p className="text-xs text-gray-600">Weekends & Holidays: Closed for public inquiries</p>
                 </div>
               </div>
             </div>
@@ -451,18 +451,18 @@ export default function ContactClient({ settings }: { settings: SiteSettings }) 
           <div className="flex flex-wrap items-center gap-3">
             <a
               href={telHref(settings.hotlinePhone)}
-              className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#D9A000] hover:bg-[#b88800] text-[#014900] text-sm font-extrabold uppercase tracking-wider rounded-2xl transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#D9A000] hover:bg-[#b88800] text-[#014900] text-sm font-bold rounded-2xl transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
             >
               <Phone className="w-3.5 h-3.5 text-[#014900]" />
-              <span>Call Us Now</span>
+              <span>Call us now</span>
             </a>
 
             <a
               href={`mailto:${settings.secretariatEmail}`}
-              className="inline-flex items-center gap-2 px-6 py-3.5 bg-white hover:bg-gray-100 text-[#014900] text-sm font-extrabold uppercase tracking-wider rounded-2xl transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-6 py-3.5 bg-white hover:bg-gray-100 text-[#014900] text-sm font-bold rounded-2xl transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5"
             >
               <Mail className="w-3.5 h-3.5 text-[#014900]" />
-              <span>Email Secretariat</span>
+              <span>Email secretariat</span>
             </a>
           </div>
         </div>

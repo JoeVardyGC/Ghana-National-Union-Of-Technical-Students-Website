@@ -146,12 +146,32 @@ export default function ScholarshipsClient({
   }, [activeOpportunities, searchQuery, selectedCategory]);
 
   // Alert Handler
-  const handleAlertSubscribe = (e: React.FormEvent) => {
+  // Saves the sign-up (Admin > Alert Subscribers lists everyone who signed up)
+  const [alertError, setAlertError] = useState('');
+  const [alertSending, setAlertSending] = useState(false);
+  const handleAlertSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (alertPhoneOrEmail.trim()) {
-      setAlertSuccess(true);
-      setTimeout(() => setAlertSuccess(false), 5000);
-      setAlertPhoneOrEmail('');
+    if (!alertPhoneOrEmail.trim() || alertSending) return;
+    setAlertError('');
+    setAlertSending(true);
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contact: alertPhoneOrEmail, source: 'scholarships' }),
+      });
+      const data = await res.json().catch(() => null);
+      if (res.ok && data?.success) {
+        setAlertSuccess(true);
+        setTimeout(() => setAlertSuccess(false), 5000);
+        setAlertPhoneOrEmail('');
+      } else {
+        setAlertError(data?.error || 'Could not sign you up. Please try again.');
+      }
+    } catch {
+      setAlertError('Network error. Please try again.');
+    } finally {
+      setAlertSending(false);
     }
   };
 
@@ -455,10 +475,14 @@ export default function ScholarshipsClient({
                   type="submit"
                   className="px-5 sm:px-6 py-2.5 sm:py-3 bg-[#014900] hover:bg-[#013300] text-white font-extrabold text-xs uppercase tracking-wider rounded-xl sm:rounded-2xl transition-all shadow-md shrink-0 cursor-pointer"
                 >
-                  GET FREE ALERTS
+                  {alertSending ? 'SIGNING UP...' : 'GET FREE ALERTS'}
                 </button>
               </form>
             </div>
+
+            {alertError && (
+              <p className="mt-4 text-xs font-semibold text-red-600">{alertError}</p>
+            )}
 
             {alertSuccess && (
               <div className="mt-4 sm:mt-5 p-3 sm:p-3.5 bg-emerald-50 border border-emerald-300 text-emerald-800 text-xs font-bold rounded-xl sm:rounded-2xl flex items-center gap-2">

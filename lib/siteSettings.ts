@@ -16,6 +16,25 @@ const COLUMNS: Record<keyof SiteSettings, string> = {
   tiktokUrl: 'tiktok_url',
   linkedinUrl: 'linkedin_url',
   youtubeUrl: 'youtube_url',
+  advocacyYears: 'advocacy_years',
+  administrationNumber: 'administration_number',
+  countersYear: 'counters_year',
+};
+
+// Columns added after the table was first created (added to existing tables on the fly)
+const ADDED_COLUMNS = ['advocacy_years', 'administration_number', 'counters_year'];
+
+/**
+ * Old placeholder values from earlier versions of this site. A saved row that still
+ * holds one of these shows the current default instead (real GNUTS LIVE links, the
+ * current secretariat), so the live site is correct without re-saving Settings.
+ */
+const OUTDATED_VALUES: Partial<Record<keyof SiteSettings, string[]>> = {
+  headquartersAddress: ['Accra Technical University Campus, Barnes Road, Accra, Ghana'],
+  facebookUrl: ['https://facebook.com/gnutsonline'],
+  twitterUrl: ['https://twitter.com/gnutsonline'],
+  instagramUrl: ['https://instagram.com/gnutsonline'],
+  tiktokUrl: ['https://tiktok.com/@gnutsonline'],
 };
 
 const KEYS = Object.keys(COLUMNS) as (keyof SiteSettings)[];
@@ -43,12 +62,36 @@ export async function ensureSiteSettingsTable(): Promise<void> {
       tiktok_url VARCHAR(255) DEFAULT '',
       linkedin_url VARCHAR(255) DEFAULT '',
       youtube_url VARCHAR(255) DEFAULT '',
+      advocacy_years VARCHAR(10) DEFAULT '',
+      administration_number VARCHAR(10) DEFAULT '',
+      counters_year VARCHAR(10) DEFAULT '',
       created_at ${isPostgres ? 'TIMESTAMPTZ NOT NULL DEFAULT now()' : 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP'},
       updated_at ${isPostgres ? 'TIMESTAMPTZ NOT NULL DEFAULT now()' : 'TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'}
     )${isPostgres ? '' : ' ENGINE=InnoDB DEFAULT CHARSET=utf8mb4'}
   `;
   await query(ddl);
+  await addMissingColumns();
   lastEnsured = Date.now();
+}
+
+/** Adds columns introduced after the table was created. */
+async function addMissingColumns(): Promise<void> {
+  const dialect = getDialect();
+  if (dialect === 'postgres') {
+    for (const column of ADDED_COLUMNS) {
+      await query(`ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS ${column} VARCHAR(10) DEFAULT ''`);
+    }
+  } else if (dialect === 'mysql') {
+    // Older MySQL has no "ADD COLUMN IF NOT EXISTS", so check first
+    const existing = await query<Record<string, unknown>>('SHOW COLUMNS FROM site_settings');
+    const names = new Set(existing.map((row) => String(row.Field ?? row.field ?? '').toLowerCase()));
+    for (const column of ADDED_COLUMNS) {
+      if (!names.has(column)) {
+        await query(`ALTER TABLE site_settings ADD COLUMN ${column} VARCHAR(10) DEFAULT ''`);
+      }
+    }
+  }
+  // The local JSON store has no fixed columns: nothing to do
 }
 
 async function readRow(): Promise<Record<string, unknown> | null> {
@@ -66,7 +109,11 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     const settings = { ...DEFAULT_SITE_SETTINGS };
     for (const key of KEYS) {
       const value = row[COLUMNS[key]];
-      if (typeof value === 'string') settings[key] = value;
+      if (typeof value !== 'string') continue;
+      // New counter columns are empty on rows saved before they existed: keep the default
+      if (ADDED_COLUMNS.includes(COLUMNS[key]) && value.trim() === '') continue;
+      if (OUTDATED_VALUES[key]?.includes(value.trim())) continue;
+      settings[key] = value;
     }
     return settings;
   } catch (err) {

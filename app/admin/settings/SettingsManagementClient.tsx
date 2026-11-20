@@ -25,7 +25,12 @@ import {
   Sparkles,
   Server
 } from 'lucide-react';
-import type { SiteSettings } from '@/lib/siteSettingsShared';
+import {
+  currentAdministrationNumber,
+  currentAdvocacyYears,
+  ordinal,
+  type SiteSettings,
+} from '@/lib/siteSettingsShared';
 
 interface SettingsManagementClientProps {
   initialCounts: {
@@ -53,7 +58,13 @@ export default function SettingsManagementClient({
   const [logs, setLogs] = useState(initialLogs);
 
   // Form State
-  const [formData, setFormData] = useState<SiteSettings>(initialSettings);
+  // The yearly counters are edited as this year's values (e.g. 35 in 2027), not as stored
+  const withCurrentCounters = (s: SiteSettings): SiteSettings => ({
+    ...s,
+    advocacyYears: String(currentAdvocacyYears(s)),
+    administrationNumber: String(currentAdministrationNumber(s)),
+  });
+  const [formData, setFormData] = useState<SiteSettings>(() => withCurrentCounters(initialSettings));
 
   const [isSaving, setIsSaving] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
@@ -74,7 +85,7 @@ export default function SettingsManagementClient({
       const data = await res.json().catch(() => null);
 
       if (res.ok && data?.success) {
-        if (data.settings) setFormData(data.settings);
+        if (data.settings) setFormData(withCurrentCounters(data.settings));
         setFeedbackMsg({ type: 'success', text: 'Portal settings saved. The public site now shows these details.' });
       } else {
         setFeedbackMsg({ type: 'error', text: data?.error || 'Failed to save settings' });
@@ -242,19 +253,6 @@ export default function SettingsManagementClient({
 
               <div className="space-y-1">
                 <label className="text-xs font-black uppercase tracking-wider text-gray-700">
-                  Headquarters Physical Address *
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.headquartersAddress}
-                  onChange={(e) => setFormData({ ...formData, headquartersAddress: e.target.value })}
-                  className="w-full px-4 py-2.5 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-semibold outline-none focus:border-[#014900] focus:bg-white"
-                />
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-xs font-black uppercase tracking-wider text-gray-700">
                   Mobile / WhatsApp Number
                 </label>
                 <input
@@ -277,6 +275,69 @@ export default function SettingsManagementClient({
                   placeholder="Leave empty to hide"
                   className="w-full px-4 py-2.5 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-semibold outline-none focus:border-[#014900] focus:bg-white"
                 />
+              </div>
+            </div>
+
+            {/* National Secretariat: moves to a different technical university with each administration */}
+            <div className="pt-4 border-t border-gray-100 space-y-2">
+              <h3 className="text-xs font-black uppercase tracking-wider text-gray-700">
+                National Secretariat
+              </h3>
+              <p className="text-xs text-gray-500 font-medium">
+                The university currently hosting the National Secretariat and its location. Update it whenever the
+                Secretariat moves; it shows in the footer, on the Contact page and in search results.
+              </p>
+              <input
+                type="text"
+                required
+                value={formData.headquartersAddress}
+                onChange={(e) => setFormData({ ...formData, headquartersAddress: e.target.value })}
+                placeholder="e.g. Ho Technical University, Ho, Volta Region, Ghana"
+                className="w-full px-4 py-2.5 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-semibold outline-none focus:border-[#014900] focus:bg-white"
+              />
+            </div>
+
+            {/* Yearly counters: entered once, then they go up by one every January */}
+            <div className="pt-4 border-t border-gray-100 space-y-2">
+              <h3 className="text-xs font-black uppercase tracking-wider text-gray-700">
+                Union Years &amp; Administration
+              </h3>
+              <p className="text-xs text-gray-500 font-medium">
+                These numbers go up by one automatically every January. Only change them to correct them.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="text-xs font-black uppercase tracking-wider text-gray-700">
+                    Years of Advocacy (this year)
+                  </label>
+                  <input
+                    type="number"
+                    min={1}
+                    max={500}
+                    required
+                    value={formData.advocacyYears}
+                    onChange={(e) => setFormData({ ...formData, advocacyYears: e.target.value })}
+                    className="w-full px-4 py-2.5 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-semibold outline-none focus:border-[#014900] focus:bg-white"
+                  />
+                  <p className="text-xs text-gray-400">Shown on the home page as &quot;{formData.advocacyYears || '34'}+ Yrs, Years of Advocacy&quot;.</p>
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs font-black uppercase tracking-wider text-gray-700">
+                    Current Administration Number
+                  </label>
+                  <input
+                    type="number"
+                    min={1}
+                    max={500}
+                    required
+                    value={formData.administrationNumber}
+                    onChange={(e) => setFormData({ ...formData, administrationNumber: e.target.value })}
+                    className="w-full px-4 py-2.5 bg-gray-50 rounded-2xl border border-gray-200 text-xs font-semibold outline-none focus:border-[#014900] focus:bg-white"
+                  />
+                  <p className="text-xs text-gray-400">
+                    Shown as &quot;The {ordinal(parseInt(formData.administrationNumber, 10) || 34)} National Executive Council&quot;.
+                  </p>
+                </div>
               </div>
             </div>
 

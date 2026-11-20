@@ -4,6 +4,10 @@ import { query } from '@/lib/db';
 import ResourcesSection from '@/components/ResourcesSection';
 import { resolveImgUrl } from '@/lib/imageUtils';
 import { absoluteUrl, SITE_URL } from '@/lib/siteUrl';
+import { getSiteSettings } from '@/lib/siteSettings';
+import { historyPhoto } from '@/lib/historyImages';
+import ConstitutionGlance from '@/components/ConstitutionGlance';
+import { currentAdministrationNumber, ordinal } from '@/lib/siteSettingsShared';
 import {
   Target, 
   Eye, 
@@ -107,13 +111,15 @@ export default async function AboutPage() {
     milestonesResult,
     executivesResult,
     resourcesResult,
-    aboutHeroResult
+    aboutHeroResult,
+    siteSettings
   ] = await Promise.all([
     query('SELECT * FROM about_page WHERE id=1').catch(() => []),
     query('SELECT * FROM history_milestones ORDER BY year ASC, display_order ASC').catch(() => []),
     query('SELECT * FROM executives ORDER BY display_order ASC, created_at DESC LIMIT 12').catch(() => []),
     query('SELECT * FROM resources ORDER BY display_order ASC, created_at DESC').catch(() => []),
     query('SELECT * FROM hero_banners WHERE page_key = "about_hero"').catch(() => []),
+    getSiteSettings(),
   ]);
 
   const aboutData = aboutDataResult[0] || {};
@@ -420,15 +426,23 @@ export default async function AboutPage() {
                             {item.description}
                           </p>
 
-                          {item.image && (
-                            <div className="mt-4 rounded-xl overflow-hidden h-48 bg-gray-900 shadow border border-gray-100">
-                              <img
-                                src={item.image.startsWith('http') ? item.image : `/${item.image}`}
-                                alt={item.title}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                              />
-                            </div>
-                          )}
+                          {(() => {
+                            // Placeholder stock pictures are swapped for GNUTS's own images (lib/historyImages.ts)
+                            const photo = historyPhoto(item.image);
+                            if (!photo) return null;
+                            const contain = photo.fit === 'contain';
+                            return (
+                              <div className={`mt-4 rounded-xl overflow-hidden h-48 shadow border border-gray-100 ${contain ? 'bg-white' : 'bg-gray-900'}`}>
+                                <img
+                                  src={resolveImgUrl(photo.url)}
+                                  alt={item.title}
+                                  loading="lazy"
+                                  decoding="async"
+                                  className={`w-full h-full group-hover:scale-105 transition-transform duration-500 ${contain ? 'object-contain p-4' : 'object-cover'}`}
+                                />
+                              </div>
+                            );
+                          })()}
                         </div>
                       </div>
 
@@ -442,11 +456,9 @@ export default async function AboutPage() {
           </div>
         </section>
 
-        {/* 5b. Constitution at a Glance — facts from the GNUTS Constitution */}
-
         {/* 6. Executive Leadership — Only display when executives exist in the system */}
         {executives && executives.length > 0 && (
-          <section id="leadership" className="py-20 sm:py-28 bg-[#f8f9fa] border-b border-gray-200">
+          <section id="leadership" className="py-20 sm:py-28 bg-[#f8f9fa] border-b border-gray-200 scroll-mt-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-gray-200 pb-6 mb-12 gap-4">
                 <div>
@@ -455,7 +467,9 @@ export default async function AboutPage() {
                   </h2>
                   <div className="w-16 h-1.5 bg-[#D9A000] rounded-full my-3" />
                 </div>
-                <p className="text-gray-600 text-sm font-medium">The 34th National Executive Council</p>
+                <p className="text-gray-600 text-sm font-medium">
+                  The {ordinal(currentAdministrationNumber(siteSettings))} National Executive Council
+                </p>
               </div>
 
               {/* Responsive Grid: 1 per row on Mobile, 2 on Tablet, 4 on Desktop */}
@@ -514,8 +528,11 @@ export default async function AboutPage() {
           </section>
         )}
 
-        {/* 7. Resources Section */}
+        {/* 7. Resources Section (the Constitution download) */}
         <ResourcesSection dbResources={resources} />
+
+        {/* 8. Our Constitution at a Glance (same section as on the Resources page) */}
+        <ConstitutionGlance />
 
       </div>
     </>

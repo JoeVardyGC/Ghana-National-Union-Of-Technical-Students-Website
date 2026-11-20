@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Phone, Smartphone, Mail, MapPin, ChevronRight, ExternalLink, Sparkles, X } from 'lucide-react';
 import { telHref, type SiteSettings } from '@/lib/siteSettingsShared';
+import { NAV_LINKS } from '@/lib/navLinks';
 
 export default function Navbar({ settings, hasGallery = true }: { settings: SiteSettings; hasGallery?: boolean }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -40,18 +41,13 @@ export default function Navbar({ settings, hasGallery = true }: { settings: Site
     return () => window.removeEventListener('scroll', handleScroll);
   }, [pathname]);
 
-  const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
-    { name: 'Scholarships & Opportunities', href: '/scholarships' },
-    { name: 'Innovations', href: '/innovations' },
-    { name: 'News & Events', href: '/blog' },
-    { name: 'Contact Us', href: '/contact' },
-  ];
+  // Shared with the footer's Quick Links (lib/navLinks.ts)
+  const navLinks = NAV_LINKS;
 
   // The gallery link is hidden until at least one photo has been uploaded
   const allDrawerLinks = [
-    { name: 'Our Leadership', href: '/#executives-section' },
+    // The About page's "National Leadership" section
+    { name: 'Our Leadership', href: '/about#leadership' },
     { name: 'Our History', href: '/about#history' },
     { name: 'Legacy & Leadership Gallery', href: '/gallery' },
     { name: 'Check your CTVET result', href: 'https://ctvet.gov.gh/results/', external: true },
@@ -63,14 +59,14 @@ export default function Navbar({ settings, hasGallery = true }: { settings: Site
     setDesktopDrawerOpen(false);
     setMobileMenuOpen(false);
 
-    // If it's a leadership link or hash on current page
-    if (href === '/#executives-section' || href.startsWith('#')) {
-      const targetId = href.replace('/#', '').replace('#', '');
-      const elem = document.getElementById(targetId) || document.getElementById('executives-section') || document.getElementById('leadership');
+    // A section link to the page we're already on: scroll there instead of reloading
+    const [path, hash] = href.split('#');
+    if (hash && (path === '' || path === pathname)) {
+      const elem = document.getElementById(hash);
       if (elem) {
         e.preventDefault();
         elem.scrollIntoView({ behavior: 'smooth' });
-        window.history.pushState(null, '', `/#${targetId}`);
+        window.history.pushState(null, '', `${path || pathname}#${hash}`);
       }
     }
   };

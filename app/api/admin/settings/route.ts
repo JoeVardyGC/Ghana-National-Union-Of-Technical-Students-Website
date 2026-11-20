@@ -61,6 +61,34 @@ function parseSettings(body: Record<string, unknown>, current: SiteSettings): Si
     next.postalAddress = text(body.postalAddress, 255);
   }
 
+  // Yearly counters: the admin enters this year's values; they then count up every
+  // January on their own. Missing fields keep the saved values.
+  const counterFields = [
+    ['advocacyYears', 'Years of advocacy'],
+    ['administrationNumber', 'Administration number'],
+  ] as const;
+  let countersChanged = false;
+  for (const [field, label] of counterFields) {
+    if (body[field] === undefined || body[field] === null || body[field] === '') continue;
+    const n = Number(body[field]);
+    if (!Number.isInteger(n) || n < 1 || n > 500) {
+      return `${label} must be a whole number between 1 and 500.`;
+    }
+    next[field] = String(n);
+    countersChanged = true;
+  }
+  if (countersChanged) {
+    // Both numbers are stored relative to the year they were entered
+    const elapsed = Math.max(0, new Date().getFullYear() - (parseInt(current.countersYear, 10) || new Date().getFullYear()));
+    if (body.advocacyYears === undefined || body.advocacyYears === '') {
+      next.advocacyYears = String((parseInt(current.advocacyYears, 10) || 34) + elapsed);
+    }
+    if (body.administrationNumber === undefined || body.administrationNumber === '') {
+      next.administrationNumber = String((parseInt(current.administrationNumber, 10) || 34) + elapsed);
+    }
+    next.countersYear = String(new Date().getFullYear());
+  }
+
   for (const field of URL_FIELDS) {
     // A field missing from the form keeps its saved value; an empty one clears the link.
     if (typeof body[field] !== 'string') continue;

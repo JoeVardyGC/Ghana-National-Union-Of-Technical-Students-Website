@@ -23,7 +23,8 @@ import {
   UserCheck,
   Building2,
   Images,
-  Sliders
+  Sliders,
+  Bell
 } from 'lucide-react';
 import { AdminSessionUser, hasModulePermission } from '@/lib/authTypes';
 
@@ -44,6 +45,7 @@ const NAV_ITEMS = [
   { name: 'Hero Banners & Media', href: '/admin/banners', icon: Sliders },
   { name: 'Legacy & Gallery', href: '/admin/gallery', icon: Images },
   { name: 'Inquiries & Messages', href: '/admin/messages', icon: Inbox },
+  { name: 'Alert Subscribers', href: '/admin/subscribers', icon: Bell },
   { name: 'Admin Users & Access', href: '/admin/users', icon: ShieldCheck },
   { name: 'System Settings', href: '/admin/settings', icon: Settings },
 ];
