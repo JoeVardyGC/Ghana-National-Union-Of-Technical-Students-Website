@@ -3,6 +3,7 @@ import { GraduationCap } from 'lucide-react';
 import { query } from '@/lib/db';
 import ScholarshipsClient from '@/components/ScholarshipsClient';
 import { resolveImgUrl } from '@/lib/imageUtils';
+import { withoutExpired } from '@/lib/deadlines';
 
 export const revalidate = 15; // Fast ISR caching
 
@@ -45,13 +46,20 @@ export interface Opportunity {
 export default async function ScholarshipsPage() {
   let heroImage = '/images/header_for_pages.jpg';
 
-  const [dbActiveScholarships, dbClosedScholarships, dbActiveOpportunities, dbClosedOpportunities, bannerRows] = await Promise.all([
+  const [allActiveScholarships, allClosedScholarships, allActiveOpportunities, allClosedOpportunities, bannerRows] = await Promise.all([
     query<any>("SELECT * FROM scholarships WHERE status = 'active' ORDER BY created_at DESC").catch(() => []),
-    query<any>("SELECT * FROM scholarships WHERE status = 'closed' ORDER BY updated_at DESC LIMIT 5").catch(() => []),
+    query<any>("SELECT * FROM scholarships WHERE status = 'closed' ORDER BY updated_at DESC").catch(() => []),
     query<any>("SELECT * FROM opportunities WHERE status = 'active' ORDER BY created_at DESC").catch(() => []),
-    query<any>("SELECT * FROM opportunities WHERE status = 'closed' ORDER BY updated_at DESC LIMIT 5").catch(() => []),
+    query<any>("SELECT * FROM opportunities WHERE status = 'closed' ORDER BY updated_at DESC").catch(() => []),
     query<any>("SELECT * FROM hero_banners WHERE page_key = 'scholarships_hero'").catch(() => []),
   ]);
+
+  // Listings disappear from the site automatically the day after their closing day
+  // (they stay in the database; admins see them marked "Expired"). See lib/deadlines.ts.
+  const dbActiveScholarships = withoutExpired(allActiveScholarships);
+  const dbClosedScholarships = withoutExpired(allClosedScholarships).slice(0, 5);
+  const dbActiveOpportunities = withoutExpired(allActiveOpportunities);
+  const dbClosedOpportunities = withoutExpired(allClosedOpportunities).slice(0, 5);
 
   let heroTitle = 'GNUTS Opportunities Hub';
   let heroSubtitle = 'Training and funding opportunities to support your technical and vocational education journey';

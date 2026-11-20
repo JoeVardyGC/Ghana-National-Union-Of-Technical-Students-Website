@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { isExpired } from '@/lib/deadlines';
 import { 
   Briefcase, 
   PlusCircle, 
@@ -426,6 +427,11 @@ export default function OpportunitiesManagementClient({
                   <Calendar className="w-3.5 h-3.5 text-[#D9A000]" />
                   <span>
                     Deadline: <strong className="text-gray-900">{item.deadline ? String(item.deadline).substring(0, 10) : 'Open Rolling'}</strong>
+                    {isExpired(item.deadline) && (
+                      <span className="ml-1.5 px-2 py-0.5 rounded-full bg-red-50 text-red-700 border border-red-200 text-xs font-bold" title="Closing day has passed: hidden from the public site">
+                        Expired, hidden from site
+                      </span>
+                    )}
                   </span>
                 </div>
 

@@ -9,6 +9,7 @@ import NewsSection from '@/components/NewsSection';
 import { resolveImgUrl } from '@/lib/imageUtils';
 import { getSiteSettings } from '@/lib/siteSettings';
 import { currentAdvocacyYears } from '@/lib/siteSettingsShared';
+import { withoutExpired } from '@/lib/deadlines';
 import { Layers, Clock, MessageSquare, Mail, Phone, Share2 } from 'lucide-react';
 
 export const revalidate = 15; // Incremental Static Regeneration for instant <5ms loads
@@ -48,29 +49,33 @@ function formatDeadline(value: unknown): string {
 export default async function HomePage() {
   // Fetch dynamic data in parallel for maximum server performance
   const [
-    scholarships,
-    opportunities,
+    allActiveScholarships,
+    allActiveOpportunities,
     innovations,
     executives,
     news,
     statsResult,
-    scholarshipsCountResult,
     carouselSlidesResult,
     siteSettings
   ] = await Promise.all([
-    query('SELECT * FROM scholarships WHERE status = "active" ORDER BY created_at DESC LIMIT 3').catch(() => []),
-    query('SELECT * FROM opportunities WHERE status = "active" ORDER BY created_at DESC LIMIT 4').catch(() => []),
+    // All active listings, so ones past their closing day can be left out before picking the latest
+    query('SELECT * FROM scholarships WHERE status = "active" ORDER BY created_at DESC').catch(() => []),
+    query('SELECT * FROM opportunities WHERE status = "active" ORDER BY created_at DESC').catch(() => []),
     query('SELECT * FROM innovations WHERE status = "approved" ORDER BY created_at DESC, id DESC LIMIT 3').catch(() => []),
     query('SELECT * FROM executives ORDER BY display_order ASC, created_at DESC LIMIT 8').catch(() => []),
     query('SELECT * FROM news WHERE status = "published" ORDER BY published_at DESC, created_at DESC, id DESC LIMIT 6').catch(() => []),
     query('SELECT COUNT(*) as count FROM innovations WHERE status = "approved"').catch(() => [{ count: 0 }]),
-    query('SELECT COUNT(*) as count FROM scholarships WHERE status = "active"').catch(() => [{ count: 0 }]),
     query('SELECT * FROM hero_banners WHERE page_key = "home_carousel" ORDER BY display_order ASC, id ASC').catch(() => []),
     getSiteSettings(),
   ]);
 
+  // Listings disappear automatically the day after their closing day (lib/deadlines.ts)
+  const openScholarships = withoutExpired(allActiveScholarships);
+  const scholarships = openScholarships.slice(0, 3);
+  const opportunities = withoutExpired(allActiveOpportunities).slice(0, 4);
+
   const projectsCount = statsResult[0]?.count ?? 0;
-  const dbScholarshipsCount = scholarshipsCountResult[0]?.count ?? 0;
+  const dbScholarshipsCount = openScholarships.length;
   const scholarshipsCount = dbScholarshipsCount > 0 ? dbScholarshipsCount : 1;
   const carouselSlides = carouselSlidesResult || [];
 

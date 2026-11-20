@@ -105,6 +105,11 @@ export default function ScholarshipsClient({
       const diffTime = deadlineDate.getTime() - today.getTime();
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
+      // Closing day itself: still listed until the day ends, then it disappears from the site
+      if (diffDays <= 0 && diffDays > -1) {
+        return { text: 'CLOSES TODAY', daysLeft: 0, isUrgent: true };
+      }
+
       if (diffDays > 0 && diffDays <= 45) {
         return {
           text: `CLOSING IN ${diffDays} DAYS`,
