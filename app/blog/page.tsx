@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: 'Official announcements, statements, and national activities from the Ghana National Union of Technical Students (GNUTS).',
 };
 
-export const revalidate = 3600; // Rebuild at most hourly; admin saves refresh pages instantly (lib/revalidateSite.ts)
+export const revalidate = 15; // Fast ISR caching
 
 export default async function NewsArchivePage() {
   let dbNews: NewsItem[] = [];

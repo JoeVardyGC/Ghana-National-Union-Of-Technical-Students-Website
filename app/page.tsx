@@ -12,7 +12,7 @@ import { currentAdvocacyYears } from '@/lib/siteSettingsShared';
 import { withoutExpired } from '@/lib/deadlines';
 import { Layers, Clock, MessageSquare, Mail, Phone, Share2 } from 'lucide-react';
 
-export const revalidate = 3600; // Rebuild at most hourly; admin saves refresh pages instantly (lib/revalidateSite.ts)
+export const revalidate = 15; // Incremental Static Regeneration for instant <5ms loads
 
 export const metadata: Metadata = {
   // Both "GNUTS" and the full name up front, so the result matches either search
