@@ -2,6 +2,7 @@ import mysql from 'mysql2/promise';
 import fs from 'fs';
 import path from 'path';
 import { revalidatePath } from 'next/cache';
+import { notifyIndexNow } from './indexnow';
 import { getDatabaseUrlProblem, getDatabaseUrlWarning, getPostgresPool, getPostgresUrl, isConnectionError, runPostgres } from './postgres';
 
 export type DatabaseDialect = 'postgres' | 'mysql' | 'local';
@@ -664,6 +665,21 @@ function afterWrite(sql: string): void {
   } catch {
     // Not inside a request (e.g. a page render or the build): the normal cache timer applies
   }
+  // Tell Bing & co. (IndexNow) which public pages just changed
+  notifyIndexNow(sql, latestPublicIds);
+}
+
+/** Newest public post ids for IndexNow, matching what the sitemap lists. */
+async function latestPublicIds(table: string): Promise<number[]> {
+  const sql =
+    table === 'news'
+      ? "SELECT id FROM news WHERE status = 'published' ORDER BY id DESC LIMIT 3"
+      : table === 'innovations'
+        ? "SELECT id FROM innovations WHERE status = 'approved' ORDER BY id DESC LIMIT 3"
+        : null;
+  if (!sql) return [];
+  const rows = await query<{ id: number | string }>(sql);
+  return rows.map((r) => Number(r.id)).filter((id) => Number.isInteger(id) && id > 0);
 }
 
 async function executeLocalSql(sql: string, params: any[]): Promise<any> {
