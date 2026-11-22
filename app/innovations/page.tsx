@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: 'Showcasing groundbreaking technical innovations and engineering solutions developed by TVET and Technical University students across Ghana.',
 };
 
-export const revalidate = 15; // Fast ISR caching
+export const revalidate = 3600; // Rebuild at most hourly; admin saves refresh pages instantly (lib/revalidateSite.ts)
 
 function formatDate(dateVal: any): string {
   if (!dateVal) return '';

@@ -11,7 +11,7 @@ import { absoluteUrl, SITE_URL } from '@/lib/siteUrl';
 import { telHref } from '@/lib/siteSettingsShared';
 import ScrollToTopOnMount from '@/components/ScrollToTopOnMount';
 
-export const revalidate = 15;
+export const revalidate = 3600; // Rebuild at most hourly; admin saves refresh pages instantly (lib/revalidateSite.ts)
 
 interface PageProps {
   params: Promise<{ id: string }>;

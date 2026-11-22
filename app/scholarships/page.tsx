@@ -5,7 +5,7 @@ import ScholarshipsClient from '@/components/ScholarshipsClient';
 import { resolveImgUrl } from '@/lib/imageUtils';
 import { withoutExpired } from '@/lib/deadlines';
 
-export const revalidate = 15; // Fast ISR caching
+export const revalidate = 3600; // Rebuild at most hourly; admin saves refresh pages instantly (lib/revalidateSite.ts)
 
 export const metadata: Metadata = {
   title: 'Scholarships & Bursaries for Technical Students | GNUTS Ghana',

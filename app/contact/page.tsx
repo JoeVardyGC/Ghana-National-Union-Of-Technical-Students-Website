@@ -4,7 +4,7 @@ import { query } from '@/lib/db';
 import { resolveImgUrl } from '@/lib/imageUtils';
 import { getSiteSettings } from '@/lib/siteSettings';
 
-export const revalidate = 15;
+export const revalidate = 3600; // Rebuild at most hourly; admin saves refresh pages instantly (lib/revalidateSite.ts)
 
 export const metadata: Metadata = {
   title: 'Contact Us | GNUTS - Ghana National Union of Technical Students',

@@ -6,7 +6,7 @@ import ScholarshipsPage from '../scholarships/page';
  * Opportunities Hub: scholarships, internships and skill camps in one place).
  * It reuses the scholarships page code, so any change there appears here too.
  */
-export const revalidate = 15;
+export const revalidate = 3600; // Rebuild at most hourly; admin saves refresh pages instantly (lib/revalidateSite.ts)
 
 export const metadata: Metadata = {
   title: 'Scholarships & Opportunities for Technical Students | GNUTS Ghana',

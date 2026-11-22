@@ -22,7 +22,7 @@ import ShareButtons from './ShareButtons';
 import DetailUpvoteButton from './DetailUpvoteButton';
 import { ReadingProgressBar } from '@/components/ArticleDetailClient';
 
-export const revalidate = 60;
+export const revalidate = 3600; // Rebuild at most hourly; admin saves refresh pages instantly (lib/revalidateSite.ts)
 
 const DEFAULT_INNOVATIONS: (InnovationItem & { images?: string[] })[] = [
   {

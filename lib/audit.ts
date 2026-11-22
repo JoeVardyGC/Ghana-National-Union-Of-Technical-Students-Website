@@ -1,4 +1,5 @@
 import { query } from './db';
+import { changesPublicContent, revalidatePublicSite } from './revalidateSite';
 
 export interface AuditLogEntry {
   id: number;
@@ -43,6 +44,12 @@ export async function logAuditAction(
     );
   } catch (e) {
     // Database table might not exist yet, fallback in memory
+  }
+
+  // Every admin content change is audit-logged right after it is saved,
+  // so this is the one place that refreshes the cached public pages.
+  if (changesPublicContent(action)) {
+    revalidatePublicSite();
   }
 }
 

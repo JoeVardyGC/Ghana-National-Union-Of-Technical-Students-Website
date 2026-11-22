@@ -89,7 +89,7 @@ const DEFAULT_RESOURCES = [
   },
 ];
 
-export const revalidate = 15; // Fast ISR caching
+export const revalidate = 3600; // Rebuild at most hourly; admin saves refresh pages instantly (lib/revalidateSite.ts)
 
 export const metadata: Metadata = {
   title: 'About GNUTS | History, Mission & Leadership',

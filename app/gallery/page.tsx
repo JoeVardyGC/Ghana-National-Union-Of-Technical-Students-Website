@@ -3,7 +3,7 @@ import GalleryClient, { GalleryItem } from '@/components/GalleryClient';
 import { query } from '@/lib/db';
 import { resolveImgUrl } from '@/lib/imageUtils';
 
-export const revalidate = 15;
+export const revalidate = 3600; // Rebuild at most hourly; admin saves refresh pages instantly (lib/revalidateSite.ts)
 
 export const metadata: Metadata = {
   title: 'Legacy & Leadership Gallery | GNUTS - Ghana National Union of Technical Students',
