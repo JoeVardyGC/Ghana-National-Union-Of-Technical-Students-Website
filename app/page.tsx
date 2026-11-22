@@ -232,8 +232,8 @@ export default async function HomePage() {
                         </span>
                       )}
                       <span
-                        className={`self-start px-3.5 py-2 rounded-xl text-xs font-extrabold uppercase tracking-wider shadow-xs transition-colors inline-flex items-center gap-1 ${
-                          isGold ? 'bg-[#D9A000] text-[#014900]' : 'bg-[#014900] group-hover:bg-[#013300] text-white'
+                        className={`self-start text-xs font-extrabold uppercase tracking-wider transition-colors inline-flex items-center gap-1 group-hover:underline underline-offset-4 ${
+                          isGold ? 'text-gold-ink' : 'text-[#014900]'
                         }`}
                       >
                         <span>View Requirements & Apply →</span>

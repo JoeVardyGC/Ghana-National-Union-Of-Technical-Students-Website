@@ -82,15 +82,6 @@ export default function InnovationsSection({ dbInnovations = [] }: { dbInnovatio
 
                       {/* Gold Accent Bar */}
                       <div className="absolute bottom-0 inset-x-0 h-1.5 bg-[#D9A000] z-10" />
-
-                      {/* Category Badge Floating on Image */}
-                      <div className="absolute top-3 left-3 z-20">
-                        <span className={`px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider shadow-lg backdrop-blur-md border border-white/20 ${
-                          isGold ? 'bg-[#D9A000]/90 text-[#014900]' : 'bg-[#014900]/90 text-white'
-                        }`}>
-                          {item.category || 'Innovation'}
-                        </span>
-                      </div>
                     </div>
 
                     {/* Content Block */}
