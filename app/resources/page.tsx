@@ -10,6 +10,7 @@ export const revalidate = 15; // Fast ISR caching
 
 export const metadata: Metadata = {
   title: 'Resources & Supreme Constitution | GNUTS',
+  alternates: { canonical: '/resources' },
   description:
     'Access and download official constitutional documents, Central Committee communiqués, policy frameworks, and audited records of the Ghana National Union of Technical Students (GNUTS).',
   openGraph: {
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
       'Official public records, constitutional charter, TVET advocacy briefs, and policy documents.',
     images: [
       {
-        url: 'https://res.cloudinary.com/dslngzls6/image/upload/v1787052593/slide1_wghgqa.jpg',
+        url: '/images/og-logo.png',
         width: 1200,
         height: 630,
         alt: 'GNUTS Resources & Constitution',

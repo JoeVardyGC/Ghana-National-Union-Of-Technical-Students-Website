@@ -216,11 +216,12 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
   const title = project ? `${project.title} | GNUTS Innovative Projects` : 'Project Detail | GNUTS';
   const description = project?.description?.slice(0, 160).replace(/[\r\n]+/g, ' ') || 'Student innovative project showcased by Ghana National Union of Technical Students.';
-  const image = project?.project_image ? (project.project_image.startsWith('http') ? project.project_image : `/${project.project_image.replace(/^\/+/, '')}`) : 'https://res.cloudinary.com/dslngzls6/image/upload/v1787056250/gnuts_cc_tech-GUEST_jt8cge.png';
+  const image = project?.project_image ? (project.project_image.startsWith('http') ? project.project_image : `/${project.project_image.replace(/^\/+/, '')}`) : '/images/og-logo.png';
 
   return {
     title,
     description,
+    alternates: { canonical: `/innovations/${idNum}` },
     openGraph: {
       title,
       description,

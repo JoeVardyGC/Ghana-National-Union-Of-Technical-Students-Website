@@ -7,6 +7,7 @@ export const revalidate = 15;
 
 export const metadata: Metadata = {
   title: 'Legacy & Leadership Gallery | GNUTS - Ghana National Union of Technical Students',
+  alternates: { canonical: '/gallery' },
   description: 'Explore the historic leadership gallery of GNUTS National Presidents, Secretariat Leaders, TVET Pioneer Alumni, and National Congress Photos.',
 };
 

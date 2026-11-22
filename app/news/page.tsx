@@ -3,6 +3,7 @@ import NewsArchivePage from '@/app/blog/page';
 
 export const metadata: Metadata = {
   title: 'News & Press Releases | GNUTS Ghana',
+  alternates: { canonical: '/blog' },
   description: 'Official announcements, statements, and national activities from the Ghana National Union of Technical Students (GNUTS).',
 };
 

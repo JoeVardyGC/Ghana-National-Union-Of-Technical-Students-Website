@@ -5,6 +5,7 @@ import { resolveImgUrl } from '@/lib/imageUtils';
 
 export const metadata: Metadata = {
   title: 'Innovative Projects | GNUTS',
+  alternates: { canonical: '/innovations' },
   description: 'Showcasing groundbreaking technical innovations and engineering solutions developed by TVET and Technical University students across Ghana.',
 };
 

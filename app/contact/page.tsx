@@ -8,6 +8,7 @@ export const revalidate = 15;
 
 export const metadata: Metadata = {
   title: 'Contact Us | GNUTS - Ghana National Union of Technical Students',
+  alternates: { canonical: '/contact' },
   description: 'Get in touch with the National Secretariat of GNUTS. Reach out for student welfare inquiries, scholarship support, innovation programs, or union membership.',
 };
 
